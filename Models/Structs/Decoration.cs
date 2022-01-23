@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using MHR_Editor.Attributes;
 
 namespace MHR_Editor.Models.Structs;
 

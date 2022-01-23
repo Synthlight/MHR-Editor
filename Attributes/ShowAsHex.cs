@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MHR_Editor.Models;
+namespace MHR_Editor.Attributes;
 
 public class ShowAsHexAttribute : Attribute {
 }

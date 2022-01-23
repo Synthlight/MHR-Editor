@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using MHR_Editor.Attributes;
 using MHR_Editor.Data;
 using MHR_Editor.Models.MHR_Enums;
 

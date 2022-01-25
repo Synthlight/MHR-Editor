@@ -24,6 +24,7 @@ public class RszObject : OnPropertyChangedBase {
         if (hash == Armor.HASH) rszObject           = new Armor();
         else if (hash == Decoration.HASH) rszObject = new Decoration();
         else if (hash == GreatSword.HASH) rszObject = new GreatSword();
+        else if (hash == Item.HASH) rszObject       = new Item();
         else rszObject                              = new();
         rszObject.structInfo = structInfo;
 

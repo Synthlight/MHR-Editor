@@ -65,6 +65,8 @@ public partial class MainWindow {
         SetupKeybind(new KeyGesture(Key.S, ModifierKeys.Control), (_,                      _) => Save());
         SetupKeybind(new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift), (_, _) => Save(true));
 
+        btn_cheat.Visibility = Debugger.IsAttached ? Visibility.Visible : Visibility.Collapsed;
+
         TryLoad(args);
     }
 
@@ -228,6 +230,7 @@ public partial class MainWindow {
             "ArmorBaseData.user.2" => typeof(Armor),
             "DecorationsBaseData.user.2" => typeof(Decoration),
             "GreatSwordBaseData.user.2" => typeof(GreatSword),
+            "ItemData.user.2" => typeof(Item),
             _ => throw new($"No type found for: {fileName}")
         };
     }

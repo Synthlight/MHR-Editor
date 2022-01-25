@@ -19,8 +19,17 @@
 		<PackageReference Include="PropertyChanged.Fody" Version="3.4.0" PrivateAssets="All"/>
 	</ItemGroup>
 	<ItemGroup>
+		<Compile Update="Data\Assets.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Assets.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Windows\MainWindow.xaml.buttons.cs">
 			<DependentUpon>MainWindow.xaml</DependentUpon>
 		</Compile>
+		<EmbeddedResource Update="Data\Assets.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Assets.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 	</ItemGroup>
 </Project>

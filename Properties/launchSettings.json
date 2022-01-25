@@ -1,8 +1,12 @@
 {
   "profiles": {
-    "MHR-Editor": {
+    "ArmorBaseData.user.2": {
       "commandName": "Project",
       "commandLineArgs": "\"R:\\Games\\Monster Hunter Rise\\Mods\\GMod\\natives\\STM\\data\\Define\\Player\\Armor\\ArmorBaseData.user.2\""
+    },
+    "ItemData.user.2": {
+      "commandName": "Project",
+      "commandLineArgs": "\"R:\\Games\\Monster Hunter Rise\\Mods\\GMod\\natives\\STM\\data\\System\\ContentsIdSystem\\Item\\Normal\\ItemData.user.2\""
     }
   }
 }

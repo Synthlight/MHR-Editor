@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +14,7 @@ using System.Windows.Input;
 using JetBrains.Annotations;
 using MHR_Editor.Controls;
 using MHR_Editor.Models;
+using MHR_Editor.Models.List_Wrappers;
 using MHR_Editor.Models.Structs;
 using Microsoft.Win32;
 
@@ -30,6 +32,23 @@ public partial class MainWindow {
     [CanBeNull] private CancellationTokenSource savedTimer;
     [CanBeNull] private ReDataFile              file;
     public              string                  targetFile { get; private set; }
+
+    public static bool showIdBeforeName = true;
+    public bool ShowIdBeforeName {
+        get => showIdBeforeName;
+        set {
+            showIdBeforeName = value;
+            if (file?.rsz.objectData == null) return;
+            foreach (var item in file.rsz.objectData) {
+                if (item is not OnPropertyChangedBase io) continue;
+                foreach (var propertyInfo in io.GetType().GetProperties()) {
+                    if (propertyInfo.Name.EndsWith("_button")) {
+                        io.OnPropertyChanged(propertyInfo.Name);
+                    }
+                }
+            }
+        }
+    }
 
     public static bool SingleClickToEditMode { get; set; } = true;
 
@@ -71,14 +90,19 @@ public partial class MainWindow {
             sub_grids.Children.Clear();
             sub_grids.UpdateLayout();
 
+            ClearDataGrids(main_grid);
             ClearDataGrids(sub_grids);
 
             GC.Collect();
 
             file = ReDataFile.Read(targetFile);
 
-            var type = GetFileType();
-            AddDataGrid(file?.rsz.objectData.Where(o => o.GetType().Is(type)));
+            var type          = GetFileType();
+            var rszObjectData = file?.rsz.objectData;
+            var getListOfType = typeof(Enumerable).GetMethod(nameof(Enumerable.OfType), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.MakeGenericMethod(type);
+            var items         = getListOfType?.Invoke(null, new object[] {rszObjectData}) ?? throw new("rsz.objectData.OfType failure.");
+            var dataGrid      = MakeDataGrid((dynamic) items);
+            AddMainDataGrid(dataGrid);
         } catch (Exception e) when (!Debugger.IsAttached) {
             ShowError(e, "Load Error");
         }
@@ -129,18 +153,34 @@ public partial class MainWindow {
         }
     }
 
-    public AutoDataGrid AddDataGrid<T>(IEnumerable<T> itemSource) {
+    public AutoDataGridGeneric<T> MakeDataGrid<T>(IEnumerable<T> itemSource) {
         var dataGrid = new AutoDataGridGeneric<T>();
         dataGrid.SetItems(itemSource is ObservableCollection<T> source ? source : new(itemSource));
-        sub_grids.AddControl(dataGrid);
         return dataGrid;
     }
 
-    public void ClearDataGrids(Panel panel) {
+    public void AddMainDataGrid(AutoDataGrid dataGrid) {
+        dataGrid.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+        dataGrid.VerticalScrollBarVisibility   = ScrollBarVisibility.Auto;
+
+        main_grid.AddControl(dataGrid);
+
+        Grid.SetRow(dataGrid, 1);
+        Grid.SetColumn(dataGrid, 0);
+        Grid.SetColumnSpan(dataGrid, 3);
+
+        main_grid.UpdateLayout();
+    }
+
+    public void AddSubDataGrid(AutoDataGrid dataGrid) {
+        sub_grids.AddControl(dataGrid);
+    }
+
+    public static void ClearDataGrids(Panel panel) {
         var grids = new List<UIElement>();
 
         // Find them all.
-        foreach (UIElement child in sub_grids.Children) {
+        foreach (UIElement child in panel.Children) {
             if (child is AutoDataGrid mhwGrid) {
                 grids.Add(child);
                 mhwGrid.SetItems(null);

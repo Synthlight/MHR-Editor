@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using MHR_Editor.Attributes;
 using MHR_Editor.Data;
+using MHR_Editor.Models.List_Wrappers;
 using MHR_Editor.Models.MHR_Enums;
 
 namespace MHR_Editor.Models.Structs;
@@ -110,75 +111,11 @@ public class Armor : RszObject {
         set => fieldData.getFieldByName("_BuffFormula").data = ((int) value).GetBytes();
     }
 
-    private List<uint> DecorationsNumList { get; set; }
+    public ObservableCollection<GenericWrapper<uint>> DecorationsNumList { get; set; }
 
-    public uint DecorationsNum1 {
-        get => DecorationsNumList[0];
-        set => DecorationsNumList[0] = value;
-    }
+    public ObservableCollection<SkillId<byte>> SkillIdList { get; set; }
 
-    public uint DecorationsNum2 {
-        get => DecorationsNumList[1];
-        set => DecorationsNumList[1] = value;
-    }
-
-    public uint DecorationsNum3 {
-        get => DecorationsNumList[2];
-        set => DecorationsNumList[2] = value;
-    }
-
-    private List<byte> SkillList      { get; set; }
-    private List<int>  SkillLevelList { get; set; }
-
-    public byte Skill1 {
-        get => SkillList[0];
-        set => SkillList[0] = value;
-    }
-
-    public int Skill1Level {
-        get => SkillLevelList[0];
-        set => SkillLevelList[0] = value;
-    }
-
-    public byte Skill2 {
-        get => SkillList[1];
-        set => SkillList[1] = value;
-    }
-
-    public int Skill2Level {
-        get => SkillLevelList[1];
-        set => SkillLevelList[1] = value;
-    }
-
-    public byte Skill3 {
-        get => SkillList[2];
-        set => SkillList[2] = value;
-    }
-
-    public int Skill3Level {
-        get => SkillLevelList[2];
-        set => SkillLevelList[2] = value;
-    }
-
-    public byte Skill4 {
-        get => SkillList[3];
-        set => SkillList[3] = value;
-    }
-
-    public int Skill4Level {
-        get => SkillLevelList[3];
-        set => SkillLevelList[3] = value;
-    }
-
-    public byte Skill5 {
-        get => SkillList[4];
-        set => SkillList[4] = value;
-    }
-
-    public int Skill5Level {
-        get => SkillLevelList[4];
-        set => SkillLevelList[4] = value;
-    }
+    public ObservableCollection<GenericWrapper<int>> SkillLevelList { get; set; }
 
     public uint IdAfterExChange {
         get => fieldData.getFieldByName("_IdAfterExChange").data.GetData<uint>();
@@ -188,16 +125,16 @@ public class Armor : RszObject {
     protected override void Init() {
         base.Init();
 
-        DecorationsNumList = fieldData.getFieldByName("_DecorationsNumList").GetDataAsList<uint>();
-        SkillList          = fieldData.getFieldByName("_SkillList").GetDataAsList<byte>();
-        SkillLevelList     = fieldData.getFieldByName("_SkillLvList").GetDataAsList<int>();
+        DecorationsNumList = new(fieldData.getFieldByName("_DecorationsNumList").GetDataAsList<GenericWrapper<uint>>());
+        SkillIdList        = new(fieldData.getFieldByName("_SkillList").GetDataAsList<SkillId<byte>>());
+        SkillLevelList     = new(fieldData.getFieldByName("_SkillLvList").GetDataAsList<GenericWrapper<int>>());
     }
 
     protected override void PreWrite() {
         base.PreWrite();
 
         fieldData.getFieldByName("_DecorationsNumList").SetDataFromList(DecorationsNumList);
-        fieldData.getFieldByName("_SkillList").SetDataFromList(SkillList);
+        fieldData.getFieldByName("_SkillList").SetDataFromList(SkillIdList);
         fieldData.getFieldByName("_SkillLvList").SetDataFromList(SkillLevelList);
     }
 

@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MHR_Editor.Windows;
 
 namespace MHR_Editor;
 
@@ -57,7 +58,7 @@ public static class Extensions {
 
         try {
             var rawDataPtr = handle.AddrOfPinnedObject();
-            return (T) Marshal.PtrToStructure(rawDataPtr, typeof(T));
+            return (T) Marshal.PtrToStructure(rawDataPtr, typeof(T))!;
         } finally {
             handle.Free();
         }
@@ -92,13 +93,13 @@ public static class Extensions {
 
     public static Dictionary<K2, V> GetOrCreate<K1, K2, V>(this Dictionary<K1, Dictionary<K2, V>> dict, K1 key) {
         if (dict.ContainsKey(key)) return dict[key];
-        dict[key] = new Dictionary<K2, V>();
+        dict[key] = new();
         return dict[key];
     }
 
     public static List<V> GetOrCreate<K, V>(this Dictionary<K, List<V>> dict, K key) {
         if (dict.ContainsKey(key)) return dict[key];
-        dict[key] = new List<V>();
+        dict[key] = new();
         return dict[key];
     }
 
@@ -166,12 +167,16 @@ public static class Extensions {
         }
     }
 
+    public static string ToStringWithId<T>(this string name, T id) where T : struct {
+        return MainWindow.showIdBeforeName ? $"{id}: {name}" : $"{name}: {id}";
+    }
+
     public static Visibility VisibleIfTrue(this bool b) {
         return b ? Visibility.Visible : Visibility.Collapsed;
     }
 
     public static T GetParent<T>(this DependencyObject d) where T : class {
-        while (d != null && !(d is T)) {
+        while (d != null && d is not T) {
             d = VisualTreeHelper.GetParent(d);
         }
 

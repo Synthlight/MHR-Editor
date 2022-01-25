@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using MHR_Editor.Attributes;
+using MHR_Editor.Models.List_Wrappers;
 using MHR_Editor.Models.MHR_Enums;
 
 namespace MHR_Editor.Models.Structs;
@@ -57,39 +58,9 @@ public class GreatSword : RszObject {
         set => fieldData.getFieldByName("_DefBonus").data = value.GetBytes();
     }
 
-    private List<int> RampageSkillIdList { get; set; }
+    public ObservableCollection<GenericWrapper<int>> RampageSkillIdList { get; set; }
 
-    public int RampageSkill1 {
-        get => RampageSkillIdList[0];
-        set => RampageSkillIdList[0] = value;
-    }
-
-    public int RampageSkill2 {
-        get => RampageSkillIdList[1];
-        set => RampageSkillIdList[1] = value;
-    }
-
-    public int RampageSkill3 {
-        get => RampageSkillIdList[2];
-        set => RampageSkillIdList[2] = value;
-    }
-
-    private List<uint> DecorationsNumList { get; set; }
-
-    public uint DecorationsNum1 {
-        get => DecorationsNumList[0];
-        set => DecorationsNumList[0] = value;
-    }
-
-    public uint DecorationsNum2 {
-        get => DecorationsNumList[1];
-        set => DecorationsNumList[1] = value;
-    }
-
-    public uint DecorationsNum3 {
-        get => DecorationsNumList[2];
-        set => DecorationsNumList[2] = value;
-    }
+    public ObservableCollection<GenericWrapper<uint>> DecorationsNumList { get; set; }
 
     public PlWeaponElementTypes MainElementVal {
         get => (PlWeaponElementTypes) fieldData.getFieldByName("_MainElementType").data.GetData<int>();
@@ -101,72 +72,17 @@ public class GreatSword : RszObject {
         set => fieldData.getFieldByName("_MainElementVal").data = value.GetBytes();
     }
 
-    private List<int> SharpnessValList { get; set; }
+    public ObservableCollection<GenericWrapper<int>> SharpnessValList { get; set; }
 
-    public int SharpnessVal1 {
-        get => SharpnessValList[0];
-        set => SharpnessValList[0] = value;
-    }
-
-    public int SharpnessVal2 {
-        get => SharpnessValList[1];
-        set => SharpnessValList[1] = value;
-    }
-
-    public int SharpnessVal3 {
-        get => SharpnessValList[2];
-        set => SharpnessValList[2] = value;
-    }
-
-    public int SharpnessVal4 {
-        get => SharpnessValList[3];
-        set => SharpnessValList[3] = value;
-    }
-
-    public int SharpnessVal5 {
-        get => SharpnessValList[4];
-        set => SharpnessValList[4] = value;
-    }
-
-    public int SharpnessVal6 {
-        get => SharpnessValList[5];
-        set => SharpnessValList[5] = value;
-    }
-
-    public int SharpnessVal7 {
-        get => SharpnessValList[6];
-        set => SharpnessValList[6] = value;
-    }
-
-    private List<int> TakumiValList { get; set; }
-
-    public int TakumiVal1 {
-        get => TakumiValList[0];
-        set => TakumiValList[0] = value;
-    }
-
-    public int TakumiVal2 {
-        get => TakumiValList[1];
-        set => TakumiValList[1] = value;
-    }
-
-    public int TakumiVal3 {
-        get => TakumiValList[2];
-        set => TakumiValList[2] = value;
-    }
-
-    public int TakumiVal4 {
-        get => TakumiValList[3];
-        set => TakumiValList[3] = value;
-    }
+    public ObservableCollection<GenericWrapper<int>> TakumiValList { get; set; }
 
     protected override void Init() {
         base.Init();
 
-        DecorationsNumList = fieldData.getFieldByName("_SlotNumList").GetDataAsList<uint>();
-        RampageSkillIdList = fieldData.getFieldByName("_HyakuryuSkillIdList").GetDataAsList<int>();
-        SharpnessValList   = fieldData.getFieldByName("_SharpnessValList").GetDataAsList<int>();
-        TakumiValList      = fieldData.getFieldByName("_TakumiValList").GetDataAsList<int>();
+        DecorationsNumList = new(fieldData.getFieldByName("_SlotNumList").GetDataAsList<GenericWrapper<uint>>());
+        RampageSkillIdList = new(fieldData.getFieldByName("_HyakuryuSkillIdList").GetDataAsList<GenericWrapper<int>>());
+        SharpnessValList   = new(fieldData.getFieldByName("_SharpnessValList").GetDataAsList<GenericWrapper<int>>());
+        TakumiValList      = new(fieldData.getFieldByName("_TakumiValList").GetDataAsList<GenericWrapper<int>>());
     }
 
     protected override void PreWrite() {

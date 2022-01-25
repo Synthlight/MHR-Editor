@@ -8,7 +8,7 @@
         Height="500"
         DataContext="{x:Reference this}"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid Name="main_grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -68,6 +68,12 @@
                           VerticalAlignment="Center"
                           Content="Single Click to Edit Mode"
                           IsChecked="{Binding SingleClickToEditMode}"/>
+                <CheckBox Name="cb_show_id_before_name"
+                          Margin="8,0,0,0"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          Content="Show Id Before Name"
+                          IsChecked="{Binding ShowIdBeforeName}"/>
             </StackPanel>
         </DockPanel>
         <DockPanel Grid.Row="0"
@@ -76,17 +82,16 @@
                    VerticalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Right"
                         Orientation="Horizontal">
+                <Button Name="btn_cheat"
+                        Margin="8,0,0,0"
+                        HorizontalAlignment="Right"
+                        Click="Btn_cheat_Click"
+                        Content="Cheat"/>
                 <Button Name="btn_open_wiki"
                         Margin="8,0,0,0"
                         HorizontalAlignment="Right"
                         Click="Btn_open_wiki_OnClick"
                         Content="Wiki"/>
-                <Button Name="btn_cheat"
-                        Margin="8,0,0,0"
-                        HorizontalAlignment="Right"
-                        Click="Btn_cheat_Click"
-                        Content="Set Damage to 50000"
-                        Visibility="Collapsed"/>
             </StackPanel>
         </DockPanel>
         <ScrollViewer Name="scroll_viewer"

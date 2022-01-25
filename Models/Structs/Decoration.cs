@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using MHR_Editor.Attributes;
+using MHR_Editor.Models.List_Wrappers;
 
 namespace MHR_Editor.Models.Structs;
 
@@ -31,24 +32,15 @@ public class Decoration : RszObject {
         set => fieldData.getFieldByName("_BasePrice").data = value.GetBytes();
     }
 
-    private List<byte> SkillList      { get; set; }
-    private List<int>  SkillLevelList { get; set; }
+    public ObservableCollection<SkillId<byte>> SkillList { get; set; }
 
-    public byte Skill1 {
-        get => SkillList[0];
-        set => SkillList[0] = value;
-    }
-
-    public int Skill1Level {
-        get => SkillLevelList[0];
-        set => SkillLevelList[0] = value;
-    }
+    public ObservableCollection<GenericWrapper<int>> SkillLevelList { get; set; }
 
     protected override void Init() {
         base.Init();
 
-        SkillList      = fieldData.getFieldByName("_SkillIdList").GetDataAsList<byte>();
-        SkillLevelList = fieldData.getFieldByName("_SkillLvList").GetDataAsList<int>();
+        SkillList      = new(fieldData.getFieldByName("_SkillIdList").GetDataAsList<SkillId<byte>>());
+        SkillLevelList = new(fieldData.getFieldByName("_SkillLvList").GetDataAsList<GenericWrapper<int>>());
     }
 
     protected override void PreWrite() {

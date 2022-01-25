@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Reflection;
 using MHR_Editor.Data;
+using MHR_Editor.Models.List_Wrappers;
 using MHR_Editor.Models.Structs;
 
 namespace MHR_Editor.Models;
@@ -12,14 +13,10 @@ namespace MHR_Editor.Models;
 [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
 [SuppressMessage("ReSharper", "NotAccessedField.Global")]
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-public class RszObject : INotifyPropertyChanged {
+public class RszObject : OnPropertyChangedBase {
     public             StructJson                 structInfo;
     protected readonly Dictionary<int, FieldData> fieldData = new();
     public             int                        Index { get; set; }
-
-#pragma warning disable CS0067 // The event is never used
-    public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067
 
     public static RszObject Read(BinaryReader reader, uint hash) {
         var       structInfo = DataHelper.STRUCT_INFO[hash];
@@ -91,26 +88,44 @@ public class RszObject : INotifyPropertyChanged {
 
 public static class RszObjectExtensions {
     public static List<T> GetDataAsList<T>(this RszObject.FieldData fieldData) {
-        var list = new List<T>(fieldData.fieldInfo.size);
-        var size = fieldData.fieldInfo.size;
+        var genericArgs = typeof(T).GenericTypeArguments;
+        var isGeneric   = genericArgs.Length != 0;
+        var genericType = isGeneric ? genericArgs[0] : null;
+        var list        = new List<T>(fieldData.fieldInfo.size);
+        var size        = fieldData.fieldInfo.size;
 
         for (var i = 0; i < fieldData.arrayCount; i++) {
             var startPos = i * size;
             var sub      = fieldData.data.Subsequence(startPos, size);
-            var asType   = sub.GetDataAs<T>();
-            list.Add(asType);
+            if (isGeneric) {
+                var getDataAs = typeof(Extensions).GetMethod(nameof(Extensions.GetDataAs), BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.MakeGenericMethod(genericType);
+                var data      = getDataAs?.Invoke(null, new object[] {sub}) ?? throw new("sub.GetDataAs failure.");
+                var wrapper   = (T) Activator.CreateInstance(typeof(T), i, data);
+                list.Add(wrapper);
+            } else {
+                list.Add(sub.GetDataAs<T>());
+            }
         }
 
         return list;
     }
 
-    public static void SetDataFromList<T>(this RszObject.FieldData fieldData, List<T> list) {
+    public static void SetDataFromList<T>(this RszObject.FieldData fieldData, IList<T> list) {
         var size      = fieldData.fieldInfo.size;
         var byteCount = list.Count * size;
         var bytes     = new List<byte>(byteCount);
 
         foreach (var entry in list) {
-            var data = entry.GetBytes();
+            byte[] data;
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+            if (entry.GetType().IsGeneric(typeof(IListWrapper<>))) {
+                var  value     = ((dynamic) entry).Value;
+                Type valueType = value.GetType();
+                var  getBytes  = typeof(Extensions).GetMethod(nameof(Extensions.GetBytes), BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.MakeGenericMethod(valueType);
+                data = (byte[]) (getBytes?.Invoke(null, new object[] {value}) ?? throw new("sub.GetDataAs failure."));
+            } else {
+                data = entry.GetBytes();
+            }
             bytes.AddRange(data);
         }
 
@@ -121,6 +136,7 @@ public static class RszObjectExtensions {
     }
 
     public static RszObject.FieldData getFieldByName(this Dictionary<int, RszObject.FieldData> fieldData, string name) {
+        // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
         foreach (var value in fieldData.Values) {
             if (value.fieldInfo.name == name) return value;
         }

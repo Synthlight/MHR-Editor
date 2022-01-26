@@ -5,7 +5,6 @@ using System.IO;
 using System.Reflection;
 using MHR_Editor.Data;
 using MHR_Editor.Models.List_Wrappers;
-using MHR_Editor.Models.Structs;
 
 namespace MHR_Editor.Models;
 
@@ -19,13 +18,9 @@ public class RszObject : OnPropertyChangedBase {
     public             int                        Index { get; set; }
 
     public static RszObject Read(BinaryReader reader, uint hash) {
-        var       structInfo = DataHelper.STRUCT_INFO[hash];
-        RszObject rszObject;
-        if (hash == Armor.HASH) rszObject           = new Armor();
-        else if (hash == Decoration.HASH) rszObject = new Decoration();
-        else if (hash == GreatSword.HASH) rszObject = new GreatSword();
-        else if (hash == Item.HASH) rszObject       = new Item();
-        else rszObject                              = new();
+        var structInfo = DataHelper.STRUCT_INFO[hash];
+        var rszType    = DataHelper.MHR_STRUCTS.TryGet(hash, typeof(RszObject));
+        var rszObject  = (RszObject) Activator.CreateInstance(rszType) ?? new RszObject();
         rszObject.structInfo = structInfo;
 
         for (var i = 0; i < structInfo.fields.Count; i++) {

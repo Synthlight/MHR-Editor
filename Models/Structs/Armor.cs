@@ -10,6 +10,7 @@ namespace MHR_Editor.Models.Structs;
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
+[MhrStruct]
 public class Armor : RszObject {
     public static readonly uint HASH = uint.Parse("6c3de53e", NumberStyles.HexNumber);
 

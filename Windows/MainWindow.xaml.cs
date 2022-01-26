@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -15,7 +14,6 @@ using JetBrains.Annotations;
 using MHR_Editor.Controls;
 using MHR_Editor.Models;
 using MHR_Editor.Models.List_Wrappers;
-using MHR_Editor.Models.Structs;
 using Microsoft.Win32;
 
 namespace MHR_Editor.Windows;
@@ -99,8 +97,9 @@ public partial class MainWindow {
 
             file = ReDataFile.Read(targetFile);
 
-            var type          = GetFileType();
             var rszObjectData = file?.rsz.objectData;
+            if (rszObjectData == null || rszObjectData.Count == 0) throw new("Error loading data; rszObjectData is null/empty.\n\nPlease report the path/name of the file you are trying to load.");
+            var type          = rszObjectData[0].GetType();
             var getListOfType = typeof(Enumerable).GetMethod(nameof(Enumerable.OfType), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.MakeGenericMethod(type);
             var items         = getListOfType?.Invoke(null, new object[] {rszObjectData}) ?? throw new("rsz.objectData.OfType failure.");
             var dataGrid      = MakeDataGrid((dynamic) items);
@@ -220,18 +219,5 @@ public partial class MainWindow {
         var cb = new CommandBinding(changeItemValues);
         cb.Executed += onPress;
         CommandBindings.Add(cb);
-    }
-
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public Type GetFileType() {
-        var fileName = Path.GetFileName(targetFile); //?.ToLower();
-
-        return fileName switch {
-            "ArmorBaseData.user.2" => typeof(Armor),
-            "DecorationsBaseData.user.2" => typeof(Decoration),
-            "GreatSwordBaseData.user.2" => typeof(GreatSword),
-            "ItemData.user.2" => typeof(Item),
-            _ => throw new($"No type found for: {fileName}")
-        };
     }
 }

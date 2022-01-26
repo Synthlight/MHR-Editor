@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using MHR_Editor.Attributes;
+using MHR_Editor.Data;
 using MHR_Editor.Models.List_Wrappers;
 using MHR_Editor.Models.MHR_Enums;
 
@@ -12,6 +13,8 @@ namespace MHR_Editor.Models.Structs;
 [MhrStruct]
 public class GreatSword : RszObject {
     public static readonly uint HASH = uint.Parse("5ce7e37b", NumberStyles.HexNumber);
+
+    public string Name => DataHelper.WEAPON_NAME_LOOKUP.TryGet(Id);
 
     [ShowAsHex]
     public uint Id {

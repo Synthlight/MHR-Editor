@@ -20,6 +20,7 @@ public static class DataHelper {
     public static readonly  Dictionary<uint, string>     ARMOR_NAME_LOOKUP;
     public static readonly  Dictionary<uint, string>     ITEM_NAME_LOOKUP;
     public static readonly  Dictionary<byte, string>     SKILL_NAME_LOOKUP;
+    public static readonly  Dictionary<uint, string>     WEAPON_NAME_LOOKUP;
 
     static DataHelper() {
         var mhrStructs = Assembly.GetCallingAssembly().GetTypes().Where(type => type.GetCustomAttribute<MhrStructAttribute>() != null);
@@ -30,15 +31,17 @@ public static class DataHelper {
         }
 
         if (LOAD_FROM_JSON) {
-            STRUCT_INFO       = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
-            ARMOR_NAME_LOOKUP = LoadDict<uint, string>(Assets.ARMOR_NAME_LOOKUP);
-            ITEM_NAME_LOOKUP  = LoadDict<uint, string>(Assets.ITEM_NAME_LOOKUP);
-            SKILL_NAME_LOOKUP = LoadDict<byte, string>(Assets.SKILL_NAME_LOOKUP);
+            STRUCT_INFO        = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
+            ARMOR_NAME_LOOKUP  = LoadDict<uint, string>(Assets.ARMOR_NAME_LOOKUP);
+            ITEM_NAME_LOOKUP   = LoadDict<uint, string>(Assets.ITEM_NAME_LOOKUP);
+            SKILL_NAME_LOOKUP  = LoadDict<byte, string>(Assets.SKILL_NAME_LOOKUP);
+            WEAPON_NAME_LOOKUP = LoadDict<uint, string>(Assets.WEAPON_NAME_LOOKUP);
         } else {
-            STRUCT_INFO       = new();
-            ARMOR_NAME_LOOKUP = new();
-            ITEM_NAME_LOOKUP  = new();
-            SKILL_NAME_LOOKUP = new();
+            STRUCT_INFO        = new();
+            ARMOR_NAME_LOOKUP  = new();
+            ITEM_NAME_LOOKUP   = new();
+            SKILL_NAME_LOOKUP  = new();
+            WEAPON_NAME_LOOKUP = new();
 
             ParseFromWiki();
         }
@@ -49,6 +52,7 @@ public static class DataHelper {
         ParseArmorNames();
         ParseItemNames();
         ParseSkillNames();
+        ParseWeaponNames();
     }
 
     private static void ParseStructInfo() {
@@ -106,6 +110,21 @@ public static class DataHelper {
             SKILL_NAME_LOOKUP[id] = name;
         }
         File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(SKILL_NAME_LOOKUP));
+    }
+
+    private static void ParseWeaponNames() {
+        var lines = File.ReadAllLines(@"R:\Games\Monster Hunter Rise\MonsterHunterRiseModding.wiki\Weapon-IDs.md");
+        var regex = new Regex(@"^\| (0[a-fA-F0-9]+) \| [^\|]+ \| [^\|]+ \| [^\|]+ \| [^\|]+ \| ([^\|]+) \|");
+
+        foreach (var line in lines) {
+            var match = regex.Match(line);
+            if (!match.Success) continue;
+            var id   = Convert.ToUInt32(match.Groups[1].Value, 16);
+            var name = match.Groups[2].Value;
+            if (WEAPON_NAME_LOOKUP.ContainsKey(id)) continue;
+            WEAPON_NAME_LOOKUP[id] = name;
+        }
+        File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\WEAPON_NAME_LOOKUP.json", JsonConvert.SerializeObject(WEAPON_NAME_LOOKUP));
     }
 
     private static T Load<T>(byte[] data) {

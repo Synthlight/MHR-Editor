@@ -99,5 +99,15 @@ namespace MHR_Editor.Data {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] WEAPON_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("WEAPON_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

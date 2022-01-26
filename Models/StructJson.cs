@@ -6,6 +6,9 @@ namespace MHR_Editor.Models;
 
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+[SuppressMessage("ReSharper", "UnassignedField.Global")]
+[SuppressMessage("ReSharper", "CollectionNeverUpdated.Global")]
 public class StructJson {
     public string      crc;
     public List<Field> fields;

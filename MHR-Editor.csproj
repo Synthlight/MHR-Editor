@@ -31,5 +31,9 @@
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>Assets.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+		<Compile Remove="ID-Parser\**"/>
+		<EmbeddedResource Remove="ID-Parser\**"/>
+		<None Remove="ID-Parser\**"/>
+		<Page Remove="ID-Parser\**"/>
 	</ItemGroup>
 </Project>

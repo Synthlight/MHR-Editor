@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MHR-Editor", "MHR-Editor.csproj", "{DFC6EB49-4C99-461A-BEAD-73AFC7212BD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ID-Parser", "ID-Parser\ID-Parser.csproj", "{D2CC139D-7D17-44FA-B20E-88916CBB20E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ID-Parser", "ID-Parser\ID-Parser.csproj", "{D2CC139D-7D17-44FA-B20E-88916CBB20E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{6E3229B6-D03B-4228-B320-55BAC693A4BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D2CC139D-7D17-44FA-B20E-88916CBB20E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2CC139D-7D17-44FA-B20E-88916CBB20E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2CC139D-7D17-44FA-B20E-88916CBB20E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E3229B6-D03B-4228-B320-55BAC693A4BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E3229B6-D03B-4228-B320-55BAC693A4BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E3229B6-D03B-4228-B320-55BAC693A4BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E3229B6-D03B-4228-B320-55BAC693A4BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

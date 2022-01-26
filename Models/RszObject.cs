@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
+using MHR_Editor.Common.Models;
 using MHR_Editor.Data;
 using MHR_Editor.Models.List_Wrappers;
 

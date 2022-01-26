@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
-namespace MHR_Editor.Models;
+namespace MHR_Editor.Common.Models;
 
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -10,26 +9,26 @@ namespace MHR_Editor.Models;
 [SuppressMessage("ReSharper", "UnassignedField.Global")]
 [SuppressMessage("ReSharper", "CollectionNeverUpdated.Global")]
 public class StructJson {
-    public string      crc;
-    public List<Field> fields;
-    public string      name;
+    public string?      crc;
+    public List<Field>? fields;
+    public string?      name;
 
-    public override string ToString() {
-        return name;
+    public override string? ToString() {
+        return name ?? base.ToString();
     }
 
     public class Field {
-        public int    align;
-        public bool   array;
-        public string name;
-        public bool   native;
+        public int     align;
+        public bool    array;
+        public string? name;
+        public bool    native;
         [JsonProperty("original_type")]
-        public string originalType;
-        public int    size;
-        public string type;
+        public string? originalType;
+        public int     size;
+        public string? type;
 
-        public override string ToString() {
-            return name;
+        public override string? ToString() {
+            return name ?? base.ToString();
         }
 
         public static class Type {

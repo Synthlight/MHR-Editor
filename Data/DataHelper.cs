@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using MHR_Editor.Attributes;
-using MHR_Editor.Models;
+using MHR_Editor.Common.Models;
 using Newtonsoft.Json;
 
 namespace MHR_Editor.Data;

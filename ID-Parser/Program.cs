@@ -1,8 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using MHR_Editor.Models;
+using MHR_Editor.Common.Models;
 using Newtonsoft.Json;
+
+namespace MHR_Editor.ID_Parser;
 
 public static class Program {
     public static readonly Dictionary<uint, StructJson> STRUCT_INFO        = new();

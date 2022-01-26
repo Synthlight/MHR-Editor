@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-		<RootNamespace>MHR_Editor.ID_Parser</RootNamespace>
+		<RootNamespace>MHR_Editor.Common</RootNamespace>
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
@@ -12,8 +11,5 @@
 	<ItemGroup>
 		<PackageReference Include="JetBrains.Annotations" Version="2021.3.0"/>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\Common\Common.csproj"/>
 	</ItemGroup>
 </Project>

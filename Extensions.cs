@@ -153,6 +153,10 @@ public static class Extensions {
     }
 
     public static byte[] GetBytes<T>(this T @struct) {
+        if (@struct is bool b) {
+            return new[] {(byte) (b ? 1 : 0)};
+        }
+
         var size   = Marshal.SizeOf(@struct);
         var bytes  = new byte[size];
         var handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);

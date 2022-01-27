@@ -1,5 +1,8 @@
 {
   "profiles": {
+    "[None]": {
+      "commandName": "Project"
+    },
     "ArmorBaseData.user.2": {
       "commandName": "Project",
       "commandLineArgs": "\"R:\\Games\\Monster Hunter Rise\\Mods\\GMod\\natives\\STM\\data\\Define\\Player\\Armor\\ArmorBaseData.user.2\""

@@ -35,12 +35,16 @@
 			<LastGenOutput>Assets.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<Compile Remove="Common\**"/>
+		<Compile Remove="Generator\**"/>
 		<Compile Remove="ID-Parser\**"/>
 		<EmbeddedResource Remove="Common\**"/>
+		<EmbeddedResource Remove="Generator\**"/>
 		<EmbeddedResource Remove="ID-Parser\**"/>
 		<None Remove="Common\**"/>
+		<None Remove="Generator\**"/>
 		<None Remove="ID-Parser\**"/>
 		<Page Remove="Common\**"/>
+		<Page Remove="Generator\**"/>
 		<Page Remove="ID-Parser\**"/>
 	</ItemGroup>
 </Project>

@@ -22,8 +22,7 @@ public static class Program {
     }
 
     private static void ParseStructInfo() {
-        var structJson = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(@"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json"));
-        Debug.Assert(structJson != null, nameof(structJson) + " != null");
+        var structJson = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(@"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json"))!;
         foreach (var (key, value) in structJson) {
             var hash = uint.Parse(key, NumberStyles.HexNumber);
             STRUCT_INFO[hash] = value;

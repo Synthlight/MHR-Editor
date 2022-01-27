@@ -10,6 +10,8 @@ namespace MHR_Editor.Models.Structs;
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+[SuppressMessage("ReSharper", "UnusedType.Global")]
 [MhrStruct]
 public class GreatSword : RszObject {
     public static readonly uint HASH = uint.Parse("5ce7e37b", NumberStyles.HexNumber);

@@ -30,6 +30,7 @@ public partial class MainWindow {
     [CanBeNull] private CancellationTokenSource savedTimer;
     [CanBeNull] private ReDataFile              file;
     public              string                  targetFile { get; private set; }
+    public readonly     string                  filter = $"MHR Data Files|{string.Join(";", Global.FILE_TYPES)}";
 
     public bool ShowIdBeforeName {
         get => Global.showIdBeforeName;
@@ -37,10 +38,11 @@ public partial class MainWindow {
             Global.showIdBeforeName = value;
             if (file?.rsz.objectData == null) return;
             foreach (var item in file.rsz.objectData) {
-                if (item is not OnPropertyChangedBase io) continue;
-                foreach (var propertyInfo in io.GetType().GetProperties()) {
-                    if (propertyInfo.Name.EndsWith("_button")) {
-                        io.OnPropertyChanged(propertyInfo.Name);
+                if (item is OnPropertyChangedBase io) {
+                    foreach (var propertyInfo in io.GetType().GetProperties()) {
+                        if (propertyInfo.Name.EndsWith("_button")) {
+                            io.OnPropertyChanged(propertyInfo.Name);
+                        }
                     }
                 }
             }
@@ -80,7 +82,7 @@ public partial class MainWindow {
 
     private void Load(string filePath = null) {
         try {
-            var target = filePath ?? GetOpenTarget($"MHR Data Files|{string.Join(";", Common.Global.FILE_TYPES)}");
+            var target = filePath ?? GetOpenTarget();
             if (string.IsNullOrEmpty(target)) return;
 
             targetFile = target;
@@ -94,7 +96,7 @@ public partial class MainWindow {
 
             GC.Collect();
 
-            file = ReDataFile.Read(targetFile);
+            file = ReDataFile.Read(targetFile!);
 
             var rszObjectData = file?.rsz.objectData;
             if (rszObjectData == null || rszObjectData.Count == 0) throw new("Error loading data; rszObjectData is null/empty.\n\nPlease report the path/name of the file you are trying to load.");
@@ -108,7 +110,7 @@ public partial class MainWindow {
         }
     }
 
-    private string GetOpenTarget(string filter) {
+    private string GetOpenTarget() {
         var ofdResult = new OpenFileDialog {
             Filter           = filter,
             Multiselect      = false,
@@ -123,7 +125,15 @@ public partial class MainWindow {
         if (file == null || targetFile == null) return;
 
         try {
-            file.Write(targetFile);
+            if (saveAs) {
+                var target = GetSaveTarget();
+                if (string.IsNullOrEmpty(target)) return;
+                targetFile = target;
+                Title      = Path.GetFileName(targetFile);
+                file!.Write(targetFile!);
+            } else {
+                file!.Write(targetFile);
+            }
 
             await ShowChangesSaved(true);
         } catch (Exception e) when (!Debugger.IsAttached) {
@@ -133,10 +143,9 @@ public partial class MainWindow {
 
     private string GetSaveTarget() {
         var sfdResult = new SaveFileDialog {
-            Filter           = $"MHR Data Files|{string.Join(";", Common.Global.FILE_TYPES)}",
-            FileName         = $"{Path.GetFileNameWithoutExtension(targetFile)}",
+            FileName         = $"{Path.GetFileName(targetFile)}",
             InitialDirectory = targetFile == null ? string.Empty : Path.GetDirectoryName(targetFile) ?? string.Empty,
-            AddExtension     = true
+            AddExtension     = false
         };
         return sfdResult.ShowDialog() == true ? sfdResult.FileName : null;
     }
@@ -153,7 +162,7 @@ public partial class MainWindow {
         }
     }
 
-    public AutoDataGridGeneric<T> MakeDataGrid<T>(IEnumerable<T> itemSource) {
+    public static AutoDataGridGeneric<T> MakeDataGrid<T>(IEnumerable<T> itemSource) {
         var dataGrid = new AutoDataGridGeneric<T>();
         dataGrid.SetItems(itemSource is ObservableCollection<T> source ? source : new(itemSource));
         return dataGrid;

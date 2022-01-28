@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
-using MHR_Editor.Models.Structs;
 
 namespace MHR_Editor.Windows;
 

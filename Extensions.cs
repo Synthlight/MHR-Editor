@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using MHR_Editor.Common;
-using MHR_Editor.Windows;
 
 namespace MHR_Editor;
 
@@ -78,5 +77,30 @@ public static class Extensions {
         writer.BaseStream.Seek(whereToWrite, SeekOrigin.Begin);
         writer.Write(tempPos);
         writer.BaseStream.Seek(tempPos, SeekOrigin.Begin);
+    }
+
+    /// <summary>
+    /// Gets the filename without an MHR extension from an absolute path.
+    /// </summary>
+    /// <param name="absolutePath"></param>
+    /// <returns></returns>
+    public static string GetFileNameWithoutExtension(this string absolutePath) {
+        var lastSlash       = absolutePath.LastIndexOf('\\');
+        var filenameWithExt = absolutePath[(lastSlash + 1)..];
+        var allPeriods      = filenameWithExt.AllIndexesOf(".").ToList();
+        return allPeriods.Count switch {
+            > 1 => filenameWithExt[..allPeriods[^2]],
+            1 => filenameWithExt[..allPeriods[^1]],
+            _ => filenameWithExt
+        };
+    }
+
+    public static IEnumerable<int> AllIndexesOf(this string str, string searchString) {
+        if (string.IsNullOrEmpty(str)) yield break;
+        var minIndex = str.IndexOf(searchString, StringComparison.Ordinal);
+        while (minIndex != -1) {
+            yield return minIndex;
+            minIndex = str.IndexOf(searchString, minIndex + searchString.Length, StringComparison.Ordinal);
+        }
     }
 }

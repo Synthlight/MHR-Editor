@@ -1,7 +1,9 @@
-﻿using MHR_Editor.Common;
+﻿using JetBrains.Annotations;
+using MHR_Editor.Common;
 
 namespace MHR_Editor.Windows.Models;
 
+[UsedImplicitly]
 public struct IdNamePair<T> where T : struct {
     public readonly T      id;
     public readonly string name;

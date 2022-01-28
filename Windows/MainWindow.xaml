@@ -85,8 +85,8 @@
                 <Button Name="btn_cheat"
                         Margin="8,0,0,0"
                         HorizontalAlignment="Right"
-                        Click="Btn_cheat_Click"
-                        Content="Cheat"/>
+                        Click="Btn_test_Click"
+                        Content="Test"/>
                 <Button Name="btn_open_wiki"
                         Margin="8,0,0,0"
                         HorizontalAlignment="Right"

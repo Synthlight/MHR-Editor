@@ -1,4 +1,6 @@
-﻿namespace MHR_Editor.Windows.Models;
+﻿using MHR_Editor.Common;
+
+namespace MHR_Editor.Windows.Models;
 
 public struct IdNamePair<T> where T : struct {
     public readonly T      id;
@@ -14,7 +16,7 @@ public struct IdNamePair<T> where T : struct {
     }
 
     public override string ToString() {
-        return MainWindow.showIdBeforeName ? $"{id}: {name}" : $"{name}: {id}";
+        return Global.showIdBeforeName ? $"{id}: {name}" : $"{name}: {id}";
     }
 
     public override int GetHashCode() {

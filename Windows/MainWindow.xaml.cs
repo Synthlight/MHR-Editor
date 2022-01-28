@@ -11,9 +11,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using JetBrains.Annotations;
+using MHR_Editor.Common;
+using MHR_Editor.Common.Models;
 using MHR_Editor.Controls;
-using MHR_Editor.Models;
-using MHR_Editor.Models.List_Wrappers;
 using Microsoft.Win32;
 
 namespace MHR_Editor.Windows;
@@ -31,11 +31,10 @@ public partial class MainWindow {
     [CanBeNull] private ReDataFile              file;
     public              string                  targetFile { get; private set; }
 
-    public static bool showIdBeforeName = true;
     public bool ShowIdBeforeName {
-        get => showIdBeforeName;
+        get => Global.showIdBeforeName;
         set {
-            showIdBeforeName = value;
+            Global.showIdBeforeName = value;
             if (file?.rsz.objectData == null) return;
             foreach (var item in file.rsz.objectData) {
                 if (item is not OnPropertyChangedBase io) continue;
@@ -81,7 +80,7 @@ public partial class MainWindow {
 
     private void Load(string filePath = null) {
         try {
-            var target = filePath ?? GetOpenTarget($"MHR Data Files|{string.Join(";", Global.FILE_TYPES)}");
+            var target = filePath ?? GetOpenTarget($"MHR Data Files|{string.Join(";", Common.Global.FILE_TYPES)}");
             if (string.IsNullOrEmpty(target)) return;
 
             targetFile = target;
@@ -134,7 +133,7 @@ public partial class MainWindow {
 
     private string GetSaveTarget() {
         var sfdResult = new SaveFileDialog {
-            Filter           = $"MHR Data Files|{string.Join(";", Global.FILE_TYPES)}",
+            Filter           = $"MHR Data Files|{string.Join(";", Common.Global.FILE_TYPES)}",
             FileName         = $"{Path.GetFileNameWithoutExtension(targetFile)}",
             InitialDirectory = targetFile == null ? string.Empty : Path.GetDirectoryName(targetFile) ?? string.Empty,
             AddExtension     = true

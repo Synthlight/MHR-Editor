@@ -13,10 +13,11 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using JetBrains.Annotations;
-using MHR_Editor.Attributes;
-using MHR_Editor.Controls.Models;
-using MHR_Editor.Data;
-using MHR_Editor.Models.List_Wrappers;
+using MHR_Editor.Common;
+using MHR_Editor.Common.Attributes;
+using MHR_Editor.Common.Controls.Models;
+using MHR_Editor.Common.Data;
+using MHR_Editor.Common.Models;
 using MHR_Editor.Windows;
 
 namespace MHR_Editor.Controls;

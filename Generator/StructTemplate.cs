@@ -1,4 +1,5 @@
-﻿using MHR_Editor.Common.Models;
+﻿using MHR_Editor.Common.Attributes;
+using MHR_Editor.Common.Models;
 
 namespace MHR_Editor.Generator;
 
@@ -8,14 +9,9 @@ public class StructTemplate {
     private readonly string                  className;
     private readonly string                  filename;
     private readonly StreamWriter            file;
-    private readonly Dictionary<string, int> usedNames = new();
-
-    private readonly List<string> hashesToIgnore = new() {
-        "6c3de53e", // Armor
-        "5ce7e37b", // GreatSword
-        "e7bd2c0d", // Decoration
-        "ee6b61f7" // Item
-    };
+    private readonly Dictionary<string, int> usedNames    = new();
+    private readonly List<ListForInit>       fieldsToInit = new();
+    private          int                     sortOrder    = 100;
 
     public StructTemplate(string hash, StructJson structInfo) {
         this.hash       = hash;
@@ -25,17 +21,11 @@ public class StructTemplate {
                               .ToUpperFirstLetter()
                               .Replace('.', '_');
 
-        filename = $@"R:\Games\Monster Hunter Rise\MHR-Editor\Generated\{className}.cs";
+        filename = $@"R:\Games\Monster Hunter Rise\MHR-Editor\Generated\Structs\{className}.cs";
         file     = new(File.Open(filename, FileMode.Create, FileAccess.Write));
     }
 
     public void Generate() {
-        if (hashesToIgnore.Contains(hash)) {
-            file.Close();
-            File.Delete(filename);
-            return;
-        }
-
         WriteUsings();
         WriteClassHeader();
         foreach (var field in structInfo.fields!) {
@@ -44,6 +34,8 @@ public class StructTemplate {
             if (typeName == null) continue;
             WriteProperty(field, typeName);
         }
+        WriteInit();
+        WritePreWrite();
         WriteClassFooter();
         file.Close();
 
@@ -54,13 +46,21 @@ public class StructTemplate {
         file.WriteLine("using System.Collections.ObjectModel;");
         file.WriteLine("using System.Diagnostics.CodeAnalysis;");
         file.WriteLine("using System.Globalization;");
-        file.WriteLine("using MHR_Editor.Attributes;");
-        file.WriteLine("using MHR_Editor.Data;");
-        file.WriteLine("using MHR_Editor.Models.List_Wrappers;");
-        file.WriteLine("using MHR_Editor.Models.MHR_Enums;");
+        file.WriteLine("using MHR_Editor.Common;");
+        file.WriteLine("using MHR_Editor.Common.Attributes;");
+        file.WriteLine("using MHR_Editor.Common.Data;");
+        file.WriteLine("using MHR_Editor.Common.Models;");
+        file.WriteLine("using MHR_Editor.Common.Models.List_Wrappers;");
+        file.WriteLine("using MHR_Editor.Generated.Enums;");
     }
 
     private void WriteClassHeader() {
+        file.WriteLine("");
+        file.WriteLine("#pragma warning disable CS8600");
+        file.WriteLine("#pragma warning disable CS8601");
+        file.WriteLine("#pragma warning disable CS8602");
+        file.WriteLine("#pragma warning disable CS8603");
+        file.WriteLine("#pragma warning disable CS8618");
         file.WriteLine("");
         file.WriteLine("namespace MHR_Editor.Models.Structs;");
         file.WriteLine("");
@@ -79,12 +79,17 @@ public class StructTemplate {
             file.WriteLine("    [ShowAsHex]");
         }
 
-        var newName = field.name;
+        var newName    = field.name;
+        var enumType   = GetEnumType(field.originalType);
+        var buttonType = GetButtonType(field.name);
 
         while (newName.StartsWith('_')) newName = newName[1..]; // Remove the leading '_'.
-        while (newName.EndsWith('_')) newName   = newName[..1]; // Remove the leading '_'.
+        while (newName.EndsWith('_')) newName   = newName[..1]; // Remove the trailing '_'.
 
-        newName = newName.ToUpperFirstLetter();
+        newName = newName.ToUpperFirstLetter()
+                         .Replace("Cariable", "Carryable")
+                         .Replace("Evalution", "Evaluation")
+                         .Replace("Hyakuryu", "Rampage");
         if (newName == "Index") newName = "_Index";
 
         if (usedNames.ContainsKey(newName)) {
@@ -94,9 +99,42 @@ public class StructTemplate {
             usedNames[newName] = 1;
         }
 
-        file.WriteLine($"    public {typeName} {newName} {{");
-        file.WriteLine($"        get => fieldData.getFieldByName(\"{field.name}\").data.GetData<{typeName}>();");
-        file.WriteLine($"        set => fieldData.getFieldByName(\"{field.name}\").data = (({typeName}) value).GetBytes();");
+        file.WriteLine($"    [SortOrder({sortOrder})]");
+        sortOrder += 100;
+
+        if (field.array) {
+            var listWrapperType = GetListWrapperForButtonType(buttonType);
+            file.WriteLine($"    public ObservableCollection<{listWrapperType}<{typeName}>> {newName} {{ get; set; }}");
+            fieldsToInit.Add(new(newName, field, typeName, listWrapperType));
+        } else {
+            file.WriteLine($"    public {enumType ?? typeName} {newName} {{");
+            file.WriteLine($"        get => ({enumType ?? typeName}) fieldData.getFieldByName(\"{field.name}\").data.GetData<{typeName}>();");
+            file.WriteLine($"        set => fieldData.getFieldByName(\"{field.name}\").data = (({typeName}) value).GetBytes();");
+            file.WriteLine("    }");
+        }
+    }
+
+    private void WriteInit() {
+        if (fieldsToInit.Count == 0) return;
+        file.WriteLine("");
+        file.WriteLine("    protected override void Init() {");
+        file.WriteLine("        base.Init();");
+        file.WriteLine("");
+        foreach (var field in fieldsToInit) {
+            file.WriteLine($"        {field.newName} = new(fieldData.getFieldByName(\"{field.field.name}\").GetDataAsList<{field.listWrapperType}<{field.typeName}>>());");
+        }
+        file.WriteLine("    }");
+    }
+
+    private void WritePreWrite() {
+        if (fieldsToInit.Count == 0) return;
+        file.WriteLine("");
+        file.WriteLine("    protected override void PreWrite() {");
+        file.WriteLine("        base.PreWrite();");
+        file.WriteLine("");
+        foreach (var field in fieldsToInit) {
+            file.WriteLine($"        fieldData.getFieldByName(\"{field.field.name}\").SetDataFromList({field.newName});");
+        }
         file.WriteLine("    }");
     }
 
@@ -117,8 +155,54 @@ public class StructTemplate {
             "U64" => "ulong",
             "F32" => "float",
             "F64" => "double",
-            //"String" => "string",
+            //"String" => "string", // TODO: Handle strings.
             _ => null
         };
+    }
+
+    private static string? GetEnumType(string? reOriginalType) {
+        return reOriginalType switch {
+            "snow.data.DataDef.RareTypes" => "RareTypes",
+            "snow.data.GameItemEnum.SexualEquipableFlag" => "SexualEquipableFlag",
+            "snow.data.ArmorBuildupData.TableTypes" => "ArmorBuildupData",
+            "snow.data.GameItemEnum.SeriesBufType" => "SeriesBufType",
+            "snow.equip.PlWeaponElementTypes" => "PlWeaponElementTypes",
+            "snow.data.DataDef.ItemTypes" => "ItemTypes",
+            "snow.data.GameItemEnum.IconRank" => "IconRank",
+            "snow.data.GameItemEnum.SeType" => "SeType",
+            "snow.data.GameItemEnum.ItemActionType" => "ItemActionType",
+            "snow.data.DataDef.RankTypes" => "RankTypes",
+            "snow.data.NormalItemData.ItemGroupTypes" => "ItemGroupTypes",
+            _ => null
+        };
+    }
+
+    private static DataSourceType? GetButtonType(string fieldName) {
+        return fieldName switch {
+            "_SkillIdList" => DataSourceType.SKILLS,
+            "_SkillList" => DataSourceType.SKILLS,
+            _ => null
+        };
+    }
+
+    private static string GetListWrapperForButtonType(DataSourceType? buttonType) {
+        return buttonType switch {
+            DataSourceType.SKILLS => "SkillId",
+            _ => "GenericWrapper"
+        };
+    }
+
+    public class ListForInit {
+        public readonly string           newName;
+        public readonly StructJson.Field field;
+        public readonly string           typeName;
+        public readonly string           listWrapperType;
+
+        public ListForInit(string newName, StructJson.Field field, string typeName, string listWrapperType) {
+            this.newName         = newName;
+            this.field           = field;
+            this.typeName        = typeName;
+            this.listWrapperType = listWrapperType;
+        }
     }
 }

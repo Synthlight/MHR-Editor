@@ -3,14 +3,12 @@
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-		<RootNamespace>MHR_Editor.Common</RootNamespace>
-		<UseWPF>true</UseWPF>
+		<RootNamespace>MHR_Editor.Generated</RootNamespace>
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="JetBrains.Annotations" Version="2021.3.0"/>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
+		<ProjectReference Include="..\Common\Common.csproj"/>
 	</ItemGroup>
 </Project>

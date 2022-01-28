@@ -14,6 +14,7 @@ using JetBrains.Annotations;
 using MHR_Editor.Common;
 using MHR_Editor.Common.Models;
 using MHR_Editor.Controls;
+using MHR_Editor.Util;
 using Microsoft.Win32;
 
 namespace MHR_Editor.Windows;
@@ -65,6 +66,8 @@ public partial class MainWindow {
         SetupKeybind(new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift), (_, _) => Save(true));
 
         btn_cheat.Visibility = Debugger.IsAttached ? Visibility.Visible : Visibility.Collapsed;
+
+        UpdateCheck.Run(this);
 
         TryLoad(args);
     }

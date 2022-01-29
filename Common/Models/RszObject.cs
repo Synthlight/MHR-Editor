@@ -30,7 +30,9 @@ public class RszObject : OnPropertyChangedBase {
         for (var i = 0; i < structInfo.fields!.Count; i++) {
             var field = structInfo.fields[i];
 
-            while (reader.BaseStream.Position % field.align != 0) {
+            // Be careful with lists. The 'align' in them refers to their contents, not their count themselves, which is always a 4-aligned int.
+            var align = field.array ? 4 : field.align;
+            while (reader.BaseStream.Position % align != 0) {
                 reader.BaseStream.Seek(1, SeekOrigin.Current);
             }
 
@@ -55,7 +57,6 @@ public class RszObject : OnPropertyChangedBase {
     protected virtual void Init() {
     }
 
-
     protected virtual void PreWrite() {
     }
 
@@ -63,7 +64,10 @@ public class RszObject : OnPropertyChangedBase {
         PreWrite();
 
         foreach (var data in fieldData.Values) {
-            writer.PadTill(() => writer.BaseStream.Position % data.fieldInfo.align != 0);
+            writer.PadTill(() => {
+                var align = data.fieldInfo.array ? 4 : data.fieldInfo.align;
+                return writer.BaseStream.Position % align != 0;
+            });
             if (data.isArray) writer.Write(data.arrayCount);
             writer.Write(data.data);
         }

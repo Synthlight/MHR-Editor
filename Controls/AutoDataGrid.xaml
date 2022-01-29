@@ -15,6 +15,7 @@
           GotFocus="On_GotFocus"
           HorizontalScrollBarVisibility="Disabled"
           SelectionUnit="CellOrRowHeader"
+          Sorting="On_Sorting"
           VerticalScrollBarVisibility="Disabled"
           mc:Ignorable="d">
     <DataGrid.Resources>

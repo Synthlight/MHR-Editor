@@ -82,7 +82,7 @@
                    VerticalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Right"
                         Orientation="Horizontal">
-                <Button Name="btn_cheat"
+                <Button Name="btn_test"
                         Margin="8,0,0,0"
                         HorizontalAlignment="Right"
                         Click="Btn_test_Click"

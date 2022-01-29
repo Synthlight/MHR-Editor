@@ -17,8 +17,9 @@ public static class Program {
         ParseStructInfo();
         ExtractItemInfo();
         ExtractArmorInfo();
-        ExtractSkillNames();
-        ExtractWeaponNames();
+        ExtractSkillInfo();
+        ExtractWeaponInfo();
+        ExtractDecorationInfo();
     }
 
     private static void ParseStructInfo() {
@@ -56,7 +57,7 @@ public static class Program {
         }
     }
 
-    private static void ExtractSkillNames() {
+    private static void ExtractSkillInfo() {
         var msg = MSG.Read(@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name.msg.17")
                      .GetLangIdMap(SubCategoryType.C_Unclassified);
         File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
@@ -65,7 +66,7 @@ public static class Program {
         File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\RAMPAGE_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
     }
 
-    private static void ExtractWeaponNames() {
+    private static void ExtractWeaponInfo() {
         var types = new List<string> {"Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"};
         foreach (var (@in, @out) in NAME_DESC) {
             var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(types.Count);
@@ -83,6 +84,14 @@ public static class Program {
             }
             var result = msgLists.MergeDictionaries();
             File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\WEAPON_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
+        }
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractDecorationInfo() {
+        foreach (var (@in, @out) in NAME_DESC) {
+            var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Equip\Decorations\Decorations_{@in}.msg.17", SubCategoryType.C_Unclassified);
+            File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }
 }

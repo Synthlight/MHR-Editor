@@ -1,49 +1,68 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Text;
 
 #pragma warning disable CS8618
 
 namespace MHR_Editor.Common.Models;
 
-[SuppressMessage("ReSharper", "InconsistentNaming")]
 public class ReDataFile {
-    public Magic magic;
-    public int   resourceCount;
-    public int   userDataCount;
-    public int   infoCount;
-    public ulong resourceInfoTable;
-    public ulong userDataTable;
-    public ulong dataOffset;
-    public RSZ   rsz;
+    public Magic              magic;
+    public int                resourceCount;
+    public int                infoCount;
+    public ulong              resourceOffset;
+    public List<UserDataInfo> userDataInfo; // String names of other files being referenced. MUST MATCH THE INNER ONE IN `RSZ`.
+    public RSZ                rsz;
 
     public static ReDataFile Read(string targetFile) {
         var       file   = new ReDataFile();
         using var reader = new BinaryReader(File.OpenRead(targetFile));
-        file.magic             = (Magic) reader.ReadUInt32();
-        file.resourceCount     = reader.ReadInt32();
-        file.userDataCount     = reader.ReadInt32();
-        file.infoCount         = reader.ReadInt32();
-        file.resourceInfoTable = reader.ReadUInt64();
-        file.userDataTable     = reader.ReadUInt64();
-        file.dataOffset        = reader.ReadUInt64();
-        reader.BaseStream.Seek((long) file.dataOffset, SeekOrigin.Begin);
+        file.magic         = (Magic) reader.ReadUInt32();
+        file.resourceCount = reader.ReadInt32();
+        var userDataCount = reader.ReadInt32();
+        file.infoCount      = reader.ReadInt32();
+        file.resourceOffset = reader.ReadUInt64();
+        var userDataOffset = reader.ReadUInt64();
+        var dataOffset     = reader.ReadUInt64();
+
+        reader.BaseStream.Seek((long) userDataOffset, SeekOrigin.Begin);
+        file.userDataInfo = new(userDataCount);
+        for (var i = 0; i < userDataCount; i++) {
+            file.userDataInfo.Add(UserDataInfo.Read(reader, file, i));
+        }
+
+        reader.BaseStream.Seek((long) dataOffset, SeekOrigin.Begin);
         file.rsz = RSZ.Read(reader);
+
         return file;
     }
 
     public void Write(string targetFile) {
-        using var writer = new BinaryWriter(File.OpenWrite(targetFile));
+        using var writer = new BinaryWriter(File.OpenWrite(targetFile), Encoding.Unicode);
 
         writer.Write((uint) magic);
         writer.Write(resourceCount);
-        writer.Write(userDataCount);
+        writer.Write(userDataInfo.Count);
         writer.Write(infoCount);
-        writer.Write(resourceInfoTable);
-        writer.Write(userDataTable);
-        writer.Write(dataOffset);
+        writer.Write(resourceOffset);
+        var userDataOffsetPos = writer.BaseStream.Position;
+        writer.Write(0ul);
+        var dataOffsetPos = writer.BaseStream.Position;
+        writer.Write(0ul);
 
-        writer.PadTill(dataOffset);
+        bool PadTill16() => writer.BaseStream.Position % 16 != 0;
 
+        writer.PadTill(PadTill16);
+        writer.WriteValueAtOffset((ulong) writer.BaseStream.Position, userDataOffsetPos);
+        foreach (var userData in userDataInfo) {
+            userData.Write(writer);
+        }
+        foreach (var userData in userDataInfo) {
+            userData.UpdateWrite(writer);
+        }
+
+        var dataOffset = (ulong) writer.BaseStream.Position;
+        writer.WriteValueAtOffset(dataOffset, dataOffsetPos);
         rsz.Write(writer, dataOffset);
     }
 

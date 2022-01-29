@@ -171,6 +171,14 @@ public static class Extensions {
         return Encoding.UTF8.GetString(stringBytes.Subsequence(0, stringBytes.Count).ToArray());
     }
 
+    public static string ReadNullTermWString(this BinaryReader reader, long offsetFromBeginning, bool stripNullTerm = true) {
+        var pos = reader.BaseStream.Position;
+        reader.BaseStream.Position = offsetFromBeginning;
+        var @string = reader.ReadNullTermWString(stripNullTerm);
+        reader.BaseStream.Position = pos;
+        return @string;
+    }
+
     public static string ReadNullTermWString(this BinaryReader reader, bool stripNullTerm = true) {
         var stringBytes = new List<byte>();
         do {
@@ -178,6 +186,12 @@ public static class Extensions {
         } while (stringBytes[^1] != 0 || stringBytes[^2] != 0);
 
         return Encoding.Unicode.GetString(stringBytes.Subsequence(0, stringBytes.Count - (stripNullTerm ? 2 : 0)).ToArray());
+    }
+
+    public static void WriteNullTermWString(this BinaryWriter writer, string str) {
+        var bytes = Encoding.Unicode.GetBytes(str);
+        writer.Write(bytes);
+        writer.Write(new byte[] {0, 0}); // Null termination of Unicode which is 2 zero bytes.
     }
 
     public static char[] ToNullTermCharArray(this string? str) {

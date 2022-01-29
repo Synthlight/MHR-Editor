@@ -3,7 +3,6 @@ using System.IO;
 
 namespace MHR_Editor.Common.Models;
 
-[SuppressMessage("ReSharper", "NotAccessedField.Global")]
 [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
 public class InstanceInfo {
     public uint hash;

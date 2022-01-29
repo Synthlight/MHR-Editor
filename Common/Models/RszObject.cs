@@ -10,22 +10,29 @@ using MHR_Editor.Common.Models.List_Wrappers;
 
 namespace MHR_Editor.Common.Models;
 
-[SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
-[SuppressMessage("ReSharper", "NotAccessedField.Global")]
-[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public class RszObject : OnPropertyChangedBase {
     public             StructJson                 structInfo;
     protected readonly Dictionary<int, FieldData> fieldData = new();
+    public             RSZ                        rsz;
+    public             int                        userDataRef = -1;
 
     [SortOrder(int.MaxValue - 1000)]
     public int Index { get; set; }
 
-    public static RszObject Read(BinaryReader reader, uint hash) {
+    public static RszObject Read(BinaryReader reader, uint hash, RSZ rsz, int userDataRef) {
+        if (userDataRef > -1) {
+            return new UserDataShell() {
+                userDataRef = userDataRef,
+                rsz         = rsz
+            };
+        }
+
         var structInfo = DataHelper.STRUCT_INFO[hash];
         var rszType    = DataHelper.MHR_STRUCTS.TryGet(hash, typeof(RszObject));
         var rszObject  = (RszObject) Activator.CreateInstance(rszType) ?? new RszObject();
         rszObject.structInfo = structInfo;
+        rszObject.rsz        = rsz;
 
         for (var i = 0; i < structInfo.fields!.Count; i++) {
             var field = structInfo.fields[i];
@@ -122,7 +129,7 @@ public static class RszObjectExtensions {
         foreach (var entry in list) {
             byte[] data;
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-            if (entry!.GetType().IsGeneric(typeof(IListWrapper<>))) {
+            if (entry.GetType().IsGeneric(typeof(IListWrapper<>))) {
                 var  value     = ((dynamic) entry).Value;
                 Type valueType = value.GetType();
                 var  getBytes  = typeof(Extensions).GetMethod(nameof(Extensions.GetBytes), BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.MakeGenericMethod(valueType);

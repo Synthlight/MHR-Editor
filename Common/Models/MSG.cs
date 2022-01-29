@@ -3,7 +3,6 @@ using System.IO;
 using MHR_Editor.Generated.Enums;
 
 #pragma warning disable CS8618
-#pragma warning disable IDE0052
 
 namespace MHR_Editor.Common.Models;
 

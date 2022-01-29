@@ -92,6 +92,13 @@
                         HorizontalAlignment="Right"
                         Click="Btn_open_wiki_OnClick"
                         Content="Wiki"/>
+                <ComboBox Name="cbx_localization"
+                          Margin="8,0,0,0"
+                          HorizontalAlignment="Right"
+                          DisplayMemberPath="Value"
+                          SelectedValue="{Binding Locale}"
+                          SelectedValuePath="Key"
+                          Visibility="Visible"/>
             </StackPanel>
         </DockPanel>
         <ScrollViewer Name="scroll_viewer"

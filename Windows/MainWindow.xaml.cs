@@ -33,6 +33,27 @@ public partial class MainWindow {
     public              string                  targetFile { get; private set; }
     public readonly     string                  filter = $"MHR Data Files|{string.Join(";", Global.FILE_TYPES)}";
 
+    public string Locale {
+        get => Global.locale;
+        set {
+            Global.locale = value;
+            if (file?.rsz.objectData == null) return;
+            foreach (var grid in GetAllDataGrids()) {
+                grid.RefreshHeaderText();
+            }
+            foreach (var item in file!.rsz.objectData) {
+                if (item is OnPropertyChangedBase io) {
+                    foreach (var propertyInfo in io.GetType().GetProperties()) {
+                        if (propertyInfo.Name == "Name"
+                            || propertyInfo.Name.EndsWith("_button")) {
+                            io.OnPropertyChanged(propertyInfo.Name);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public bool ShowIdBeforeName {
         get => Global.showIdBeforeName;
         set {
@@ -62,10 +83,12 @@ public partial class MainWindow {
         Width  = SystemParameters.MaximizedPrimaryScreenWidth * 0.8;
         Height = SystemParameters.MaximizedPrimaryScreenHeight * 0.5;
 
+        cbx_localization.ItemsSource = Global.LANGUAGE_NAME_LOOKUP;
+
         SetupKeybind(new KeyGesture(Key.S, ModifierKeys.Control), (_,                      _) => Save());
         SetupKeybind(new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift), (_, _) => Save(true));
 
-        btn_cheat.Visibility = Debugger.IsAttached ? Visibility.Visible : Visibility.Collapsed;
+        btn_test.Visibility = Debugger.IsAttached ? Visibility.Visible : Visibility.Collapsed;
 
         UpdateCheck.Run(this);
 
@@ -189,24 +212,34 @@ public partial class MainWindow {
     }
 
     public static void ClearDataGrids(Panel panel) {
-        var grids = new List<UIElement>();
-
-        // Find them all.
-        foreach (UIElement child in panel.Children) {
-            if (child is AutoDataGrid mhwGrid) {
-                grids.Add(child);
-                mhwGrid.SetItems(null);
-            }
-        }
+        var grids = GetDataGrids(panel).ToList();
 
         // Remove them.
         foreach (var grid in grids) {
+            grid.SetItems(null);
             panel.Children.Remove(grid);
         }
 
         // Cleanup if needed.
         if (grids.Count > 0) {
             panel.UpdateLayout();
+        }
+    }
+
+    public IEnumerable<AutoDataGrid> GetAllDataGrids() {
+        foreach (var grid in GetDataGrids(main_grid)) {
+            yield return grid;
+        }
+        foreach (var grid in GetDataGrids(sub_grids)) {
+            yield return grid;
+        }
+    }
+
+    public static IEnumerable<AutoDataGrid> GetDataGrids(Panel panel) {
+        foreach (UIElement child in panel.Children) {
+            if (child is AutoDataGrid mhwGrid) {
+                yield return mhwGrid;
+            }
         }
     }
 
@@ -217,7 +250,7 @@ public partial class MainWindow {
     }
 
     public static void ShowError(Exception err, string title) {
-        var errMsg = "Error occurred. Press Ctrl+C to copy the contents of th.s window and report to the developer.\r\n\r\n";
+        var errMsg = "Error occurred. Press Ctrl+C to copy the contents of this window and report to the developer.\r\n\r\n";
 
         MessageBox.Show(errMsg + err, title, MessageBoxButton.OK, MessageBoxImage.Error);
     }

@@ -20,7 +20,7 @@
                Grid.Column="0"
                HorizontalAlignment="Stretch"
                VerticalAlignment="Center"
-               Text="{Binding HeaderText}"/>
+               Text="{Binding HeaderInfo.OriginalText}"/>
     <TextBox Grid.Row="1"
              Grid.Column="0"
              Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"

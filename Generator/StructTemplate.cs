@@ -88,8 +88,7 @@ public class StructTemplate {
 
         newName = newName.ToUpperFirstLetter()
                          .Replace("Cariable", "Carryable")
-                         .Replace("Evalution", "Evaluation")
-                         .Replace("Hyakuryu", "Rampage");
+                         .Replace("Evalution", "Evaluation");
         if (newName == "Index") newName = "_Index";
 
         if (usedNames.ContainsKey(newName)) {

@@ -33,7 +33,7 @@ public partial class MainWindow {
     public              string                  targetFile { get; private set; }
     public readonly     string                  filter = $"MHR Data Files|{string.Join(";", Global.FILE_TYPES)}";
 
-    public string Locale {
+    public Global.LangIndex Locale {
         get => Global.locale;
         set {
             Global.locale = value;

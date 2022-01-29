@@ -24,7 +24,7 @@ public sealed class SkillId<T> : ListWrapper<T> where T : struct {
     }
 
     [CustomSorter(typeof(ButtonSorter))]
-    public string Value_button => DataHelper.SKILL_NAME_LOOKUP.TryGet((byte) (object) Value).ToStringWithId(Value);
+    public string Value_button => DataHelper.SKILL_NAME_LOOKUP[Global.locale].TryGet((byte) (object) Value).ToStringWithId(Value);
 
     public SkillId(int index, T value) {
         Index = index;

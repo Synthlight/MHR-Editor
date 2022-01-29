@@ -118,17 +118,29 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ARMOR_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\armor_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ARMOR_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\armor_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ITEM_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\item_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ITEM_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\item_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RAMPAGE_SKILL_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\rampage_skill_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="SKILL_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\skill_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="STRUCT_INFO" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\struct_info.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WEAPON_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\weapon_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="WEAPON_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\weapon_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

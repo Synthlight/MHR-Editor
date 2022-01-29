@@ -1,34 +1,54 @@
-﻿namespace MHR_Editor.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace MHR_Editor.Common;
 
 public static class Global {
-    public static bool   showIdBeforeName = true;
-    public static string locale           = "eng";
+    public static bool      showIdBeforeName = true;
+    public static LangIndex locale           = LangIndex.eng;
 
     public static readonly string[] FILE_TYPES = {
         "*.user.2"
     };
 
-    public static readonly Dictionary<string, string> LANGUAGE_NAME_LOOKUP = new() {
-        {"ara", "العربية"},
-        {"chS", "简体中文"},
-        {"chT", "繁體中文"},
-        {"eng", "English"},
-        {"fre", "Français"},
-        {"ger", "Deutsch"},
-        {"ita", "Italiano"},
-        {"jpn", "日本語"},
-        {"kor", "한국어"},
-        {"pol", "Polski"},
-        {"ptB", "Português do Brasil"},
-        {"rus", "Русский"},
-        {"spa", "Español"}
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public enum LangIndex {
+        jpn,
+        eng,
+        fre,
+        ita,
+        ger,
+        spa,
+        rus,
+        ptB = 10,
+        kor,
+        chT,
+        chS,
+        ara = 21,
+        pol = 26
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public static readonly Dictionary<LangIndex, string> LANGUAGE_NAME_LOOKUP = new() {
+        {LangIndex.ara, "العربية"},
+        {LangIndex.chS, "简体中文"},
+        {LangIndex.chT, "繁體中文"},
+        {LangIndex.eng, "English"},
+        {LangIndex.fre, "Français"},
+        {LangIndex.ger, "Deutsch"},
+        {LangIndex.ita, "Italiano"},
+        {LangIndex.jpn, "日本語"},
+        {LangIndex.kor, "한국어"},
+        {LangIndex.pol, "Polski"},
+        {LangIndex.ptB, "Português do Brasil"},
+        {LangIndex.rus, "Русский"},
+        {LangIndex.spa, "Español"}
     };
 
-    public static readonly List<string> LANGUAGES = new(LANGUAGE_NAME_LOOKUP.Keys);
+    public static readonly List<LangIndex> LANGUAGES = Enum.GetValues(typeof(LangIndex)).Cast<LangIndex>().ToList();
 
-    public static readonly Dictionary<string, Dictionary<string, string>> TRANSLATION_MAP = new() {
+    public static readonly Dictionary<LangIndex, Dictionary<string, string>> TRANSLATION_MAP = new() {
         {
-            "eng", new() {
+            LangIndex.eng, new() {
                 {"Hyakuryu", "Rampage"},
                 {"Takumi", "Handicraft"}
             }

@@ -131,7 +131,7 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
         }
 
         if (e.PropertyType == typeof(DateTime)) {
-            var cb = new DataGridTextColumn {
+            e.Column = new DataGridTextColumn {
                 Header = e.Column.Header,
                 Binding = new Binding(e.PropertyName) {
                     StringFormat = "{0:yyyy-MM-dd}" // Can't be negative, but needed to hide all 0 cases.
@@ -139,7 +139,6 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
                 CanUserSort = true,
                 IsReadOnly  = true
             };
-            e.Column = cb;
         }
 
         if (e.PropertyName == "Index") {
@@ -215,11 +214,12 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
             var columns = columnMap.Values.ToList();
             columns.Sort((c1, c2) => c1.sortOrder.CompareTo(c2.sortOrder));
             for (var i = 0; i < columns.Count; i++) {
-                columns[i].column.DisplayIndex = i;
+                var column = columns[i].column;
+                column.DisplayIndex = i;
 
                 if (shadeThisColumn) {
-                    columns[i].column.CellStyle = new(typeof(DataGridCell));
-                    columns[i].column.CellStyle.Setters.Add(new Setter(BackgroundProperty, new SolidColorBrush(Color.FromRgb(230, 230, 230))));
+                    column.CellStyle = new(typeof(DataGridCell));
+                    column.CellStyle.Setters.Add(new Setter(BackgroundProperty, new SolidColorBrush(Color.FromRgb(230, 230, 230))));
                     shadeThisColumn = !shadeThisColumn;
                 } else {
                     shadeThisColumn = !shadeThisColumn;

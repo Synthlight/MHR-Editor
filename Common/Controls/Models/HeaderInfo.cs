@@ -3,9 +3,9 @@
 namespace MHR_Editor.Common.Controls.Models;
 
 public class HeaderInfo : OnPropertyChangedBase {
-    private readonly string                     originalText;
-    private readonly Dictionary<string, string> translatedText = new();
-    public           string                     OriginalText => translatedText.TryGet(Global.locale, originalText);
+    private readonly string                               originalText;
+    private readonly Dictionary<Global.LangIndex, string> translatedText = new();
+    public           string                               OriginalText => translatedText.TryGet(Global.locale, originalText);
 
     public string PropertyName { get; }
 

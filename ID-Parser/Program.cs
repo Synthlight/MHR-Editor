@@ -1,93 +1,88 @@
-﻿using System.Globalization;
-using System.Text.RegularExpressions;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using MHR_Editor.Common;
 using MHR_Editor.Common.Models;
+using MHR_Editor.Generated.Enums;
 using Newtonsoft.Json;
 
 namespace MHR_Editor.ID_Parser;
 
 public static class Program {
-    public static readonly Dictionary<uint, StructJson> STRUCT_INFO        = new();
-    public static readonly Dictionary<uint, string>     ARMOR_NAME_LOOKUP  = new();
-    public static readonly Dictionary<uint, string>     ITEM_NAME_LOOKUP   = new();
-    public static readonly Dictionary<byte, string>     SKILL_NAME_LOOKUP  = new();
-    public static readonly Dictionary<uint, string>     WEAPON_NAME_LOOKUP = new();
+    private static readonly List<Tuple<string, string>> NAME_DESC = new() {
+        new("Name", "NAME"),
+        new("Explain", "DESC"),
+    };
 
-    public static void Main(string[] args) {
+    public static void Main() {
         ParseStructInfo();
-        ParseArmorNames();
-        ParseItemNames();
-        ParseSkillNames();
-        ParseWeaponNames();
+        ExtractItemInfo();
+        ExtractArmorInfo();
+        ExtractSkillNames();
+        ExtractWeaponNames();
     }
 
     private static void ParseStructInfo() {
         var structJson = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(@"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json"))!;
+        var structInfo = new Dictionary<uint, StructJson>();
         foreach (var (key, value) in structJson) {
             var hash = uint.Parse(key, NumberStyles.HexNumber);
-            STRUCT_INFO[hash] = value;
+            structInfo[hash] = value;
         }
-        File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\STRUCT_INFO.json", JsonConvert.SerializeObject(STRUCT_INFO));
+        File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\STRUCT_INFO.json", JsonConvert.SerializeObject(structInfo));
     }
 
-    private static void ParseItemNames() {
-        var lines = File.ReadAllLines(@"R:\Games\Monster Hunter Rise\MonsterHunterRiseModding.wiki\Item-IDs.md");
-        var regex = new Regex(@"^\| \d+ \| (0[a-fA-F0-9]+) \| [^\|]+ \| [^\|]+ \| (?:<COLOR [a-fA-F0-9]+>#Rejected#<\/COLOR>)?([^\|]+) \|");
-
-        foreach (var line in lines) {
-            var match = regex.Match(line);
-            if (!match.Success) continue;
-            var id   = Convert.ToUInt32(match.Groups[1].Value, 16);
-            var name = match.Groups[2].Value;
-            if (ITEM_NAME_LOOKUP.ContainsKey(id)) continue;
-            ITEM_NAME_LOOKUP[id] = name;
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractItemInfo() {
+        foreach (var (@in, @out) in NAME_DESC) {
+            var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\System\ContentsIdSystem\Item\Normal\Item{@in}.msg.17", SubCategoryType.I_Normal);
+            File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\ITEM_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
-        File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\ITEM_NAME_LOOKUP.json", JsonConvert.SerializeObject(ITEM_NAME_LOOKUP));
     }
 
-    private static void ParseArmorNames() {
-        var lines = File.ReadAllLines(@"R:\Games\Monster Hunter Rise\MonsterHunterRiseModding.wiki\Armor-IDs.md");
-        var regex = new Regex(@"^\| (0[a-fA-F0-9]+) \| ([^\|]+) \|");
-
-        foreach (var line in lines) {
-            var match = regex.Match(line);
-            if (!match.Success) continue;
-            var id   = Convert.ToUInt32(match.Groups[1].Value, 16);
-            var name = match.Groups[2].Value;
-            if (ARMOR_NAME_LOOKUP.ContainsKey(id)) continue;
-            ARMOR_NAME_LOOKUP[id] = name;
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractArmorInfo() {
+        var types = new List<string> {"Arm", "Chest", "Head", "Leg", "Waist"};
+        foreach (var (@in, @out) in NAME_DESC) {
+            var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(types.Count);
+            // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var type in types) {
+                var enumType = Enum.Parse<SubCategoryType>($"A_{type}");
+                var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Armor\{type}\A_{type}_{@in}.msg.17")
+                             .GetLangIdMap(enumType);
+                msgLists.Add(msg);
+            }
+            var result = msgLists.MergeDictionaries();
+            File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\ARMOR_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }
-        File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\ARMOR_NAME_LOOKUP.json", JsonConvert.SerializeObject(ARMOR_NAME_LOOKUP));
     }
 
-    private static void ParseSkillNames() {
-        var lines = File.ReadAllLines(@"R:\Games\Monster Hunter Rise\MonsterHunterRiseModding.wiki\Skill-IDs.md");
-        var regex = new Regex(@"^\| (\d+) \| Pl_EquipSkill_\d+ \| ([^\|]+) \|");
-
-        SKILL_NAME_LOOKUP[0] = "None";
-
-        foreach (var line in lines) {
-            var match = regex.Match(line);
-            if (!match.Success) continue;
-            var id   = Convert.ToByte(match.Groups[1].Value, 10);
-            var name = match.Groups[2].Value;
-            if (SKILL_NAME_LOOKUP.ContainsKey(id)) continue;
-            SKILL_NAME_LOOKUP[id] = name;
-        }
-        File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(SKILL_NAME_LOOKUP));
+    private static void ExtractSkillNames() {
+        var msg = MSG.Read(@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name.msg.17")
+                     .GetLangIdMap(SubCategoryType.C_Unclassified);
+        File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+        msg = MSG.Read(@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name.msg.17")
+                 .GetLangIdMap(SubCategoryType.C_Unclassified);
+        File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\RAMPAGE_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
     }
 
-    private static void ParseWeaponNames() {
-        var lines = File.ReadAllLines(@"R:\Games\Monster Hunter Rise\MonsterHunterRiseModding.wiki\Weapon-IDs.md");
-        var regex = new Regex(@"^\| (0[a-fA-F0-9]+) \| [^\|]+ \| [^\|]+ \| [^\|]+ \| [^\|]+ \| ([^\|]+) \|");
-
-        foreach (var line in lines) {
-            var match = regex.Match(line);
-            if (!match.Success) continue;
-            var id   = Convert.ToUInt32(match.Groups[1].Value, 16);
-            var name = match.Groups[2].Value;
-            if (WEAPON_NAME_LOOKUP.ContainsKey(id)) continue;
-            WEAPON_NAME_LOOKUP[id] = name;
+    private static void ExtractWeaponNames() {
+        var types = new List<string> {"Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"};
+        foreach (var (@in, @out) in NAME_DESC) {
+            var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(types.Count);
+            // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var type in types) {
+                var enumType = Enum.Parse<SubCategoryType>($"W_{type}");
+                var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}.msg.17")
+                             .GetLangIdMap(enumType);
+                msgLists.Add(msg);
+            }
+            if (@in == "Name") {
+                var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Weapon\Insect\IG_Insect_{@in}.msg.17")
+                             .GetLangIdMap(SubCategoryType.W_Insect);
+                msgLists.Add(msg);
+            }
+            var result = msgLists.MergeDictionaries();
+            File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\WEAPON_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }
-        File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\WEAPON_NAME_LOOKUP.json", JsonConvert.SerializeObject(WEAPON_NAME_LOOKUP));
     }
 }

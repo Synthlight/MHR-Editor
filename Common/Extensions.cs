@@ -171,6 +171,15 @@ public static class Extensions {
         return Encoding.UTF8.GetString(stringBytes.Subsequence(0, stringBytes.Count).ToArray());
     }
 
+    public static string ReadNullTermWString(this BinaryReader reader, bool stripNullTerm = true) {
+        var stringBytes = new List<byte>();
+        do {
+            stringBytes.AddRange(reader.ReadBytes(2));
+        } while (stringBytes[^1] != 0 || stringBytes[^2] != 0);
+
+        return Encoding.Unicode.GetString(stringBytes.Subsequence(0, stringBytes.Count - (stripNullTerm ? 2 : 0)).ToArray());
+    }
+
     public static char[] ToNullTermCharArray(this string? str) {
         str ??= "\0";
         if (!str.EndsWith("\0")) str += "\0";
@@ -209,5 +218,25 @@ public static class Extensions {
         writer.BaseStream.Seek(whereToWrite, SeekOrigin.Begin);
         writer.Write(tempPos);
         writer.BaseStream.Seek(tempPos, SeekOrigin.Begin);
+    }
+
+    public static Dictionary<A, B> MergeDictionaries<A, B>(this IEnumerable<Dictionary<A, B>> dictionaries) where A : notnull {
+        return dictionaries.SelectMany(dict => dict)
+                           .ToDictionary(pair => pair.Key, pair => pair.Value);
+    }
+
+    public static Dictionary<A, Dictionary<B, C>> MergeDictionaries<A, B, C>(this IEnumerable<Dictionary<A, Dictionary<B, C>>> dictionaries) where A : notnull
+                                                                                                                                             where B : notnull {
+        var merged = new Dictionary<A, Dictionary<B, C>>();
+        foreach (var dict in dictionaries) {
+            foreach (var (key, value) in dict) {
+                if (merged.ContainsKey(key)) {
+                    merged[key] = (new List<Dictionary<B, C>> {merged[key], value}).MergeDictionaries();
+                } else {
+                    merged[key] = value;
+                }
+            }
+        }
+        return merged;
     }
 }

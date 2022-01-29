@@ -18,7 +18,7 @@ public class RszObject : OnPropertyChangedBase {
     public             StructJson                 structInfo;
     protected readonly Dictionary<int, FieldData> fieldData = new();
 
-    [SortOrder(int.MaxValue)]
+    [SortOrder(int.MaxValue - 1000)]
     public int Index { get; set; }
 
     public static RszObject Read(BinaryReader reader, uint hash) {

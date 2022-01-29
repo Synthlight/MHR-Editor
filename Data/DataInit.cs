@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using MHR_Editor.Common;
 using MHR_Editor.Common.Attributes;
 using MHR_Editor.Common.Data;
 using MHR_Editor.Common.Models;
@@ -24,10 +25,13 @@ public static class DataInit {
         }
 
         DataHelper.STRUCT_INFO        = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
-        DataHelper.ARMOR_NAME_LOOKUP  = LoadDict<uint, string>(Assets.ARMOR_NAME_LOOKUP);
-        DataHelper.ITEM_NAME_LOOKUP   = LoadDict<uint, string>(Assets.ITEM_NAME_LOOKUP);
-        DataHelper.SKILL_NAME_LOOKUP  = LoadDict<byte, string>(Assets.SKILL_NAME_LOOKUP);
-        DataHelper.WEAPON_NAME_LOOKUP = LoadDict<uint, string>(Assets.WEAPON_NAME_LOOKUP);
+        DataHelper.ARMOR_NAME_LOOKUP  = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ARMOR_NAME_LOOKUP);
+        DataHelper.ARMOR_DESC_LOOKUP  = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ARMOR_DESC_LOOKUP);
+        DataHelper.ITEM_NAME_LOOKUP   = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ITEM_NAME_LOOKUP);
+        DataHelper.ITEM_DESC_LOOKUP   = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ITEM_DESC_LOOKUP);
+        DataHelper.SKILL_NAME_LOOKUP  = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.SKILL_NAME_LOOKUP);
+        DataHelper.WEAPON_NAME_LOOKUP = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.WEAPON_NAME_LOOKUP);
+        DataHelper.WEAPON_DESC_LOOKUP = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.WEAPON_DESC_LOOKUP);
     }
 
     private static T Load<T>(byte[] data) {

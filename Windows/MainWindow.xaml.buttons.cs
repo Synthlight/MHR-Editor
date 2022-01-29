@@ -23,7 +23,7 @@ public partial class MainWindow {
 
     private void Btn_open_wiki_OnClick(object sender, RoutedEventArgs e) {
         try {
-            Process.Start("https://github.com/Synthlight/MHR-Editor/wiki");
+            Process.Start(new ProcessStartInfo("cmd", "/c start https://github.com/Synthlight/MHR-Editor/wiki") {CreateNoWindow = true});
         } catch (Exception err) {
             Console.Error.WriteLine(err);
         }

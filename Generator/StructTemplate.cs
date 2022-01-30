@@ -84,7 +84,7 @@ public class StructTemplate {
 
         var newName    = field.name;
         var enumType   = GetEnumType(field.originalType);
-        var buttonType = GetButtonType(field);
+        var buttonType = GetButtonType(field, structInfo.name);
 
         while (newName.StartsWith('_')) newName = newName[1..]; // Remove the leading '_'.
         while (newName.EndsWith('_')) newName   = newName[..1]; // Remove the trailing '_'.
@@ -199,12 +199,22 @@ public class StructTemplate {
         };
     }
 
-    private static DataSourceType? GetButtonType(StructJson.Field field) {
-        var type = (DataSourceType?) (field.originalType switch {
+    private static DataSourceType? GetButtonType(StructJson.Field field, string? structName) {
+        DataSourceType? type = field.originalType switch {
             "snow.data.ContentsIdSystem.ItemId" => DataSourceType.ITEMS,
             "snow.data.DataDef.PlHyakuryuSkillId" => DataSourceType.RAMPAGE_SKILLS,
             _ => null
-        }) ?? field.name switch {
+        };
+
+        if (structName?.Contains("Dango") == true || structName?.Contains("Kitchen") == true) {
+            type = type ?? field.name switch {
+                "_SkillIdList" => DataSourceType.DANGO_SKILLS,
+                "_SkillList" => DataSourceType.DANGO_SKILLS,
+                _ => null
+            };
+        }
+
+        type = type ?? field.name switch {
             "_HyakuryuSkillIdList" => DataSourceType.RAMPAGE_SKILLS,
             "_HyakuryuSkillList" => DataSourceType.RAMPAGE_SKILLS,
             "_ItemIdList" => DataSourceType.ITEMS,
@@ -219,6 +229,7 @@ public class StructTemplate {
 
     private static string GetListWrapperForButtonType(DataSourceType? buttonType) {
         return buttonType switch {
+            DataSourceType.DANGO_SKILLS => nameof(DangoSkillId<int>),
             DataSourceType.ITEMS => nameof(ItemId<int>),
             DataSourceType.RAMPAGE_SKILLS => nameof(RampageSkillId<int>),
             DataSourceType.SKILLS => nameof(SkillId<int>),
@@ -228,6 +239,7 @@ public class StructTemplate {
 
     public static string GetLookupForDataSourceType(DataSourceType? dataSourceType) {
         return dataSourceType switch {
+            DataSourceType.DANGO_SKILLS => nameof(DataHelper.DANGO_SKILL_NAME_LOOKUP),
             DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
             DataSourceType.SKILLS => nameof(DataHelper.SKILL_NAME_LOOKUP),
             DataSourceType.RAMPAGE_SKILLS => nameof(DataHelper.RAMPAGE_SKILL_NAME_LOOKUP),

@@ -124,6 +124,15 @@
   <data name="ARMOR_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\armor_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="DANGO_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\dango_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DANGO_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\dango_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DANGO_SKILL_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\dango_skill_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="DECORATION_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\decoration_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

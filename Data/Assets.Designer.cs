@@ -83,6 +83,36 @@ namespace MHR_Editor.Data {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] DANGO_DESC_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("DANGO_DESC_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] DANGO_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("DANGO_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] DANGO_SKILL_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("DANGO_SKILL_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] DECORATION_DESC_LOOKUP {
             get {
                 object obj = ResourceManager.GetObject("DECORATION_DESC_LOOKUP", resourceCulture);

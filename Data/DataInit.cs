@@ -27,6 +27,9 @@ public static class DataInit {
         DataHelper.STRUCT_INFO               = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
         DataHelper.ARMOR_NAME_LOOKUP         = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ARMOR_NAME_LOOKUP);
         DataHelper.ARMOR_DESC_LOOKUP         = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ARMOR_DESC_LOOKUP);
+        DataHelper.DANGO_NAME_LOOKUP         = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DANGO_NAME_LOOKUP);
+        DataHelper.DANGO_DESC_LOOKUP         = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DANGO_DESC_LOOKUP);
+        DataHelper.DANGO_SKILL_NAME_LOOKUP   = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DANGO_SKILL_NAME_LOOKUP);
         DataHelper.DECORATION_NAME_LOOKUP    = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DECORATION_NAME_LOOKUP);
         DataHelper.DECORATION_DESC_LOOKUP    = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DECORATION_DESC_LOOKUP);
         DataHelper.ITEM_NAME_LOOKUP          = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ITEM_NAME_LOOKUP);

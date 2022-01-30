@@ -250,7 +250,7 @@ public partial class MainWindow {
     }
 
     public static void ShowError(Exception err, string title) {
-        var errMsg = "Error occurred. Press Ctrl+C to copy the contents of this window and report to the developer.\r\n\r\n";
+        const string errMsg = "Error occurred. Press Ctrl+C to copy the contents of this window and report to the developer.\r\n\r\n";
 
         MessageBox.Show(errMsg + err, title, MessageBoxButton.OK, MessageBoxImage.Error);
     }

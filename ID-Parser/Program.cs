@@ -21,6 +21,7 @@ public static class Program {
         ExtractSkillInfo();
         ExtractWeaponInfo();
         ExtractDecorationInfo();
+        ExtractDangoInfo();
     }
 
     private static void ParseStructInfo() {
@@ -71,6 +72,7 @@ public static class Program {
         }
     }
 
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractSkillInfo() {
         var msg = MSG.Read(@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name.msg.17")
                      .GetLangIdMap(SubCategoryType.C_Unclassified, false);
@@ -79,11 +81,17 @@ public static class Program {
         Debug.Assert(attackBoost == "Attack Boost");
 
         File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+
         msg = MSG.Read(@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name.msg.17")
                  .GetLangIdMap(SubCategoryType.C_Unclassified, false);
         File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\RAMPAGE_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+
+        msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name.msg.17")
+                 .GetLangIdMap(SubCategoryType.C_Unclassified, false);
+        File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\DANGO_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
     }
 
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractWeaponInfo() {
         var types = new List<string> {"Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"};
         foreach (var (@in, @out) in NAME_DESC) {
@@ -117,6 +125,15 @@ public static class Program {
             var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Equip\Decorations\Decorations_{@in}.msg.17")
                          .GetLangIdMap(SubCategoryType.C_Unclassified, false);
             File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+        }
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractDangoInfo() {
+        foreach (var (@in, @out) in NAME_DESC) {
+            var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Lobby\Facility\Kitchen\Dango_{@in}.msg.17")
+                         .GetLangIdMap(SubCategoryType.C_Unclassified, false);
+            File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\DANGO_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }
 }

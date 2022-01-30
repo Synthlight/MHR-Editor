@@ -9,11 +9,11 @@ namespace MHR_Editor.Common.Models.List_Wrappers;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-public sealed class SkillId<T> : ListWrapper<T> where T : struct {
+public sealed class ItemId<T> : ListWrapper<T> where T : struct {
     public int Index { get; }
 
     private T Value_raw;
-    [DataSource(DataSourceType.SKILLS)]
+    [DataSource(DataSourceType.ITEMS)]
     public override T Value {
         get => Value_raw;
         set {
@@ -26,9 +26,9 @@ public sealed class SkillId<T> : ListWrapper<T> where T : struct {
 
     [CustomSorter(typeof(ButtonSorter))]
     [DisplayName("Value")]
-    public string Value_button => DataHelper.SKILL_NAME_LOOKUP[Global.locale].TryGet((uint) Convert.ChangeType(Value, TypeCode.UInt32)).ToStringWithId(Value);
+    public string Value_button => DataHelper.ITEM_NAME_LOOKUP[Global.locale].TryGet((uint) Convert.ChangeType(Value, TypeCode.UInt32)).ToStringWithId(Value);
 
-    public SkillId(int index, T value) {
+    public ItemId(int index, T value) {
         Index = index;
         Value = value;
     }

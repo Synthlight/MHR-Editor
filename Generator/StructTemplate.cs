@@ -1,5 +1,7 @@
 ﻿using MHR_Editor.Common.Attributes;
+using MHR_Editor.Common.Data;
 using MHR_Editor.Common.Models;
+using MHR_Editor.Common.Models.List_Wrappers;
 
 namespace MHR_Editor.Generator;
 
@@ -11,7 +13,7 @@ public class StructTemplate {
     private readonly StreamWriter            file;
     private readonly Dictionary<string, int> usedNames    = new();
     private readonly List<ListForInit>       fieldsToInit = new();
-    private          int                     sortOrder    = 100;
+    private          int                     sortOrder    = 1000;
 
     public StructTemplate(string hash, StructJson structInfo) {
         this.hash       = hash;
@@ -44,6 +46,7 @@ public class StructTemplate {
 
     private void WriteUsings() {
         file.WriteLine("using System.Collections.ObjectModel;");
+        file.WriteLine("using System.ComponentModel;");
         file.WriteLine("using System.Diagnostics.CodeAnalysis;");
         file.WriteLine("using System.Globalization;");
         file.WriteLine("using MHR_Editor.Common;");
@@ -81,7 +84,7 @@ public class StructTemplate {
 
         var newName    = field.name;
         var enumType   = GetEnumType(field.originalType);
-        var buttonType = GetButtonType(field.name);
+        var buttonType = GetButtonType(field);
 
         while (newName.StartsWith('_')) newName = newName[1..]; // Remove the leading '_'.
         while (newName.EndsWith('_')) newName   = newName[..1]; // Remove the trailing '_'.
@@ -98,19 +101,39 @@ public class StructTemplate {
             usedNames[newName] = 1;
         }
 
-        file.WriteLine($"    [SortOrder({sortOrder})]");
-        sortOrder += 100;
-
         if (field.array) {
             var listWrapperType = GetListWrapperForButtonType(buttonType);
+            file.WriteLine($"    [SortOrder({sortOrder})]");
             file.WriteLine($"    public ObservableCollection<{listWrapperType}<{typeName}>> {newName} {{ get; set; }}");
             fieldsToInit.Add(new(newName, field, typeName, listWrapperType));
         } else {
-            file.WriteLine($"    public {enumType ?? typeName} {newName} {{");
-            file.WriteLine($"        get => ({enumType ?? typeName}) fieldData.getFieldByName(\"{field.name}\").data.GetData<{typeName}>();");
-            file.WriteLine($"        set => fieldData.getFieldByName(\"{field.name}\").data = (({typeName}) value).GetBytes();");
-            file.WriteLine("    }");
+            if (buttonType != null && field.name != "_Id") {
+                var lookupName = GetLookupForDataSourceType(buttonType);
+                file.WriteLine($"    [SortOrder({sortOrder + 10})]");
+                file.WriteLine($"    [DataSource(DataSourceType.{buttonType})]");
+                file.WriteLine($"    public {typeName} {newName} {{");
+                file.WriteLine($"        get => fieldData.getFieldByName(\"{field.name}\").data.GetData<{typeName}>();");
+                file.WriteLine("        set {");
+                file.WriteLine($"            if (EqualityComparer<{typeName}>.Default.Equals({newName}, value)) return;");
+                file.WriteLine($"            fieldData.getFieldByName(\"{field.name}\").data = value.GetBytes();");
+                file.WriteLine($"            OnPropertyChanged(nameof({newName}));");
+                file.WriteLine($"            OnPropertyChanged(nameof({newName}_button));");
+                file.WriteLine("        }");
+                file.WriteLine("    }");
+                file.WriteLine("");
+                file.WriteLine($"    [SortOrder({sortOrder})]");
+                file.WriteLine($"    [DisplayName(\"{newName}\")]");
+                file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) Convert.ChangeType({newName}, TypeCode.UInt32)).ToStringWithId({newName});");
+            } else {
+                file.WriteLine($"    [SortOrder({sortOrder})]");
+                file.WriteLine($"    public {enumType ?? typeName} {newName} {{");
+                file.WriteLine($"        get => ({enumType ?? typeName}) fieldData.getFieldByName(\"{field.name}\").data.GetData<{typeName}>();");
+                file.WriteLine($"        set => fieldData.getFieldByName(\"{field.name}\").data = (({typeName}) value).GetBytes();");
+                file.WriteLine("    }");
+            }
         }
+
+        sortOrder += 100;
     }
 
     private void WriteInit() {
@@ -161,33 +184,54 @@ public class StructTemplate {
 
     private static string? GetEnumType(string? reOriginalType) {
         return reOriginalType switch {
-            "snow.data.DataDef.RareTypes" => "RareTypes",
-            "snow.data.GameItemEnum.SexualEquipableFlag" => "SexualEquipableFlag",
             "snow.data.ArmorBuildupData.TableTypes" => "ArmorBuildupData",
-            "snow.data.GameItemEnum.SeriesBufType" => "SeriesBufType",
-            "snow.equip.PlWeaponElementTypes" => "PlWeaponElementTypes",
             "snow.data.DataDef.ItemTypes" => "ItemTypes",
-            "snow.data.GameItemEnum.IconRank" => "IconRank",
-            "snow.data.GameItemEnum.SeType" => "SeType",
-            "snow.data.GameItemEnum.ItemActionType" => "ItemActionType",
             "snow.data.DataDef.RankTypes" => "RankTypes",
+            "snow.data.DataDef.RareTypes" => "RareTypes",
+            "snow.data.GameItemEnum.IconRank" => "IconRank",
+            "snow.data.GameItemEnum.ItemActionType" => "ItemActionType",
+            "snow.data.GameItemEnum.SeriesBufType" => "SeriesBufType",
+            "snow.data.GameItemEnum.SeType" => "SeType",
+            "snow.data.GameItemEnum.SexualEquipableFlag" => "SexualEquipableFlag",
             "snow.data.NormalItemData.ItemGroupTypes" => "ItemGroupTypes",
+            "snow.equip.PlWeaponElementTypes" => "PlWeaponElementTypes",
             _ => null
         };
     }
 
-    private static DataSourceType? GetButtonType(string fieldName) {
-        return fieldName switch {
+    private static DataSourceType? GetButtonType(StructJson.Field field) {
+        var type = (DataSourceType?) (field.originalType switch {
+            "snow.data.ContentsIdSystem.ItemId" => DataSourceType.ITEMS,
+            "snow.data.DataDef.PlHyakuryuSkillId" => DataSourceType.RAMPAGE_SKILLS,
+            _ => null
+        }) ?? field.name switch {
+            "_HyakuryuSkillIdList" => DataSourceType.RAMPAGE_SKILLS,
+            "_HyakuryuSkillList" => DataSourceType.RAMPAGE_SKILLS,
+            "_ItemIdList" => DataSourceType.ITEMS,
+            "_RecipeItemIdList" => DataSourceType.ITEMS,
             "_SkillIdList" => DataSourceType.SKILLS,
             "_SkillList" => DataSourceType.SKILLS,
             _ => null
         };
+
+        return type;
     }
 
     private static string GetListWrapperForButtonType(DataSourceType? buttonType) {
         return buttonType switch {
-            DataSourceType.SKILLS => "SkillId",
+            DataSourceType.ITEMS => nameof(ItemId<int>),
+            DataSourceType.RAMPAGE_SKILLS => nameof(RampageSkillId<int>),
+            DataSourceType.SKILLS => nameof(SkillId<int>),
             _ => "GenericWrapper"
+        };
+    }
+
+    public static string GetLookupForDataSourceType(DataSourceType? dataSourceType) {
+        return dataSourceType switch {
+            DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
+            DataSourceType.SKILLS => nameof(DataHelper.SKILL_NAME_LOOKUP),
+            DataSourceType.RAMPAGE_SKILLS => nameof(DataHelper.RAMPAGE_SKILL_NAME_LOOKUP),
+            _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
     }
 

@@ -57,8 +57,10 @@ public static class Extensions {
         }
     }
 
-    public static string ToStringWithId<T>(this string name, T id) where T : struct {
-        return Global.showIdBeforeName ? $"{id}: {name}" : $"{name}: {id}";
+    public static string ToStringWithId<T>(this string name, T id, bool asHex = false) where T : struct {
+        // ReSharper disable once InterpolatedStringExpressionIsNotIFormattable
+        var s = $"{id:X}";
+        return Global.showIdBeforeName ? $"{s}: {name}" : $"{name}: {s}";
     }
 
     public static string SHA512(this string fileName) {

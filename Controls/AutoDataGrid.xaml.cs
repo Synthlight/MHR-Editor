@@ -353,7 +353,9 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
         var dataSourceType = ((DataSourceAttribute) property.GetCustomAttribute(typeof(DataSourceAttribute), true))?.dataType;
 
         dynamic dataSource = dataSourceType switch {
-            DataSourceType.SKILLS => DataHelper.SKILL_NAME_LOOKUP,
+            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
+            DataSourceType.SKILLS => DataHelper.SKILL_NAME_LOOKUP[Global.locale],
+            DataSourceType.RAMPAGE_SKILLS => DataHelper.RAMPAGE_SKILL_NAME_LOOKUP[Global.locale],
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
 

@@ -59,7 +59,7 @@ public static class Extensions {
 
     public static string ToStringWithId<T>(this string name, T id, bool asHex = false) where T : struct {
         // ReSharper disable once InterpolatedStringExpressionIsNotIFormattable
-        var s = $"{id:X}";
+        var s = asHex ? $"{id:X}" : id.ToString();
         return Global.showIdBeforeName ? $"{s}: {name}" : $"{name}: {s}";
     }
 

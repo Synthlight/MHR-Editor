@@ -14,6 +14,7 @@ public sealed class ItemId<T> : ListWrapper<T> where T : struct {
 
     private T Value_raw;
     [DataSource(DataSourceType.ITEMS)]
+    [ButtonIdAsHex]
     public override T Value {
         get => Value_raw;
         set {
@@ -26,7 +27,7 @@ public sealed class ItemId<T> : ListWrapper<T> where T : struct {
 
     [CustomSorter(typeof(ButtonSorter))]
     [DisplayName("Value")]
-    public string Value_button => DataHelper.ITEM_NAME_LOOKUP[Global.locale].TryGet((uint) Convert.ChangeType(Value, TypeCode.UInt32)).ToStringWithId(Value);
+    public string Value_button => DataHelper.ITEM_NAME_LOOKUP[Global.locale].TryGet((uint) Convert.ChangeType(Value, TypeCode.UInt32)).ToStringWithId(Value, true);
 
     public ItemId(int index, T value) {
         Index = index;

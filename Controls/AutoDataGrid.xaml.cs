@@ -351,6 +351,7 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
         var propertyType   = property.PropertyType;
         var value          = property.GetValue(obj);
         var dataSourceType = ((DataSourceAttribute) property.GetCustomAttribute(typeof(DataSourceAttribute), true))?.dataType;
+        var showAsHex      = (ButtonIdAsHexAttribute) property.GetCustomAttribute(typeof(ButtonIdAsHexAttribute), true) != null;
 
         dynamic dataSource = dataSourceType switch {
             DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
@@ -359,7 +360,7 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
 
-        var getNewItemId = new GetNewItemId(value, dataSource);
+        var getNewItemId = new GetNewItemId(value, dataSource, showAsHex);
         getNewItemId.ShowDialog();
 
         if (!getNewItemId.Cancelled) {

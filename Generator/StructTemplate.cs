@@ -123,7 +123,7 @@ public class StructTemplate {
                 file.WriteLine("");
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    [DisplayName(\"{newName}\")]");
-                file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) Convert.ChangeType({newName}, TypeCode.UInt32)).ToStringWithId({newName});");
+                file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) Convert.ChangeType({newName}, TypeCode.UInt32)).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
             } else {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    public {enumType ?? typeName} {newName} {{");

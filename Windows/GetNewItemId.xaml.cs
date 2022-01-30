@@ -16,9 +16,9 @@ namespace MHR_Editor.Windows {
         // ReSharper disable once MemberCanBeMadeStatic.Global
         public dynamic dataProxy { get; }
 
-        public GetNewItemId(dynamic currentItem, dynamic data) {
+        public GetNewItemId(dynamic currentItem, dynamic data, bool showAsHex) {
             CurrentItem = currentItem;
-            dataProxy   = ConvertToIdAndNamePair(data);
+            dataProxy   = ConvertToIdAndNamePair(data, showAsHex);
 
             InitializeComponent();
 
@@ -36,7 +36,7 @@ namespace MHR_Editor.Windows {
             btn_cancel.Click        += (_, _) => Cancel();
         }
 
-        private static Dictionary<T, IdNamePair<T>> ConvertToIdAndNamePair<T>(Dictionary<T, string> data) where T : struct {
+        private static Dictionary<T, IdNamePair<T>> ConvertToIdAndNamePair<T>(Dictionary<T, string> data, bool showAsHex) where T : struct {
             var       dict       = new Dictionary<T, IdNamePair<T>>();
             using var enumerator = data.GetEnumerator();
             enumerator.MoveNext();
@@ -44,7 +44,7 @@ namespace MHR_Editor.Windows {
             var genericType = typeof(IdNamePair<>).MakeGenericType(type);
 
             foreach (var key in data.Keys) {
-                dict[key] = (IdNamePair<T>) Activator.CreateInstance(genericType, key, data[key])!;
+                dict[key] = (IdNamePair<T>) Activator.CreateInstance(genericType, key, data[key], showAsHex)!;
             }
 
             return dict;

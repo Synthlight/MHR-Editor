@@ -7,18 +7,20 @@ namespace MHR_Editor.Windows.Models;
 public struct IdNamePair<T> where T : struct {
     public readonly T      id;
     public readonly string name;
+    public readonly bool   showAsHex;
 
-    public IdNamePair(T id, string name) {
-        this.id   = id;
-        this.name = name;
+    public IdNamePair(T id, string name, bool showAsHex) {
+        this.id        = id;
+        this.name      = name;
+        this.showAsHex = showAsHex;
     }
 
     public static IdNamePair<T> Unknown(T id) {
-        return new IdNamePair<T>(id, "Unknown");
+        return new(id, "Unknown", false);
     }
 
     public override string ToString() {
-        return Global.showIdBeforeName ? $"{id}: {name}" : $"{name}: {id}";
+        return name.ToStringWithId(id, showAsHex);
     }
 
     public override int GetHashCode() {

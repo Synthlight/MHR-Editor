@@ -97,10 +97,6 @@ public class MSG {
         return file;
     }
 
-    public static Dictionary<Global.LangIndex, Dictionary<uint, string>> Read(string targetFile, SubCategoryType type) {
-        return Read(targetFile).GetLangIdMap(type);
-    }
-
     private static void Decrypt(IList<byte> data) {
         byte b    = 0;
         var  num  = 0;
@@ -137,10 +133,10 @@ public class MSG {
         return result;
     }
 
-    public Dictionary<uint, string> GetIdMap(Global.LangIndex lang, SubCategoryType type) {
+    public Dictionary<uint, string> GetIdMap(Global.LangIndex lang, SubCategoryType type, bool startAtOne) {
         var dict = new Dictionary<uint, string>(subEntries.Length);
-        for (var i = 1; i < subEntries.Length; i++) {
-            var id   = (uint) type | (uint) (i + -1);
+        for (var i = startAtOne ? 1 : 0; i < subEntries.Length; i++) {
+            var id   = (uint) type | (uint) (i - (startAtOne ? 1 : 0));
             var text = subEntries[i].refs[(int) lang];
             if (text == "") continue;
             if (text.Contains("#Rejected#")) text = "#Rejected#";
@@ -152,10 +148,10 @@ public class MSG {
         return dict;
     }
 
-    public Dictionary<Global.LangIndex, Dictionary<uint, string>> GetLangIdMap(SubCategoryType type) {
+    public Dictionary<Global.LangIndex, Dictionary<uint, string>> GetLangIdMap(SubCategoryType type, bool startAtOne) {
         var dict = new Dictionary<Global.LangIndex, Dictionary<uint, string>>(Global.LANGUAGES.Count);
         foreach (var lang in Global.LANGUAGES) {
-            dict[lang] = GetIdMap(lang, type);
+            dict[lang] = GetIdMap(lang, type, startAtOne);
         }
         return dict;
     }

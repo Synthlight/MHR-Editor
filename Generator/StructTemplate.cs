@@ -200,31 +200,13 @@ public class StructTemplate {
     }
 
     private static DataSourceType? GetButtonType(StructJson.Field field, string? structName) {
-        DataSourceType? type = field.originalType switch {
+        return field.originalType?.Replace("[]", "") switch {
             "snow.data.ContentsIdSystem.ItemId" => DataSourceType.ITEMS,
+            "snow.data.DataDef.PlEquipSkillId" => DataSourceType.SKILLS,
             "snow.data.DataDef.PlHyakuryuSkillId" => DataSourceType.RAMPAGE_SKILLS,
+            "snow.data.DataDef.PlKitchenSkillId" => DataSourceType.DANGO_SKILLS,
             _ => null
         };
-
-        if (structName?.Contains("Dango") == true || structName?.Contains("Kitchen") == true) {
-            type = type ?? field.name switch {
-                "_SkillIdList" => DataSourceType.DANGO_SKILLS,
-                "_SkillList" => DataSourceType.DANGO_SKILLS,
-                _ => null
-            };
-        }
-
-        type = type ?? field.name switch {
-            "_HyakuryuSkillIdList" => DataSourceType.RAMPAGE_SKILLS,
-            "_HyakuryuSkillList" => DataSourceType.RAMPAGE_SKILLS,
-            "_ItemIdList" => DataSourceType.ITEMS,
-            "_RecipeItemIdList" => DataSourceType.ITEMS,
-            "_SkillIdList" => DataSourceType.SKILLS,
-            "_SkillList" => DataSourceType.SKILLS,
-            _ => null
-        };
-
-        return type;
     }
 
     private static string GetListWrapperForButtonType(DataSourceType? buttonType) {

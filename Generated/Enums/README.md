@@ -1,0 +1,1 @@
+Generated enum files from `Enums_Internal.hpp` go here. They aren't tracked due to there being over 5k+ of them.

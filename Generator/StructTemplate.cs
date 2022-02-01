@@ -54,7 +54,7 @@ public class StructTemplate {
         file.WriteLine("using MHR_Editor.Common.Data;");
         file.WriteLine("using MHR_Editor.Common.Models;");
         file.WriteLine("using MHR_Editor.Common.Models.List_Wrappers;");
-        file.WriteLine("using MHR_Editor.Generated.Enums;");
+        file.WriteLine("using MHR_Editor.Models.Enums;");
     }
 
     private void WriteClassHeader() {
@@ -83,7 +83,7 @@ public class StructTemplate {
         }
 
         var newName    = field.name;
-        var enumType   = GetEnumType(field.originalType);
+        var enumType   = GetEnumType(field);
         var buttonType = GetButtonType(field, structInfo.name);
 
         while (newName.StartsWith('_')) newName = newName[1..]; // Remove the leading '_'.
@@ -182,21 +182,17 @@ public class StructTemplate {
         };
     }
 
-    private static string? GetEnumType(string? reOriginalType) {
-        return reOriginalType switch {
-            "snow.data.ArmorBuildupData.TableTypes" => "ArmorBuildupData",
-            "snow.data.DataDef.ItemTypes" => "ItemTypes",
-            "snow.data.DataDef.RankTypes" => "RankTypes",
-            "snow.data.DataDef.RareTypes" => "RareTypes",
-            "snow.data.GameItemEnum.IconRank" => "IconRank",
-            "snow.data.GameItemEnum.ItemActionType" => "ItemActionType",
-            "snow.data.GameItemEnum.SeriesBufType" => "SeriesBufType",
-            "snow.data.GameItemEnum.SeType" => "SeType",
-            "snow.data.GameItemEnum.SexualEquipableFlag" => "SexualEquipableFlag",
-            "snow.data.NormalItemData.ItemGroupTypes" => "ItemGroupTypes",
-            "snow.equip.PlWeaponElementTypes" => "PlWeaponElementTypes",
-            _ => null
-        };
+    private static string? GetEnumType(StructJson.Field field) {
+        if (field.name == "_Id"
+            || Program.ENUM_NAMES.Contains(field.name!)
+            || field.originalType == null
+            || field.originalType.Contains('<')
+            || field.originalType.Contains('`')
+            || field.originalType.StartsWith("System")
+            || !field.originalType.StartsWith("snow")) return null;
+
+        return field.originalType.Replace(".", "_")
+                    .ToUpperFirstLetter();
     }
 
     private static DataSourceType? GetButtonType(StructJson.Field field, string? structName) {

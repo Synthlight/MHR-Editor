@@ -111,7 +111,12 @@ public static class RszObjectExtensions {
             if (isGeneric) {
                 var getDataAs = typeof(Extensions).GetMethod(nameof(Extensions.GetDataAs), BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.MakeGenericMethod(genericType!);
                 var data      = getDataAs?.Invoke(null, new object[] {sub}) ?? throw new("sub.GetDataAs failure.");
-                var wrapper   = (T) Activator.CreateInstance(typeof(T), i, data)!;
+                T   wrapper;
+                if (typeof(T).GetGenericTypeDefinition().Is(typeof(DataSourceWrapper<>))) {
+                    wrapper = (T) Activator.CreateInstance(typeof(T), i, data, fieldData.fieldInfo)!;
+                } else {
+                    wrapper = (T) Activator.CreateInstance(typeof(T), i, data)!;
+                }
                 list.Add(wrapper);
             } else {
                 list.Add(sub.GetDataAs<T>());

@@ -161,11 +161,6 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
         var           showAsHex        = (ShowAsHexAttribute) propertyInfo?.GetCustomAttribute(typeof(ShowAsHexAttribute), true) != null;
         ICustomSorter customSorter     = null;
 
-        // `sourceProperty` will only have a value if we come from a button.
-        if (sourceProperty?.PropertyType.Is(typeof(DataSourceWrapper<>)) == true) {
-            showAsHex = (ShowAsHexAttribute) sourceProperty?.GetCustomAttribute(typeof(ShowAsHexAttribute), true) != null;
-        }
-
         if (displayName != null) {
             if (displayName == "") { // Use empty DisplayName as a way to hide columns.
                 e.Cancel = true;
@@ -334,7 +329,7 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
             var list             = propertyInfo.GetGetMethod()?.Invoke(obj, null);
             var listType         = list?.GetType().GenericTypeArguments[0];
             var viewType         = typeof(SubStructViewDynamic<>).MakeGenericType(listType ?? throw new InvalidOperationException());
-            var subStructView    = (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, list);
+            var subStructView    = (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, list, propertyInfo);
 
             ColorCell(frameworkElement);
             subStructView?.ShowDialog();

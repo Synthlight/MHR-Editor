@@ -10,6 +10,8 @@ namespace MHR_Editor.Common.Models.List_Wrappers;
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public sealed class DataSourceWrapper<T> : ListWrapper<T> where T : struct {
+    private readonly StructJson.Field field;
+
     public int Index { get; }
 
     private T Value_raw;
@@ -25,10 +27,28 @@ public sealed class DataSourceWrapper<T> : ListWrapper<T> where T : struct {
 
     [CustomSorter(typeof(ButtonSorter))]
     [DisplayName("Value")]
-    public string Value_button => DataHelper.SKILL_NAME_LOOKUP[Global.locale].TryGet((uint) Convert.ChangeType(Value, TypeCode.UInt32)).ToStringWithId(Value);
+    public string Value_button => GetDataLookupSource()[Global.locale].TryGet((uint) Convert.ChangeType(Value, TypeCode.UInt32)).ToStringWithId(Value, ShowAsHex());
 
-    public DataSourceWrapper(int index, T value) {
-        Index = index;
-        Value = value;
+    public DataSourceWrapper(int index, T value, StructJson.Field field) {
+        Index      = index;
+        Value      = value;
+        this.field = field;
+    }
+
+    private Dictionary<Global.LangIndex, Dictionary<uint, string>> GetDataLookupSource() {
+        return field.originalType?.Replace("[]", "") switch {
+            "snow.data.ContentsIdSystem.ItemId" => DataHelper.ITEM_NAME_LOOKUP,
+            "snow.data.DataDef.PlEquipSkillId" => DataHelper.SKILL_NAME_LOOKUP,
+            "snow.data.DataDef.PlHyakuryuSkillId" => DataHelper.RAMPAGE_SKILL_NAME_LOOKUP,
+            "snow.data.DataDef.PlKitchenSkillId" => DataHelper.DANGO_NAME_LOOKUP,
+            _ => throw new InvalidOperationException($"No data source lookup known for: {field.originalType}")
+        };
+    }
+
+    private bool ShowAsHex() {
+        return field.originalType?.Replace("[]", "") switch {
+            "snow.data.ContentsIdSystem.ItemId" => true,
+            _ => false
+        };
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using MHR_Editor.Controls;
@@ -11,7 +12,7 @@ namespace MHR_Editor.Windows {
     }
 
     public sealed class SubStructViewDynamic<T> : SubStructView {
-        public SubStructViewDynamic(Window window, string name, ObservableCollection<T> items) {
+        public SubStructViewDynamic(Window window, string name, ObservableCollection<T> items, PropertyInfo sourceProperty) {
             Title  = name;
             Owner  = window;
             Width  = window.Width;
@@ -21,7 +22,7 @@ namespace MHR_Editor.Windows {
                 HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
                 VerticalScrollBarVisibility   = ScrollBarVisibility.Auto,
             };
-            dataGrid.SetItems(items);
+            dataGrid.SetItems(items, sourceProperty);
 
             AddChild(dataGrid);
         }

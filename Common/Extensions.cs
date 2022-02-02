@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -137,7 +138,10 @@ public static class Extensions {
         var handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
 
         try {
-            return (T) Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(T))!;
+            var type                   = typeof(T);
+            if (typeof(T).IsEnum) type = typeof(T).GetEnumUnderlyingType();
+
+            return (T) Marshal.PtrToStructure(handle.AddrOfPinnedObject(), type)!;
         } finally {
             if (handle.IsAllocated) {
                 handle.Free();
@@ -148,6 +152,15 @@ public static class Extensions {
     public static byte[] GetBytes<T>(this T @struct) where T : notnull {
         if (@struct is bool b) {
             return new[] {(byte) (b ? 1 : 0)};
+        }
+
+        var type = @struct.GetType();
+        if (type.IsEnum) {
+            var enumType        = type.GetEnumUnderlyingType();
+            var valueAsEnumType = Convert.ChangeType(@struct, enumType);
+            var getBytes        = typeof(Extensions).GetMethod(nameof(GetBytes), BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.MakeGenericMethod(enumType);
+            var data            = (byte[]) (getBytes?.Invoke(null, new[] {valueAsEnumType}) ?? throw new("sub.GetDataAs failure."));
+            return data;
         }
 
         var size   = Marshal.SizeOf(@struct);

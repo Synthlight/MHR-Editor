@@ -1,17 +1,65 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.CodeDom;
+using System.Text.RegularExpressions;
 using MHR_Editor.Common.Models;
+using Microsoft.CSharp;
 using Newtonsoft.Json;
 
 namespace MHR_Editor.Generator;
 
 public static class Program {
-    public static readonly List<string> ENUM_NAMES = new();
+    public static readonly List<string>               ENUM_NAMES = new();
+    public static readonly Dictionary<string, string> ENUM_TYPES = new();
+
+#pragma warning disable CS8618
+    private static Dictionary<string, StructJson> structJson;
+#pragma warning restore CS8618
 
     public static void Main(string[] args) {
+        // ReSharper disable once StringLiteralTypo
+        structJson = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(@"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json"))!;
+
+        FindAllEnumUnderlyingTypes();
+
         CleanupGeneratedFiles(@"R:\Games\Monster Hunter Rise\MHR-Editor\Generated\Enums");
         CleanupGeneratedFiles(@"R:\Games\Monster Hunter Rise\MHR-Editor\Generated\Structs");
+
         GenerateEnums();
         GenerateStructs();
+    }
+
+    private static void FindAllEnumUnderlyingTypes() {
+        var compiler = new CSharpCodeProvider();
+
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var (_, structInfo) in structJson) {
+            if (structInfo.name == null
+                || structInfo.name.Contains('<')
+                || structInfo.name.Contains('`')
+                || structInfo.name.StartsWith("System")
+                || !structInfo.name.StartsWith("snow")
+                || structInfo.fields?.Count == 0) continue;
+
+            var field = structInfo.fields?[0];
+
+            // We only want the enum placeholders.
+            if (structInfo.fields?.Count != 1 || field?.name != "value__") continue;
+
+            var name = structInfo.name.Replace(".", "_")
+                                 .ToUpperFirstLetter();
+            var boxedType  = GetTypeForName(field.originalType!);
+            var type       = new CodeTypeReference(boxedType);
+            var typeString = compiler.GetTypeOutput(type);
+
+            ENUM_TYPES[name] = typeString;
+        }
+    }
+
+    private static Type GetTypeForName(string typeName) {
+        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+            var type = assembly.GetType(typeName);
+            if (type != null) return type;
+        }
+        throw new InvalidOperationException($"Unable to find type for: {typeName}");
     }
 
     private static void CleanupGeneratedFiles(string path) {
@@ -35,7 +83,6 @@ public static class Program {
     }
 
     private static void GenerateStructs() {
-        var structJson = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(@"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json"))!;
         foreach (var (hash, structInfo) in structJson) {
             if (structInfo.name == null
                 || structInfo.name.Contains('<')

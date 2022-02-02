@@ -18,8 +18,7 @@ public class EnumTemplate {
     public void Generate() {
         file.WriteLine("namespace MHR_Editor.Models.Enums;");
         file.WriteLine("");
-        var type = contents.Contains(" -") ? "long" : "ulong";
-        file.Write($"public enum {name} : {type} ");
+        file.Write($"public enum {name} : {Program.ENUM_TYPES[name]} ");
         file.Write(contents);
         file.Close();
 

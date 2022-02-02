@@ -18,11 +18,9 @@ public class StructTemplate {
         this.hash       = hash;
         this.structInfo = structInfo;
 
-        className = structInfo.name!
-                              .ToUpperFirstLetter()
-                              .Replace('.', '_');
+        className = structInfo.name!.ToConvertedTypeName();
 
-        filename = $@"R:\Games\Monster Hunter Rise\MHR-Editor\Generated\Structs\{className}.cs";
+        filename = $@"{Program.STRUCT_GEN_PATH}\{className}.cs";
         file     = new(File.Open(filename, FileMode.Create, FileAccess.Write));
     }
 
@@ -31,7 +29,7 @@ public class StructTemplate {
         WriteClassHeader();
         foreach (var field in structInfo.fields!) {
             if (field.name == null) continue;
-            var typeName = GetCSharpType(field.type);
+            var typeName = GetCSharpType(field);
             if (typeName == null) continue;
             WriteProperty(field, typeName);
         }
@@ -75,22 +73,15 @@ public class StructTemplate {
     }
 
     private void WriteProperty(StructJson.Field field, string typeName) {
-        file.WriteLine("");
-
-        if (field.name!.ToLower() == "_id") {
-            file.WriteLine("    [ShowAsHex]");
-        }
-
-        var newName    = field.name;
-        var enumType   = GetEnumType(field)?.Replace("[]", "");
-        var buttonType = GetButtonType(field, structInfo.name);
+        var newName      = field.name!;
+        var enumType     = GetEnumType(field)?.Replace("[]", "");
+        var buttonType   = GetButtonType(field);
+        var isObjectType = field.type == "Object";
 
         while (newName.StartsWith('_')) newName = newName[1..]; // Remove the leading '_'.
         while (newName.EndsWith('_')) newName   = newName[..1]; // Remove the trailing '_'.
 
-        newName = newName.ToUpperFirstLetter()
-                         .Replace("Cariable", "Carryable")
-                         .Replace("Evalution", "Evaluation");
+        newName = newName.ToConvertedTypeName(true);
         if (newName == "Index") newName = "_Index";
 
         if (usedNames.ContainsKey(newName)) {
@@ -98,6 +89,12 @@ public class StructTemplate {
             newName += usedNames[newName].ToString();
         } else {
             usedNames[newName] = 1;
+        }
+
+        file.WriteLine("");
+
+        if (field.name!.ToLower() == "_id") {
+            file.WriteLine("    [ShowAsHex]");
         }
 
         if (field.array) {
@@ -108,10 +105,12 @@ public class StructTemplate {
                     file.WriteLine($"    {additionalAttributes}");
                 }
                 file.WriteLine($"    public ObservableCollection<DataSourceWrapper<{typeName}>> {newName} {{ get; set; }}");
+            } else if (isObjectType) {
+                file.WriteLine($"    public ObservableCollection<{enumType}> {newName} {{ get; set; }}");
             } else {
                 file.WriteLine($"    public ObservableCollection<GenericWrapper<{enumType ?? typeName}>> {newName} {{ get; set; }}");
             }
-            fieldsToInit.Add(new(newName, field, buttonType, enumType, typeName));
+            fieldsToInit.Add(new(newName, field, buttonType, enumType, typeName, isObjectType));
         } else {
             if (buttonType != null && field.name != "_Id") {
                 var lookupName = GetLookupForDataSourceType(buttonType);
@@ -149,9 +148,10 @@ public class StructTemplate {
         file.WriteLine("        base.Init();");
         file.WriteLine("");
         foreach (var field in fieldsToInit) {
-            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (field.buttonType != null) {
                 file.WriteLine($"        {field.newName} = new(fieldData.getFieldByName(\"{field.field.name}\").GetDataAsList<DataSourceWrapper<{field.typeName}>>());");
+            } else if (field.isObjectType) {
+                file.WriteLine($"        {field.newName} = new(fieldData.getFieldByName(\"{field.field.name}\").GetDataAsList<{field.enumType}>());");
             } else {
                 file.WriteLine($"        {field.newName} = new(fieldData.getFieldByName(\"{field.field.name}\").GetDataAsList<GenericWrapper<{field.enumType ?? field.typeName}>>());");
             }
@@ -175,8 +175,8 @@ public class StructTemplate {
         file.WriteLine("}");
     }
 
-    private static string? GetCSharpType(string? reType) {
-        return reType switch {
+    private static string? GetCSharpType(StructJson.Field field) {
+        return field.type switch {
             "Bool" => "bool",
             "S8" => "sbyte",
             "U8" => "byte",
@@ -188,7 +188,11 @@ public class StructTemplate {
             "U64" => "ulong",
             "F32" => "float",
             "F64" => "double",
-            //"String" => "string", // TODO: Handle strings.
+            // TODO: Generate properties for the object type classes.
+            // The problem with this is some of them lead to `via.~` classes which we're skipping so that could be a problem.
+            //"Object" => GetEnumType(field),
+            //"UserData" => GetEnumType(field),
+            //"Color" => GetEnumType(field),
             _ => null
         };
     }
@@ -202,11 +206,10 @@ public class StructTemplate {
             || field.originalType.StartsWith("System")
             || !field.originalType.StartsWith("snow")) return null;
 
-        return field.originalType.Replace(".", "_")
-                    .ToUpperFirstLetter();
+        return field.originalType.ToConvertedTypeName();
     }
 
-    private static DataSourceType? GetButtonType(StructJson.Field field, string? structName) {
+    private static DataSourceType? GetButtonType(StructJson.Field field) {
         return field.originalType?.Replace("[]", "") switch {
             "snow.data.ContentsIdSystem.ItemId" => DataSourceType.ITEMS,
             "snow.data.DataDef.PlEquipSkillId" => DataSourceType.SKILLS,
@@ -239,13 +242,15 @@ public class StructTemplate {
         public readonly DataSourceType?  buttonType;
         public readonly string?          enumType;
         public readonly string           typeName;
+        public readonly bool             isObjectType;
 
-        public ListForInit(string newName, StructJson.Field field, DataSourceType? buttonType, string? enumType, string typeName) {
-            this.newName    = newName;
-            this.field      = field;
-            this.buttonType = buttonType;
-            this.enumType   = enumType;
-            this.typeName   = typeName;
+        public ListForInit(string newName, StructJson.Field field, DataSourceType? buttonType, string? enumType, string typeName, bool isObjectType) {
+            this.newName      = newName;
+            this.field        = field;
+            this.buttonType   = buttonType;
+            this.enumType     = enumType;
+            this.typeName     = typeName;
+            this.isObjectType = isObjectType;
         }
     }
 }

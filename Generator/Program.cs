@@ -7,8 +7,14 @@ using Newtonsoft.Json;
 namespace MHR_Editor.Generator;
 
 public static class Program {
-    public static readonly List<string>               ENUM_NAMES = new();
-    public static readonly Dictionary<string, string> ENUM_TYPES = new();
+    //public const           string                     BASE_GEN_PATH    = @"C:\Temp\Gen"; //@"R:\Games\Monster Hunter Rise\MHR-Editor\Generated";
+    public const           string                     BASE_GEN_PATH    = @"R:\Games\Monster Hunter Rise\MHR-Editor\Generated";
+    public const           string                     ENUM_GEN_PATH    = $@"{BASE_GEN_PATH}\Enums";
+    public const           string                     STRUCT_GEN_PATH  = $@"{BASE_GEN_PATH}\Structs";
+    public const           string                     STRUCT_JSON_PATH = @"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json";
+    public const           string                     ENUM_HEADER_PATH = @"C:\SteamLibrary\common\MonsterHunterRise\Enums_Internal.hpp";
+    public static readonly List<string>               ENUM_NAMES       = new();
+    public static readonly Dictionary<string, string> ENUM_TYPES       = new();
 
 #pragma warning disable CS8618
     private static Dictionary<string, StructJson> structJson;
@@ -16,12 +22,12 @@ public static class Program {
 
     public static void Main(string[] args) {
         // ReSharper disable once StringLiteralTypo
-        structJson = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(@"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json"))!;
+        structJson = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(STRUCT_JSON_PATH))!;
 
         FindAllEnumUnderlyingTypes();
 
-        CleanupGeneratedFiles(@"R:\Games\Monster Hunter Rise\MHR-Editor\Generated\Enums");
-        CleanupGeneratedFiles(@"R:\Games\Monster Hunter Rise\MHR-Editor\Generated\Structs");
+        CleanupGeneratedFiles(ENUM_GEN_PATH);
+        CleanupGeneratedFiles(STRUCT_GEN_PATH);
 
         GenerateEnums();
         GenerateStructs();
@@ -44,8 +50,7 @@ public static class Program {
             // We only want the enum placeholders.
             if (structInfo.fields?.Count != 1 || field?.name != "value__") continue;
 
-            var name = structInfo.name.Replace(".", "_")
-                                 .ToUpperFirstLetter();
+            var name       = structInfo.name.ToConvertedTypeName();
             var boxedType  = GetTypeForName(field.originalType!);
             var type       = new CodeTypeReference(boxedType);
             var typeString = compiler.GetTypeOutput(type);
@@ -70,7 +75,7 @@ public static class Program {
     }
 
     private static void GenerateEnums() {
-        var enumHpp = File.ReadAllText(@"C:\SteamLibrary\common\MonsterHunterRise\Enums_Internal.hpp");
+        var enumHpp = File.ReadAllText(ENUM_HEADER_PATH);
         var regex   = new Regex(@"namespace ((?:snow::[^ ]+|snow)) {\s+enum ([^ ]+) ({[^}]+})", RegexOptions.Singleline);
         var matches = regex.Matches(enumHpp);
         foreach (Match match in matches) {

@@ -8,10 +8,9 @@ public class EnumTemplate {
     public EnumTemplate(string name, string contents) {
         this.contents = contents.Replace("        ", "    ")
                                 .Replace("    }", "}");
-        this.name = name.Replace("::", "_")
-                        .ToUpperFirstLetter();
+        this.name = name.ToConvertedTypeName();
 
-        var filename = $@"R:\Games\Monster Hunter Rise\MHR-Editor\Generated\Enums\{this.name}.cs";
+        var filename = $@"{Program.ENUM_GEN_PATH}\{this.name}.cs";
         file = new(File.Open(filename, FileMode.Create, FileAccess.Write));
     }
 

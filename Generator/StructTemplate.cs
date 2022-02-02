@@ -1,7 +1,6 @@
 ﻿using MHR_Editor.Common.Attributes;
 using MHR_Editor.Common.Data;
 using MHR_Editor.Common.Models;
-using MHR_Editor.Common.Models.List_Wrappers;
 
 namespace MHR_Editor.Generator;
 
@@ -83,7 +82,7 @@ public class StructTemplate {
         }
 
         var newName    = field.name;
-        var enumType   = GetEnumType(field);
+        var enumType   = GetEnumType(field)?.Replace("[]", "");
         var buttonType = GetButtonType(field, structInfo.name);
 
         while (newName.StartsWith('_')) newName = newName[1..]; // Remove the leading '_'.
@@ -102,10 +101,17 @@ public class StructTemplate {
         }
 
         if (field.array) {
-            var listWrapperType = GetListWrapperForButtonType(buttonType);
             file.WriteLine($"    [SortOrder({sortOrder})]");
-            file.WriteLine($"    public ObservableCollection<{listWrapperType}<{typeName}>> {newName} {{ get; set; }}");
-            fieldsToInit.Add(new(newName, field, typeName, listWrapperType));
+            if (buttonType != null) {
+                file.WriteLine($"    [DataSource(DataSourceType.{buttonType})]");
+                foreach (var additionalAttributes in GetAdditionalAttributesForDataSourceType(buttonType)) {
+                    file.WriteLine($"    {additionalAttributes}");
+                }
+                file.WriteLine($"    public ObservableCollection<DataSourceWrapper<{typeName}>> {newName} {{ get; set; }}");
+            } else {
+                file.WriteLine($"    public ObservableCollection<GenericWrapper<{enumType ?? typeName}>> {newName} {{ get; set; }}");
+            }
+            fieldsToInit.Add(new(newName, field, buttonType, enumType, typeName));
         } else {
             if (buttonType != null && field.name != "_Id") {
                 var lookupName = GetLookupForDataSourceType(buttonType);
@@ -143,7 +149,12 @@ public class StructTemplate {
         file.WriteLine("        base.Init();");
         file.WriteLine("");
         foreach (var field in fieldsToInit) {
-            file.WriteLine($"        {field.newName} = new(fieldData.getFieldByName(\"{field.field.name}\").GetDataAsList<{field.listWrapperType}<{field.typeName}>>());");
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+            if (field.buttonType != null) {
+                file.WriteLine($"        {field.newName} = new(fieldData.getFieldByName(\"{field.field.name}\").GetDataAsList<DataSourceWrapper<{field.typeName}>>());");
+            } else {
+                file.WriteLine($"        {field.newName} = new(fieldData.getFieldByName(\"{field.field.name}\").GetDataAsList<GenericWrapper<{field.enumType ?? field.typeName}>>());");
+            }
         }
         file.WriteLine("    }");
     }
@@ -205,13 +216,10 @@ public class StructTemplate {
         };
     }
 
-    private static string GetListWrapperForButtonType(DataSourceType? buttonType) {
-        return buttonType switch {
-            DataSourceType.DANGO_SKILLS => nameof(DangoSkillId<int>),
-            DataSourceType.ITEMS => nameof(ItemId<int>),
-            DataSourceType.RAMPAGE_SKILLS => nameof(RampageSkillId<int>),
-            DataSourceType.SKILLS => nameof(SkillId<int>),
-            _ => "GenericWrapper"
+    private static List<string> GetAdditionalAttributesForDataSourceType(DataSourceType? dataSourceType) {
+        return dataSourceType switch {
+            DataSourceType.ITEMS => new() {"[ButtonIdAsHex]"},
+            _ => new()
         };
     }
 
@@ -228,14 +236,16 @@ public class StructTemplate {
     public class ListForInit {
         public readonly string           newName;
         public readonly StructJson.Field field;
+        public readonly DataSourceType?  buttonType;
+        public readonly string?          enumType;
         public readonly string           typeName;
-        public readonly string           listWrapperType;
 
-        public ListForInit(string newName, StructJson.Field field, string typeName, string listWrapperType) {
-            this.newName         = newName;
-            this.field           = field;
-            this.typeName        = typeName;
-            this.listWrapperType = listWrapperType;
+        public ListForInit(string newName, StructJson.Field field, DataSourceType? buttonType, string? enumType, string typeName) {
+            this.newName    = newName;
+            this.field      = field;
+            this.buttonType = buttonType;
+            this.enumType   = enumType;
+            this.typeName   = typeName;
         }
     }
 }

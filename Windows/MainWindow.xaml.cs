@@ -130,6 +130,7 @@ public partial class MainWindow {
             var getListOfType = typeof(Enumerable).GetMethod(nameof(Enumerable.OfType), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.MakeGenericMethod(type);
             var items         = getListOfType?.Invoke(null, new object[] {rszObjectData}) ?? throw new("rsz.objectData.OfType failure.");
             var dataGrid      = MakeDataGrid((dynamic) items);
+            Debug.WriteLine($"Loading type: {type.Name}");
             AddMainDataGrid(dataGrid);
         } catch (Exception e) when (!Debugger.IsAttached) {
             ShowError(e, "Load Error");

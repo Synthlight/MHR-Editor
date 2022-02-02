@@ -1,38 +1,3 @@
-Generate struct code on the fly:
-    For debugging, this would be great.
-
-    We'd need to pre-compile for a release build.
-        This would catch any errors hidden in the struct that you wouldn't see till load.
-        This would also be much much faster.
-
-    We could probably generate the sources and save it as two files.
-        .txt for debug builds which would compile it on the fly.
-            We would need some way of knowing what file to compile for the target hash.
-                Build an additional file that is a map of hashes to file names?
-
-        .cs for release builds which would be the same as now.
-
-        Project/configuration flags to include/exclude the different dirs.
-
-Find a way to make sub-arrays & lookups working without having to generate sub-structs for each separate type:
-    Add attributes to the list types in the source structs and pass them on to the child AutoDataGrid when opening a sub-array.
-        Sub-structs would still be pre-compiled classes so not an issue.
-        It would mess with the button code which would need an extra column. (One for the string/button, and another, hidden, with the actual value.)
-            This would require the code to use a passed data (from parent AutoDataGrid) as a lookup source for the contents.
-            Would have to invent a new system to show the string without changing the underlying list type.
-
-        Enums would need a separate format too.
-            This one's probably easier as we could just change the list type to the enum type itself.
-
-    Alt idea (which is probably better):
-        There would be four classes. DataSourceWrapper (name lookups/buttone), and EnumWrapper (enums), GenericWrapper (any other primitive, *not* structs), and just plain List<struct> for the sub-structs.
-            AutoDataGrid would need to pass on the attributes on the list itself (the prop in the source struct) to the wrapper class.
-                DataSourceWrapper: This would store the lookup type that AutoDataGrid would then need to use instead of the attribute on the property which wouldn't be set.
-
-                EnumWrapper: This would work as-is due to how the grid handles enums; displaying as name, but using the value.
-
-                GenericWrapper/List<struct>: Nothing would need to be done at all.
-
 Multi-struct mode:
     Load(file) needs to count the various hash types in the list and if there's more than *two*, load in multi-struct mode.
         This has a potential issue where the first type *isn't* a list and we'd need to show them both. I'm not sure this would happen though.

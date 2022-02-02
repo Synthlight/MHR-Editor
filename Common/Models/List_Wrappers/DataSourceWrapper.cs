@@ -9,11 +9,10 @@ namespace MHR_Editor.Common.Models.List_Wrappers;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-public sealed class DangoSkillId<T> : ListWrapper<T> where T : struct {
+public sealed class DataSourceWrapper<T> : ListWrapper<T> where T : struct {
     public int Index { get; }
 
     private T Value_raw;
-    [DataSource(DataSourceType.SKILLS)]
     public override T Value {
         get => Value_raw;
         set {
@@ -26,9 +25,9 @@ public sealed class DangoSkillId<T> : ListWrapper<T> where T : struct {
 
     [CustomSorter(typeof(ButtonSorter))]
     [DisplayName("Value")]
-    public string Value_button => DataHelper.DANGO_SKILL_NAME_LOOKUP[Global.locale].TryGet((uint) Convert.ChangeType(Value, TypeCode.UInt32)).ToStringWithId(Value);
+    public string Value_button => DataHelper.SKILL_NAME_LOOKUP[Global.locale].TryGet((uint) Convert.ChangeType(Value, TypeCode.UInt32)).ToStringWithId(Value);
 
-    public DangoSkillId(int index, T value) {
+    public DataSourceWrapper(int index, T value) {
         Index = index;
         Value = value;
     }

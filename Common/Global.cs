@@ -50,7 +50,8 @@ public static class Global {
         {
             LangIndex.eng, new() {
                 {"Hyakuryu", "Rampage"},
-                {"Takumi", "Handicraft"}
+                {"Takumi", "Handicraft"},
+                {"Hagitori", "Carve"}
             }
         }
     };

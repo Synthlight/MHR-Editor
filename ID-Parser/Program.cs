@@ -9,6 +9,11 @@ using Newtonsoft.Json;
 namespace MHR_Editor.ID_Parser;
 
 public static class Program {
+    
+    public const           string                     BASE_PROJ_PATH   = @"..\..\..";
+    public const           string                     STRUCT_JSON_PATH = @"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json";
+    public const           string                     PAK_FOLDER_PATH  = @"V:\MHR\re_chunk_000";
+
     private static readonly List<Tuple<string, string>> NAME_DESC = new() {
         new("Name", "NAME"),
         new("Explain", "DESC"),
@@ -25,19 +30,19 @@ public static class Program {
     }
 
     private static void ParseStructInfo() {
-        var structJson = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(@"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json"))!;
+        var structJson = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(STRUCT_JSON_PATH))!;
         var structInfo = new Dictionary<uint, StructJson>();
         foreach (var (key, value) in structJson) {
             var hash = uint.Parse(key, NumberStyles.HexNumber);
             structInfo[hash] = value;
         }
-        File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\STRUCT_INFO.json", JsonConvert.SerializeObject(structInfo));
+        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\STRUCT_INFO.json", JsonConvert.SerializeObject(structInfo));
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractItemInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\System\ContentsIdSystem\Item\Normal\Item{@in}.msg.17")
+            var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\System\ContentsIdSystem\Item\Normal\Item{@in}.msg.17")
                          .GetLangIdMap(SubCategoryType.I_Normal, true);
 
             if (@in == "Name") {
@@ -45,7 +50,7 @@ public static class Program {
                 Debug.Assert(potion == "Potion");
             }
 
-            File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\ITEM_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ITEM_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }
 
@@ -57,7 +62,7 @@ public static class Program {
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in types) {
                 var enumType = Enum.Parse<SubCategoryType>($"A_{type}");
-                var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Armor\{type}\A_{type}_{@in}.msg.17")
+                var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Armor\{type}\A_{type}_{@in}.msg.17")
                              .GetLangIdMap(enumType, false);
                 msgLists.Add(msg);
             }
@@ -68,27 +73,27 @@ public static class Program {
                 Debug.Assert(kamuraHeadScarf == "Kamura Head Scarf");
             }
 
-            File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\ARMOR_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ARMOR_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractSkillInfo() {
-        var msg = MSG.Read(@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name.msg.17")
+        var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name.msg.17")
                      .GetLangIdMap(SubCategoryType.C_Unclassified, false);
 
         var attackBoost = msg[Global.LangIndex.eng][1];
         Debug.Assert(attackBoost == "Attack Boost");
 
-        File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
-        msg = MSG.Read(@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name.msg.17")
+        msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name.msg.17")
                  .GetLangIdMap(SubCategoryType.C_Unclassified, false);
-        File.WriteAllText(@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\RAMPAGE_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\RAMPAGE_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
-        msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name.msg.17")
+        msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name.msg.17")
                  .GetLangIdMap(SubCategoryType.C_Unclassified, false);
-        File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\DANGO_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DANGO_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -99,12 +104,12 @@ public static class Program {
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in types) {
                 var enumType = Enum.Parse<SubCategoryType>($"W_{type}");
-                var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}.msg.17")
+                var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}.msg.17")
                              .GetLangIdMap(enumType, false);
                 msgLists.Add(msg);
             }
             if (@in == "Name") {
-                var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Weapon\Insect\IG_Insect_{@in}.msg.17")
+                var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\Insect\IG_Insect_{@in}.msg.17")
                              .GetLangIdMap(SubCategoryType.W_Insect, false);
                 msgLists.Add(msg);
             }
@@ -115,25 +120,25 @@ public static class Program {
                 Debug.Assert(busterSword1 == "Buster Sword I");
             }
 
-            File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\WEAPON_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\WEAPON_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractDecorationInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Player\Equip\Decorations\Decorations_{@in}.msg.17")
+            var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Equip\Decorations\Decorations_{@in}.msg.17")
                          .GetLangIdMap(SubCategoryType.C_Unclassified, false);
-            File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractDangoInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = MSG.Read($@"V:\MHR\re_chunk_000\natives\STM\data\Define\Lobby\Facility\Kitchen\Dango_{@in}.msg.17")
+            var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Lobby\Facility\Kitchen\Dango_{@in}.msg.17")
                          .GetLangIdMap(SubCategoryType.C_Unclassified, false);
-            File.WriteAllText($@"R:\Games\Monster Hunter Rise\MHR-Editor\Data\Assets\DANGO_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DANGO_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }
 }

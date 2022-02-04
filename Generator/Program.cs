@@ -8,7 +8,7 @@ namespace MHR_Editor.Generator;
 
 public static class Program {
     //public const           string                     BASE_GEN_PATH    = @"C:\Temp\Gen"; //@"R:\Games\Monster Hunter Rise\MHR-Editor\Generated";
-    public const           string                     BASE_GEN_PATH    = @"R:\Games\Monster Hunter Rise\MHR-Editor\Generated";
+    public const           string                     BASE_GEN_PATH    = @"..\..\..\Generated";
     public const           string                     ENUM_GEN_PATH    = $@"{BASE_GEN_PATH}\Enums";
     public const           string                     STRUCT_GEN_PATH  = $@"{BASE_GEN_PATH}\Structs";
     public const           string                     STRUCT_JSON_PATH = @"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json";

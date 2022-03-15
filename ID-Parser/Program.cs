@@ -9,10 +9,9 @@ using Newtonsoft.Json;
 namespace MHR_Editor.ID_Parser;
 
 public static class Program {
-    
-    public const           string                     BASE_PROJ_PATH   = @"..\..\..";
-    public const           string                     STRUCT_JSON_PATH = @"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json";
-    public const           string                     PAK_FOLDER_PATH  = @"V:\MHR\re_chunk_000";
+    public const string BASE_PROJ_PATH   = @"..\..\..";
+    public const string STRUCT_JSON_PATH = @"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json";
+    public const string PAK_FOLDER_PATH  = @"V:\MHR\re_chunk_000";
 
     private static readonly List<Tuple<string, string>> NAME_DESC = new() {
         new("Name", "NAME"),
@@ -27,6 +26,8 @@ public static class Program {
         ExtractWeaponInfo();
         ExtractDecorationInfo();
         ExtractDangoInfo();
+        ExtractDogInfo();
+        ExtractCatInfo();
     }
 
     private static void ParseStructInfo() {
@@ -139,6 +140,42 @@ public static class Program {
             var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Lobby\Facility\Kitchen\Dango_{@in}.msg.17")
                          .GetLangIdMap(SubCategoryType.C_Unclassified, false);
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DANGO_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+        }
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractDogInfo() {
+        var types = new List<string> {"Chest", "Head"};
+        foreach (var (@in, @out) in NAME_DESC) {
+            var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(types.Count);
+            // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var type in types) {
+                var enumType = Enum.Parse<SubCategoryType>($"OtArmor_Dog_{type}");
+                var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtDogArmor_{type}_{@in}.msg.17")
+                             .GetLangIdMap(enumType, false);
+                msgLists.Add(msg);
+            }
+            var result = msgLists.MergeDictionaries();
+
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DOG_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
+        }
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractCatInfo() {
+        var types = new List<string> {"Chest", "Head"};
+        foreach (var (@in, @out) in NAME_DESC) {
+            var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(types.Count);
+            // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var type in types) {
+                var enumType = Enum.Parse<SubCategoryType>($"OtArmor_Airou_{type}");
+                var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtAirouArmor_{type}_{@in}.msg.17")
+                             .GetLangIdMap(enumType, false);
+                msgLists.Add(msg);
+            }
+            var result = msgLists.MergeDictionaries();
+
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\CAT_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }
     }
 }

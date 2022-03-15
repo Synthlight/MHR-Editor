@@ -28,6 +28,7 @@ public static class Program {
         ExtractDangoInfo();
         ExtractDogInfo();
         ExtractCatInfo();
+        ExtractCatDogWeaponInfo();
     }
 
     private static void ParseStructInfo() {
@@ -176,6 +177,18 @@ public static class Program {
             var result = msgLists.MergeDictionaries();
 
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\CAT_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
+        }
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractCatDogWeaponInfo() {
+        foreach (var (@in, @out) in NAME_DESC) {
+            var catMsg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeapon_{@in}.msg.17")
+                            .GetLangIdMap(SubCategoryType.OtWeapon_Dog, false);
+            var dogMsg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtAirouWeapon_{@in}.msg.17")
+                            .GetLangIdMap(SubCategoryType.OtWeapon_Airou, false);
+            var result = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>> {catMsg, dogMsg}.MergeDictionaries();
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\CAT_DOG_WEAPON_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }
     }
 }

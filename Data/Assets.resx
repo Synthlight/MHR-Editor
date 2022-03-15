@@ -127,6 +127,12 @@
   <data name="CAT_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\cat_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="CAT_DOG_WEAPON_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\cat_dog_weapon_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CAT_DOG_WEAPON_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\cat_dog_weapon_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="CAT_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\cat_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

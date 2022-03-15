@@ -13,6 +13,8 @@ public static class DataHelper {
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> ARMOR_DESC_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> CAT_NAME_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> CAT_DESC_LOOKUP;
+    public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> CAT_DOG_WEAPON_NAME_LOOKUP;
+    public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> CAT_DOG_WEAPON_DESC_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> DANGO_NAME_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> DANGO_DESC_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> DANGO_SKILL_NAME_LOOKUP;

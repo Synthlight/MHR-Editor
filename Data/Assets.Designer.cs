@@ -93,6 +93,26 @@ namespace MHR_Editor.Data {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] CAT_DOG_WEAPON_DESC_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("CAT_DOG_WEAPON_DESC_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] CAT_DOG_WEAPON_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("CAT_DOG_WEAPON_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] CAT_NAME_LOOKUP {
             get {
                 object obj = ResourceManager.GetObject("CAT_NAME_LOOKUP", resourceCulture);

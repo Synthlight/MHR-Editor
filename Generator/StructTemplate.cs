@@ -80,7 +80,7 @@ public class StructTemplate {
 
         while (newName.StartsWith('_')) newName = newName[1..]; // Remove the leading '_'.
         while (newName.EndsWith('_')) newName   = newName[..1]; // Remove the trailing '_'.
-        while (newName.EndsWith("k__BackingField")) newName = newName.Substring(1,newName.LastIndexOf('>')); // Remove the k__BackingField.
+        while (newName.EndsWith("k__BackingField")) newName = newName.Substring(1,newName.LastIndexOf('>')-1); // Remove the k__BackingField.
 
         newName = newName.ToConvertedTypeName(true);
         if (newName == "Index") newName = "_Index";

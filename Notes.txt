@@ -8,3 +8,15 @@ Multi-struct mode:
             If it has multiple field types, load in multi-struct.
 
             This would be more 'correct', but be much more complicated.
+
+
+
+Jumbled data:
+    natives\STM\data\Define\Common\HunterRecord\AchievementUserDataAsset.user.2
+
+Crashes:
+    natives\STM\data\Define\Common\HunterNote\*
+    (Uses strings.)
+
+Needs multi-struct support:
+    natives\STM\data\Define\Common\HunterNote

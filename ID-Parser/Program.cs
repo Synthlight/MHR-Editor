@@ -18,6 +18,8 @@ public static class Program {
         new("Explain", "DESC"),
     };
 
+    private const string MR = "{{{MR}}}"; // To find/replace with either nothing or `_MR` when parsing paired files.
+
     public static void Main() {
         ParseStructInfo();
         ExtractItemInfo();
@@ -38,21 +40,42 @@ public static class Program {
             var hash = uint.Parse(key, NumberStyles.HexNumber);
             structInfo[hash] = value;
         }
-        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\STRUCT_INFO.json", JsonConvert.SerializeObject(structInfo));
+        //File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\STRUCT_INFO.json", JsonConvert.SerializeObject(structInfo, Formatting.Indented));
+    }
+
+    private static Dictionary<Global.LangIndex, Dictionary<uint, string>> GetMergedMrTexts(string path, SubCategoryType type, bool startAtOne, uint offsetToAdd, bool addAfter = false) {
+        var msg = MSG.Read(path.Replace(MR, ""))
+                     .GetLangIdMap(type, startAtOne);
+        var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(2) {
+            msg,
+            MSG.Read(path.Replace(MR, "_MR"))
+               .GetLangIdMap(type, startAtOne, addAfter ? (uint) msg[0].Count : offsetToAdd)
+        };
+        try {
+            return msgLists.MergeDictionaries();
+        } catch (ArgumentException) {
+            foreach (var pair in msg) {
+                var firstId  = msgLists[1][pair.Key].Keys.First();
+                var toRemove = pair.Value.Where(kvp => kvp.Key >= firstId).Select(x => x.Key).ToList();
+                foreach (var o in toRemove) {
+                    pair.Value.Remove(o);
+                }
+            }
+            return msgLists.MergeDictionaries();
+        }
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractItemInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\System\ContentsIdSystem\Item\Normal\Item{@in}.msg.17")
-                         .GetLangIdMap(SubCategoryType.I_Normal, true);
+            var result = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\System\ContentsIdSystem\Item\Normal\Item{@in}{MR}.msg.17", SubCategoryType.I_Normal, true, 2000);
 
             if (@in == "Name") {
-                var potion = msg[Global.LangIndex.eng][0x4100006];
+                var potion = result[Global.LangIndex.eng][0x4100006];
                 Debug.Assert(potion == "Potion");
             }
 
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ITEM_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ITEM_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }
     }
 
@@ -64,9 +87,7 @@ public static class Program {
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in types) {
                 var enumType = Enum.Parse<SubCategoryType>($"A_{type}");
-                var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Armor\{type}\A_{type}_{@in}.msg.17")
-                             .GetLangIdMap(enumType, false);
-                msgLists.Add(msg);
+                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Armor\{type}\A_{type}_{@in}{MR}.msg.17", enumType, false, 300));
             }
             var result = msgLists.MergeDictionaries();
 
@@ -81,20 +102,19 @@ public static class Program {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractSkillInfo() {
-        var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name.msg.17")
-                     .GetLangIdMap(SubCategoryType.C_Unclassified, false);
+        var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 120);
 
         var attackBoost = msg[Global.LangIndex.eng][1];
         Debug.Assert(attackBoost == "Attack Boost");
 
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
-        msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name.msg.17")
-                 .GetLangIdMap(SubCategoryType.C_Unclassified, false);
+        // TODO: Figure out how the rest of these merge into the ID lists.
+
+        msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\RAMPAGE_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
-        msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name.msg.17")
-                 .GetLangIdMap(SubCategoryType.C_Unclassified, false);
+        msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DANGO_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
     }
 
@@ -106,14 +126,10 @@ public static class Program {
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in types) {
                 var enumType = Enum.Parse<SubCategoryType>($"W_{type}");
-                var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}.msg.17")
-                             .GetLangIdMap(enumType, false);
-                msgLists.Add(msg);
+                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}{MR}.msg.17", enumType, false, 300));
             }
             if (@in == "Name") {
-                var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\Insect\IG_Insect_{@in}.msg.17")
-                             .GetLangIdMap(SubCategoryType.W_Insect, false);
-                msgLists.Add(msg);
+                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\Insect\IG_Insect_{@in}{MR}.msg.17", SubCategoryType.W_Insect, false, 100));
             }
             var result = msgLists.MergeDictionaries();
 
@@ -129,8 +145,7 @@ public static class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractDecorationInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Equip\Decorations\Decorations_{@in}.msg.17")
-                         .GetLangIdMap(SubCategoryType.C_Unclassified, false);
+            var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Equip\Decorations\Decorations_{@in}{MR}.msg.17", SubCategoryType.C_Unclassified, false, 109);
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }
@@ -138,8 +153,7 @@ public static class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractDangoInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Lobby\Facility\Kitchen\Dango_{@in}.msg.17")
-                         .GetLangIdMap(SubCategoryType.C_Unclassified, false);
+            var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Lobby\Facility\Kitchen\Dango_{@in}{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DANGO_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }
@@ -152,9 +166,7 @@ public static class Program {
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in types) {
                 var enumType = Enum.Parse<SubCategoryType>($"OtArmor_Dog_{type}");
-                var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtDogArmor_{type}_{@in}.msg.17")
-                             .GetLangIdMap(enumType, false);
-                msgLists.Add(msg);
+                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtDogArmor_{type}_{@in}{MR}.msg.17", enumType, false, 200));
             }
             var result = msgLists.MergeDictionaries();
 
@@ -170,9 +182,7 @@ public static class Program {
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in types) {
                 var enumType = Enum.Parse<SubCategoryType>($"OtArmor_Airou_{type}");
-                var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtAirouArmor_{type}_{@in}.msg.17")
-                             .GetLangIdMap(enumType, false);
-                msgLists.Add(msg);
+                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtAirouArmor_{type}_{@in}{MR}.msg.17", enumType, false, 200));
             }
             var result = msgLists.MergeDictionaries();
 
@@ -183,10 +193,8 @@ public static class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractCatDogWeaponInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var catMsg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeapon_{@in}.msg.17")
-                            .GetLangIdMap(SubCategoryType.OtWeapon_Dog, false);
-            var dogMsg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtAirouWeapon_{@in}.msg.17")
-                            .GetLangIdMap(SubCategoryType.OtWeapon_Airou, false);
+            var catMsg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeapon_{@in}{MR}.msg.17", SubCategoryType.OtWeapon_Dog, false, 200);
+            var dogMsg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtAirouWeapon_{@in}{MR}.msg.17", SubCategoryType.OtWeapon_Airou, false, 200);
             var result = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>> {catMsg, dogMsg}.MergeDictionaries();
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\CAT_DOG_WEAPON_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }

@@ -133,10 +133,10 @@ public class MSG {
         return result;
     }
 
-    public Dictionary<uint, string> GetIdMap(Global.LangIndex lang, SubCategoryType type, bool startAtOne) {
+    public Dictionary<uint, string> GetIdMap(Global.LangIndex lang, SubCategoryType type, bool startAtOne, uint idBaseNum) {
         var dict = new Dictionary<uint, string>(subEntries.Length);
         for (var i = startAtOne ? 1 : 0; i < subEntries.Length; i++) {
-            var id   = (uint) type | (uint) (i - (startAtOne ? 1 : 0));
+            var id   = idBaseNum + ((uint) type | (uint) (i - (startAtOne ? 1 : 0)));
             var text = subEntries[i].refs[(int) lang];
             if (text == "") continue;
             if (text.Contains("#Rejected#")) text = "#Rejected#";
@@ -148,10 +148,10 @@ public class MSG {
         return dict;
     }
 
-    public Dictionary<Global.LangIndex, Dictionary<uint, string>> GetLangIdMap(SubCategoryType type, bool startAtOne) {
+    public Dictionary<Global.LangIndex, Dictionary<uint, string>> GetLangIdMap(SubCategoryType type, bool startAtOne, uint idBaseNum = 0) {
         var dict = new Dictionary<Global.LangIndex, Dictionary<uint, string>>(Global.LANGUAGES.Count);
         foreach (var lang in Global.LANGUAGES) {
-            dict[lang] = GetIdMap(lang, type, startAtOne);
+            dict[lang] = GetIdMap(lang, type, startAtOne, idBaseNum);
         }
         return dict;
     }

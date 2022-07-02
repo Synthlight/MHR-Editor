@@ -1,0 +1,8 @@
+﻿using System.Collections.ObjectModel;
+using MHR_Editor.Common.Models.List_Wrappers;
+
+namespace MHR_Editor.Common.Models.Game;
+
+public interface IRampageSlots {
+    public ObservableCollection<GenericWrapper<uint>> HyakuryuSlotNumList { get; set; }
+}

@@ -88,7 +88,9 @@ public partial class MainWindow {
         SetupKeybind(new KeyGesture(Key.S, ModifierKeys.Control), (_,                      _) => Save());
         SetupKeybind(new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift), (_, _) => Save(true));
 
-        btn_test.Visibility = Debugger.IsAttached ? Visibility.Visible : Visibility.Collapsed;
+        var visibility = File.Exists("enable_cheats") ? Visibility.Visible : Visibility.Collapsed;
+        btn_test.Visibility       = visibility;
+        btn_all_cheats.Visibility = visibility;
 
         UpdateCheck.Run(this);
 

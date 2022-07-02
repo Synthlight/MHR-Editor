@@ -2,6 +2,7 @@
 using MHR_Editor.Common;
 using MHR_Editor.Common.Attributes;
 using MHR_Editor.Common.Data;
+using MHR_Editor.Common.Models.Game;
 
 namespace MHR_Editor.Models.Structs;
 
@@ -9,7 +10,7 @@ namespace MHR_Editor.Models.Structs;
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 [SuppressMessage("ReSharper", "UnusedType.Global")]
-public partial class Snow_equip_InsectGlaiveBaseUserData_Param {
+public partial class Snow_equip_InsectGlaiveBaseUserData_Param : IMeleeWeapon {
     [SortOrder(50)]
     public string Name => DataHelper.WEAPON_NAME_LOOKUP[Global.locale].TryGet(Id);
 

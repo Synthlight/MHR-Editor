@@ -29,6 +29,9 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>Assets.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Windows\MainWindow.xaml.cheats.cs">
+			<DependentUpon>MainWindow.xaml</DependentUpon>
+		</Compile>
 		<Compile Update="Windows\MainWindow.xaml.buttons.cs">
 			<DependentUpon>MainWindow.xaml</DependentUpon>
 		</Compile>

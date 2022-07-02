@@ -83,6 +83,16 @@ namespace MHR_Editor.Data {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] ARMOR_SERIES_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("ARMOR_SERIES_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] CAT_DESC_LOOKUP {
             get {
                 object obj = ResourceManager.GetObject("CAT_DESC_LOOKUP", resourceCulture);

@@ -24,6 +24,7 @@ public static class Program {
         ParseStructInfo();
         ExtractItemInfo();
         ExtractArmorInfo();
+        ExtractArmorSeriesInfo();
         ExtractSkillInfo();
         ExtractWeaponInfo();
         ExtractDecorationInfo();
@@ -98,6 +99,12 @@ public static class Program {
 
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ARMOR_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractArmorSeriesInfo() {
+        var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 300);
+        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ARMOR_SERIES_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]

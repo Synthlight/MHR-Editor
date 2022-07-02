@@ -11,6 +11,7 @@ public static class DataHelper {
     public static          Dictionary<uint, StructJson>                           STRUCT_INFO;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> ARMOR_NAME_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> ARMOR_DESC_LOOKUP;
+    public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> ARMOR_SERIES_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> CAT_NAME_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> CAT_DESC_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> CAT_DOG_WEAPON_NAME_LOOKUP;

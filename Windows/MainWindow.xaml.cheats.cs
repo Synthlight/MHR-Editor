@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows;
+using MHR_Editor.Common.Models;
 using MHR_Editor.Common.Models.Game;
 using MHR_Editor.Models.Structs;
 
@@ -11,12 +16,108 @@ public partial class MainWindow {
         Btn_max_skills_Click(sender, e);
     }
 
+    private static readonly string[] WEAPON_TYPES = new[] {"Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"};
+
+    private IEnumerable<string> GetAllWeaponFileBasePaths() {
+        return WEAPON_TYPES.Select(s => @$"\natives\STM\data\Define\Player\Weapon\{s}\{s}BaseData.user.2").ToList();
+    }
+
+    private void Btn_create_cheat_mods_Click(object sender, RoutedEventArgs e) {
+        const string inPath        = @"V:\MHR\re_chunk_000";
+        const string outPath       = @"R:\Games\Monster Hunter Rise\Mods\Cheat Mods";
+        const string version       = "v1.0";
+        const string armorBasePath = @"\natives\STM\data\Define\Player\Armor\ArmorBaseData.user.2";
+        const string gemBasePath   = @"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsBaseData.user.2";
+
+        var cheatMods = new CheatMod[] {
+            new() {
+                name   = "Armor With Max Slots Only",
+                files  = new[] {armorBasePath},
+                action = MaxSlots
+            },
+            new() {
+                name   = "Armor With Max Skills Only",
+                files  = new[] {armorBasePath},
+                action = MaxSkills
+            },
+            new() {
+                name  = "Armor With Max Slots & Skills",
+                files = new[] {armorBasePath},
+                action = data => {
+                    MaxSlots(data);
+                    MaxSkills(data);
+                }
+            },
+            new() {
+                name   = "Weapons With Max Slots Only",
+                files  = GetAllWeaponFileBasePaths(),
+                action = MaxSlots
+            },
+            new() {
+                name   = "Weapons With Max Sharpness Only",
+                files  = GetAllWeaponFileBasePaths(),
+                action = MaxSharpness
+            },
+            new() {
+                name  = "Weapons With Max Slots & Sharpness",
+                files = GetAllWeaponFileBasePaths(),
+                action = data => {
+                    MaxSlots(data);
+                    MaxSharpness(data);
+                }
+            },
+            new() {
+                name   = "One Gem to Max Skill",
+                files  = new[] {gemBasePath},
+                action = MaxSkills
+            },
+            new() {
+                name = "All In One",
+                files = GetAllWeaponFileBasePaths()
+                        .Append(armorBasePath)
+                        .Append(gemBasePath),
+                action = data => {
+                    MaxSlots(data);
+                    MaxSharpness(data);
+                    MaxSkills(data);
+                }
+            }
+        };
+
+        foreach (var cheatMod in cheatMods) {
+            var cheatPath = @$"{outPath}\{cheatMod.name}";
+            Directory.CreateDirectory(cheatPath);
+
+            var modInfo = new StringWriter();
+            modInfo.WriteLine($"name={cheatMod.name}");
+            modInfo.WriteLine($"version={version}");
+            modInfo.WriteLine("description=A cheat mod.");
+            modInfo.WriteLine("author=LordGregory");
+            File.WriteAllText(@$"{cheatPath}\modinfo.ini", modInfo.ToString());
+
+            foreach (var modFile in cheatMod.files) {
+                var sourceFile = @$"{inPath}\{modFile}";
+                var outFile    = @$"{cheatPath}\{modFile}";
+                Directory.CreateDirectory(Path.GetDirectoryName(outFile)!);
+
+                var dataFile = ReDataFile.Read(sourceFile);
+                var data     = dataFile.rsz.objectData;
+                cheatMod.action.Invoke(data);
+                dataFile.Write(outFile);
+            }
+        }
+    }
+
     private void Btn_max_sharpness_Click(object sender, RoutedEventArgs e) {
         if (file == null) return;
 
-        foreach (var obj in file.rsz.objectData) {
+        MaxSharpness(file.rsz.objectData);
+    }
+
+    private void MaxSharpness(List<RszObject> rszObjectData) {
+        foreach (var obj in rszObjectData) {
             switch (obj) {
-                case IMeleeWeapon weapon:
+                case ISharpness weapon:
                     weapon.SharpnessValList[0].Value = 10;
                     weapon.SharpnessValList[1].Value = 10;
                     weapon.SharpnessValList[2].Value = 10;
@@ -35,7 +136,11 @@ public partial class MainWindow {
     private void Btn_max_slots_Click(object sender, RoutedEventArgs e) {
         if (file == null) return;
 
-        foreach (var obj in file.rsz.objectData) {
+        MaxSlots(file.rsz.objectData);
+    }
+
+    private void MaxSlots(List<RszObject> rszObjectData) {
+        foreach (var obj in rszObjectData) {
             switch (obj) {
                 case Snow_data_ArmorBaseUserData_Param armor:
                     armor.DecorationsNumList[0].Value =
@@ -43,15 +148,17 @@ public partial class MainWindow {
                             armor.DecorationsNumList[2].Value = 0;
                     armor.DecorationsNumList[3].Value = 3;
                     break;
-                case IMeleeWeapon weapon:
-                    weapon.SlotNumList[0].Value =
-                        weapon.SlotNumList[1].Value =
-                            weapon.SlotNumList[2].Value = 0;
-                    weapon.SlotNumList[3].Value = 3;
-                    weapon.HyakuryuSlotNumList[0].Value =
-                        weapon.HyakuryuSlotNumList[1].Value = 0;
-                    weapon.HyakuryuSlotNumList[2].Value = 1;
-                    break;
+            }
+            if (obj is ISlots slots) {
+                slots.SlotNumList[0].Value =
+                    slots.SlotNumList[1].Value =
+                        slots.SlotNumList[2].Value = 0;
+                slots.SlotNumList[3].Value = 3;
+            }
+            if (obj is IRampageSlots rampageSlots) {
+                rampageSlots.HyakuryuSlotNumList[0].Value =
+                    rampageSlots.HyakuryuSlotNumList[1].Value = 0;
+                rampageSlots.HyakuryuSlotNumList[2].Value = 1;
             }
         }
     }
@@ -59,7 +166,11 @@ public partial class MainWindow {
     private void Btn_max_skills_Click(object sender, RoutedEventArgs e) {
         if (file == null) return;
 
-        foreach (var obj in file.rsz.objectData) {
+        MaxSkills(file.rsz.objectData);
+    }
+
+    private void MaxSkills(List<RszObject> rszObjectData) {
+        foreach (var obj in rszObjectData) {
             switch (obj) {
                 case Snow_data_ArmorBaseUserData_Param armor:
                     foreach (var level in armor.SkillLvList) {
@@ -71,5 +182,11 @@ public partial class MainWindow {
                     break;
             }
         }
+    }
+
+    public struct CheatMod {
+        public string                  name;
+        public IEnumerable<string>     files;
+        public Action<List<RszObject>> action;
     }
 }

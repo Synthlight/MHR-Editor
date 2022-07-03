@@ -105,6 +105,10 @@
                                     HorizontalAlignment="Left"
                                     Click="Btn_max_skills_Click"
                                     Content="Max Skills"/>
+                            <Button Margin="0,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    Click="Btn_create_cheat_mods_Click"
+                                    Content="- Create Cheat Mods"/>
                         </StackPanel>
                     </xctk:SplitButton.DropDownContent>
                 </xctk:SplitButton>

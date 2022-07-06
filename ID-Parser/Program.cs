@@ -103,14 +103,16 @@ public static class Program {
     private static void ExtractArmorSeriesInfo() {
         var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 300);
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ARMOR_SERIES_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+
+        CreateConstantsFile(msg[Global.LangIndex.eng], "ArmorConstants");
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractSkillInfo() {
         var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 112);
 
-        var attackBoost = msg[Global.LangIndex.eng][1];
-        Debug.Assert(attackBoost == "Attack Boost");
+        var engSkills = msg[Global.LangIndex.eng];
+        Debug.Assert(engSkills[1] == "Attack Boost");
 
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
@@ -121,6 +123,8 @@ public static class Program {
 
         msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DANGO_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+
+        CreateConstantsFile(engSkills, "SkillConstants");
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -131,7 +135,11 @@ public static class Program {
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in types) {
                 var enumType = Enum.Parse<SubCategoryType>($"W_{type}");
-                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}{MR}.msg.17", enumType, false, 300));
+                var msg      = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}{MR}.msg.17", enumType, false, 300);
+                msgLists.Add(msg);
+                if (@in == "Name") {
+                    CreateConstantsFile(msg[Global.LangIndex.eng], $"{type}Constants");
+                }
             }
             if (@in == "Name") {
                 msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\Insect\IG_Insect_{@in}{MR}.msg.17", SubCategoryType.W_Insect, false, 100));
@@ -203,5 +211,36 @@ public static class Program {
             var result = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>> {catMsg, dogMsg}.MergeDictionaries();
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\CAT_DOG_WEAPON_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }
+    }
+
+    private static void CreateConstantsFile(Dictionary<uint, string> engDict, string className) {
+        using var writer = new StreamWriter(File.Create($@"{BASE_PROJ_PATH}\Constants\{className}.cs"));
+        writer.WriteLine("using System.Diagnostics.CodeAnalysis;");
+        writer.WriteLine("");
+        writer.WriteLine("namespace MHR_Editor.Constants;");
+        writer.WriteLine("");
+        writer.WriteLine("[SuppressMessage(\"ReSharper\", \"InconsistentNaming\")]");
+        writer.WriteLine("[SuppressMessage(\"ReSharper\", \"UnusedMember.Global\")]");
+        writer.WriteLine("[SuppressMessage(\"ReSharper\", \"IdentifierTypo\")]");
+        writer.WriteLine($"public static class {className} {{");
+        var namesUsed = new List<string?>(engDict.Count);
+        foreach (var (key, name) in engDict) {
+            if (name.ToLower() == "#rejected#") continue;
+            var constName = name.ToUpper()
+                                .Replace("'", "")
+                                .Replace("\"", "")
+                                .Replace(".", "")
+                                .Replace("(", "")
+                                .Replace(")", "")
+                                .Replace("/", "_")
+                                .Replace("&", "AND")
+                                .Replace("+", "_PLUS")
+                                .Replace('-', '_')
+                                .Replace(' ', '_');
+            if (namesUsed.Contains(constName)) continue;
+            namesUsed.Add(constName);
+            writer.WriteLine($"    public const uint {constName} = {key};");
+        }
+        writer.WriteLine("}");
     }
 }

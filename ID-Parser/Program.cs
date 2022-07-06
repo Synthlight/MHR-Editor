@@ -45,17 +45,15 @@ public static class Program {
     }
 
     private static Dictionary<Global.LangIndex, Dictionary<uint, string>> GetMergedMrTexts(string path, SubCategoryType type, bool startAtOne, uint offsetToAdd, bool addAfter = false) {
-        var msg = MSG.Read(path.Replace(MR, ""))
-                     .GetLangIdMap(type, startAtOne);
-        var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(2) {
-            msg,
-            MSG.Read(path.Replace(MR, "_MR"))
-               .GetLangIdMap(type, startAtOne, addAfter ? (uint) msg[0].Count : offsetToAdd)
-        };
+        var baseList = MSG.Read(path.Replace(MR, ""))
+                          .GetLangIdMap(type, startAtOne);
+        var mrList = MSG.Read(path.Replace(MR, "_MR"))
+                        .GetLangIdMap(type, startAtOne, addAfter ? (uint) baseList[0].Count : offsetToAdd);
+        var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(2) {baseList, mrList};
         try {
             return msgLists.MergeDictionaries();
         } catch (ArgumentException) {
-            foreach (var pair in msg) {
+            foreach (var pair in baseList) {
                 var firstId  = msgLists[1][pair.Key].Keys.First();
                 var toRemove = pair.Value.Where(kvp => kvp.Key >= firstId).Select(x => x.Key).ToList();
                 foreach (var o in toRemove) {
@@ -109,7 +107,7 @@ public static class Program {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractSkillInfo() {
-        var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 120);
+        var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 112);
 
         var attackBoost = msg[Global.LangIndex.eng][1];
         Debug.Assert(attackBoost == "Attack Boost");

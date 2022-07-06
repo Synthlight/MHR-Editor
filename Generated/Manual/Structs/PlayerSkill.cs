@@ -2,6 +2,7 @@
 using MHR_Editor.Common;
 using MHR_Editor.Common.Attributes;
 using MHR_Editor.Common.Data;
+using MHR_Editor.Models.Enums;
 
 namespace MHR_Editor.Models.Structs;
 
@@ -15,5 +16,9 @@ public partial class Snow_data_PlEquipSkillBaseUserData_Param {
 
     public override string ToString() {
         return Name;
+    }
+
+    public Snow_data_DataDef_PlEquipSkillId GetSkillEnum() {
+        return Enum.GetValues<Snow_data_DataDef_PlEquipSkillId>()[Index];
     }
 }

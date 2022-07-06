@@ -69,7 +69,7 @@ public static class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractItemInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var result = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\System\ContentsIdSystem\Item\Normal\Item{@in}{MR}.msg.17", SubCategoryType.I_Normal, true, 2000);
+            var result = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\System\ContentsIdSystem\Item\Normal\Item{@in}{MR}.msg.17", SubCategoryType.I_Normal, true, 2001);
 
             if (@in == "Name") {
                 var potion = result[Global.LangIndex.eng][0x4100006];

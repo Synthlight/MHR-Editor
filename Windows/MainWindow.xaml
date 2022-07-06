@@ -84,7 +84,7 @@
                         Orientation="Horizontal">
                 <Button Name="btn_wiki_dump" Margin="0,0,0,0"
                         HorizontalAlignment="Left"
-                        Click="Btn_dump_armor_Click"
+                        Click="Btn_wiki_dump_Click"
                         Content="Wiki Dump"/>
                 <xctk:SplitButton Name="btn_all_cheats"
                                   Margin="8,0,0,0"

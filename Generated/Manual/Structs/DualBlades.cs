@@ -2,7 +2,7 @@
 using MHR_Editor.Common;
 using MHR_Editor.Common.Attributes;
 using MHR_Editor.Common.Data;
-using MHR_Editor.Common.Models.Game;
+using MHR_Editor.Generated.Models;
 
 namespace MHR_Editor.Models.Structs;
 

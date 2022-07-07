@@ -116,11 +116,10 @@ public static class Program {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractWeaponInfo() {
-        var types = new List<string> {"Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"};
         foreach (var (@in, @out) in NAME_DESC) {
-            var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(types.Count);
+            var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(Global.WEAPON_TYPES.Count);
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
-            foreach (var type in types) {
+            foreach (var type in Global.WEAPON_TYPES) {
                 var enumType = Enum.Parse<SubCategoryType>($"W_{type}");
                 var msg      = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}{MR}.msg.17", enumType, false, 300);
                 msgLists.Add(msg);

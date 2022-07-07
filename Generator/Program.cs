@@ -203,7 +203,7 @@ public static class Program {
     private static void FilterWhitelisted(bool useWhitelist) {
         if (!useWhitelist) return;
         ENUM_TYPES.Keys
-                  .Where(key => WHITELIST.Contains(key))
+                  .Where(key => WHITELIST.Contains(key) || key.Contains("ContentsIdSystem"))
                   .ToList()
                   .ForEach(key => ENUM_TYPES[key].useCount++);
         STRUCT_TYPES.Keys

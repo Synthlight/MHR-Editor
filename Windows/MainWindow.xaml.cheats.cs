@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using MHR_Editor.Common.Models;
-using MHR_Editor.Common.Models.Game;
+using MHR_Editor.Generated.Models;
 using MHR_Editor.Models.Structs;
 
 namespace MHR_Editor.Windows;

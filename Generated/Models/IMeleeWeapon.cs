@@ -1,4 +1,4 @@
-﻿namespace MHR_Editor.Common.Models.Game;
+﻿namespace MHR_Editor.Generated.Models;
 
 public interface IMeleeWeapon : IWeapon, ISlots, IRampageSlots, ISharpness {
 }

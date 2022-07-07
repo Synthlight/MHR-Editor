@@ -2,7 +2,6 @@
 using MHR_Editor.Common;
 using MHR_Editor.Common.Attributes;
 using MHR_Editor.Common.Data;
-using MHR_Editor.Generated;
 using MHR_Editor.Models.Enums;
 
 namespace MHR_Editor.Models.Structs;

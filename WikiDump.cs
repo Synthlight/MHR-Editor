@@ -4,6 +4,7 @@ using System.Linq;
 using MHR_Editor.Common;
 using MHR_Editor.Common.Data;
 using MHR_Editor.Common.Models;
+using MHR_Editor.Generated.Models;
 using MHR_Editor.Models.Enums;
 using MHR_Editor.Models.Structs;
 
@@ -16,6 +17,7 @@ namespace MHR_Editor {
             DumpArmor();
             DumpItems();
             DumpSkills();
+            DumpWeapons();
             DumpArmorIdToLayeredIdForLayeredProgressionMod();
         }
 
@@ -66,6 +68,24 @@ namespace MHR_Editor {
                 writer.WriteLine($"| {a.Id}" +
                                  $" | {a.GetSkillEnum()}" +
                                  $" | {a.Name} |");
+            }
+        }
+
+        public static void DumpWeapons() {
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var type in Global.WEAPON_TYPES) {
+                var weapon = ReDataFile.Read(IN_PATH + $@"\natives\STM\data\Define\Player\Weapon\{type}\{type}BaseData.user.2")
+                                       .rsz.objectData.OfType<IWeapon>();
+                using var writer = new StreamWriter(File.Create(OUT_PATH + $@"\{type}.md"));
+                foreach (var a in weapon.OrderBy(w => w.Id)) {
+                    if (a.ModelId == Snow_data_ParamEnum_WeaponModelId.None) continue;
+                    writer.WriteLine($"| {a.Id:X8}" +
+                                     $" | {a.GetWeaponEnum()}" +
+                                     $" | {(uint) a.ModelId:X8}" +
+                                     $" | {a.ModelId}" +
+                                     $" | {a.SortId}" +
+                                     $" | {a.Name} |");
+                }
             }
         }
 

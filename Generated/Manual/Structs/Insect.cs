@@ -2,6 +2,7 @@
 using MHR_Editor.Common;
 using MHR_Editor.Common.Attributes;
 using MHR_Editor.Common.Data;
+using MHR_Editor.Models.Enums;
 
 namespace MHR_Editor.Models.Structs;
 
@@ -18,5 +19,13 @@ public partial class Snow_equip_InsectBaseUserData_Param {
 
     public override string ToString() {
         return Name;
+    }
+
+    public Snow_data_ContentsIdSystem_WeaponId GetWeaponEnum() {
+        return (Snow_data_ContentsIdSystem_WeaponId) Id;
+    }
+
+    public uint GetWeaponId() {
+        return Id & BitMasks.ITEM_ID_BIT_MASK;
     }
 }

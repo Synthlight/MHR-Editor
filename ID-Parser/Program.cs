@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using MHR_Editor.Common;
 using MHR_Editor.Common.Models;
 using MHR_Editor.Generated.Enums;
@@ -9,9 +8,8 @@ using Newtonsoft.Json;
 namespace MHR_Editor.ID_Parser;
 
 public static class Program {
-    public const string BASE_PROJ_PATH   = @"..\..\..";
-    public const string STRUCT_JSON_PATH = @"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json";
-    public const string PAK_FOLDER_PATH  = @"V:\MHR\re_chunk_000";
+    public const string BASE_PROJ_PATH  = @"..\..\..";
+    public const string PAK_FOLDER_PATH = @"V:\MHR\re_chunk_000";
 
     private static readonly List<Tuple<string, string>> NAME_DESC = new() {
         new("Name", "NAME"),
@@ -21,7 +19,6 @@ public static class Program {
     private const string MR = "{{{MR}}}"; // To find/replace with either nothing or `_MR` when parsing paired files.
 
     public static void Main() {
-        ParseStructInfo();
         ExtractItemInfo();
         ExtractArmorInfo();
         ExtractArmorSeriesInfo();
@@ -32,16 +29,6 @@ public static class Program {
         ExtractDogInfo();
         ExtractCatInfo();
         ExtractCatDogWeaponInfo();
-    }
-
-    private static void ParseStructInfo() {
-        var structJson = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(STRUCT_JSON_PATH))!;
-        var structInfo = new Dictionary<uint, StructJson>();
-        foreach (var (key, value) in structJson) {
-            var hash = uint.Parse(key, NumberStyles.HexNumber);
-            structInfo[hash] = value;
-        }
-        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\STRUCT_INFO.json", JsonConvert.SerializeObject(structInfo, Formatting.Indented));
     }
 
     private static Dictionary<Global.LangIndex, Dictionary<uint, string>> GetMergedMrTexts(string path, SubCategoryType type, bool startAtOne, uint offsetToAdd, bool addAfter = false) {

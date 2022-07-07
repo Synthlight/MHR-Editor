@@ -1,26 +1,22 @@
-﻿namespace MHR_Editor.Generator;
+﻿using MHR_Editor.Generator.Models;
+
+namespace MHR_Editor.Generator;
 
 public class EnumTemplate {
-    public readonly  string       name;
-    public readonly  string       contents;
-    private readonly StreamWriter file;
+    public readonly EnumType enumType;
 
-    public EnumTemplate(string name, string contents) {
-        this.contents = contents.Replace("        ", "    ")
-                                .Replace("    }", "}");
-        this.name = name.ToConvertedTypeName();
-
-        var filename = $@"{Program.ENUM_GEN_PATH}\{this.name}.cs";
-        file = new(File.Open(filename, FileMode.Create, FileAccess.Write));
+    public EnumTemplate(EnumType enumType) {
+        this.enumType = enumType;
     }
 
     public void Generate() {
+        var       filename = $@"{Program.ENUM_GEN_PATH}\{enumType.name}.cs";
+        using var file     = new StreamWriter(File.Open(filename, FileMode.Create, FileAccess.Write));
+
         file.WriteLine("namespace MHR_Editor.Models.Enums;");
         file.WriteLine("");
-        file.Write($"public enum {name} : {Program.ENUM_TYPES[name]} ");
-        file.Write(contents);
+        file.Write($"public enum {enumType.name} : {enumType.type} ");
+        file.Write(enumType.Contents);
         file.Close();
-
-        Program.ENUM_NAMES.Add(name);
     }
 }

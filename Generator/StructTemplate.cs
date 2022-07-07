@@ -1,6 +1,7 @@
 ﻿using MHR_Editor.Common.Attributes;
 using MHR_Editor.Common.Data;
 using MHR_Editor.Common.Models;
+using MHR_Editor.Generator.Models;
 
 namespace MHR_Editor.Generator;
 
@@ -8,40 +9,42 @@ public class StructTemplate {
     public readonly  string                  hash;
     public readonly  StructJson              structInfo;
     private readonly string                  className;
-    private readonly string                  filename;
-    private readonly StreamWriter            file;
     private readonly Dictionary<string, int> usedNames    = new();
     private readonly List<ListForInit>       fieldsToInit = new();
     private          int                     sortOrder    = 1000;
 
-    public StructTemplate(string hash, StructJson structInfo) {
-        this.hash       = hash;
-        this.structInfo = structInfo;
-
-        className = structInfo.name!.ToConvertedTypeName();
-
-        filename = $@"{Program.STRUCT_GEN_PATH}\{className}.cs";
-        file     = new(File.Open(filename, FileMode.Create, FileAccess.Write));
+    public StructTemplate(StructType structType) {
+        hash       = structType.hash;
+        structInfo = structType.structInfo;
+        className  = structType.name;
     }
 
     public void Generate() {
-        WriteUsings();
-        WriteClassHeader();
+        var       filename = $@"{Program.STRUCT_GEN_PATH}\{className}.cs";
+        using var file     = new StreamWriter(File.Open(filename, FileMode.Create, FileAccess.Write));
+        WriteUsings(file);
+        WriteClassHeader(file);
         foreach (var field in structInfo.fields!) {
             if (field.name == null) continue;
-            var typeName = GetCSharpType(field);
-            if (typeName == null) continue;
-            WriteProperty(field, typeName);
+            var primitiveName = field.GetCSharpType();
+            if (primitiveName != null) {
+                WriteProperty(file, field, primitiveName);
+                continue;
+            }
+            var enumType = field.GetEnumType(); // No discernible difference between struct and enum here.
+            if (enumType != null && (Program.ENUM_TYPES.ContainsKey(enumType) || Program.STRUCT_TYPES.ContainsKey(enumType))) {
+                WriteProperty(file, field, enumType);
+            }
         }
-        WriteInit();
-        WritePreWrite();
-        WriteClassFooter();
+        WriteInit(file);
+        WritePreWrite(file);
+        WriteClassFooter(file);
         file.Close();
 
         if (usedNames.Count == 0) File.Delete(filename);
     }
 
-    private void WriteUsings() {
+    private void WriteUsings(TextWriter file) {
         file.WriteLine("using System.Collections.ObjectModel;");
         file.WriteLine("using System.ComponentModel;");
         file.WriteLine("using System.Diagnostics.CodeAnalysis;");
@@ -54,7 +57,7 @@ public class StructTemplate {
         file.WriteLine("using MHR_Editor.Models.Enums;");
     }
 
-    private void WriteClassHeader() {
+    private void WriteClassHeader(TextWriter file) {
         file.WriteLine("");
         file.WriteLine("#pragma warning disable CS8600");
         file.WriteLine("#pragma warning disable CS8601");
@@ -72,15 +75,14 @@ public class StructTemplate {
         file.WriteLine($"    public static readonly uint HASH = uint.Parse(\"{hash}\", NumberStyles.HexNumber);");
     }
 
-    private void WriteProperty(StructJson.Field field, string typeName) {
+    private void WriteProperty(TextWriter file, StructJson.Field field, string typeName) {
         var newName      = field.name!;
-        var enumType     = GetEnumType(field)?.Replace("[]", "");
+        var enumType     = field.GetEnumType()?.Replace("[]", "");
         var buttonType   = GetButtonType(field);
         var isObjectType = field.type == "Object";
 
         while (newName.StartsWith('_')) newName = newName[1..]; // Remove the leading '_'.
         while (newName.EndsWith('_')) newName   = newName[..1]; // Remove the trailing '_'.
-        while (newName.EndsWith("k__BackingField")) newName = newName.Substring(1,newName.LastIndexOf('>')-1); // Remove the k__BackingField.
 
         newName = newName.ToConvertedTypeName(true);
         if (newName == "Index") newName = "_Index";
@@ -142,7 +144,7 @@ public class StructTemplate {
         sortOrder += 100;
     }
 
-    private void WriteInit() {
+    private void WriteInit(TextWriter file) {
         if (fieldsToInit.Count == 0) return;
         file.WriteLine("");
         file.WriteLine("    protected override void Init() {");
@@ -160,7 +162,7 @@ public class StructTemplate {
         file.WriteLine("    }");
     }
 
-    private void WritePreWrite() {
+    private void WritePreWrite(TextWriter file) {
         if (fieldsToInit.Count == 0) return;
         file.WriteLine("");
         file.WriteLine("    protected override void PreWrite() {");
@@ -172,42 +174,8 @@ public class StructTemplate {
         file.WriteLine("    }");
     }
 
-    private void WriteClassFooter() {
+    private void WriteClassFooter(TextWriter file) {
         file.WriteLine("}");
-    }
-
-    private static string? GetCSharpType(StructJson.Field field) {
-        return field.type switch {
-            "Bool" => "bool",
-            "S8" => "sbyte",
-            "U8" => "byte",
-            "S16" => "short",
-            "U16" => "ushort",
-            "S32" => "int",
-            "U32" => "uint",
-            "S64" => "long",
-            "U64" => "ulong",
-            "F32" => "float",
-            "F64" => "double",
-            // TODO: Generate properties for the object type classes.
-            // The problem with this is some of them lead to `via.~` classes which we're skipping so that could be a problem.
-            //"Object" => GetEnumType(field),
-            //"UserData" => GetEnumType(field),
-            //"Color" => GetEnumType(field),
-            _ => null
-        };
-    }
-
-    private static string? GetEnumType(StructJson.Field field) {
-        if (field.name == "_Id"
-            || Program.ENUM_NAMES.Contains(field.name!)
-            || field.originalType == null
-            || field.originalType.Contains('<')
-            || field.originalType.Contains('`')
-            || field.originalType.StartsWith("System")
-            || !field.originalType.StartsWith("snow")) return null;
-
-        return field.originalType.ToConvertedTypeName();
     }
 
     private static DataSourceType? GetButtonType(StructJson.Field field) {

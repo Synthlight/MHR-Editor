@@ -2,6 +2,7 @@
 using MHR_Editor.Common;
 using MHR_Editor.Common.Attributes;
 using MHR_Editor.Common.Data;
+using MHR_Editor.Generated;
 using MHR_Editor.Models.Enums;
 
 namespace MHR_Editor.Models.Structs;
@@ -11,9 +12,6 @@ namespace MHR_Editor.Models.Structs;
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 public partial class Snow_data_ArmorBaseUserData_Param {
-    private const uint armorTypeBitMask = 0xFFF00000;
-    private const uint armorIdBitMask   = armorTypeBitMask ^ 0xFFFFFFFF;
-
     [SortOrder(50)]
     public string Name => DataHelper.ARMOR_NAME_LOOKUP[Global.locale].TryGet(Id);
 
@@ -25,14 +23,14 @@ public partial class Snow_data_ArmorBaseUserData_Param {
     }
 
     public uint GetArmorType() {
-        return Id & armorTypeBitMask;
+        return Id & BitMasks.ARMOR_TYPE_BIT_MASK;
     }
 
     public uint GetArmorId() {
-        return Id & armorIdBitMask;
+        return Id & BitMasks.ARMOR_ID_BIT_MASK;
     }
 
-    public string GetArmorTypeName() {
-        return Enum.GetValues<Snow_data_ContentsIdSystem_SubCategoryType>().First(type => (uint) type == GetArmorType()).ToString();
+    public Snow_data_ContentsIdSystem_SubCategoryType GetArmorTypeEnum() {
+        return (Snow_data_ContentsIdSystem_SubCategoryType) GetArmorType();
     }
 }

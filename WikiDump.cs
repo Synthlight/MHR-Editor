@@ -28,7 +28,7 @@ namespace MHR_Editor {
                 writer.WriteLine($"| {a.Id:X8}" +
                                  $" | {DataHelper.ARMOR_NAME_LOOKUP[Global.locale].TryGet(a.Id, "")}" +
                                  $" | {a.GetArmorId()}" +
-                                 $" | {a.GetArmorTypeName()}" +
+                                 $" | {a.GetArmorTypeEnum()}" +
                                  $" | {(uint) a.ModelId}" +
                                  $" | {a.ModelId}" +
                                  $" | {(uint) a.Series}" +

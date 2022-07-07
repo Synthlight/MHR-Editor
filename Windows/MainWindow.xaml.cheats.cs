@@ -125,7 +125,7 @@ public partial class MainWindow {
                     weapon.SharpnessValList[4].Value = 10;
                     weapon.SharpnessValList[5].Value = 10;
                     weapon.SharpnessValList[6].Value = 340;
-                    foreach (var handicraft in weapon.TakumiValList) {
+                    foreach (var handicraft in weapon.HandicraftValList) {
                         handicraft.Value = 0;
                     }
                     break;
@@ -156,9 +156,9 @@ public partial class MainWindow {
                 slots.SlotNumList[3].Value = 3;
             }
             if (obj is IRampageSlots rampageSlots) {
-                rampageSlots.HyakuryuSlotNumList[0].Value =
-                    rampageSlots.HyakuryuSlotNumList[1].Value = 0;
-                rampageSlots.HyakuryuSlotNumList[2].Value = 1;
+                rampageSlots.RampageSlotNumList[0].Value =
+                    rampageSlots.RampageSlotNumList[1].Value = 0;
+                rampageSlots.RampageSlotNumList[2].Value = 1;
             }
         }
     }

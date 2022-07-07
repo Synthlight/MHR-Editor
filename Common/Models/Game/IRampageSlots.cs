@@ -5,4 +5,8 @@ namespace MHR_Editor.Common.Models.Game;
 
 public interface IRampageSlots {
     public ObservableCollection<GenericWrapper<uint>> HyakuryuSlotNumList { get; set; }
+    public ObservableCollection<GenericWrapper<uint>> RampageSlotNumList {
+        get => HyakuryuSlotNumList;
+        set => HyakuryuSlotNumList = value;
+    }
 }

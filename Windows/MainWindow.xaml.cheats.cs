@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using MHR_Editor.Common;
 using MHR_Editor.Common.Models;
 using MHR_Editor.Generated.Models;
 using MHR_Editor.Models.Enums;
@@ -20,12 +21,8 @@ public partial class MainWindow {
 
     private static readonly string[] WEAPON_TYPES = new[] {"Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"};
 
-    private IEnumerable<string> GetAllWeaponFileBasePaths() {
-        return WEAPON_TYPES.Select(s => @$"\natives\STM\data\Define\Player\Weapon\{s}\{s}BaseData.user.2").ToList();
-    }
-
-    private IEnumerable<string> GetAllWeaponFileRecipePaths() {
-        return WEAPON_TYPES.Select(s => @$"\natives\STM\data\Define\Player\Weapon\{s}\{s}ProductData.user.2").ToList();
+    private IEnumerable<string> GetAllWeaponFilePaths(string type) {
+        return WEAPON_TYPES.Select(s => @$"\natives\STM\data\Define\Player\Weapon\{s}\{s}{type}Data.user.2").ToList();
     }
 
     private void Btn_create_cheat_mods_Click(object sender, RoutedEventArgs e) {
@@ -60,17 +57,17 @@ public partial class MainWindow {
             },
             new() {
                 name   = "Weapons With Max Slots Only",
-                files  = GetAllWeaponFileBasePaths(),
+                files  = GetAllWeaponFilePaths("Base"),
                 action = MaxSlots
             },
             new() {
                 name   = "Weapons With Max Sharpness Only",
-                files  = GetAllWeaponFileBasePaths(),
+                files  = GetAllWeaponFilePaths("Base"),
                 action = MaxSharpness
             },
             new() {
                 name  = "Weapons With Max Slots & Sharpness",
-                files = GetAllWeaponFileBasePaths(),
+                files = GetAllWeaponFilePaths("Base"),
                 action = data => {
                     MaxSlots(data);
                     MaxSharpness(data);
@@ -83,7 +80,7 @@ public partial class MainWindow {
             },
             new() {
                 name = "All In One",
-                files = GetAllWeaponFileBasePaths()
+                files = GetAllWeaponFilePaths("Base")
                         .Append(armorBasePath)
                         .Append(gemBasePath),
                 action = data => {
@@ -94,7 +91,9 @@ public partial class MainWindow {
             },
             new() {
                 name = "No Crafting Requirements (All)",
-                files = GetAllWeaponFileRecipePaths()
+                files = GetAllWeaponFilePaths("Product")
+                        .Append(GetAllWeaponFilePaths("Process"))
+                        .Append(GetAllWeaponFilePaths("Change"))
                         .Append(armorRecipePath)
                         .Append(layeredArmorRecipePath)
                         .Append(decorationRecipePath)
@@ -102,8 +101,10 @@ public partial class MainWindow {
                 action = NoCost
             },
             new() {
-                name   = "No Crafting Requirements (Weapons)",
-                files  = GetAllWeaponFileRecipePaths(),
+                name = "No Crafting Requirements (Weapons)",
+                files = GetAllWeaponFilePaths("Product")
+                        .Append(GetAllWeaponFilePaths("Process"))
+                        .Append(GetAllWeaponFilePaths("Change")),
                 action = NoCost
             },
             new() {
@@ -246,12 +247,19 @@ public partial class MainWindow {
                     weaponProdData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.None;
                     weaponProdData.MaterialCategoryNum = 0;
                     break;
+                case Snow_data_WeaponChangeUserData_Param weaponChangeData:
+                    weaponChangeData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.None;
+                    weaponChangeData.MaterialCategoryNum = 0;
+                    break;
+                case Snow_data_WeaponProcessUserData_Param weaponProcessData:
+                    weaponProcessData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.None;
+                    weaponProcessData.MaterialCategoryNum = 0;
+                    break;
                 case Snow_equip_PlOverwearProductUserData_Param layeredProdData:
-                    layeredProdData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.None;
-                    layeredProdData.MaterialCategoryNum = 0;
+                    if (layeredProdData.MaterialCategoryNum > 0) layeredProdData.MaterialCategoryNum = 1;
                     break;
                 case Snow_data_HyakuryuDecoProductUserData_Param rampageDecoProdData:
-                    rampageDecoProdData.Point = 1;
+                    if (rampageDecoProdData.Point > 0) rampageDecoProdData.Point = 1;
                     break;
             }
         }

@@ -272,4 +272,8 @@ public static class Extensions {
         }
         return merged;
     }
+
+    public static IEnumerable<TSource> Append<TSource>(this IEnumerable<TSource> source, IEnumerable<TSource> elements) {
+        return elements.Aggregate(source, (current, element) => current.Append(element));
+    }
 }

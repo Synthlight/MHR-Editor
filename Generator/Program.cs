@@ -219,7 +219,12 @@ public static class Program {
     }
 
     private static bool IsWhitelisted(string key) {
-        return WHITELIST.Contains(key) || key.ContainsIgnoreCase("ContentsIdSystem") || key.ContainsIgnoreCase("Snow_data_DataDef") || key.ContainsIgnoreCase("ProductUserData");
+        return WHITELIST.Contains(key)
+               || key.ContainsIgnoreCase("ContentsIdSystem")
+               || key.ContainsIgnoreCase("Snow_data_DataDef")
+               || key.ContainsIgnoreCase("ProductUserData")
+               || key.ContainsIgnoreCase("ChangeUserData")
+               || key.ContainsIgnoreCase("ProcessUserData");
     }
 
     /**

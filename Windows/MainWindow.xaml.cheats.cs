@@ -29,11 +29,15 @@ public partial class MainWindow {
     }
 
     private void Btn_create_cheat_mods_Click(object sender, RoutedEventArgs e) {
-        const string inPath        = @"V:\MHR\re_chunk_000";
-        const string outPath       = @"R:\Games\Monster Hunter Rise\Mods\Cheat Mods";
-        const string version       = "v1.0";
-        const string armorBasePath = @"\natives\STM\data\Define\Player\Armor\ArmorBaseData.user.2";
-        const string gemBasePath   = @"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsBaseData.user.2";
+        const string inPath                      = @"V:\MHR\re_chunk_000";
+        const string outPath                     = @"R:\Games\Monster Hunter Rise\Mods\Cheat Mods";
+        const string version                     = "v1.0";
+        const string armorBasePath               = @"\natives\STM\data\Define\Player\Armor\ArmorBaseData.user.2";
+        const string gemBasePath                 = @"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsBaseData.user.2";
+        const string armorRecipePath             = @"\natives\STM\data\Define\Player\Armor\ArmorProductData.user.2";
+        const string layeredArmorRecipePath      = @"\natives\STM\data\Define\Player\Armor\PlOverwearProductUserData.user.2";
+        const string decorationRecipePath        = @"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsProductData.user.2";
+        const string rampageDecorationRecipePath = @"\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDecoProductData.user.2";
 
         var cheatMods = new CheatMod[] {
             new() {
@@ -89,11 +93,32 @@ public partial class MainWindow {
                 }
             },
             new() {
-                name = "No Crafting Requirements",
+                name = "No Crafting Requirements (All)",
                 files = GetAllWeaponFileRecipePaths()
-                        .Append(@"\natives\STM\data\Define\Player\Armor\ArmorProductData.user.2")
-                        .Append(@"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsProductData.user.2")
-                        .Append(@"\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDecoProductData.user.2"),
+                        .Append(armorRecipePath)
+                        .Append(layeredArmorRecipePath)
+                        .Append(decorationRecipePath)
+                        .Append(rampageDecorationRecipePath),
+                action = NoCost
+            },
+            new() {
+                name   = "No Crafting Requirements (Weapons)",
+                files  = GetAllWeaponFileRecipePaths(),
+                action = NoCost
+            },
+            new() {
+                name   = "No Crafting Requirements (Decorations)",
+                files  = new[] {decorationRecipePath, rampageDecorationRecipePath},
+                action = NoCost
+            },
+            new() {
+                name   = "No Crafting Requirements (Normal Armor)",
+                files  = new[] {armorRecipePath},
+                action = NoCost
+            },
+            new() {
+                name   = "No Crafting Requirements (Layered Armor)",
+                files  = new[] {layeredArmorRecipePath},
                 action = NoCost
             }
         };
@@ -220,6 +245,10 @@ public partial class MainWindow {
                 case Snow_data_WeaponProductUserData_Param weaponProdData:
                     weaponProdData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.None;
                     weaponProdData.MaterialCategoryNum = 0;
+                    break;
+                case Snow_equip_PlOverwearProductUserData_Param layeredProdData:
+                    layeredProdData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.None;
+                    layeredProdData.MaterialCategoryNum = 0;
                     break;
                 case Snow_data_HyakuryuDecoProductUserData_Param rampageDecoProdData:
                     rampageDecoProdData.Point = 1;

@@ -10,9 +10,6 @@ namespace MHR_Editor.Models.Structs;
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 public partial class Snow_equip_PlOverwearBaseUserData_Param {
-    private const uint layeredIdBitMask = 0x0FFF;
-    private const uint armorIdBitMask   = 0x000FFFFF;
-
     [SortOrder(50)]
     public string Name => DataHelper.ARMOR_SERIES_LOOKUP[Global.locale].TryGet((uint) Series);
 
@@ -21,10 +18,10 @@ public partial class Snow_equip_PlOverwearBaseUserData_Param {
     }
 
     public uint GetArmorId() {
-        return (uint) RelativeId & armorIdBitMask;
+        return (uint) RelativeId & BitMasks.ARMOR_ID_BIT_MASK;
     }
 
     public uint GetLayeredId() {
-        return (uint) Id & layeredIdBitMask;
+        return (uint) Id & BitMasks.LAYERED_ID_BIT_MASK;
     }
 }

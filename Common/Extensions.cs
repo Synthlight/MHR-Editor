@@ -28,6 +28,10 @@ public static class Extensions {
         return arr.Any(s => string.Equals(s, needle, StringComparison.CurrentCultureIgnoreCase));
     }
 
+    public static bool ContainsIgnoreCase(this string arr, string needle) {
+        return arr.Contains(needle, StringComparison.CurrentCultureIgnoreCase);
+    }
+
     public static V TryGet<K, V>(this IDictionary<K, V>? dict, K key, V defaultValue) {
         if (dict == null) return defaultValue;
         return dict.ContainsKey(key) ? dict[key] : defaultValue;

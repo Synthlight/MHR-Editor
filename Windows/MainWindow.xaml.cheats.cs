@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using MHR_Editor.Common.Models;
 using MHR_Editor.Generated.Models;
+using MHR_Editor.Models.Enums;
 using MHR_Editor.Models.Structs;
 
 namespace MHR_Editor.Windows;
@@ -14,12 +15,17 @@ public partial class MainWindow {
         Btn_max_sharpness_Click(sender, e);
         Btn_max_slots_Click(sender, e);
         Btn_max_skills_Click(sender, e);
+        Btn_no_cost_Click(sender, e);
     }
 
     private static readonly string[] WEAPON_TYPES = new[] {"Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"};
 
     private IEnumerable<string> GetAllWeaponFileBasePaths() {
         return WEAPON_TYPES.Select(s => @$"\natives\STM\data\Define\Player\Weapon\{s}\{s}BaseData.user.2").ToList();
+    }
+
+    private IEnumerable<string> GetAllWeaponFileRecipePaths() {
+        return WEAPON_TYPES.Select(s => @$"\natives\STM\data\Define\Player\Weapon\{s}\{s}ProductData.user.2").ToList();
     }
 
     private void Btn_create_cheat_mods_Click(object sender, RoutedEventArgs e) {
@@ -81,6 +87,14 @@ public partial class MainWindow {
                     MaxSharpness(data);
                     MaxSkills(data);
                 }
+            },
+            new() {
+                name = "No Crafting Requirements",
+                files = GetAllWeaponFileRecipePaths()
+                        .Append(@"\natives\STM\data\Define\Player\Armor\ArmorProductData.user.2")
+                        .Append(@"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsProductData.user.2")
+                        .Append(@"\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDecoProductData.user.2"),
+                action = NoCost
             }
         };
 
@@ -179,6 +193,36 @@ public partial class MainWindow {
                     break;
                 case Snow_data_DecorationsBaseUserData_Param decoration:
                     if (decoration.SkillLvList[0].Value > 0) decoration.SkillLvList[0].Value = 10;
+                    break;
+            }
+        }
+    }
+
+    private void Btn_no_cost_Click(object sender, RoutedEventArgs e) {
+        if (file == null) return;
+
+        NoCost(file.rsz.objectData);
+    }
+
+    private void NoCost(List<RszObject> rszObjectData) {
+        foreach (var obj in rszObjectData) {
+            switch (obj) {
+                case ICraftingCost recipe:
+                    foreach (var item in recipe.ItemIdList) {
+                        item.Value = (uint) Snow_data_ContentsIdSystem_ItemId.I_Unclassified_None;
+                    }
+                    foreach (var itemNum in recipe.ItemNumList) {
+                        itemNum.Value = 0;
+                    }
+                    break;
+            }
+            switch (obj) {
+                case Snow_data_WeaponProductUserData_Param weaponProdData:
+                    weaponProdData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.None;
+                    weaponProdData.MaterialCategoryNum = 0;
+                    break;
+                case Snow_data_HyakuryuDecoProductUserData_Param rampageDecoProdData:
+                    rampageDecoProdData.Point = 1;
                     break;
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System.CodeDom;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using MHR_Editor.Common;
 using MHR_Editor.Common.Models;
 using MHR_Editor.Generator.Models;
 using Microsoft.CSharp;
@@ -20,36 +21,36 @@ public static class Program {
     private static readonly Dictionary<string, StructJson> STRUCT_JSON      = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(STRUCT_JSON_PATH))!;
 
     private static readonly List<string> WHITELIST = new() {
-        "Snow_data_ArmorBaseUserData_Param",
+        "Snow_data_ArmorBaseUserData",
         "Snow_data_ContentsIdSystem_ItemId",
         "Snow_data_ContentsIdSystem_SubCategoryType",
-        "Snow_data_DangoBaseUserData_Param",
+        "Snow_data_DangoBaseUserData",
         "Snow_data_DataDef_PlEquipSkillId",
-        "Snow_data_DecorationsBaseUserData_Param",
-        "Snow_data_ItemUserData_Param",
-        "Snow_data_NormalLvBuffCageBaseUserData_Param",
-        "Snow_data_OtAirouArmorBaseUserData_Param",
-        "Snow_data_OtDogArmorBaseUserData_Param",
-        "Snow_data_OtDogWeaponBaseUserData_Param",
-        "Snow_data_OtWeaponBaseUserData_Param",
-        "Snow_data_PlEquipSkillBaseUserData_Param",
-        "Snow_data_PlHyakuryuSkillBaseUserData_Param",
-        "Snow_equip_BowBaseUserData_Param",
-        "Snow_equip_ChargeAxeBaseUserData_Param",
-        "Snow_equip_DualBladesBaseUserData_Param",
-        "Snow_equip_GreatSwordBaseUserData_Param",
-        "Snow_equip_GunLanceBaseUserData_Param",
-        "Snow_equip_HammerBaseUserData_Param",
-        "Snow_equip_HeavyBowgunBaseUserData_Param",
-        "Snow_equip_HornBaseUserData_Param",
-        "Snow_equip_InsectBaseUserData_Param",
-        "Snow_equip_InsectGlaiveBaseUserData_Param",
-        "Snow_equip_LanceBaseUserData_Param",
-        "Snow_equip_LightBowgunBaseUserData_Param",
-        "Snow_equip_LongSwordBaseUserData_Param",
-        "Snow_equip_PlOverwearBaseUserData_Param",
-        "Snow_equip_ShortSwordBaseUserData_Param",
-        "Snow_equip_SlashAxeBaseUserData_Param",
+        "Snow_data_DecorationsBaseUserData",
+        "Snow_data_ItemUserData",
+        "Snow_data_NormalLvBuffCageBaseUserData",
+        "Snow_data_OtAirouArmorBaseUserData",
+        "Snow_data_OtDogArmorBaseUserData",
+        "Snow_data_OtDogWeaponBaseUserData",
+        "Snow_data_OtWeaponBaseUserData",
+        "Snow_data_PlEquipSkillBaseUserData",
+        "Snow_data_PlHyakuryuSkillBaseUserData",
+        "Snow_equip_BowBaseUserData",
+        "Snow_equip_ChargeAxeBaseUserData",
+        "Snow_equip_DualBladesBaseUserData",
+        "Snow_equip_GreatSwordBaseUserData",
+        "Snow_equip_GunLanceBaseUserData",
+        "Snow_equip_HammerBaseUserData",
+        "Snow_equip_HeavyBowgunBaseUserData",
+        "Snow_equip_HornBaseUserData",
+        "Snow_equip_InsectBaseUserData",
+        "Snow_equip_InsectGlaiveBaseUserData",
+        "Snow_equip_LanceBaseUserData",
+        "Snow_equip_LightBowgunBaseUserData",
+        "Snow_equip_LongSwordBaseUserData",
+        "Snow_equip_PlOverwearBaseUserData",
+        "Snow_equip_ShortSwordBaseUserData",
+        "Snow_equip_SlashAxeBaseUserData",
     };
 
     public static void Main(string[] args) {
@@ -203,14 +204,22 @@ public static class Program {
      */
     private static void FilterWhitelisted(bool useWhitelist) {
         if (!useWhitelist) return;
+        // Whitelist more commonly used things.
+        foreach (var name in WHITELIST.ToList()) {
+            WHITELIST.Add(name + "_Param");
+        }
         ENUM_TYPES.Keys
-                  .Where(key => WHITELIST.Contains(key) || key.Contains("ContentsIdSystem") || key.Contains("Snow_data_DataDef"))
+                  .Where(IsWhitelisted)
                   .ToList()
                   .ForEach(key => ENUM_TYPES[key].useCount++);
         STRUCT_TYPES.Keys
-                    .Where(key => !WHITELIST.Contains(key))
+                    .Where(key => !IsWhitelisted(key))
                     .ToList()
                     .ForEach(key => STRUCT_TYPES.Remove(key));
+    }
+
+    private static bool IsWhitelisted(string key) {
+        return WHITELIST.Contains(key) || key.ContainsIgnoreCase("ContentsIdSystem") || key.ContainsIgnoreCase("Snow_data_DataDef") || key.ContainsIgnoreCase("ProductUserData");
     }
 
     /**

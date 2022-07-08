@@ -88,7 +88,7 @@ public partial class MainWindow {
         SetupKeybind(new KeyGesture(Key.S, ModifierKeys.Control), (_,                      _) => Save());
         SetupKeybind(new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift), (_, _) => Save(true));
 
-        var visibility = File.Exists("enable_cheats") ? Visibility.Visible : Visibility.Collapsed;
+        var visibility = File.Exists($@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\enable_cheats") ? Visibility.Visible : Visibility.Collapsed;
         btn_wiki_dump.Visibility  = visibility;
         btn_test.Visibility       = visibility;
         btn_all_cheats.Visibility = visibility;

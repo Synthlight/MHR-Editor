@@ -33,6 +33,7 @@ public static class Program {
         "Snow_data_OtDogWeaponBaseUserData_Param",
         "Snow_data_OtWeaponBaseUserData_Param",
         "Snow_data_PlEquipSkillBaseUserData_Param",
+        "Snow_data_PlHyakuryuSkillBaseUserData_Param",
         "Snow_equip_BowBaseUserData_Param",
         "Snow_equip_ChargeAxeBaseUserData_Param",
         "Snow_equip_DualBladesBaseUserData_Param",
@@ -203,7 +204,7 @@ public static class Program {
     private static void FilterWhitelisted(bool useWhitelist) {
         if (!useWhitelist) return;
         ENUM_TYPES.Keys
-                  .Where(key => WHITELIST.Contains(key) || key.Contains("ContentsIdSystem"))
+                  .Where(key => WHITELIST.Contains(key) || key.Contains("ContentsIdSystem") || key.Contains("Snow_data_DataDef"))
                   .ToList()
                   .ForEach(key => ENUM_TYPES[key].useCount++);
         STRUCT_TYPES.Keys

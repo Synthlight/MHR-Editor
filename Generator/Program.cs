@@ -1,4 +1,5 @@
 ﻿using System.CodeDom;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using MHR_Editor.Common;
@@ -69,9 +70,13 @@ public static class Program {
         ParseEnums();
         ParseStructs();
 
-        FilterWhitelisted(useWhitelist);
-        UpdateEnumUsingCounts();
-        RemoveUnusedEnumTypes();
+        if (useWhitelist) {
+            FilterWhitelisted();
+            UpdateUsingCounts();
+            RemoveUnusedTypes();
+        }
+
+        Debug.WriteLine($"Generating {ENUM_TYPES.Count} enums, {STRUCT_TYPES.Count} structs.");
 
         GenerateEnums();
         GenerateStructs();
@@ -191,31 +196,22 @@ public static class Program {
     }
 
     /**
-     * Goes through structs and adds to the using count of enums.
+     * Increases the useCount of enums/structs marked as whitelisted.
      */
-    private static void UpdateEnumUsingCounts() {
-        foreach (var structType in STRUCT_TYPES.Values) {
-            structType.UpdateUsingCounts();
-        }
-    }
-
-    /**
-     * Removes structs not in the whitelist if the whitelist is enabled.
-     */
-    private static void FilterWhitelisted(bool useWhitelist) {
-        if (!useWhitelist) return;
+    private static void FilterWhitelisted() {
         // Whitelist more commonly used things.
         foreach (var name in WHITELIST.ToList()) {
             WHITELIST.Add(name + "_Param");
         }
+        // Make sure to keep whitelisted enums/structs.
         ENUM_TYPES.Keys
                   .Where(IsWhitelisted)
                   .ToList()
                   .ForEach(key => ENUM_TYPES[key].useCount++);
         STRUCT_TYPES.Keys
-                    .Where(key => !IsWhitelisted(key))
+                    .Where(IsWhitelisted)
                     .ToList()
-                    .ForEach(key => STRUCT_TYPES.Remove(key));
+                    .ForEach(key => STRUCT_TYPES[key].useCount++);
     }
 
     private static bool IsWhitelisted(string key) {
@@ -224,17 +220,34 @@ public static class Program {
                || key.ContainsIgnoreCase("Snow_data_DataDef")
                || key.ContainsIgnoreCase("ProductUserData")
                || key.ContainsIgnoreCase("ChangeUserData")
-               || key.ContainsIgnoreCase("ProcessUserData");
+               || key.ContainsIgnoreCase("ProcessUserData")
+               || key.ContainsIgnoreCase("PlayerUserData---"); // TODO: There are structs referenced as field that are treated wrongly as enums.
     }
 
     /**
-     * Goes through enums and removes ones that aren't referenced by any struct.
+     * Goes through structs and increases useCounts of enums/structs referenced by other structs.
      */
-    private static void RemoveUnusedEnumTypes() {
+    private static void UpdateUsingCounts() {
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var structType in STRUCT_TYPES.Values) {
+            if (structType.useCount > 0) {
+                structType.UpdateUsingCounts();
+            }
+        }
+    }
+
+    /**
+     * Goes through enums/structs and removes ones that aren't referenced by any struct.
+     */
+    private static void RemoveUnusedTypes() {
         ENUM_TYPES.Keys
                   .Where(key => ENUM_TYPES[key].useCount == 0)
                   .ToList()
                   .ForEach(key => ENUM_TYPES.Remove(key));
+        STRUCT_TYPES.Keys
+                    .Where(key => STRUCT_TYPES[key].useCount == 0)
+                    .ToList()
+                    .ForEach(key => STRUCT_TYPES.Remove(key));
     }
 
     private static void GenerateEnums() {

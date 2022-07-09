@@ -5,6 +5,7 @@ namespace MHR_Editor.Generator.Models {
         public readonly string     name;
         public readonly string     hash;
         public readonly StructJson structInfo;
+        public          int        useCount;
 
         public StructType(string name, string hash, StructJson structInfo) {
             this.name       = name;
@@ -18,8 +19,13 @@ namespace MHR_Editor.Generator.Models {
                 if (field.name == null) continue;
                 var enumType = field.GetEnumType(); // No discernible difference between struct and enum here.
                 if (enumType == null) continue;
-                if (Program.STRUCT_TYPES.ContainsKey(enumType)) continue;
-                Program.ENUM_TYPES[enumType].useCount++;
+                if (Program.STRUCT_TYPES.ContainsKey(enumType)) {
+                    Program.STRUCT_TYPES[enumType].useCount++;
+                    Program.STRUCT_TYPES[enumType].UpdateUsingCounts();
+                }
+                if (Program.ENUM_TYPES.ContainsKey(enumType)) {
+                    Program.ENUM_TYPES[enumType].useCount++;
+                }
             }
         }
     }

@@ -40,8 +40,6 @@ public class StructTemplate {
         WritePreWrite(file);
         WriteClassFooter(file);
         file.Close();
-
-        if (usedNames.Count == 0) File.Delete(filename);
     }
 
     private void WriteUsings(TextWriter file) {
@@ -72,7 +70,7 @@ public class StructTemplate {
         file.WriteLine("[SuppressMessage(\"ReSharper\", \"ClassNeverInstantiated.Global\")]");
         file.WriteLine("[MhrStruct]");
         file.WriteLine($"public partial class {className} : RszObject {{");
-        file.WriteLine($"    public static readonly uint HASH = uint.Parse(\"{hash}\", NumberStyles.HexNumber);");
+        file.WriteLine($"    public const uint HASH = 0x{hash};");
     }
 
     private void WriteProperty(TextWriter file, StructJson.Field field, string typeName) {

@@ -2,7 +2,7 @@
     public class EnumType {
         public readonly string  name;
         public readonly string  type;
-        public          int     useCount = 0;
+        public          int     useCount;
         private         string? contents;
         public string? Contents {
             get => contents;

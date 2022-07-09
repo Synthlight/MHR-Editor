@@ -102,9 +102,14 @@ public partial class MainWindow {
             },
             new() {
                 name = "No Crafting Requirements (Weapons)",
-                files = GetAllWeaponFilePaths("Product")
-                        .Append(GetAllWeaponFilePaths("Process"))
-                        .Append(GetAllWeaponFilePaths("Change")),
+                files = GetAllWeaponFilePaths("Product") // Forge
+                        .Append(GetAllWeaponFilePaths("Process")) // Upgrade
+                        .Append(GetAllWeaponFilePaths("Change")), // Layer
+                action = NoCost
+            },
+            new() {
+                name   = "No Crafting Requirements (Weapons, Layered Only)",
+                files  = GetAllWeaponFilePaths("Change"),
                 action = NoCost
             },
             new() {

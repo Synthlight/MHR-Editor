@@ -49,6 +49,8 @@ public static class Program {
         "Snow_equip_LanceBaseUserData",
         "Snow_equip_LightBowgunBaseUserData",
         "Snow_equip_LongSwordBaseUserData",
+        "Snow_equip_OtOverwearBaseUserData_Param",
+        "Snow_equip_OtOverwearRecipeUserData_Param",
         "Snow_equip_PlOverwearBaseUserData",
         "Snow_equip_ShortSwordBaseUserData",
         "Snow_equip_SlashAxeBaseUserData",
@@ -221,6 +223,7 @@ public static class Program {
                || key.ContainsIgnoreCase("ProductUserData")
                || key.ContainsIgnoreCase("ChangeUserData")
                || key.ContainsIgnoreCase("ProcessUserData")
+               || key.ContainsIgnoreCase("RecipeUserData")
                || key.ContainsIgnoreCase("PlayerUserData---"); // TODO: There are structs referenced as field that are treated wrongly as enums.
     }
 

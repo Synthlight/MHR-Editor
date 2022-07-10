@@ -14,8 +14,8 @@ namespace MHR_Editor.Common.Models;
 public class RszObject : OnPropertyChangedBase {
     public             StructJson                 structInfo;
     protected readonly Dictionary<int, FieldData> fieldData = new();
-    public             RSZ                        rsz;
-    public             int                        userDataRef = -1;
+    protected          RSZ                        rsz;
+    protected          int                        userDataRef = -1;
 
     [SortOrder(int.MaxValue - 1000)]
     public int Index { get; set; }
@@ -49,10 +49,12 @@ public class RszObject : OnPropertyChangedBase {
             };
 
             if (field.array) {
+                // TODO: Handle object arrays.
                 fieldData.isArray    = true;
                 fieldData.arrayCount = reader.ReadInt32();
                 fieldData.data       = reader.ReadBytes(field.size * fieldData.arrayCount);
             } else {
+                // TODO: Handle non-array objects.
                 fieldData.data = reader.ReadBytes(field.size);
             }
             rszObject.fieldData[i] = fieldData;

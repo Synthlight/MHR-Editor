@@ -26,8 +26,7 @@ public static class Program {
         ExtractWeaponInfo();
         ExtractDecorationInfo();
         ExtractDangoInfo();
-        ExtractDogInfo();
-        ExtractCatInfo();
+        ExtractCatDogArmorInfo();
         ExtractCatDogWeaponInfo();
     }
 
@@ -156,42 +155,28 @@ public static class Program {
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
-    private static void ExtractDogInfo() {
+    private static void ExtractCatDogArmorInfo() {
         var types = new List<string> {"Chest", "Head"};
         foreach (var (@in, @out) in NAME_DESC) {
             var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(types.Count);
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in types) {
-                var enumType = Enum.Parse<SubCategoryType>($"OtArmor_Dog_{type}");
-                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtDogArmor_{type}_{@in}{MR}.msg.17", enumType, false, 200));
+                var catEnumType = Enum.Parse<SubCategoryType>($"OtArmor_Airou_{type}");
+                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtAirouArmor_{type}_{@in}{MR}.msg.17", catEnumType, false, 200));
+                var dogEnumType = Enum.Parse<SubCategoryType>($"OtArmor_Dog_{type}");
+                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtDogArmor_{type}_{@in}{MR}.msg.17", dogEnumType, false, 200));
             }
             var result = msgLists.MergeDictionaries();
 
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DOG_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
-        }
-    }
-
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
-    private static void ExtractCatInfo() {
-        var types = new List<string> {"Chest", "Head"};
-        foreach (var (@in, @out) in NAME_DESC) {
-            var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(types.Count);
-            // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
-            foreach (var type in types) {
-                var enumType = Enum.Parse<SubCategoryType>($"OtArmor_Airou_{type}");
-                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtAirouArmor_{type}_{@in}{MR}.msg.17", enumType, false, 200));
-            }
-            var result = msgLists.MergeDictionaries();
-
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\CAT_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\CAT_DOG_ARMOR_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractCatDogWeaponInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var catMsg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeapon_{@in}{MR}.msg.17", SubCategoryType.OtWeapon_Dog, false, 200);
-            var dogMsg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtAirouWeapon_{@in}{MR}.msg.17", SubCategoryType.OtWeapon_Airou, false, 200);
+            var catMsg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeapon_{@in}{MR}.msg.17", SubCategoryType.OtWeapon_Dog, true, 200);
+            var dogMsg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtAirouWeapon_{@in}{MR}.msg.17", SubCategoryType.OtWeapon_Airou, true, 200);
             var result = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>> {catMsg, dogMsg}.MergeDictionaries();
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\CAT_DOG_WEAPON_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }

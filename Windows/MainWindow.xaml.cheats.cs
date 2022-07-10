@@ -26,15 +26,20 @@ public partial class MainWindow {
     }
 
     private void Btn_create_cheat_mods_Click(object sender, RoutedEventArgs e) {
-        const string inPath                      = @"V:\MHR\re_chunk_000";
-        const string outPath                     = @"R:\Games\Monster Hunter Rise\Mods\Cheat Mods";
-        const string version                     = "v1.0";
-        const string armorBasePath               = @"\natives\STM\data\Define\Player\Armor\ArmorBaseData.user.2";
-        const string gemBasePath                 = @"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsBaseData.user.2";
-        const string armorRecipePath             = @"\natives\STM\data\Define\Player\Armor\ArmorProductData.user.2";
-        const string layeredArmorRecipePath      = @"\natives\STM\data\Define\Player\Armor\PlOverwearProductUserData.user.2";
-        const string decorationRecipePath        = @"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsProductData.user.2";
-        const string rampageDecorationRecipePath = @"\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDecoProductData.user.2";
+        const string inPath                       = @"V:\MHR\re_chunk_000";
+        const string outPath                      = @"R:\Games\Monster Hunter Rise\Mods\Cheat Mods";
+        const string version                      = "v1.0";
+        const string armorBasePath                = @"\natives\STM\data\Define\Player\Armor\ArmorBaseData.user.2";
+        const string gemBasePath                  = @"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsBaseData.user.2";
+        const string armorRecipePath              = @"\natives\STM\data\Define\Player\Armor\ArmorProductData.user.2";
+        const string layeredArmorRecipePath       = @"\natives\STM\data\Define\Player\Armor\PlOverwearProductUserData.user.2";
+        const string decorationRecipePath         = @"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsProductData.user.2";
+        const string rampageDecorationRecipePath  = @"\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDecoProductData.user.2";
+        const string catArmorRecipePath           = @"\natives\STM\data\Define\Otomo\Equip\Armor\OtAirouArmorProductData.user.2";
+        const string catWeaponRecipePath          = @"\natives\STM\data\Define\Otomo\Equip\Weapon\OtAirouWeaponProductData.user.2";
+        const string dogArmorRecipePath           = @"\natives\STM\data\Define\Otomo\Equip\Armor\OtDogArmorProductData.user.2";
+        const string dogWeaponRecipePath          = @"\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeaponProductData.user.2";
+        const string catDogLayeredArmorRecipePath = @"\natives\STM\data\Define\Otomo\Equip\Overwear\OtOverwearRecipeData.user.2";
 
         var cheatMods = new CheatMod[] {
             new() {
@@ -97,7 +102,12 @@ public partial class MainWindow {
                         .Append(armorRecipePath)
                         .Append(layeredArmorRecipePath)
                         .Append(decorationRecipePath)
-                        .Append(rampageDecorationRecipePath),
+                        .Append(rampageDecorationRecipePath)
+                        .Append(catArmorRecipePath)
+                        .Append(catWeaponRecipePath)
+                        .Append(dogArmorRecipePath)
+                        .Append(dogWeaponRecipePath)
+                        .Append(catDogLayeredArmorRecipePath),
                 action = NoCost
             },
             new() {
@@ -125,6 +135,21 @@ public partial class MainWindow {
             new() {
                 name   = "No Crafting Requirements (Layered Armor)",
                 files  = new[] {layeredArmorRecipePath},
+                action = NoCost
+            },
+            new() {
+                name = "No Crafting Requirements (Cat-Dog Armor-Weapons)",
+                files = new[] {
+                    catArmorRecipePath,
+                    catWeaponRecipePath,
+                    dogArmorRecipePath,
+                    dogWeaponRecipePath
+                },
+                action = NoCost
+            },
+            new() {
+                name   = "No Crafting Requirements (Cat-Dog Layered Armor)",
+                files  = new[] {catDogLayeredArmorRecipePath},
                 action = NoCost
             }
         };

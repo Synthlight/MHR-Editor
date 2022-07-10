@@ -93,9 +93,19 @@ namespace MHR_Editor.Data {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] CAT_DESC_LOOKUP {
+        internal static byte[] CAT_DOG_ARMOR_DESC_LOOKUP {
             get {
-                object obj = ResourceManager.GetObject("CAT_DESC_LOOKUP", resourceCulture);
+                object obj = ResourceManager.GetObject("CAT_DOG_ARMOR_DESC_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] CAT_DOG_ARMOR_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("CAT_DOG_ARMOR_NAME_LOOKUP", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -116,16 +126,6 @@ namespace MHR_Editor.Data {
         internal static byte[] CAT_DOG_WEAPON_NAME_LOOKUP {
             get {
                 object obj = ResourceManager.GetObject("CAT_DOG_WEAPON_NAME_LOOKUP", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] CAT_NAME_LOOKUP {
-            get {
-                object obj = ResourceManager.GetObject("CAT_NAME_LOOKUP", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -176,26 +176,6 @@ namespace MHR_Editor.Data {
         internal static byte[] DECORATION_NAME_LOOKUP {
             get {
                 object obj = ResourceManager.GetObject("DECORATION_NAME_LOOKUP", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] DOG_DESC_LOOKUP {
-            get {
-                object obj = ResourceManager.GetObject("DOG_DESC_LOOKUP", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] DOG_NAME_LOOKUP {
-            get {
-                object obj = ResourceManager.GetObject("DOG_NAME_LOOKUP", resourceCulture);
                 return ((byte[])(obj));
             }
         }

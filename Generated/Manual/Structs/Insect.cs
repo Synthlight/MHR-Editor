@@ -14,9 +14,6 @@ public partial class Snow_equip_InsectBaseUserData_Param {
     [SortOrder(50)]
     public string Name => DataHelper.WEAPON_NAME_LOOKUP[Global.locale].TryGet(Id);
 
-    [SortOrder(int.MaxValue)]
-    public string Description => DataHelper.WEAPON_DESC_LOOKUP[Global.locale].TryGet(Id);
-
     public override string ToString() {
         return Name;
     }

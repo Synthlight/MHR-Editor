@@ -286,10 +286,12 @@ public partial class MainWindow {
                     weaponProcessData.MaterialCategoryNum = 0;
                     break;
                 case Snow_equip_PlOverwearProductUserData_Param layeredProdData:
-                    if (layeredProdData.MaterialCategoryNum > 0) layeredProdData.MaterialCategoryNum = 1;
+                    // Settings the category to 'none' here breaks the game.
+                    layeredProdData.MaterialCategoryNum = 0;
                     break;
                 case Snow_data_HyakuryuDecoProductUserData_Param rampageDecoProdData:
-                    if (rampageDecoProdData.Point > 0) rampageDecoProdData.Point = 1;
+                    // Settings the category to 'none' here breaks the game.
+                    rampageDecoProdData.Point = 0;
                     break;
             }
         }

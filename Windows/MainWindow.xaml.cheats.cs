@@ -128,6 +128,14 @@ public partial class MainWindow {
                 action = NoCost
             },
             new() {
+                name  = "No Crafting Requirements (Decorations, Ignore Unlock Flags)",
+                files = new[] {decorationRecipePath, rampageDecorationRecipePath},
+                action = list => {
+                    NoCost(list);
+                    NoUnlockFlag(list);
+                }
+            },
+            new() {
                 name   = "No Crafting Requirements (Normal Armor)",
                 files  = new[] {armorRecipePath},
                 action = NoCost
@@ -292,6 +300,23 @@ public partial class MainWindow {
                 case Snow_data_HyakuryuDecoProductUserData_Param rampageDecoProdData:
                     // Settings the category to 'none' here breaks the game.
                     rampageDecoProdData.Point = 0;
+                    break;
+            }
+        }
+    }
+
+    private void NoUnlockFlag(List<RszObject> rszObjectData) {
+        foreach (var obj in rszObjectData) {
+            switch (obj) {
+                case Snow_data_DecorationsProductUserData_Param decoProdData:
+                    decoProdData.ItemFlag     = (uint) Snow_data_ContentsIdSystem_ItemId.I_Unclassified_None;
+                    decoProdData.EnemyFlag    = Snow_enemy_EnemyDef_EmTypes.EmTypeNoData;
+                    decoProdData.ProgressFlag = Snow_data_DataDef_UnlockProgressTypes.None;
+                    break;
+                case Snow_data_HyakuryuDecoProductUserData_Param decoProdData:
+                    decoProdData.ItemFlag     = (uint) Snow_data_ContentsIdSystem_ItemId.I_Unclassified_None;
+                    decoProdData.EnemyFlag    = Snow_enemy_EnemyDef_EmTypes.EmTypeNoData;
+                    decoProdData.ProgressFlag = Snow_data_DataDef_UnlockProgressTypes.None;
                     break;
             }
         }

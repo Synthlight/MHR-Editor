@@ -28,6 +28,8 @@ public class RszObject : OnPropertyChangedBase {
             };
         }
 
+        if (!DataHelper.STRUCT_INFO.ContainsKey(hash)) throw new FileNotSupported();
+
         var structInfo = DataHelper.STRUCT_INFO[hash];
         var rszObject  = CreateRszObjectInstance(hash);
         rszObject.structInfo = structInfo;

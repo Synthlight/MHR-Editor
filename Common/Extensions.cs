@@ -350,6 +350,12 @@ public static class Extensions {
 
         if (int.TryParse(name[0].ToString(), out _)) name = "_" + name; // If it starts with a number.
         while (name.EndsWith("k__BackingField")) name     = name.Substring(1, name.LastIndexOf('>') - 1); // Remove the k__BackingField.
+        while (name.StartsWith("System_Collections_Generic_List")
+               || name.StartsWith("System_Collections_Generic_IReadOnlyCollection")
+               || name.StartsWith("System_Collections_Generic_ICollection")) { // The 'array' field already covers this.
+            name = name.SubstringToEnd(name.LastIndexOf('<') + 1, name.IndexOf('>'))
+                       .ToUpperFirstLetter();
+        }
 
         if (fixTypos) {
             name = name.Replace("Cariable", "Carryable")
@@ -357,6 +363,11 @@ public static class Extensions {
         }
 
         return name;
+    }
+
+    public static string SubstringToEnd(this string value, int startIndex, int endIndex) {
+        var length = endIndex - startIndex;
+        return value.Substring(startIndex, length);
     }
 
     public static string? ToConvertedFieldName(this string? name) {

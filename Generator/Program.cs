@@ -177,16 +177,11 @@ public static class Program {
         var structTypes = new Dictionary<string, StructType>();
 
         foreach (var (hash, structInfo) in STRUCT_JSON) {
-            if (structInfo.name == null
-                || structInfo.name.Contains('<')
-                || structInfo.name.Contains('`')
-                || structInfo.name.Contains('[')
-                || structInfo.name.StartsWith("System")
-                || !structInfo.name.StartsWith("snow") && !structInfo.name.StartsWith("via")) continue;
+            if (!IsStructNameValid(structInfo)) continue;
             // Also ignore structs that are just enum placeholders.
             if (structInfo.fields?.Count == 1 && structInfo.fields[0].name == "value__") continue;
             // Ignore the 'via.thing' placeholders.
-            if (structInfo.name.GetViaType() != null) continue;
+            if (structInfo.name!.GetViaType() != null) continue;
             var name       = structInfo.name.ToConvertedTypeName()!;
             var structType = new StructType(name, hash, structInfo);
             structTypes[name] = structType;
@@ -195,6 +190,17 @@ public static class Program {
         foreach (var key in structTypes.Keys.OrderBy(s => s)) {
             STRUCT_TYPES[key] = structTypes[key];
         }
+    }
+
+    private static bool IsStructNameValid(StructJson structInfo) {
+        return !(structInfo.name == null
+                 || structInfo.name.Contains('<')
+                 || structInfo.name.Contains('`')
+                 || structInfo.name.Contains('[')
+                 || structInfo.name.Contains("List`")
+                 || structInfo.name.Contains("Culture=neutral")
+                 || structInfo.name.StartsWith("System")
+                 || !structInfo.name.StartsWith("snow") && !structInfo.name.StartsWith("via"));
     }
 
     /**
@@ -224,7 +230,7 @@ public static class Program {
                || key.ContainsIgnoreCase("ChangeUserData")
                || key.ContainsIgnoreCase("ProcessUserData")
                || key.ContainsIgnoreCase("RecipeUserData")
-               || key.ContainsIgnoreCase("PlayerUserData---"); // TODO: There are structs referenced as field that are treated wrongly as enums.
+               || key.ContainsIgnoreCase("PlayerUserData");
     }
 
     /**
@@ -252,13 +258,21 @@ public static class Program {
                     .ToList()
                     .ForEach(key => STRUCT_TYPES.Remove(key));
         // Remove the struct data we're not using from the struct info.
-        var keysToRemove = (from entry in STRUCT_JSON
-                            let name = entry.Value.name
-                            where !string.IsNullOrEmpty(name)
-                            let typeName = name?.ToConvertedTypeName()
-                            where !ENUM_TYPES.ContainsKey(typeName) && !STRUCT_TYPES.ContainsKey(typeName)
-                            select entry.Key).ToList();
-        foreach (var key in keysToRemove) {
+        RemoveStructs(from entry in STRUCT_JSON
+                      where IsStructNameValid(entry.Value)
+                      let name = entry.Value.name
+                      where !string.IsNullOrEmpty(name)
+                      let typeName = name?.ToConvertedTypeName()
+                      where !ENUM_TYPES.ContainsKey(typeName) && !STRUCT_TYPES.ContainsKey(typeName)
+                      select entry.Key);
+        // Now again to remove invalid/ignored when parsing structs. (Like those which are empty named as some generic list.)
+        RemoveStructs(from entry in STRUCT_JSON
+                      where !IsStructNameValid(entry.Value)
+                      select entry.Key);
+    }
+
+    private static void RemoveStructs(IEnumerable<string> enumerable) {
+        foreach (var key in enumerable.ToList()) {
             STRUCT_JSON.Remove(key);
         }
     }

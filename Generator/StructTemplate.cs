@@ -70,15 +70,20 @@ public class StructTemplate {
     }
 
     private void WriteProperty(TextWriter file, StructJson.Field field) {
-        var newName        = field.name?.ToConvertedFieldName()!;
-        var primitiveName  = field.GetCSharpType();
-        var typeName       = field.originalType!.ToConvertedTypeName();
-        var isPrimitive    = primitiveName != null;
-        var isEnumType     = typeName != null && Program.ENUM_TYPES.ContainsKey(typeName);
-        var buttonType     = GetButtonType(field);
-        var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
-        var isObjectType   = field.type == "Object";
-        var viaType        = isNonPrimitive && !isObjectType ? field.type!.GetViaType() ?? throw new NotImplementedException($"Hard-coded type '{field.type}' not implemented.") : null;
+        var     newName        = field.name?.ToConvertedFieldName()!;
+        var     primitiveName  = field.GetCSharpType();
+        var     typeName       = field.originalType!.ToConvertedTypeName();
+        var     isPrimitive    = primitiveName != null;
+        var     isEnumType     = typeName != null && Program.ENUM_TYPES.ContainsKey(typeName);
+        var     buttonType     = GetButtonType(field);
+        var     isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
+        var     isObjectType   = field.type == "Object";
+        string? viaType        = null;
+
+        if (isNonPrimitive && !isObjectType) {
+            // This makes sure we've implemented the via type during generation.
+            viaType = field.type!.GetViaType() ?? throw new NotImplementedException($"Hard-coded type '{field.type}' not implemented.");
+        }
 
         if (usedNames.ContainsKey(newName)) {
             usedNames[newName]++;

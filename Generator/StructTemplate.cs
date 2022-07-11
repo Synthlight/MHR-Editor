@@ -1,4 +1,6 @@
-﻿using MHR_Editor.Common.Attributes;
+﻿using System.Diagnostics;
+using MHR_Editor.Common;
+using MHR_Editor.Common.Attributes;
 using MHR_Editor.Common.Data;
 using MHR_Editor.Common.Models;
 using MHR_Editor.Generator.Models;
@@ -9,9 +11,8 @@ public class StructTemplate {
     public readonly  string                  hash;
     public readonly  StructJson              structInfo;
     private readonly string                  className;
-    private readonly Dictionary<string, int> usedNames    = new();
-    private readonly List<ListForInit>       fieldsToInit = new();
-    private          int                     sortOrder    = 1000;
+    private readonly Dictionary<string, int> usedNames = new();
+    private          int                     sortOrder = 1000;
 
     public StructTemplate(StructType structType) {
         hash       = structType.hash;
@@ -24,21 +25,15 @@ public class StructTemplate {
         using var file     = new StreamWriter(File.Open(filename, FileMode.Create, FileAccess.Write));
         WriteUsings(file);
         WriteClassHeader(file);
-        foreach (var field in structInfo.fields!) {
-            if (field.name == null) continue;
-            var primitiveName = field.GetCSharpType();
-            if (primitiveName != null) {
-                WriteProperty(file, field, primitiveName);
-                continue;
-            }
-            var enumType = field.GetEnumType(); // No discernible difference between struct and enum here.
-            if (enumType != null && (Program.ENUM_TYPES.ContainsKey(enumType) || Program.STRUCT_TYPES.ContainsKey(enumType))) {
-                WriteProperty(file, field, enumType);
+        if (structInfo.fields != null) {
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var field in structInfo.fields) {
+                if (string.IsNullOrEmpty(field.name) || string.IsNullOrEmpty(field.originalType)) continue;
+                WriteProperty(file, field);
             }
         }
-        WriteInit(file);
-        WritePreWrite(file);
         WriteClassFooter(file);
+        file.Flush();
         file.Close();
     }
 
@@ -52,6 +47,7 @@ public class StructTemplate {
         file.WriteLine("using MHR_Editor.Common.Data;");
         file.WriteLine("using MHR_Editor.Common.Models;");
         file.WriteLine("using MHR_Editor.Common.Models.List_Wrappers;");
+        file.WriteLine("using MHR_Editor.Common.Structs;");
         file.WriteLine("using MHR_Editor.Models.Enums;");
     }
 
@@ -73,17 +69,16 @@ public class StructTemplate {
         file.WriteLine($"    public const uint HASH = 0x{hash};");
     }
 
-    private void WriteProperty(TextWriter file, StructJson.Field field, string typeName) {
-        var newName      = field.name!;
-        var enumType     = field.GetEnumType()?.Replace("[]", "");
-        var buttonType   = GetButtonType(field);
-        var isObjectType = field.type == "Object";
-
-        while (newName.StartsWith('_')) newName = newName[1..]; // Remove the leading '_'.
-        while (newName.EndsWith('_')) newName   = newName[..1]; // Remove the trailing '_'.
-
-        newName = newName.ToConvertedTypeName(true);
-        if (newName == "Index") newName = "_Index";
+    private void WriteProperty(TextWriter file, StructJson.Field field) {
+        var newName        = field.name?.ToConvertedFieldName()!;
+        var primitiveName  = field.GetCSharpType();
+        var typeName       = field.originalType!.ToConvertedTypeName();
+        var isPrimitive    = primitiveName != null;
+        var isEnumType     = typeName != null && Program.ENUM_TYPES.ContainsKey(typeName);
+        var buttonType     = GetButtonType(field);
+        var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
+        var isObjectType   = field.type == "Object";
+        var viaType        = isNonPrimitive && !isObjectType ? field.type!.GetViaType() ?? throw new NotImplementedException($"Hard-coded type '{field.type}' not implemented.") : null;
 
         if (usedNames.ContainsKey(newName)) {
             usedNames[newName]++;
@@ -94,86 +89,69 @@ public class StructTemplate {
 
         file.WriteLine("");
 
+        if (newName == "RotOffset") {
+            Debug.Write("");
+        }
+
         if (field.name!.ToLower() == "_id") {
             file.WriteLine("    [ShowAsHex]");
+            isEnumType = false;
         }
 
         if (field.array) {
             file.WriteLine($"    [SortOrder({sortOrder})]");
             if (buttonType != null) {
+                if (primitiveName == null) {
+                    throw new InvalidDataException("Button type found but primitiveName is null.");
+                }
                 file.WriteLine($"    [DataSource(DataSourceType.{buttonType})]");
                 foreach (var additionalAttributes in GetAdditionalAttributesForDataSourceType(buttonType)) {
                     file.WriteLine($"    {additionalAttributes}");
                 }
-                file.WriteLine($"    public ObservableCollection<DataSourceWrapper<{typeName}>> {newName} {{ get; set; }}");
+                file.WriteLine($"    public ObservableCollection<DataSourceWrapper<{primitiveName}>> {newName} {{ get; set; }}");
             } else if (isObjectType) {
-                file.WriteLine($"    public ObservableCollection<{enumType}> {newName} {{ get; set; }}");
+                file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
+            } else if (isNonPrimitive) {
+                file.WriteLine($"    public ObservableCollection<{viaType}> {newName} {{ get; set; }}");
+            } else if (isEnumType) {
+                file.WriteLine($"    public ObservableCollection<GenericWrapper<{typeName}>> {newName} {{ get; set; }}");
+            } else if (isPrimitive) {
+                file.WriteLine($"    public ObservableCollection<GenericWrapper<{primitiveName}>> {newName} {{ get; set; }}");
             } else {
-                file.WriteLine($"    public ObservableCollection<GenericWrapper<{enumType ?? typeName}>> {newName} {{ get; set; }}");
+                throw new InvalidDataException("Not a primitive, enum, or object array type.");
             }
-            fieldsToInit.Add(new(newName, field, buttonType, enumType, typeName, isObjectType));
         } else {
             if (buttonType != null && field.name != "_Id") {
                 var lookupName = GetLookupForDataSourceType(buttonType);
                 file.WriteLine($"    [SortOrder({sortOrder + 10})]");
                 file.WriteLine($"    [DataSource(DataSourceType.{buttonType})]");
-                file.WriteLine($"    public {typeName} {newName} {{");
-                file.WriteLine($"        get => fieldData.getFieldByName(\"{field.name}\").data.GetData<{typeName}>();");
-                file.WriteLine("        set {");
-                file.WriteLine($"            if (EqualityComparer<{typeName}>.Default.Equals({newName}, value)) return;");
-                file.WriteLine($"            fieldData.getFieldByName(\"{field.name}\").data = value.GetBytes();");
-                file.WriteLine($"            OnPropertyChanged(nameof({newName}));");
-                file.WriteLine($"            OnPropertyChanged(nameof({newName}_button));");
-                file.WriteLine("        }");
-                file.WriteLine("    }");
+                file.WriteLine($"    public {primitiveName} {newName} {{ get; set; }}");
                 file.WriteLine("");
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    [DisplayName(\"{newName}\")]");
                 file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) Convert.ChangeType({newName}, TypeCode.UInt32)).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
-            } else {
+            } else if (isObjectType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
-                file.WriteLine($"    public {enumType ?? typeName} {newName} {{");
-                file.WriteLine($"        get => ({enumType ?? typeName}) fieldData.getFieldByName(\"{field.name}\").data.GetData<{typeName}>();");
-                file.WriteLine($"        set => fieldData.getFieldByName(\"{field.name}\").data = (({typeName}) value).GetBytes();");
-                file.WriteLine("    }");
+                file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
+            } else if (isNonPrimitive) {
+                file.WriteLine($"    [SortOrder({sortOrder})]");
+                file.WriteLine($"    public ObservableCollection<{viaType}> {newName} {{ get; set; }}");
+            } else if (isEnumType) {
+                file.WriteLine($"    [SortOrder({sortOrder})]");
+                file.WriteLine($"    public {typeName} {newName} {{ get; set; }}");
+            } else if (isPrimitive) {
+                file.WriteLine($"    [SortOrder({sortOrder})]");
+                file.WriteLine($"    public {primitiveName} {newName} {{ get; set; }}");
+            } else {
+                throw new InvalidDataException("Not a primitive, enum, or object type.");
             }
         }
 
         sortOrder += 100;
     }
 
-    private void WriteInit(TextWriter file) {
-        if (fieldsToInit.Count == 0) return;
-        file.WriteLine("");
-        file.WriteLine("    protected override void Init() {");
-        file.WriteLine("        base.Init();");
-        file.WriteLine("");
-        foreach (var field in fieldsToInit) {
-            if (field.buttonType != null) {
-                file.WriteLine($"        {field.newName} = new(fieldData.getFieldByName(\"{field.field.name}\").GetDataAsList<DataSourceWrapper<{field.typeName}>>());");
-            } else if (field.isObjectType) {
-                file.WriteLine($"        {field.newName} = new(fieldData.getFieldByName(\"{field.field.name}\").GetDataAsList<{field.enumType}>());");
-            } else {
-                file.WriteLine($"        {field.newName} = new(fieldData.getFieldByName(\"{field.field.name}\").GetDataAsList<GenericWrapper<{field.enumType ?? field.typeName}>>());");
-            }
-        }
-        file.WriteLine("    }");
-    }
-
-    private void WritePreWrite(TextWriter file) {
-        if (fieldsToInit.Count == 0) return;
-        file.WriteLine("");
-        file.WriteLine("    protected override void PreWrite() {");
-        file.WriteLine("        base.PreWrite();");
-        file.WriteLine("");
-        foreach (var field in fieldsToInit) {
-            file.WriteLine($"        fieldData.getFieldByName(\"{field.field.name}\").SetDataFromList({field.newName});");
-        }
-        file.WriteLine("    }");
-    }
-
     private void WriteClassFooter(TextWriter file) {
-        file.WriteLine("}");
+        file.Write("}");
     }
 
     private static DataSourceType? GetButtonType(StructJson.Field field) {

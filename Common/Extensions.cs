@@ -1,7 +1,9 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using MHR_Editor.Common.Models;
 
 namespace MHR_Editor.Common;
 
@@ -153,6 +155,24 @@ public static class Extensions {
         }
     }
 
+    public static object GetDataAs(this IEnumerable<byte> bytes, Type type) {
+        var handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+
+        try {
+            var isEnum                  = type.IsEnum;
+            var deserializeType         = type;
+            if (isEnum) deserializeType = type.GetEnumUnderlyingType();
+
+            var data = Marshal.PtrToStructure(handle.AddrOfPinnedObject(), deserializeType)!;
+
+            return isEnum ? Enum.ToObject(type, data) : data;
+        } finally {
+            if (handle.IsAllocated) {
+                handle.Free();
+            }
+        }
+    }
+
     public static byte[] GetBytes<T>(this T @struct) where T : notnull {
         if (@struct is bool b) {
             return new[] {(byte) (b ? 1 : 0)};
@@ -275,5 +295,89 @@ public static class Extensions {
 
     public static IEnumerable<TSource> Append<TSource>(this IEnumerable<TSource> source, IEnumerable<TSource> elements) {
         return elements.Aggregate(source, (current, element) => current.Append(element));
+    }
+
+    public static string? GetCSharpType(this StructJson.Field field) {
+        return field.type switch {
+            "Bool" => "bool",
+            "S8" => "sbyte",
+            "U8" => "byte",
+            "S16" => "short",
+            "U16" => "ushort",
+            "S32" => "int",
+            "U32" => "uint",
+            "S64" => "long",
+            "U64" => "ulong",
+            "F32" => "float",
+            "F64" => "double",
+            "String" => "string",
+            _ => null
+        };
+    }
+
+    public static string? GetViaType(this string name) {
+        switch (name.ToLower()) {
+            case "vec2":
+            case "via.vec2":
+                return "ViaVec2";
+            case "vec3":
+            case "via.vec3":
+                return "ViaVec3";
+            case "quaternion":
+            case "via.quaternion":
+                return "Quaternion";
+            case "float2":
+            case "via.float2":
+                return "Float2";
+            case "float3":
+            case "via.float3":
+                return "Float3";
+            default: return null;
+        }
+    }
+
+    public static string ToUpperFirstLetter(this string source) {
+        if (string.IsNullOrEmpty(source)) return string.Empty;
+        var letters = source.ToCharArray();
+        letters[0] = char.ToUpper(letters[0]);
+        return new(letters);
+    }
+
+    public static string? ToConvertedTypeName(this string? source, bool fixTypos = false) {
+        if (source == null) return null;
+        var name = source.ToUpperFirstLetter()
+                         .Replace(".", "_")
+                         .Replace("::", "_")
+                         .Replace("[]", "");
+
+        if (int.TryParse(name[0].ToString(), out _)) name = "_" + name; // If it starts with a number.
+        while (name.EndsWith("k__BackingField")) name     = name.Substring(1, name.LastIndexOf('>') - 1); // Remove the k__BackingField.
+
+        if (fixTypos) {
+            name = name.Replace("Cariable", "Carryable")
+                       .Replace("Evalution", "Evaluation");
+        }
+
+        return name;
+    }
+
+    public static string? ToConvertedFieldName(this string? name) {
+        if (name == null) return null;
+        while (name.StartsWith('_')) name = name[1..]; // Remove the leading '_'.
+        while (name.EndsWith('_')) name   = name[..1]; // Remove the trailing '_'.
+
+        name = name.ToConvertedTypeName(true)!;
+        if (name == "Index") name = "_Index";
+        return name;
+    }
+
+    /**
+     * Returns a list of all the items in the give list matching the given type.
+     * Essentially a type-as-a-variable way to call OfType().
+     */
+    public static object GetGenericItemsOfType<T>(this IReadOnlyList<T> rszObjectData, Type type) {
+        return typeof(Enumerable).GetMethod(nameof(Enumerable.OfType), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)
+                                 ?.MakeGenericMethod(type)
+                                 .Invoke(null, new object[] {rszObjectData}) ?? throw new("rsz.objectData.OfType failure.");
     }
 }

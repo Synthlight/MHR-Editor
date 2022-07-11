@@ -54,15 +54,12 @@ public static class Program {
         "Snow_equip_PlOverwearBaseUserData",
         "Snow_equip_ShortSwordBaseUserData",
         "Snow_equip_SlashAxeBaseUserData",
+        "Snow_fallingObject_FallingObjectPlayerHeavyBowgunExtraCartridgeUserData",
+        "Snow_player_PlayerUserDataBow",
     };
 
     public static void Main(string[] args) {
-        var useWhitelist     = args.Length > 0 && args.Contains("useWhitelist");
-        var ignoreStructInfo = args.Length > 0 && args.Contains("ignoreStructInfo");
-
-        if (!ignoreStructInfo) {
-            ParseStructInfo();
-        }
+        var useWhitelist = args.Length > 0 && args.Contains("useWhitelist");
 
         FindAllEnumUnderlyingTypes();
 
@@ -82,14 +79,15 @@ public static class Program {
 
         GenerateEnums();
         GenerateStructs();
+
+        WriteStructInfo();
     }
 
-    private static void ParseStructInfo() {
-        var structJson = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(STRUCT_JSON_PATH))!;
+    private static void WriteStructInfo() {
         var structInfo = new Dictionary<uint, StructJson>();
-        foreach (var (key, value) in structJson) {
-            var hash = uint.Parse(key, NumberStyles.HexNumber);
-            structInfo[hash] = value;
+        foreach (var (hashString, @struct) in STRUCT_JSON) {
+            var hash = uint.Parse(hashString, NumberStyles.HexNumber);
+            structInfo[hash] = @struct;
         }
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\STRUCT_INFO.json", JsonConvert.SerializeObject(structInfo, Formatting.Indented));
     }
@@ -114,7 +112,7 @@ public static class Program {
             // We only want the enum placeholders.
             if (structInfo.fields?.Count != 1 || field?.name != "value__") continue;
 
-            var name       = structInfo.name.ToConvertedTypeName();
+            var name       = structInfo.name.ToConvertedTypeName()!;
             var boxedType  = GetTypeForName(field.originalType!);
             var type       = new CodeTypeReference(boxedType);
             var typeString = compiler.GetTypeOutput(type);
@@ -159,7 +157,7 @@ public static class Program {
             if (hppName.Contains('<') || hppName.Contains('`')) continue;
             var name     = hppName.ToConvertedTypeName();
             var contents = match.Groups[3].Value;
-            if (ENUM_TYPES.ContainsKey(name)) {
+            if (name != null && ENUM_TYPES.ContainsKey(name)) {
                 ENUM_TYPES[name].Contents = contents;
             }
         }
@@ -187,7 +185,9 @@ public static class Program {
                 || !structInfo.name.StartsWith("snow") && !structInfo.name.StartsWith("via")) continue;
             // Also ignore structs that are just enum placeholders.
             if (structInfo.fields?.Count == 1 && structInfo.fields[0].name == "value__") continue;
-            var name       = structInfo.name.ToConvertedTypeName();
+            // Ignore the 'via.thing' placeholders.
+            if (structInfo.name.GetViaType() != null) continue;
+            var name       = structInfo.name.ToConvertedTypeName()!;
             var structType = new StructType(name, hash, structInfo);
             structTypes[name] = structType;
         }
@@ -251,6 +251,16 @@ public static class Program {
                     .Where(key => STRUCT_TYPES[key].useCount == 0)
                     .ToList()
                     .ForEach(key => STRUCT_TYPES.Remove(key));
+        // Remove the struct data we're not using from the struct info.
+        var keysToRemove = (from entry in STRUCT_JSON
+                            let name = entry.Value.name
+                            where !string.IsNullOrEmpty(name)
+                            let typeName = name?.ToConvertedTypeName()
+                            where !ENUM_TYPES.ContainsKey(typeName) && !STRUCT_TYPES.ContainsKey(typeName)
+                            select entry.Key).ToList();
+        foreach (var key in keysToRemove) {
+            STRUCT_JSON.Remove(key);
+        }
     }
 
     private static void GenerateEnums() {

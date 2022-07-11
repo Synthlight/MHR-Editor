@@ -129,14 +129,38 @@ public partial class MainWindow {
 
             var rszObjectData = file?.rsz.objectData;
             if (rszObjectData == null || rszObjectData.Count == 0) throw new("Error loading data; rszObjectData is null/empty.\n\nPlease report the path/name of the file you are trying to load.");
-            var type          = rszObjectData[0].GetType();
-            var getListOfType = typeof(Enumerable).GetMethod(nameof(Enumerable.OfType), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.MakeGenericMethod(type);
-            var items         = getListOfType?.Invoke(null, new object[] {rszObjectData}) ?? throw new("rsz.objectData.OfType failure.");
-            var dataGrid      = MakeDataGrid((dynamic) items);
+            var rszObjectInfo = file?.rsz.objectInfo;
+            if (rszObjectInfo == null || rszObjectInfo.Count == 0) throw new("Error loading data; rszObjectInfo is null/empty.\n\nPlease report the path/name of the file you are trying to load.");
+
+            // Find entry object & type.
+            var objectDataIndex     = (int) rszObjectInfo[0] - 1; // 1 based.
+            var entryPointRszObject = rszObjectData[objectDataIndex];
+
+            var (type, items) = GetItemAndTypeToUseAsRoot(rszObjectData, entryPointRszObject);
+            var dataGrid = MakeDataGrid((dynamic) items);
             Debug.WriteLine($"Loading type: {type.Name}");
             AddMainDataGrid(dataGrid);
         } catch (Exception e) when (!Debugger.IsAttached) {
             ShowError(e, "Load Error");
+        }
+    }
+
+    /**
+     * Gets the items & typeName to use as the root entry in the dataGrid.
+     * For param types, the is the list of params. (A shortcut we make.)
+     * For the rest, it's the entry point & type.
+     */
+    private static (Type, object) GetItemAndTypeToUseAsRoot(IReadOnlyList<RszObject> rszObjectData, RszObject entryPointRszObject) {
+        var hasTwoTypes     = rszObjectData.Select(o => o.GetType()).Distinct().Count() == 2;
+        var isParamListOnly = entryPointRszObject.structInfo.fields is {Count: 1} && entryPointRszObject.structInfo.fields[0].name == "_Param";
+        if (hasTwoTypes && isParamListOnly) {
+            var type  = rszObjectData[0].GetType();
+            var items = rszObjectData.GetGenericItemsOfType(type);
+            return (type, items);
+        } else {
+            var type  = entryPointRszObject.GetType();
+            var items = new List<RszObject> {entryPointRszObject}.GetGenericItemsOfType(type);
+            return (type, items);
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using MHR_Editor.Common.Models;
+﻿using MHR_Editor.Common;
+using MHR_Editor.Common.Models;
 
 namespace MHR_Editor.Generator.Models {
     public class StructType {
@@ -16,15 +17,15 @@ namespace MHR_Editor.Generator.Models {
         public void UpdateUsingCounts() {
             // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var field in structInfo.fields!) {
-                if (field.name == null) continue;
-                var enumType = field.GetEnumType(); // No discernible difference between struct and enum here.
-                if (enumType == null) continue;
-                if (Program.STRUCT_TYPES.ContainsKey(enumType)) {
-                    Program.STRUCT_TYPES[enumType].useCount++;
-                    Program.STRUCT_TYPES[enumType].UpdateUsingCounts();
+                if (string.IsNullOrEmpty(field.name) || string.IsNullOrEmpty(field.originalType)) continue;
+                var typeName = field.originalType?.ToConvertedTypeName();
+                if (typeName == null) continue;
+                if (Program.STRUCT_TYPES.ContainsKey(typeName)) {
+                    Program.STRUCT_TYPES[typeName].useCount++;
+                    Program.STRUCT_TYPES[typeName].UpdateUsingCounts();
                 }
-                if (Program.ENUM_TYPES.ContainsKey(enumType)) {
-                    Program.ENUM_TYPES[enumType].useCount++;
+                if (Program.ENUM_TYPES.ContainsKey(typeName)) {
+                    Program.ENUM_TYPES[typeName].useCount++;
                 }
             }
         }

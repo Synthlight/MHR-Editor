@@ -8,6 +8,20 @@ using MHR_Editor.Common.Models;
 namespace MHR_Editor.Common;
 
 public static class Extensions {
+    private static readonly Dictionary<string, string> VIA_TYPE_NAME_LOOKUPS = new();
+
+    static Extensions() {
+        var viaTypes = from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                       from type in assembly.GetTypes()
+                       where type != typeof(IViaType) && type.IsAssignableTo(typeof(IViaType))
+                       select type.Name;
+        foreach (var viaType in viaTypes) {
+            VIA_TYPE_NAME_LOOKUPS[viaType.ToLower()]          = viaType;
+            VIA_TYPE_NAME_LOOKUPS[$"via.{viaType}".ToLower()] = viaType;
+        }
+        Debug.Assert(VIA_TYPE_NAME_LOOKUPS.Count > 0);
+    }
+
     public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T> {
         if (val.CompareTo(min) < 0) {
             return min;
@@ -316,24 +330,8 @@ public static class Extensions {
     }
 
     public static string? GetViaType(this string name) {
-        switch (name.ToLower()) {
-            case "vec2":
-            case "via.vec2":
-                return "ViaVec2";
-            case "vec3":
-            case "via.vec3":
-                return "ViaVec3";
-            case "quaternion":
-            case "via.quaternion":
-                return "Quaternion";
-            case "float2":
-            case "via.float2":
-                return "Float2";
-            case "float3":
-            case "via.float3":
-                return "Float3";
-            default: return null;
-        }
+        name = name.ToLower();
+        return VIA_TYPE_NAME_LOOKUPS.ContainsKey(name) ? VIA_TYPE_NAME_LOOKUPS[name] : null;
     }
 
     public static string ToUpperFirstLetter(this string source) {

@@ -141,7 +141,7 @@ public partial class MainWindow {
             Debug.WriteLine($"Loading type: {type.Name}");
             AddMainDataGrid(dataGrid);
         } catch (FileNotSupported) {
-            MessageBox.Show("Please check the stickied comments on the nexus page and if it's not listed there, leave a comment about it.", "File not supported in this version.", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Please check the stickied comments on the nexus page and if it's not listed there, leave a comment about it.", "File not supported.", MessageBoxButton.OK, MessageBoxImage.Error);
         } catch (Exception e) when (!Debugger.IsAttached) {
             ShowError(e, "Load Error");
         }

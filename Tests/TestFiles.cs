@@ -8,8 +8,9 @@ public class TestFiles {
     private const string IN_PATH        = @"V:\MHR\re_chunk_000";
     private const string TEST_BASE_PATH = $@"{IN_PATH}\natives\STM\data\Define";
     private static readonly string[] TEST_PATHS = {
-        $@"{TEST_BASE_PATH}\Player",
-        $@"{TEST_BASE_PATH}\Otomo",
+        $@"{IN_PATH}\natives\STM\data\Define",
+        $@"{IN_PATH}\natives\STM\data\System",
+        $@"{IN_PATH}\natives\STM\player\UserData",
     };
 
     private static IEnumerable<object[]> GetFilesToTest() {

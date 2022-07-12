@@ -51,6 +51,8 @@ public class StructTemplate {
         file.WriteLine("using MHR_Editor.Common.Models.List_Wrappers;");
         file.WriteLine("using MHR_Editor.Common.Structs;");
         file.WriteLine("using MHR_Editor.Models.Enums;");
+        file.WriteLine("using DateTime = MHR_Editor.Common.Structs.DateTime;");
+        file.WriteLine("using Guid = MHR_Editor.Common.Structs.Guid;");
     }
 
     private void WriteClassHeader(TextWriter file) {
@@ -72,6 +74,9 @@ public class StructTemplate {
     }
 
     private void WriteProperty(TextWriter file, StructJson.Field field) {
+        if (GenerateFiles.UNSUPPORTED_DATA_TYPES.Contains(field.type!)) return;
+        if (GenerateFiles.UNSUPPORTED_OBJECT_TYPES.Any(s => field.originalType!.Contains(s))) return;
+
         var     newName        = field.name?.ToConvertedFieldName()!;
         var     primitiveName  = field.GetCSharpType();
         var     typeName       = field.originalType!.ToConvertedTypeName();
@@ -81,8 +86,6 @@ public class StructTemplate {
         var     isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
         var     isObjectType   = field.type == "Object";
         string? viaType        = null;
-
-        if (GenerateFiles.UNSUPPORTED_DATA_TYPES.Contains(field.type!)) return;
 
         if (isNonPrimitive && !isObjectType) {
             // This makes sure we've implemented the via type during generation.

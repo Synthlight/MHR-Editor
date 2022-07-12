@@ -76,6 +76,21 @@ public class GenerateFiles {
         "UserData",
     };
 
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public static readonly List<string> UNSUPPORTED_OBJECT_TYPES = new() { // TODO: Implement support for these.
+        "snow.camera.CameraUtility.BufferingParam`",
+        "snow.data.StmKeyconfigSystem.ConfigCodeSet`",
+        "snow.shell.Em", // There's one for each monster variant. Exclude the whole shebang for now.
+        "snow.enemy.EnemyCarryChangeTrack`",
+        "snow.enemy.EnemyEditStepActionData`",
+        "snow.envCreature.EnvironmentCreatureActionController`",
+        "snow.eventcut.EventPlayerMediator.FaceMaterialConfig`",
+        "snow.StmDefaultKeyconfigData.EnumSet2`",
+        "snow.StmGuiKeyconfigData.EnumItemSystemMessage`",
+        "snow.StmGuiKeyconfigData.EnumMessage`",
+        "System.Collections.Generic.Dictionary`",
+    };
+
     public readonly  Dictionary<string, EnumType>   enumTypes   = new();
     public readonly  Dictionary<string, StructType> structTypes = new();
     private readonly Dictionary<string, StructJson> structJson  = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(STRUCT_JSON_PATH))!;
@@ -222,8 +237,10 @@ public class GenerateFiles {
     private static bool IsStructNameValid(StructJson structInfo) {
         return !(structInfo.name == null
                  || structInfo.name.Contains('<')
+                 || structInfo.name.Contains('>')
                  || structInfo.name.Contains('`')
                  || structInfo.name.Contains('[')
+                 || structInfo.name.Contains(']')
                  || structInfo.name.Contains("List`")
                  || structInfo.name.Contains("Culture=neutral")
                  || structInfo.name.StartsWith("System")
@@ -257,7 +274,10 @@ public class GenerateFiles {
                || key.ContainsIgnoreCase("ChangeUserData")
                || key.ContainsIgnoreCase("ProcessUserData")
                || key.ContainsIgnoreCase("RecipeUserData")
-               || key.ContainsIgnoreCase("PlayerUserData");
+               || key.ContainsIgnoreCase("PlayerUserData")
+               || key.ContainsIgnoreCase("Snow_equip")
+               || key.ContainsIgnoreCase("Snow_data")
+               || key.ContainsIgnoreCase("Snow_player");
     }
 
     /**

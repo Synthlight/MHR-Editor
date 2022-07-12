@@ -351,23 +351,38 @@ public static class Extensions {
     public static string? ToConvertedTypeName(this string? source, bool fixTypos = false) {
         if (source == null) return null;
         var name = source.ToUpperFirstLetter()
-                         .Replace(".", "_")
+                         .Replace('.', '_')
                          .Replace("::", "_")
                          .Replace("[]", "");
 
         if (int.TryParse(name[0].ToString(), out _)) name = "_" + name; // If it starts with a number.
         while (name.EndsWith("k__BackingField")) name     = name.Substring(1, name.LastIndexOf('>') - 1); // Remove the k__BackingField.
-        while (name.StartsWith("System_Collections_Generic_List")
-               || name.StartsWith("System_Collections_Generic_IReadOnlyCollection")
-               || name.StartsWith("System_Collections_Generic_ICollection")) { // The 'array' field already covers this.
+        while (name.StartsWith("System_Collections_Generic_List`")
+               || name.StartsWith("System_Collections_Generic_IReadOnlyCollection`")
+               || name.StartsWith("System_Collections_Generic_ICollection`")
+               || name.StartsWith("System_Collections_Generic_SortedSet`")
+               || name.StartsWith("System_Collections_Generic_Queue`")
+               || name.StartsWith("Snow_BitSetFlag`")
+               || name.StartsWith("Snow_Bitset`")
+               || name.StartsWith("Snow_ai_FieldGimmickIntersector_ArrayElement`")
+               || name.StartsWith("Snow_enemy_aifsm_EnemyCheckThinkCounter`")
+               || name.StartsWith("Snow_enemy_EnemyConvertShellDataList`")) { // The 'array' field already covers this.
             if (name.Contains("[[")) {
-                name = name.SubstringToEnd(name.LastIndexOf("[[", StringComparison.Ordinal) + 1, name.IndexOf(','))
+                name = name.SubstringToEnd(name.LastIndexOf("[[", StringComparison.Ordinal) + 2, name.IndexOf(','))
                            .ToUpperFirstLetter();
             } else {
                 name = name.SubstringToEnd(name.LastIndexOf('<') + 1, name.IndexOf('>'))
                            .ToUpperFirstLetter();
             }
         }
+        Debug.Assert(!name.StartsWith("System_Collections"), source);
+        Debug.Assert(!name.Contains('`'), source);
+        Debug.Assert(!name.Contains('['), source);
+        Debug.Assert(!name.Contains(']'), source);
+        Debug.Assert(!name.Contains('<'), source);
+        Debug.Assert(!name.Contains('>'), source);
+
+        if (name == "System_UInt32") name = "GenericWrapper<uint>";
 
         if (fixTypos) {
             name = name.Replace("Cariable", "Carryable")

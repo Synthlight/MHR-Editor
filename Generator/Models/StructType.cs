@@ -18,6 +18,8 @@ namespace MHR_Editor.Generator.Models {
             // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var field in structInfo.fields!) {
                 if (string.IsNullOrEmpty(field.name) || string.IsNullOrEmpty(field.originalType)) continue;
+                if (GenerateFiles.UNSUPPORTED_DATA_TYPES.Contains(field.type!)) continue;
+                if (GenerateFiles.UNSUPPORTED_OBJECT_TYPES.Any(s => field.originalType!.Contains(s))) continue;
                 var typeName = field.originalType?.ToConvertedTypeName();
                 if (typeName == null) continue;
                 if (generator.structTypes.ContainsKey(typeName)) {

@@ -8,21 +8,23 @@ using MHR_Editor.Generator.Models;
 namespace MHR_Editor.Generator;
 
 public class StructTemplate {
+    private readonly GenerateFiles           generator;
     public readonly  string                  hash;
     public readonly  StructJson              structInfo;
     private readonly string                  className;
     private readonly Dictionary<string, int> usedNames = new();
     private          int                     sortOrder = 1000;
 
-    public StructTemplate(StructType structType) {
-        hash       = structType.hash;
-        structInfo = structType.structInfo;
-        className  = structType.name;
+    public StructTemplate(GenerateFiles generator, StructType structType) {
+        this.generator = generator;
+        hash           = structType.hash;
+        structInfo     = structType.structInfo;
+        className      = structType.name;
     }
 
-    public void Generate() {
-        var       filename = $@"{Program.STRUCT_GEN_PATH}\{className}.cs";
-        using var file     = new StreamWriter(File.Open(filename, FileMode.Create, FileAccess.Write));
+    public void Generate(bool dryRun) {
+        var       filename = $@"{GenerateFiles.STRUCT_GEN_PATH}\{className}.cs";
+        using var file     = new StreamWriter(dryRun ? new MemoryStream() : File.Open(filename, FileMode.Create, FileAccess.Write));
         WriteUsings(file);
         WriteClassHeader(file);
         if (structInfo.fields != null) {
@@ -74,11 +76,13 @@ public class StructTemplate {
         var     primitiveName  = field.GetCSharpType();
         var     typeName       = field.originalType!.ToConvertedTypeName();
         var     isPrimitive    = primitiveName != null;
-        var     isEnumType     = typeName != null && Program.ENUM_TYPES.ContainsKey(typeName);
+        var     isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
         var     buttonType     = GetButtonType(field);
         var     isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
         var     isObjectType   = field.type == "Object";
         string? viaType        = null;
+
+        if (GenerateFiles.UNSUPPORTED_DATA_TYPES.Contains(field.type!)) return;
 
         if (isNonPrimitive && !isObjectType) {
             // This makes sure we've implemented the via type during generation.

@@ -43,17 +43,21 @@
 		<Compile Remove="Generated\**"/>
 		<Compile Remove="Generator\**"/>
 		<Compile Remove="ID-Parser\**"/>
+		<Compile Remove="Tests\**"/>
 		<EmbeddedResource Remove="Common\**"/>
 		<EmbeddedResource Remove="Generated\**"/>
 		<EmbeddedResource Remove="Generator\**"/>
 		<EmbeddedResource Remove="ID-Parser\**"/>
+		<EmbeddedResource Remove="Tests\**"/>
 		<None Remove="Common\**"/>
 		<None Remove="Generated\**"/>
 		<None Remove="Generator\**"/>
 		<None Remove="ID-Parser\**"/>
+		<None Remove="Tests\**"/>
 		<Page Remove="Common\**"/>
 		<Page Remove="Generated\**"/>
 		<Page Remove="Generator\**"/>
 		<Page Remove="ID-Parser\**"/>
+		<Page Remove="Tests\**"/>
 	</ItemGroup>
 </Project>

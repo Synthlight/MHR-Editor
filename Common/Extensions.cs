@@ -22,6 +22,11 @@ public static class Extensions {
         Debug.Assert(VIA_TYPE_NAME_LOOKUPS.Count > 0);
     }
 
+    private static void AddCustomValType(string valName, string realTypeName) {
+        VIA_TYPE_NAME_LOOKUPS[valName]                    = realTypeName;
+        VIA_TYPE_NAME_LOOKUPS[$"via.{valName}".ToLower()] = realTypeName;
+    }
+
     public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T> {
         if (val.CompareTo(min) < 0) {
             return min;
@@ -84,18 +89,18 @@ public static class Extensions {
         return Global.showIdBeforeName ? $"{s}: {name}" : $"{name}: {s}";
     }
 
-    public static string SHA512(this string fileName) {
+    public static string Sha512(this string fileName) {
         using var file = File.OpenRead(fileName);
-        return file.SHA512();
+        return file.Sha512();
     }
 
-    public static string SHA512(this Stream stream) {
+    public static string Sha512(this Stream stream) {
         using var sha512 = System.Security.Cryptography.SHA512.Create();
         var       hash   = sha512.ComputeHash(stream);
         return BitConverter.ToString(hash).Replace("-", "");
     }
 
-    public static string SHA512(this byte[] bytes) {
+    public static string Sha512(this byte[] bytes) {
         using var sha512 = System.Security.Cryptography.SHA512.Create();
         var       hash   = sha512.ComputeHash(bytes);
         return BitConverter.ToString(hash).Replace("-", "");
@@ -325,6 +330,8 @@ public static class Extensions {
             "F32" => "float",
             "F64" => "double",
             "String" => "string",
+            "Resource" => "string",
+            "Size" => "uint",
             _ => null
         };
     }
@@ -353,8 +360,13 @@ public static class Extensions {
         while (name.StartsWith("System_Collections_Generic_List")
                || name.StartsWith("System_Collections_Generic_IReadOnlyCollection")
                || name.StartsWith("System_Collections_Generic_ICollection")) { // The 'array' field already covers this.
-            name = name.SubstringToEnd(name.LastIndexOf('<') + 1, name.IndexOf('>'))
-                       .ToUpperFirstLetter();
+            if (name.Contains("[[")) {
+                name = name.SubstringToEnd(name.LastIndexOf("[[", StringComparison.Ordinal) + 1, name.IndexOf(','))
+                           .ToUpperFirstLetter();
+            } else {
+                name = name.SubstringToEnd(name.LastIndexOf('<') + 1, name.IndexOf('>'))
+                           .ToUpperFirstLetter();
+            }
         }
 
         if (fixTypos) {

@@ -9,9 +9,9 @@ public class EnumTemplate {
         this.enumType = enumType;
     }
 
-    public void Generate() {
-        var       filename = $@"{Program.ENUM_GEN_PATH}\{enumType.name}.cs";
-        using var file     = new StreamWriter(File.Open(filename, FileMode.Create, FileAccess.Write));
+    public void Generate(bool dryRun) {
+        var       filename = $@"{GenerateFiles.ENUM_GEN_PATH}\{enumType.name}.cs";
+        using var file     = new StreamWriter(dryRun ? new MemoryStream() : File.Open(filename, FileMode.Create, FileAccess.Write));
 
         file.WriteLine("namespace MHR_Editor.Models.Enums;");
         file.WriteLine("");

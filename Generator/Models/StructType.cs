@@ -14,18 +14,18 @@ namespace MHR_Editor.Generator.Models {
             this.structInfo = structInfo;
         }
 
-        public void UpdateUsingCounts() {
+        public void UpdateUsingCounts(GenerateFiles generator) {
             // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var field in structInfo.fields!) {
                 if (string.IsNullOrEmpty(field.name) || string.IsNullOrEmpty(field.originalType)) continue;
                 var typeName = field.originalType?.ToConvertedTypeName();
                 if (typeName == null) continue;
-                if (Program.STRUCT_TYPES.ContainsKey(typeName)) {
-                    Program.STRUCT_TYPES[typeName].useCount++;
-                    Program.STRUCT_TYPES[typeName].UpdateUsingCounts();
+                if (generator.structTypes.ContainsKey(typeName)) {
+                    generator.structTypes[typeName].useCount++;
+                    generator.structTypes[typeName].UpdateUsingCounts(generator);
                 }
-                if (Program.ENUM_TYPES.ContainsKey(typeName)) {
-                    Program.ENUM_TYPES[typeName].useCount++;
+                if (generator.enumTypes.ContainsKey(typeName)) {
+                    generator.enumTypes[typeName].useCount++;
                 }
             }
         }

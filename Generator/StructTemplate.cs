@@ -53,6 +53,7 @@ public class StructTemplate {
         file.WriteLine("using MHR_Editor.Models.Enums;");
         file.WriteLine("using DateTime = MHR_Editor.Common.Structs.DateTime;");
         file.WriteLine("using Guid = MHR_Editor.Common.Structs.Guid;");
+        file.WriteLine("using Range = MHR_Editor.Common.Structs.Range;");
     }
 
     private void WriteClassHeader(TextWriter file) {

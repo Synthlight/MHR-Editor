@@ -381,6 +381,7 @@ public static class Extensions {
         Debug.Assert(!name.Contains(']'), source);
         Debug.Assert(!name.Contains('<'), source);
         Debug.Assert(!name.Contains('>'), source);
+        Debug.Assert(!name.Contains(','), source);
 
         if (name == "System_UInt32") name = "GenericWrapper<uint>";
 

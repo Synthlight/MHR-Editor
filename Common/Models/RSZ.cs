@@ -58,6 +58,8 @@ public class RSZ {
             rsz.objectData.Add(obj);
         }
 
+        if (reader.BaseStream.Position != reader.BaseStream.Length) throw new("Finished reading the file but the position is not at the end.");
+
         return rsz;
     }
 

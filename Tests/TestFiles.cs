@@ -1,5 +1,6 @@
+using System.Diagnostics;
+using System.Security.Cryptography;
 using MHR_Editor.Common.Models;
-using MHR_Editor.Data;
 
 namespace Tests;
 
@@ -14,25 +15,38 @@ public class TestFiles {
     };
 
     private static IEnumerable<object[]> GetFilesToTest() {
-        foreach (var basePath in TEST_PATHS) {
-            var files = Directory.EnumerateFiles(basePath, "*.user.2", SearchOption.AllDirectories);
-            foreach (var file in files) {
-                if (!File.Exists(file)) continue;
-                yield return new object[] {file};
-            }
-        }
-    }
-
-    [TestInitialize]
-    public void Init() {
-        DataInit.Init();
+        return from basePath in TEST_PATHS
+               from file in Directory.EnumerateFiles(basePath, "*.user.2", SearchOption.AllDirectories)
+               where File.Exists(file)
+               select new object[] {file};
     }
 
     [DynamicData(nameof(GetFilesToTest), DynamicDataSourceType.Method)]
     [DataTestMethod]
-    public void Test(string file) {
+    public void TestRead(string file) {
         try {
             ReDataFile.Read(file);
+        } catch (FileNotSupported) {
+            Assert.Inconclusive();
+        }
+    }
+
+    [DynamicData(nameof(GetFilesToTest), DynamicDataSourceType.Method)]
+    [DataTestMethod]
+    public void TestWrite(string file) {
+        try {
+            var       data   = ReDataFile.Read(file);
+            using var writer = new BinaryWriter(new MemoryStream());
+            data.Write(writer, true);
+
+            var sourceLength = new FileInfo(file).Length;
+            var destLength   = writer.BaseStream.Length;
+            Debug.Assert(sourceLength == destLength, $"Length expected {sourceLength}, found {destLength}.");
+
+
+            var fileHash = MD5.Create().ComputeHash(File.Open(file, FileMode.Open, FileAccess.Read, FileShare.Read));
+            var newHash  = MD5.Create().ComputeHash(writer.BaseStream);
+            Debug.Assert(sourceLength == destLength, $"MD5 expected {fileHash}, found {newHash}.");
         } catch (FileNotSupported) {
             Assert.Inconclusive();
         }

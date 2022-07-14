@@ -1,5 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using MHR_Editor.Common.Attributes;
@@ -15,7 +18,9 @@ namespace MHR_Editor.Common.Models;
 public class RszObject : OnPropertyChangedBase {
     public    StructJson structInfo;
     protected RSZ        rsz;
-    protected int        userDataRef = -1;
+    protected int        userDataRef         = -1;
+    public    int        objectInstanceIndex = 0; // 0 is invalid, field is one based. This is assigned during write so the order is correct.
+    private   long       pos; // Used during testing to make sure read/write without altering anything is written in the same spot.
 
     [SortOrder(int.MaxValue - 1000)]
     public int Index { get; set; }
@@ -34,23 +39,23 @@ public class RszObject : OnPropertyChangedBase {
         var rszObject  = CreateRszObjectInstance(hash);
         rszObject.structInfo = structInfo;
         rszObject.rsz        = rsz;
+        rszObject.pos        = reader.BaseStream.Position;
 
         for (var i = 0; i < structInfo.fields!.Count; i++) {
-            var field          = structInfo.fields[i];
-            var fieldName      = field.name?.ToConvertedFieldName()!;
-            var primitiveName  = field.GetCSharpType();
-            var viaType        = field.type?.GetViaType().AsType();
-            var isNonPrimitive = primitiveName == null;
-            var isObjectType   = field.type == "Object";
-
-            // Be careful with lists. The 'align' in them refers to their contents, not their count themselves, which is always a 4-aligned int.
-            var align = field.array ? 4 : field.align;
-            reader.Align(align);
-
+            var field            = structInfo.fields[i];
+            var fieldName        = field.name?.ToConvertedFieldName()!;
+            var primitiveName    = field.GetCSharpType();
+            var viaType          = field.type?.GetViaType().AsType();
+            var isNonPrimitive   = primitiveName == null;
+            var isObjectType     = field.type == "Object";
             var fieldInfo        = rszObject.GetType().GetProperty(fieldName)!;
             var fieldType        = fieldInfo.PropertyType;
             var fieldGenericType = fieldType.IsGenericType ? fieldType.GenericTypeArguments[0] : null; // GetInnermostGenericType(fieldType);
             var fieldSetMethod   = fieldInfo.SetMethod!;
+
+            // Be careful with lists. The 'align' in them refers to their contents, not their count themselves, which is always a 4-aligned int.
+            var align = field.GetAlign();
+            reader.Align(align);
 
             // TODO: Strings & data objects.
 
@@ -128,15 +133,121 @@ public class RszObject : OnPropertyChangedBase {
         return rszObject;
     }
 
-    public void Write(BinaryWriter writer) {
-        //foreach (var data in fieldData.Values) {
-        //    writer.PadTill(() => {
-        //        var align = data.fieldInfo.array ? 4 : data.fieldInfo.align;
-        //        return writer.BaseStream.Position % align != 0;
-        //    });
-        //    if (data.isArray) writer.Write(data.arrayCount);
-        //    writer.Write(data.data);
-        //}
+    public void SetupInstanceInfo(List<InstanceInfo> instanceInfo) {
+        // Do once to write all child objects first.
+        for (var i = 0; i < structInfo.fields!.Count; i++) {
+            var field          = structInfo.fields[i];
+            var fieldName      = field.name?.ToConvertedFieldName()!;
+            var fieldInfo      = GetType().GetProperty(fieldName)!;
+            var isObjectType   = field.type == "Object";
+            var fieldGetMethod = fieldInfo.GetMethod!;
+
+            if (isObjectType) {
+                if (field.array) { // Array of pointers.
+                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                    foreach (var obj in list) {
+                        ((RszObject) obj).SetupInstanceInfo(instanceInfo);
+                    }
+                } else { // Pointer to object.
+                    var obj = (RszObject) fieldGetMethod.Invoke(this, null)!;
+                    obj.SetupInstanceInfo(instanceInfo);
+                }
+            }
+        }
+
+        var hash = (uint) GetType().GetField("HASH")!.GetValue(null)!;
+        var crc  = uint.Parse(structInfo.crc!, NumberStyles.HexNumber);
+
+        instanceInfo.Add(new() {
+            hash = hash,
+            crc  = crc
+        });
+
+        objectInstanceIndex = instanceInfo.Count;
+    }
+
+    public void Write(BinaryWriter writer, bool testWritePosition) {
+        // Do once to write all child objects first.
+        for (var i = 0; i < structInfo.fields!.Count; i++) {
+            var field          = structInfo.fields[i];
+            var fieldName      = field.name?.ToConvertedFieldName()!;
+            var fieldInfo      = GetType().GetProperty(fieldName)!;
+            var isObjectType   = field.type == "Object";
+            var fieldGetMethod = fieldInfo.GetMethod!;
+
+            if (isObjectType) {
+                if (field.array) { // Array of pointers.
+                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                    foreach (var obj in list) {
+                        ((RszObject) obj).Write(writer, testWritePosition);
+                    }
+                } else { // Pointer to object.
+                    var obj = (RszObject) fieldGetMethod.Invoke(this, null)!;
+                    obj.Write(writer, testWritePosition);
+                }
+            }
+        }
+
+        if (testWritePosition) {
+            Debug.Assert(pos == writer.BaseStream.Position, $"Expected {pos}, found {writer.BaseStream.Position}.");
+        }
+
+        for (var i = 0; i < structInfo.fields!.Count; i++) {
+            var field            = structInfo.fields[i];
+            var fieldName        = field.name?.ToConvertedFieldName()!;
+            var primitiveName    = field.GetCSharpType();
+            var viaType          = field.type?.GetViaType().AsType();
+            var isNonPrimitive   = primitiveName == null;
+            var isObjectType     = field.type == "Object";
+            var fieldInfo        = GetType().GetProperty(fieldName)!;
+            var fieldType        = fieldInfo.PropertyType;
+            var fieldGenericType = fieldType.IsGenericType ? fieldType.GenericTypeArguments[0] : null; // GetInnermostGenericType(fieldType);
+            var fieldGetMethod   = fieldInfo.GetMethod!;
+
+            // Be careful with lists. The 'align' in them refers to their contents, not their count themselves, which is always a 4-aligned int.
+            var align = field.GetAlign();
+            writer.PadTill(() => writer.BaseStream.Position % align != 0);
+
+            // TODO: Strings & data objects.
+
+            if (field.array) {
+                if (isObjectType) { // Array of pointers.
+                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                    writer.Write(list.Count);
+                    foreach (var obj in list) {
+                        writer.Write(((RszObject) obj).objectInstanceIndex);
+                    }
+                } else if (isNonPrimitive) { // Array of embedded objects. (Built-in types like via.vec2.)
+                    // TODO
+                    throw new NotImplementedException();
+                } else { // Primitive array.
+                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                    writer.Write(list.Count);
+                    foreach (var obj in list) {
+                        byte[] bytes;
+                        if (obj.GetType().IsGeneric(typeof(IListWrapper<>))) {
+                            var value = ((dynamic) obj).Value;
+                            bytes = Extensions.GetBytes(value);
+                        } else {
+                            bytes = obj.GetBytes();
+                        }
+                        writer.Write(bytes);
+                    }
+                }
+            } else {
+                if (isObjectType) { // Pointer to object.
+                    var obj = (RszObject) ((dynamic) fieldGetMethod.Invoke(this, null)!)[0];
+                    writer.Write(obj.objectInstanceIndex);
+                } else if (isNonPrimitive) { // Embedded object. (A built-in type like via.vec2.)
+                    // TODO
+                    throw new NotImplementedException();
+                } else { // A primitive.
+                    var obj   = fieldGetMethod.Invoke(this, null)!;
+                    var bytes = obj.GetBytes();
+                    writer.Write(bytes);
+                }
+            }
+        }
     }
 
     public override string? ToString() {
@@ -145,6 +256,10 @@ public class RszObject : OnPropertyChangedBase {
 }
 
 public static class RszObjectExtensions {
+    public static int GetAlign(this StructJson.Field field) {
+        return field.array ? 4 : field.align;
+    }
+
     public static void Align(this BinaryReader reader, int align) {
         while (reader.BaseStream.Position % align != 0) {
             reader.BaseStream.Seek(1, SeekOrigin.Current);

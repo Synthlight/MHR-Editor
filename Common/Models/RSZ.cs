@@ -15,7 +15,7 @@ public class RSZ {
     public List<uint>            objectInfo; // Outermost data type.
     public List<InstanceInfo>    instanceInfo; // Array type info. (Contents of the 'outermost' data type, given the outermost type is an array.)
     public List<RszUserDataInfo> userDataInfo; // String names of other files being referenced. MUST MATCH THE OUTER ONE IN `ReDataFile`.
-    public List<RszObject>       objectData; // Array data.
+    public List<RszObject>       objectData; // Array data. USED ONLY FOR READ.
 
     public static RSZ Read(BinaryReader reader) {
         var rsz = new RSZ();
@@ -63,7 +63,20 @@ public class RSZ {
         return rsz;
     }
 
-    public void Write(BinaryWriter writer, ulong rszOffsetStart) {
+    public void Write(BinaryWriter writer, ulong rszOffsetStart, bool testWritePosition) {
+        // We need to pre-calculate the instance info array before we write it.
+        // This will also give us the entry object, but we're just not supporting adding/removing instances for now.
+
+        instanceInfo.Clear();
+        instanceInfo.Add(new() {hash = 0, crc = 0});
+
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var obj in objectInfo) {
+            // Find entry objects and tell it to setup the instance info.
+            var entryPointRszObject = objectData[(int) obj - 1]; // 1 based.
+            entryPointRszObject.SetupInstanceInfo(instanceInfo);
+        }
+
         writer.Write(magic);
         writer.Write(version);
         writer.Write(objectInfo.Count);
@@ -98,8 +111,13 @@ public class RSZ {
 
         writer.PadTill(() => writer.BaseStream.Position % 16 != 0);
         writer.WriteValueAtOffset((ulong) writer.BaseStream.Position - rszOffsetStart, dataOffsetPos);
-        foreach (var obj in objectData) {
-            obj.Write(writer);
+
+        // Find entry objects and 'write' from there. Those will need to handle writing out the objects as needed.
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var obj in objectInfo) {
+            var objectDataIndex     = obj - 1; // 1 based. TODO: Needs to handle adding/removing objects.
+            var entryPointRszObject = objectData[(int) objectDataIndex];
+            entryPointRszObject.Write(writer, testWritePosition);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.CodeDom;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -94,6 +93,7 @@ public class GenerateFiles {
         "System.Collections.Generic.Dictionary`",
         "System.Collections.Generic.List`1<snow.enemy.em134.Em", // Nested generics.
         "System.Collections.Generic.Queue`1<System.Tuple`", // Nested generics.
+        "System.Collections.Generic.Queue`1<via.vec3>", // Because this breaks generation and I need a better way of handling generics.
     };
 
     public readonly  Dictionary<string, EnumType>   enumTypes   = new();

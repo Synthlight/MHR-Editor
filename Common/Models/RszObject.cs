@@ -18,8 +18,8 @@ namespace MHR_Editor.Common.Models;
 public class RszObject : OnPropertyChangedBase {
     public    StructJson structInfo;
     protected RSZ        rsz;
-    protected int        userDataRef         = -1;
-    public    int        objectInstanceIndex = 0; // 0 is invalid, field is one based. This is assigned during write so the order is correct.
+    protected int        userDataRef = -1;
+    public    int        objectInstanceIndex; // 0 is invalid, field is one based. This is assigned during write so the order is correct.
     private   long       pos; // Used during testing to make sure read/write without altering anything is written in the same spot.
 
     [SortOrder(int.MaxValue - 1000)]
@@ -112,14 +112,6 @@ public class RszObject : OnPropertyChangedBase {
         fieldSetMethod.Invoke(rszObject, new[] {data});
     }
 
-    private static Type? GetInnermostGenericType(Type type) {
-        if (!type.IsGenericType) return null;
-        while (type.IsGenericType) {
-            type = type.GenericTypeArguments[0];
-        }
-        return type;
-    }
-
     public static ObservableCollection<T> MakeGenericObservableCollection<T>(IEnumerable<T> itemSource) {
         return itemSource is ObservableCollection<T> source ? source : new(itemSource);
     }
@@ -163,7 +155,7 @@ public class RszObject : OnPropertyChangedBase {
             crc  = crc
         });
 
-        objectInstanceIndex = instanceInfo.Count;
+        objectInstanceIndex = instanceInfo.Count - 1;
     }
 
     public void Write(BinaryWriter writer, bool testWritePosition) {

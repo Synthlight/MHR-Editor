@@ -35,7 +35,14 @@ public class TestFiles {
     [DataTestMethod]
     public void TestWrite(string file) {
         try {
-            var       data   = ReDataFile.Read(file);
+            ReDataFile data;
+            try {
+                data = ReDataFile.Read(file);
+            } catch (Exception) {
+                Assert.Inconclusive();
+                return;
+            }
+
             using var writer = new BinaryWriter(new MemoryStream());
             data.Write(writer, true);
 
@@ -43,10 +50,10 @@ public class TestFiles {
             var destLength   = writer.BaseStream.Length;
             Debug.Assert(sourceLength == destLength, $"Length expected {sourceLength}, found {destLength}.");
 
-
-            var fileHash = MD5.Create().ComputeHash(File.Open(file, FileMode.Open, FileAccess.Read, FileShare.Read));
-            var newHash  = MD5.Create().ComputeHash(writer.BaseStream);
-            Debug.Assert(sourceLength == destLength, $"MD5 expected {fileHash}, found {newHash}.");
+            // To byte arrays since MD5 unbelievably takes steam **position** into account.
+            var fileHash = MD5.Create().ComputeHash(File.ReadAllBytes(file));
+            var newHash  = MD5.Create().ComputeHash(((MemoryStream) writer.BaseStream).ToArray());
+            Debug.Assert(fileHash.SequenceEqual(newHash), $"MD5 expected {BitConverter.ToString(fileHash)}, found {BitConverter.ToString(newHash)}.");
         } catch (FileNotSupported) {
             Assert.Inconclusive();
         }

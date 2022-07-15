@@ -220,9 +220,9 @@ public class RszObject : OnPropertyChangedBase {
                 } else if (isStringType) { // Array of strings.
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;
                     writer.Write(list.Count);
-                    foreach (string obj in list) {
+                    foreach (GenericWrapper<string> obj in list) {
                         writer.BaseStream.Align(field.align);
-                        writer.WriteWString(obj);
+                        writer.WriteWString(obj.Value);
                     }
                 } else if (isNonPrimitive) { // Array of embedded objects. (Built-in types like via.vec2.)
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;

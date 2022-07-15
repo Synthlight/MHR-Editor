@@ -9,8 +9,7 @@ public class TestFiles {
     private const string IN_PATH        = @"V:\MHR\re_chunk_000";
     private const string TEST_BASE_PATH = $@"{IN_PATH}\natives\STM\data\Define";
     private static readonly string[] TEST_PATHS = {
-        $@"{IN_PATH}\natives\STM\data\Define",
-        $@"{IN_PATH}\natives\STM\data\System",
+        $@"{IN_PATH}\natives\STM\data\",
         $@"{IN_PATH}\natives\STM\player\UserData",
     };
 

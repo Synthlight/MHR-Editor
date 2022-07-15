@@ -13,4 +13,9 @@ public class Range : RszObject, IViaType {
         R = reader.ReadSingle();
         S = reader.ReadSingle();
     }
+
+    public void Write(BinaryWriter writer) {
+        writer.Write(R);
+        writer.Write(S);
+    }
 }

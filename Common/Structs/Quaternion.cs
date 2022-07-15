@@ -17,4 +17,11 @@ public class Quaternion : RszObject, IViaType {
         Z = reader.ReadSingle();
         W = reader.ReadSingle();
     }
+
+    public void Write(BinaryWriter writer) {
+        writer.Write(X);
+        writer.Write(Y);
+        writer.Write(Z);
+        writer.Write(W);
+    }
 }

@@ -15,4 +15,10 @@ public class Float3 : RszObject, IViaType {
         Y = reader.ReadSingle();
         Z = reader.ReadSingle();
     }
+
+    public void Write(BinaryWriter writer) {
+        writer.Write(X);
+        writer.Write(Y);
+        writer.Write(Z);
+    }
 }

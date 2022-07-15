@@ -16,4 +16,11 @@ public class Vec3 : RszObject, IViaType {
         Z = reader.ReadSingle();
         reader.ReadSingle();
     }
+
+    public void Write(BinaryWriter writer) {
+        writer.Write(X);
+        writer.Write(Y);
+        writer.Write(Z);
+        writer.Write(0f);
+    }
 }

@@ -17,4 +17,11 @@ public class Int4 : RszObject, IViaType {
         Z = reader.ReadInt32();
         W = reader.ReadInt32();
     }
+
+    public void Write(BinaryWriter writer) {
+        writer.Write(X);
+        writer.Write(Y);
+        writer.Write(Z);
+        writer.Write(W);
+    }
 }

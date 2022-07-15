@@ -13,4 +13,9 @@ public class Int2 : RszObject, IViaType {
         X = reader.ReadInt32();
         Y = reader.ReadInt32();
     }
+
+    public void Write(BinaryWriter writer) {
+        writer.Write(X);
+        writer.Write(Y);
+    }
 }

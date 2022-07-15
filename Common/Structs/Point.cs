@@ -13,4 +13,9 @@ public class Point : RszObject, IViaType {
         X = reader.ReadSingle();
         Y = reader.ReadSingle();
     }
+
+    public void Write(BinaryWriter writer) {
+        writer.Write(X);
+        writer.Write(Y);
+    }
 }

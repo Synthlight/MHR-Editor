@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using MHR_Editor.Common.Models;
 
@@ -17,5 +18,12 @@ public class Color : RszObject, IViaType {
         var b = reader.ReadInt32();
         var a = reader.ReadInt32();
         RGBA = $"#{r:x2}{g:x2}{b:x2}{a:x2}";
+    }
+
+    public void Write(BinaryWriter writer) {
+        writer.Write(int.Parse(RGBA[1..2], NumberStyles.HexNumber));
+        writer.Write(int.Parse(RGBA[3..4], NumberStyles.HexNumber));
+        writer.Write(int.Parse(RGBA[5..6], NumberStyles.HexNumber));
+        writer.Write(int.Parse(RGBA[7..8], NumberStyles.HexNumber));
     }
 }

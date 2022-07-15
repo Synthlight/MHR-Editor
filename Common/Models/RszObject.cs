@@ -55,7 +55,7 @@ public class RszObject : OnPropertyChangedBase {
 
             // Be careful with lists. The 'align' in them refers to their contents, not their count themselves, which is always a 4-aligned int.
             var align = field.GetAlign();
-            reader.Align(align);
+            reader.BaseStream.Align(align);
 
             // TODO: Strings & data objects.
 
@@ -70,7 +70,7 @@ public class RszObject : OnPropertyChangedBase {
                     SetList(items, fieldSetMethod, rszObject);
                 } else if (isNonPrimitive) { // Array of embedded objects. (Built-in types like via.vec2.)
                     var arrayCount = reader.ReadInt32();
-                    reader.Align(field.align);
+                    reader.BaseStream.Align(field.align);
                     var objects = new List<IViaType>(arrayCount);
                     for (var s = 0; s < arrayCount; s++) {
                         var instance = (IViaType) Activator.CreateInstance(viaType!)!;
@@ -92,7 +92,6 @@ public class RszObject : OnPropertyChangedBase {
                     var items   = objects.GetGenericItemsOfType(fieldGenericType!);
                     SetList(items, fieldSetMethod, rszObject);
                 } else if (isNonPrimitive) { // Embedded object. (A built-in type like via.vec2.)
-                    reader.Align(field.align);
                     var instance = (IViaType) Activator.CreateInstance(viaType!)!;
                     instance.Read(reader);
                     var items = new List<IViaType> {instance}.GetGenericItemsOfType(fieldGenericType!);
@@ -125,8 +124,11 @@ public class RszObject : OnPropertyChangedBase {
         return rszObject;
     }
 
+    /**
+     * Run before writing to setup all the instance info / indexes so we know exactly where an object is being written.
+     * This is how we know what to point an 'object' field to.
+     */
     public void SetupInstanceInfo(List<InstanceInfo> instanceInfo) {
-        // Do once to write all child objects first.
         for (var i = 0; i < structInfo.fields!.Count; i++) {
             var field          = structInfo.fields[i];
             var fieldName      = field.name?.ToConvertedFieldName()!;
@@ -187,16 +189,13 @@ public class RszObject : OnPropertyChangedBase {
         }
 
         for (var i = 0; i < structInfo.fields!.Count; i++) {
-            var field            = structInfo.fields[i];
-            var fieldName        = field.name?.ToConvertedFieldName()!;
-            var primitiveName    = field.GetCSharpType();
-            var viaType          = field.type?.GetViaType().AsType();
-            var isNonPrimitive   = primitiveName == null;
-            var isObjectType     = field.type == "Object";
-            var fieldInfo        = GetType().GetProperty(fieldName)!;
-            var fieldType        = fieldInfo.PropertyType;
-            var fieldGenericType = fieldType.IsGenericType ? fieldType.GenericTypeArguments[0] : null; // GetInnermostGenericType(fieldType);
-            var fieldGetMethod   = fieldInfo.GetMethod!;
+            var field          = structInfo.fields[i];
+            var fieldName      = field.name?.ToConvertedFieldName()!;
+            var primitiveName  = field.GetCSharpType();
+            var isNonPrimitive = primitiveName == null;
+            var isObjectType   = field.type == "Object";
+            var fieldInfo      = GetType().GetProperty(fieldName)!;
+            var fieldGetMethod = fieldInfo.GetMethod!;
 
             // Be careful with lists. The 'align' in them refers to their contents, not their count themselves, which is always a 4-aligned int.
             var align = field.GetAlign();
@@ -212,8 +211,12 @@ public class RszObject : OnPropertyChangedBase {
                         writer.Write(((RszObject) obj).objectInstanceIndex);
                     }
                 } else if (isNonPrimitive) { // Array of embedded objects. (Built-in types like via.vec2.)
-                    // TODO
-                    throw new NotImplementedException();
+                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                    writer.Write(list.Count);
+                    writer.BaseStream.Align(field.align);
+                    foreach (var obj in list) {
+                        ((IViaType) obj).Write(writer);
+                    }
                 } else { // Primitive array.
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;
                     writer.Write(list.Count);
@@ -233,8 +236,9 @@ public class RszObject : OnPropertyChangedBase {
                     var obj = (RszObject) ((dynamic) fieldGetMethod.Invoke(this, null)!)[0];
                     writer.Write(obj.objectInstanceIndex);
                 } else if (isNonPrimitive) { // Embedded object. (A built-in type like via.vec2.)
-                    // TODO
-                    throw new NotImplementedException();
+                    // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract fro ma list.
+                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                    ((IViaType) list[0]!).Write(writer);
                 } else { // A primitive.
                     var obj   = fieldGetMethod.Invoke(this, null)!;
                     var bytes = obj.GetBytes();
@@ -254,9 +258,9 @@ public static class RszObjectExtensions {
         return field.array ? 4 : field.align;
     }
 
-    public static void Align(this BinaryReader reader, int align) {
-        while (reader.BaseStream.Position % align != 0) {
-            reader.BaseStream.Seek(1, SeekOrigin.Current);
+    public static void Align(this Stream stream, int align) {
+        while (stream.Position % align != 0) {
+            stream.Seek(1, SeekOrigin.Current);
         }
     }
 

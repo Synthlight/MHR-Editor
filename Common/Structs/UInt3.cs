@@ -15,4 +15,10 @@ public class UInt3 : RszObject, IViaType {
         Y = reader.ReadInt32();
         Z = reader.ReadInt32();
     }
+
+    public void Write(BinaryWriter writer) {
+        writer.Write(X);
+        writer.Write(Y);
+        writer.Write(Z);
+    }
 }

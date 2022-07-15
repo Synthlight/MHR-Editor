@@ -11,4 +11,8 @@ public class GameObjectRef : RszObject, IViaType {
     public void Read(BinaryReader reader) {
         Value = new(reader.ReadBytes(16));
     }
+
+    public void Write(BinaryWriter writer) {
+        writer.Write(Value.ToByteArray());
+    }
 }

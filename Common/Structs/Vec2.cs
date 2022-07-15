@@ -15,4 +15,11 @@ public class Vec2 : RszObject, IViaType {
         reader.ReadSingle();
         reader.ReadSingle();
     }
+
+    public void Write(BinaryWriter writer) {
+        writer.Write(X);
+        writer.Write(Y);
+        writer.Write(0f);
+        writer.Write(0f);
+    }
 }

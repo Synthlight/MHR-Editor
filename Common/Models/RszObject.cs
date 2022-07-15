@@ -141,8 +141,9 @@ public class RszObject : OnPropertyChangedBase {
                         ((RszObject) obj).SetupInstanceInfo(instanceInfo);
                     }
                 } else { // Pointer to object.
-                    var obj = (RszObject) fieldGetMethod.Invoke(this, null)!;
-                    obj.SetupInstanceInfo(instanceInfo);
+                    // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract fro ma list.
+                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                    ((RszObject) list[0]!).SetupInstanceInfo(instanceInfo);
                 }
             }
         }
@@ -174,8 +175,9 @@ public class RszObject : OnPropertyChangedBase {
                         ((RszObject) obj).Write(writer, testWritePosition);
                     }
                 } else { // Pointer to object.
-                    var obj = (RszObject) fieldGetMethod.Invoke(this, null)!;
-                    obj.Write(writer, testWritePosition);
+                    // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract fro ma list.
+                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                    ((RszObject) list[0]!).Write(writer, testWritePosition);
                 }
             }
         }

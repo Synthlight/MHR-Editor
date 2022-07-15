@@ -28,7 +28,6 @@ public partial class MainWindow {
     private void Btn_create_cheat_mods_Click(object sender, RoutedEventArgs e) {
         const string inPath                       = @"V:\MHR\re_chunk_000";
         const string outPath                      = @"R:\Games\Monster Hunter Rise\Mods\Cheat Mods";
-        const string version                      = "v1.0";
         const string armorBasePath                = @"\natives\STM\data\Define\Player\Armor\ArmorBaseData.user.2";
         const string gemBasePath                  = @"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsBaseData.user.2";
         const string armorRecipePath              = @"\natives\STM\data\Define\Player\Armor\ArmorProductData.user.2";
@@ -40,17 +39,21 @@ public partial class MainWindow {
         const string dogArmorRecipePath           = @"\natives\STM\data\Define\Otomo\Equip\Armor\OtDogArmorProductData.user.2";
         const string dogWeaponRecipePath          = @"\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeaponProductData.user.2";
         const string catDogLayeredArmorRecipePath = @"\natives\STM\data\Define\Otomo\Equip\Overwear\OtOverwearRecipeData.user.2";
+        const string cheatModVersion              = "1.1";
+        const string noRequirementsVersion        = "1.5";
 
         var cheatMods = new CheatMod[] {
             new() {
-                name   = "Armor With Max Slots Only",
-                files  = new[] {armorBasePath},
-                action = MaxSlots
+                name    = "Armor With Max Slots Only",
+                files   = new[] {armorBasePath},
+                action  = MaxSlots,
+                version = cheatModVersion
             },
             new() {
-                name   = "Armor With Max Skills Only",
-                files  = new[] {armorBasePath},
-                action = MaxSkills
+                name    = "Armor With Max Skills Only",
+                files   = new[] {armorBasePath},
+                action  = MaxSkills,
+                version = cheatModVersion
             },
             new() {
                 name  = "Armor With Max Slots & Skills",
@@ -58,17 +61,20 @@ public partial class MainWindow {
                 action = data => {
                     MaxSlots(data);
                     MaxSkills(data);
-                }
+                },
+                version = cheatModVersion
             },
             new() {
-                name   = "Weapons With Max Slots Only",
-                files  = GetAllWeaponFilePaths("Base"),
-                action = MaxSlots
+                name    = "Weapons With Max Slots Only",
+                files   = GetAllWeaponFilePaths("Base"),
+                action  = MaxSlots,
+                version = cheatModVersion
             },
             new() {
-                name   = "Weapons With Max Sharpness Only",
-                files  = GetAllWeaponFilePaths("Base"),
-                action = MaxSharpness
+                name    = "Weapons With Max Sharpness Only",
+                files   = GetAllWeaponFilePaths("Base"),
+                action  = MaxSharpness,
+                version = cheatModVersion
             },
             new() {
                 name  = "Weapons With Max Slots & Sharpness",
@@ -76,12 +82,14 @@ public partial class MainWindow {
                 action = data => {
                     MaxSlots(data);
                     MaxSharpness(data);
-                }
+                },
+                version = cheatModVersion
             },
             new() {
-                name   = "One Gem to Max Skill",
-                files  = new[] {gemBasePath},
-                action = MaxSkills
+                name    = "One Gem to Max Skill",
+                files   = new[] {gemBasePath},
+                action  = MaxSkills,
+                version = cheatModVersion
             },
             new() {
                 name = "All In One",
@@ -92,7 +100,8 @@ public partial class MainWindow {
                     MaxSlots(data);
                     MaxSharpness(data);
                     MaxSkills(data);
-                }
+                },
+                version = cheatModVersion
             },
             new() {
                 name = "No Crafting Requirements (All)",
@@ -108,24 +117,28 @@ public partial class MainWindow {
                         .Append(dogArmorRecipePath)
                         .Append(dogWeaponRecipePath)
                         .Append(catDogLayeredArmorRecipePath),
-                action = NoCost
+                action  = NoCost,
+                version = noRequirementsVersion
             },
             new() {
                 name = "No Crafting Requirements (Weapons)",
                 files = GetAllWeaponFilePaths("Product") // Forge
                         .Append(GetAllWeaponFilePaths("Process")) // Upgrade
                         .Append(GetAllWeaponFilePaths("Change")), // Layer
-                action = NoCost
+                action  = NoCost,
+                version = noRequirementsVersion
             },
             new() {
-                name   = "No Crafting Requirements (Weapons, Layered Only)",
-                files  = GetAllWeaponFilePaths("Change"),
-                action = NoCost
+                name    = "No Crafting Requirements (Weapons, Layered Only)",
+                files   = GetAllWeaponFilePaths("Change"),
+                action  = NoCost,
+                version = noRequirementsVersion
             },
             new() {
-                name   = "No Crafting Requirements (Decorations)",
-                files  = new[] {decorationRecipePath, rampageDecorationRecipePath},
-                action = NoCost
+                name    = "No Crafting Requirements (Decorations)",
+                files   = new[] {decorationRecipePath, rampageDecorationRecipePath},
+                action  = NoCost,
+                version = noRequirementsVersion
             },
             new() {
                 name  = "No Crafting Requirements (Decorations, Ignore Unlock Flags)",
@@ -133,17 +146,20 @@ public partial class MainWindow {
                 action = list => {
                     NoCost(list);
                     NoUnlockFlag(list);
-                }
+                },
+                version = noRequirementsVersion
             },
             new() {
-                name   = "No Crafting Requirements (Normal Armor)",
-                files  = new[] {armorRecipePath},
-                action = NoCost
+                name    = "No Crafting Requirements (Normal Armor)",
+                files   = new[] {armorRecipePath},
+                action  = NoCost,
+                version = noRequirementsVersion
             },
             new() {
-                name   = "No Crafting Requirements (Layered Armor)",
-                files  = new[] {layeredArmorRecipePath},
-                action = NoCost
+                name    = "No Crafting Requirements (Layered Armor)",
+                files   = new[] {layeredArmorRecipePath},
+                action  = NoCost,
+                version = noRequirementsVersion
             },
             new() {
                 name = "No Crafting Requirements (Cat-Dog Armor-Weapons)",
@@ -153,12 +169,14 @@ public partial class MainWindow {
                     dogArmorRecipePath,
                     dogWeaponRecipePath
                 },
-                action = NoCost
+                action  = NoCost,
+                version = noRequirementsVersion
             },
             new() {
-                name   = "No Crafting Requirements (Cat-Dog Layered Armor)",
-                files  = new[] {catDogLayeredArmorRecipePath},
-                action = NoCost
+                name    = "No Crafting Requirements (Cat-Dog Layered Armor)",
+                files   = new[] {catDogLayeredArmorRecipePath},
+                action  = NoCost,
+                version = noRequirementsVersion
             }
         };
 
@@ -168,7 +186,7 @@ public partial class MainWindow {
 
             var modInfo = new StringWriter();
             modInfo.WriteLine($"name={cheatMod.name}");
-            modInfo.WriteLine($"version={version}");
+            modInfo.WriteLine($"version={cheatMod.version}");
             modInfo.WriteLine("description=A cheat mod.");
             modInfo.WriteLine("author=LordGregory");
             File.WriteAllText(@$"{cheatPath}\modinfo.ini", modInfo.ToString());
@@ -295,10 +313,16 @@ public partial class MainWindow {
                     break;
                 case Snow_equip_PlOverwearProductUserData_Param layeredProdData:
                     // Settings the category to 'none' here breaks the game.
+                    // If the player hasn't seen an item in the category the game breaks.
+                    if (layeredProdData.MaterialCategory >= Snow_data_NormalItemData_MaterialCategory.Category_001) {
+                        layeredProdData.MaterialCategory = Snow_data_NormalItemData_MaterialCategory.Category_011;
+                    }
                     layeredProdData.MaterialCategoryNum = 0;
                     break;
                 case Snow_data_HyakuryuDecoProductUserData_Param rampageDecoProdData:
-                    // Settings the category to 'none' here breaks the game.
+                    if (rampageDecoProdData.Category >= Snow_data_NormalItemData_MaterialCategory.Category_001) {
+                        rampageDecoProdData.Category = Snow_data_NormalItemData_MaterialCategory.Category_011;
+                    }
                     rampageDecoProdData.Point = 0;
                     break;
             }
@@ -326,5 +350,6 @@ public partial class MainWindow {
         public string                  name;
         public IEnumerable<string>     files;
         public Action<List<RszObject>> action;
+        public string                  version;
     }
 }

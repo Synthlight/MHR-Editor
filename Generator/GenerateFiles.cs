@@ -104,14 +104,18 @@ public class GenerateFiles {
         var useWhitelist = args.Length > 0 && args.Contains("useWhitelist");
         var dryRun       = args.Length > 0 && args.Contains("dryRun");
 
+        Console.WriteLine("Finding enum placeholders in the struct json.");
         FindAllEnumUnderlyingTypes();
 
         if (!dryRun) {
+            Console.WriteLine("Removing existing generated files.");
             CleanupGeneratedFiles(ENUM_GEN_PATH);
             CleanupGeneratedFiles(STRUCT_GEN_PATH);
         }
 
+        Console.WriteLine("Parsing enums.");
         ParseEnums();
+        Console.WriteLine("Parsing structs.");
         ParseStructs();
 
         if (useWhitelist) {

@@ -275,12 +275,6 @@ public static class RszObjectExtensions {
         return field.array ? 4 : field.align;
     }
 
-    public static void Align(this Stream stream, int align) {
-        while (stream.Position % align != 0) {
-            stream.Seek(1, SeekOrigin.Current);
-        }
-    }
-
     public static Type? AsType(this string? typeName) {
         return typeName == null ? null : Type.GetType("MHR_Editor.Common.Structs." + typeName, true);
     }

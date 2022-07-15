@@ -22,11 +22,6 @@ public static class Extensions {
         Debug.Assert(VIA_TYPE_NAME_LOOKUPS.Count > 0);
     }
 
-    private static void AddCustomValType(string valName, string realTypeName) {
-        VIA_TYPE_NAME_LOOKUPS[valName]                    = realTypeName;
-        VIA_TYPE_NAME_LOOKUPS[$"via.{valName}".ToLower()] = realTypeName;
-    }
-
     public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T> {
         if (val.CompareTo(min) < 0) {
             return min;
@@ -429,5 +424,11 @@ public static class Extensions {
         return typeof(Enumerable).GetMethod(nameof(Enumerable.OfType), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)
                                  ?.MakeGenericMethod(type)
                                  .Invoke(null, new object[] {rszObjectData}) ?? throw new("rsz.objectData.OfType failure.");
+    }
+
+    public static void Align(this Stream stream, int align) {
+        while (stream.Position % align != 0) {
+            stream.Seek(1, SeekOrigin.Current);
+        }
     }
 }

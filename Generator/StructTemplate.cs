@@ -3,6 +3,7 @@ using MHR_Editor.Common;
 using MHR_Editor.Common.Attributes;
 using MHR_Editor.Common.Data;
 using MHR_Editor.Common.Models;
+using MHR_Editor.Common.Structs;
 using MHR_Editor.Generator.Models;
 
 namespace MHR_Editor.Generator;
@@ -91,6 +92,9 @@ public class StructTemplate {
         if (isNonPrimitive && !isObjectType) {
             // This makes sure we've implemented the via type during generation.
             viaType = field.type!.GetViaType() ?? throw new NotImplementedException($"Hard-coded type '{field.type}' not implemented.");
+        } else if (typeName == "Via_Prefab") {
+            viaType      = nameof(Prefab);
+            isObjectType = false;
         }
 
         if (usedNames.ContainsKey(newName)) {

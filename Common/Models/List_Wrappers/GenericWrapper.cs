@@ -14,4 +14,8 @@ public sealed class GenericWrapper<T> : ListWrapper<T> {
         Index = index;
         Value = value;
     }
+
+    public override string? ToString() {
+        return Value?.ToString();
+    }
 }

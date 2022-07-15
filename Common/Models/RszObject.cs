@@ -48,6 +48,7 @@ public class RszObject : OnPropertyChangedBase {
             var viaType          = field.type?.GetViaType().AsType();
             var isNonPrimitive   = primitiveName == null;
             var isObjectType     = field.type == "Object";
+            var isStringType     = field.type == "String";
             var fieldInfo        = rszObject.GetType().GetProperty(fieldName)!;
             var fieldType        = fieldInfo.PropertyType;
             var fieldGenericType = fieldType.IsGenericType ? fieldType.GenericTypeArguments[0] : null; // GetInnermostGenericType(fieldType);
@@ -57,19 +58,24 @@ public class RszObject : OnPropertyChangedBase {
             var align = field.GetAlign();
             reader.BaseStream.Align(align);
 
-            // TODO: Strings & data objects.
-
             if (field.array) {
+                var arrayCount = reader.ReadInt32();
+
                 if (isObjectType) { // Array of pointers.
-                    var arrayCount = reader.ReadInt32();
-                    var objects    = new List<RszObject>();
+                    var objects = new List<RszObject>();
                     for (var index = 0; index < arrayCount; index++) {
                         objects.Add(rsz.objectData[reader.ReadInt32() - 1]);
                     }
                     var items = objects.GetGenericItemsOfType(fieldGenericType!);
                     SetList(items, fieldSetMethod, rszObject);
+                } else if (isStringType) { // Array of strings.
+                    var strings = new List<GenericWrapper<string>>(arrayCount);
+                    for (var s = 0; s < arrayCount; s++) {
+                        reader.BaseStream.Align(field.align);
+                        strings.Add(new(s, reader.ReadWString()));
+                    }
+                    SetList(strings, fieldSetMethod, rszObject);
                 } else if (isNonPrimitive) { // Array of embedded objects. (Built-in types like via.vec2.)
-                    var arrayCount = reader.ReadInt32();
                     reader.BaseStream.Align(field.align);
                     var objects = new List<IViaType>(arrayCount);
                     for (var s = 0; s < arrayCount; s++) {
@@ -80,7 +86,6 @@ public class RszObject : OnPropertyChangedBase {
                     var items = objects.GetGenericItemsOfType(fieldGenericType!);
                     SetList(items, fieldSetMethod, rszObject);
                 } else { // Primitive array.
-                    var arrayCount    = reader.ReadInt32();
                     var bytes         = reader.ReadBytes(field.size * arrayCount);
                     var genericMethod = typeof(RszObjectExtensions).GetMethod(nameof(RszObjectExtensions.GetDataAsList))!.MakeGenericMethod(fieldGenericType!);
                     var items         = genericMethod.Invoke(null, new object[] {bytes, field.size, arrayCount, field})!;
@@ -91,6 +96,9 @@ public class RszObject : OnPropertyChangedBase {
                     var objects = new List<RszObject> {rsz.objectData[reader.ReadInt32() - 1]};
                     var items   = objects.GetGenericItemsOfType(fieldGenericType!);
                     SetList(items, fieldSetMethod, rszObject);
+                } else if (isStringType) { // A string.
+                    var str = reader.ReadWString();
+                    fieldSetMethod.Invoke(rszObject, new object?[] {str});
                 } else if (isNonPrimitive) { // Embedded object. (A built-in type like via.vec2.)
                     var instance = (IViaType) Activator.CreateInstance(viaType!)!;
                     instance.Read(reader);
@@ -112,7 +120,7 @@ public class RszObject : OnPropertyChangedBase {
     }
 
     public static ObservableCollection<T> MakeGenericObservableCollection<T>(IEnumerable<T> itemSource) {
-        return itemSource is ObservableCollection<T> source ? source : new(itemSource);
+        return itemSource as ObservableCollection<T> ?? new(itemSource);
     }
 
     /**
@@ -139,8 +147,8 @@ public class RszObject : OnPropertyChangedBase {
             if (isObjectType) {
                 if (field.array) { // Array of pointers.
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;
-                    foreach (var obj in list) {
-                        ((RszObject) obj).SetupInstanceInfo(instanceInfo);
+                    foreach (RszObject obj in list) {
+                        obj.SetupInstanceInfo(instanceInfo);
                     }
                 } else { // Pointer to object.
                     // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract fro ma list.
@@ -194,6 +202,7 @@ public class RszObject : OnPropertyChangedBase {
             var primitiveName  = field.GetCSharpType();
             var isNonPrimitive = primitiveName == null;
             var isObjectType   = field.type == "Object";
+            var isStringType   = field.type == "String";
             var fieldInfo      = GetType().GetProperty(fieldName)!;
             var fieldGetMethod = fieldInfo.GetMethod!;
 
@@ -201,14 +210,19 @@ public class RszObject : OnPropertyChangedBase {
             var align = field.GetAlign();
             writer.PadTill(() => writer.BaseStream.Position % align != 0);
 
-            // TODO: Strings & data objects.
-
             if (field.array) {
                 if (isObjectType) { // Array of pointers.
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;
                     writer.Write(list.Count);
-                    foreach (var obj in list) {
-                        writer.Write(((RszObject) obj).objectInstanceIndex);
+                    foreach (RszObject obj in list) {
+                        writer.Write(obj.objectInstanceIndex);
+                    }
+                } else if (isStringType) { // Array of strings.
+                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                    writer.Write(list.Count);
+                    foreach (string obj in list) {
+                        writer.BaseStream.Align(field.align);
+                        writer.WriteWString(obj);
                     }
                 } else if (isNonPrimitive) { // Array of embedded objects. (Built-in types like via.vec2.)
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;
@@ -235,6 +249,9 @@ public class RszObject : OnPropertyChangedBase {
                 if (isObjectType) { // Pointer to object.
                     var obj = (RszObject) ((dynamic) fieldGetMethod.Invoke(this, null)!)[0];
                     writer.Write(obj.objectInstanceIndex);
+                } else if (isStringType) { // Array of strings.
+                    var str = (string) fieldGetMethod.Invoke(this, null)!;
+                    writer.WriteWString(str);
                 } else if (isNonPrimitive) { // Embedded object. (A built-in type like via.vec2.)
                     // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract fro ma list.
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;

@@ -252,6 +252,19 @@ public static class Extensions {
         writer.Write(new byte[] {0, 0}); // Null termination of Unicode which is 2 zero bytes.
     }
 
+    public static string ReadWString(this BinaryReader reader, bool stripNullTerm = true) {
+        var size  = reader.ReadInt32() * 2;
+        var bytes = reader.ReadBytes(size);
+        return Encoding.Unicode.GetString(bytes.Subsequence(0, bytes.Length - (stripNullTerm ? 2 : 0)).ToArray());
+    }
+
+    public static void WriteWString(this BinaryWriter writer, string str, bool stripNullTerm = true) {
+        var bytes = Encoding.Unicode.GetBytes(str);
+        writer.Write(bytes.Length / 2 + 1); // +1 for the null bytes.
+        writer.Write(bytes);
+        writer.Write(new byte[] {0, 0}); // Null termination of Unicode which is 2 zero bytes.
+    }
+
     public static char[] ToNullTermCharArray(this string? str) {
         str ??= "\0";
         if (!str.EndsWith("\0")) str += "\0";

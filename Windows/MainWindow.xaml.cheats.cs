@@ -40,7 +40,7 @@ public partial class MainWindow {
         const string dogWeaponRecipePath          = @"\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeaponProductData.user.2";
         const string catDogLayeredArmorRecipePath = @"\natives\STM\data\Define\Otomo\Equip\Overwear\OtOverwearRecipeData.user.2";
         const string cheatModVersion              = "1.1";
-        const string noRequirementsVersion        = "1.5";
+        const string noRequirementsVersion        = "1.6";
 
         var cheatMods = new CheatMod[] {
             new() {
@@ -314,14 +314,14 @@ public partial class MainWindow {
                 case Snow_equip_PlOverwearProductUserData_Param layeredProdData:
                     // Settings the category to 'none' here breaks the game.
                     // If the player hasn't seen an item in the category the game breaks.
-                    if (layeredProdData.MaterialCategory >= Snow_data_NormalItemData_MaterialCategory.Category_001) {
-                        layeredProdData.MaterialCategory = Snow_data_NormalItemData_MaterialCategory.Category_011;
+                    if (layeredProdData.MaterialCategory >= Snow_data_NormalItemData_MaterialCategory.Category_000) {
+                        layeredProdData.MaterialCategory = Snow_data_NormalItemData_MaterialCategory.Category_000;
                     }
                     layeredProdData.MaterialCategoryNum = 0;
                     break;
                 case Snow_data_HyakuryuDecoProductUserData_Param rampageDecoProdData:
-                    if (rampageDecoProdData.Category >= Snow_data_NormalItemData_MaterialCategory.Category_001) {
-                        rampageDecoProdData.Category = Snow_data_NormalItemData_MaterialCategory.Category_011;
+                    if (rampageDecoProdData.Category >= Snow_data_NormalItemData_MaterialCategory.Category_000) {
+                        rampageDecoProdData.Category = Snow_data_NormalItemData_MaterialCategory.Category_000;
                     }
                     rampageDecoProdData.Point = 0;
                     break;

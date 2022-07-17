@@ -111,8 +111,16 @@
                                     Content="No Cost"/>
                             <Button Margin="0,0,0,0"
                                     HorizontalAlignment="Left"
+                                    Click="Btn_no_unlock_flag_Click"
+                                    Content="No Unlock Flags"/>
+                            <Button Margin="0,0,0,0"
+                                    HorizontalAlignment="Left"
                                     Click="Btn_create_cheat_mods_Click"
                                     Content="- Create Cheat Mods"/>
+                            <Button Margin="0,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    Click="Btn_create_sorted_gem_mods_Click"
+                                    Content="- Create Sorted Gem Mods"/>
                         </StackPanel>
                     </xctk:SplitButton.DropDownContent>
                 </xctk:SplitButton>
@@ -121,11 +129,25 @@
                         HorizontalAlignment="Right"
                         Click="Btn_test_Click"
                         Content="Test"/>
-                <Button Name="btn_open_wiki"
-                        Margin="8,0,0,0"
+                <Button Margin="8,0,0,0"
                         HorizontalAlignment="Right"
                         Click="Btn_open_wiki_OnClick"
                         Content="Wiki"/>
+                <xctk:SplitButton Name="btn_sort_gems_by_skill_name"
+                                  Margin="8,0,0,0"
+                                  HorizontalAlignment="Left"
+                                  Visibility="Collapsed"
+                                  Click="Btn_sort_gems_by_skill_name_Click"
+                                  Content="Sort Gems by Skill Name">
+                    <xctk:SplitButton.DropDownContent>
+                        <StackPanel Orientation="Vertical">
+                            <Button Margin="0,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    Click="Btn_sort_gems_by_gem_name_Click"
+                                    Content="Sort Gems by Gem Name"/>
+                        </StackPanel>
+                    </xctk:SplitButton.DropDownContent>
+                </xctk:SplitButton>
                 <ComboBox Name="cbx_localization"
                           Margin="8,0,0,0"
                           HorizontalAlignment="Right"

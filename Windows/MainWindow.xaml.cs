@@ -125,7 +125,7 @@ public partial class MainWindow {
 
             GC.Collect();
 
-            file = ReDataFile.Read(targetFile!);
+            file = ReDataFile.Read(target);
 
             var rszObjectData = file?.rsz.objectData;
             if (rszObjectData == null || rszObjectData.Count == 0) throw new("Error loading data; rszObjectData is null/empty.\n\nPlease report the path/name of the file you are trying to load.");
@@ -140,6 +140,8 @@ public partial class MainWindow {
             var dataGrid = MakeDataGrid((dynamic) items);
             Debug.WriteLine($"Loading type: {type.Name}");
             AddMainDataGrid(dataGrid);
+
+            btn_sort_gems_by_skill_name.Visibility = target.Contains("DecorationsBaseData.user.2") || target.Contains("HyakuryuDecoBaseData.user.2") ? Visibility.Visible : Visibility.Collapsed;
         } catch (FileNotSupported) {
             MessageBox.Show("Please check the stickied comments on the nexus page and if it's not listed there, leave a comment about it.", "File not supported.", MessageBoxButton.OK, MessageBoxImage.Error);
         } catch (Exception e) when (!Debugger.IsAttached) {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using JetBrains.Annotations;
 using MHR_Editor.Common;
 using MHR_Editor.Common.Models;
 using MHR_Editor.Generated.Models;
@@ -42,7 +43,7 @@ public partial class MainWindow {
         const string cheatModVersion              = "1.1";
         const string noRequirementsVersion        = "1.6";
 
-        var cheatMods = new CheatMod[] {
+        var mods = new NexusMod[] {
             new() {
                 name    = "Armor With Max Slots Only",
                 files   = new[] {armorBasePath},
@@ -180,25 +181,29 @@ public partial class MainWindow {
             }
         };
 
-        foreach (var cheatMod in cheatMods) {
-            var cheatPath = @$"{outPath}\{cheatMod.name}";
-            Directory.CreateDirectory(cheatPath);
+        WriteMods(mods, inPath, outPath);
+    }
+
+    private static void WriteMods(IEnumerable<NexusMod> mods, string inPath, string outPath) {
+        foreach (var mod in mods) {
+            var modPath = @$"{outPath}\{mod.filename ?? mod.name}";
+            Directory.CreateDirectory(modPath);
 
             var modInfo = new StringWriter();
-            modInfo.WriteLine($"name={cheatMod.name}");
-            modInfo.WriteLine($"version={cheatMod.version}");
-            modInfo.WriteLine("description=A cheat mod.");
+            modInfo.WriteLine($"name={mod.name}");
+            modInfo.WriteLine($"version={mod.version}");
+            modInfo.WriteLine($"description={mod.desc ?? "A cheat mod."}");
             modInfo.WriteLine("author=LordGregory");
-            File.WriteAllText(@$"{cheatPath}\modinfo.ini", modInfo.ToString());
+            File.WriteAllText(@$"{modPath}\modinfo.ini", modInfo.ToString());
 
-            foreach (var modFile in cheatMod.files) {
+            foreach (var modFile in mod.files) {
                 var sourceFile = @$"{inPath}\{modFile}";
-                var outFile    = @$"{cheatPath}\{modFile}";
+                var outFile    = @$"{modPath}\{modFile}";
                 Directory.CreateDirectory(Path.GetDirectoryName(outFile)!);
 
                 var dataFile = ReDataFile.Read(sourceFile);
                 var data     = dataFile.rsz.objectData;
-                cheatMod.action.Invoke(data);
+                mod.action.Invoke(data);
                 dataFile.Write(outFile);
             }
         }
@@ -329,6 +334,12 @@ public partial class MainWindow {
         }
     }
 
+    private void Btn_no_unlock_flag_Click(object sender, RoutedEventArgs e) {
+        if (file == null) return;
+
+        MaxSkills(file.rsz.objectData);
+    }
+
     private void NoUnlockFlag(List<RszObject> rszObjectData) {
         foreach (var obj in rszObjectData) {
             switch (obj) {
@@ -346,10 +357,12 @@ public partial class MainWindow {
         }
     }
 
-    public struct CheatMod {
-        public string                  name;
-        public IEnumerable<string>     files;
-        public Action<List<RszObject>> action;
-        public string                  version;
+    public struct NexusMod {
+        public             string                  name;
+        [CanBeNull] public string                  desc;
+        [CanBeNull] public string                  filename;
+        public             IEnumerable<string>     files;
+        public             Action<List<RszObject>> action;
+        public             string                  version;
     }
 }

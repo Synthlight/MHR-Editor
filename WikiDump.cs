@@ -66,7 +66,7 @@ namespace MHR_Editor {
             foreach (var a in item) {
                 if (a.Id <= 0) continue;
                 writer.WriteLine($"| {a.Id}" +
-                                 $" | {a.GetSkillEnum()}" +
+                                 $" | {a.EnumName}" +
                                  $" | {a.Name} |");
             }
         }

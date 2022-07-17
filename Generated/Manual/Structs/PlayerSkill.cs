@@ -18,7 +18,6 @@ public partial class Snow_data_PlEquipSkillBaseUserData_Param {
         return Name;
     }
 
-    public Snow_data_DataDef_PlEquipSkillId GetSkillEnum() {
-        return Enum.GetValues<Snow_data_DataDef_PlEquipSkillId>()[Index];
-    }
+    [SortOrder(2000)]
+    public Snow_data_DataDef_PlEquipSkillId EnumName => Enum.GetValues<Snow_data_DataDef_PlEquipSkillId>()[Index];
 }

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<RootNamespace>MHR_Editor.Data_Helper_Extractor</RootNamespace>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="JetBrains.Annotations" Version="2022.1.0"/>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1"/>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Common\Common.csproj"/>
+		<ProjectReference Include="..\Generated\Generated.csproj"/>
+		<ProjectReference Include="..\MHR-Editor.csproj"/>
+	</ItemGroup>
+</Project>

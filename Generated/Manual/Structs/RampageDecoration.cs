@@ -10,18 +10,18 @@ namespace MHR_Editor.Models.Structs;
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
 [SuppressMessage("ReSharper", "UnusedType.Global")]
-public partial class Snow_data_DecorationsBaseUserData_Param : IGem {
+public partial class Snow_data_HyakuryuDecoBaseUserData_Param : IGem {
     [SortOrder(50)]
-    public string Name => DataHelper.DECORATION_NAME_LOOKUP[Global.locale].TryGet(Id);
+    public string Name => DataHelper.RAMPAGE_DECORATION_NAME_LOOKUP[Global.locale].TryGet(Id);
 
     [SortOrder(int.MaxValue)]
-    public string Description => DataHelper.DECORATION_DESC_LOOKUP[Global.locale].TryGet(Id);
+    public string Description => DataHelper.RAMPAGE_DECORATION_DESC_LOOKUP[Global.locale].TryGet(Id);
 
     public override string ToString() {
         return Name;
     }
 
     public string GetFirstSkillName(Global.LangIndex lang) {
-        return DataHelper.DECORATION_NAME_LOOKUP[lang].TryGet(SkillIdList[0].Value);
+        return DataHelper.RAMPAGE_SKILL_NAME_LOOKUP[lang].TryGet((uint) HyakuryuSkillId);
     }
 }

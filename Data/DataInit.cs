@@ -20,25 +20,27 @@ public static class DataInit {
         Assembly.Load(nameof(Generated));
         InitStructTypeInfo();
 
-        DataHelper.STRUCT_INFO                = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
-        DataHelper.ARMOR_NAME_LOOKUP          = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ARMOR_NAME_LOOKUP);
-        DataHelper.ARMOR_DESC_LOOKUP          = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ARMOR_DESC_LOOKUP);
-        DataHelper.ARMOR_SERIES_LOOKUP        = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ARMOR_SERIES_LOOKUP);
-        DataHelper.CAT_DOG_ARMOR_NAME_LOOKUP  = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.CAT_DOG_ARMOR_NAME_LOOKUP);
-        DataHelper.CAT_DOG_ARMOR_DESC_LOOKUP  = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.CAT_DOG_ARMOR_DESC_LOOKUP);
-        DataHelper.CAT_DOG_WEAPON_NAME_LOOKUP = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.CAT_DOG_WEAPON_NAME_LOOKUP);
-        DataHelper.CAT_DOG_WEAPON_DESC_LOOKUP = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.CAT_DOG_WEAPON_DESC_LOOKUP);
-        DataHelper.DANGO_NAME_LOOKUP          = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DANGO_NAME_LOOKUP);
-        DataHelper.DANGO_DESC_LOOKUP          = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DANGO_DESC_LOOKUP);
-        DataHelper.DANGO_SKILL_NAME_LOOKUP    = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DANGO_SKILL_NAME_LOOKUP);
-        DataHelper.DECORATION_NAME_LOOKUP     = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DECORATION_NAME_LOOKUP);
-        DataHelper.DECORATION_DESC_LOOKUP     = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DECORATION_DESC_LOOKUP);
-        DataHelper.ITEM_NAME_LOOKUP           = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ITEM_NAME_LOOKUP);
-        DataHelper.ITEM_DESC_LOOKUP           = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ITEM_DESC_LOOKUP);
-        DataHelper.RAMPAGE_SKILL_NAME_LOOKUP  = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.RAMPAGE_SKILL_NAME_LOOKUP);
-        DataHelper.SKILL_NAME_LOOKUP          = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.SKILL_NAME_LOOKUP);
-        DataHelper.WEAPON_NAME_LOOKUP         = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.WEAPON_NAME_LOOKUP);
-        DataHelper.WEAPON_DESC_LOOKUP         = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.WEAPON_DESC_LOOKUP);
+        DataHelper.STRUCT_INFO                    = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
+        DataHelper.ARMOR_NAME_LOOKUP              = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ARMOR_NAME_LOOKUP);
+        DataHelper.ARMOR_DESC_LOOKUP              = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ARMOR_DESC_LOOKUP);
+        DataHelper.ARMOR_SERIES_LOOKUP            = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ARMOR_SERIES_LOOKUP);
+        DataHelper.CAT_DOG_ARMOR_NAME_LOOKUP      = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.CAT_DOG_ARMOR_NAME_LOOKUP);
+        DataHelper.CAT_DOG_ARMOR_DESC_LOOKUP      = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.CAT_DOG_ARMOR_DESC_LOOKUP);
+        DataHelper.CAT_DOG_WEAPON_NAME_LOOKUP     = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.CAT_DOG_WEAPON_NAME_LOOKUP);
+        DataHelper.CAT_DOG_WEAPON_DESC_LOOKUP     = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.CAT_DOG_WEAPON_DESC_LOOKUP);
+        DataHelper.DANGO_NAME_LOOKUP              = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DANGO_NAME_LOOKUP);
+        DataHelper.DANGO_DESC_LOOKUP              = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DANGO_DESC_LOOKUP);
+        DataHelper.DANGO_SKILL_NAME_LOOKUP        = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DANGO_SKILL_NAME_LOOKUP);
+        DataHelper.DECORATION_NAME_LOOKUP         = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DECORATION_NAME_LOOKUP);
+        DataHelper.DECORATION_DESC_LOOKUP         = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DECORATION_DESC_LOOKUP);
+        DataHelper.ITEM_NAME_LOOKUP               = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ITEM_NAME_LOOKUP);
+        DataHelper.ITEM_DESC_LOOKUP               = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ITEM_DESC_LOOKUP);
+        DataHelper.RAMPAGE_DECORATION_NAME_LOOKUP = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.RAMPAGE_DECORATION_NAME_LOOKUP);
+        DataHelper.RAMPAGE_DECORATION_DESC_LOOKUP = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.RAMPAGE_DECORATION_DESC_LOOKUP);
+        DataHelper.RAMPAGE_SKILL_NAME_LOOKUP      = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.RAMPAGE_SKILL_NAME_LOOKUP);
+        DataHelper.SKILL_NAME_LOOKUP              = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.SKILL_NAME_LOOKUP);
+        DataHelper.WEAPON_NAME_LOOKUP             = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.WEAPON_NAME_LOOKUP);
+        DataHelper.WEAPON_DESC_LOOKUP             = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.WEAPON_DESC_LOOKUP);
 
         foreach (var lang in Enum.GetValues<Global.LangIndex>()) {
             if (!Global.TRANSLATION_MAP.ContainsKey(lang)) Global.TRANSLATION_MAP[lang] = new();

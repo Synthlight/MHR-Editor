@@ -144,6 +144,10 @@ public static class Program {
             var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Equip\Decorations\Decorations_{@in}{MR}.msg.17", SubCategoryType.C_Unclassified, false, 109);
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
+        foreach (var (@in, @out) in NAME_DESC) {
+            var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDeco_{@in}_MR.msg.17").GetLangIdMap(SubCategoryType.C_Normal, false);
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\RAMPAGE_DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+        }
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]

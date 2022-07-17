@@ -203,6 +203,26 @@ namespace MHR_Editor.Data {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] RAMPAGE_DECORATION_DESC_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("RAMPAGE_DECORATION_DESC_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] RAMPAGE_DECORATION_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("RAMPAGE_DECORATION_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] RAMPAGE_SKILL_NAME_LOOKUP {
             get {
                 object obj = ResourceManager.GetObject("RAMPAGE_SKILL_NAME_LOOKUP", resourceCulture);

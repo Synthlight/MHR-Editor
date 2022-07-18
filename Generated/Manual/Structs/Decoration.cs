@@ -22,6 +22,6 @@ public partial class Snow_data_DecorationsBaseUserData_Param : IGem {
     }
 
     public string GetFirstSkillName(Global.LangIndex lang) {
-        return DataHelper.DECORATION_NAME_LOOKUP[lang].TryGet(SkillIdList[0].Value);
+        return DataHelper.SKILL_NAME_LOOKUP[lang].TryGet(SkillIdList[0].Value);
     }
 }

@@ -43,7 +43,7 @@ public partial class MainWindow {
         const string outPath         = @"R:\Games\Monster Hunter Rise\Mods\Sorted Gems";
         const string decoPath        = @"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsBaseData.user.2";
         const string rampageDecoPath = @"\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDecoBaseData.user.2";
-        const string modVersion      = "1.0";
+        const string modVersion      = "1.1";
 
         var mods = new List<NexusMod>();
         foreach (var (lang, name) in Global.LANGUAGE_NAME_LOOKUP) {

@@ -155,9 +155,8 @@ public partial class MainWindow {
      * For the rest, it's the entry point & type.
      */
     private static (Type, object) GetItemAndTypeToUseAsRoot(IReadOnlyList<RszObject> rszObjectData, RszObject entryPointRszObject) {
-        var hasTwoTypes     = rszObjectData.Select(o => o.GetType()).Distinct().Count() == 2;
-        var isParamListOnly = entryPointRszObject.structInfo.fields is {Count: 1} && entryPointRszObject.structInfo.fields[0].name == "_Param";
-        if (hasTwoTypes && isParamListOnly) {
+        var structInfo = entryPointRszObject.structInfo;
+        if (structInfo.fields is {Count: 1} && structInfo.fields[0].array && structInfo.fields[0].type == "Object") {
             var type  = rszObjectData[0].GetType();
             var items = rszObjectData.GetGenericItemsOfType(type);
             return (type, items);

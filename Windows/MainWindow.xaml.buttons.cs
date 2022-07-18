@@ -80,10 +80,10 @@ public partial class MainWindow {
         SortGems(file.rsz.objectData, GemSortType.SKILL_NAME, Global.locale);
     }
 
-    private void SortGems(IEnumerable<RszObject> rszObjectData, GemSortType sortType, Global.LangIndex lang) {
+    private static void SortGems(IEnumerable<RszObject> rszObjectData, GemSortType sortType, Global.LangIndex lang) {
         var currentLang = Global.locale;
         Global.locale = lang;
-        var gems = rszObjectData.OfType<IGem>().Where(gem => gem.SortId > 0);
+        var gems = rszObjectData.OfType<IGem>().Where(gem => gem.SortId > 0).ToList();
         var gemsInNameOrder = sortType switch {
             GemSortType.GEM_NAME => from gem in gems
                                     orderby gem.Name
@@ -93,7 +93,7 @@ public partial class MainWindow {
                                       select gem,
             _ => throw new ArgumentOutOfRangeException(nameof(sortType), sortType, null)
         };
-        var sortId = 10000u;
+        var sortId = gems.Any() && gems[0] is Snow_data_HyakuryuDecoBaseUserData_Param ? 15000u : 10000u;
         foreach (var gem in gemsInNameOrder) {
             gem.SortId = sortId++;
         }

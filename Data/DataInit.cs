@@ -35,6 +35,8 @@ public static class DataInit {
         DataHelper.DECORATION_DESC_LOOKUP         = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.DECORATION_DESC_LOOKUP);
         DataHelper.ITEM_NAME_LOOKUP               = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ITEM_NAME_LOOKUP);
         DataHelper.ITEM_DESC_LOOKUP               = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ITEM_DESC_LOOKUP);
+        DataHelper.PETALACE_NAME_LOOKUP           = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.PETALACE_NAME_LOOKUP);
+        DataHelper.PETALACE_DESC_LOOKUP           = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.PETALACE_DESC_LOOKUP);
         DataHelper.RAMPAGE_DECORATION_NAME_LOOKUP = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.RAMPAGE_DECORATION_NAME_LOOKUP);
         DataHelper.RAMPAGE_DECORATION_DESC_LOOKUP = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.RAMPAGE_DECORATION_DESC_LOOKUP);
         DataHelper.RAMPAGE_SKILL_NAME_LOOKUP      = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.RAMPAGE_SKILL_NAME_LOOKUP);

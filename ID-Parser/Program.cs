@@ -28,6 +28,7 @@ public static class Program {
         ExtractDangoInfo();
         ExtractCatDogArmorInfo();
         ExtractCatDogWeaponInfo();
+        ExtractPetalaceInfo();
     }
 
     private static Dictionary<Global.LangIndex, Dictionary<uint, string>> GetMergedMrTexts(string path, SubCategoryType type, bool startAtOne, uint offsetToAdd, bool addAfter = false) {
@@ -121,7 +122,7 @@ public static class Program {
                 var msg      = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}{MR}.msg.17", enumType, false, 300);
                 msgLists.Add(msg);
                 if (@in == "Name") {
-                    CreateConstantsFile(msg[Global.LangIndex.eng], $"{type}Constants");
+                    CreateConstantsFile(msg[Global.LangIndex.eng], $"{type}Constants", true);
                 }
             }
             if (@in == "Name") {
@@ -186,7 +187,18 @@ public static class Program {
         }
     }
 
-    private static void CreateConstantsFile(Dictionary<uint, string> engDict, string className) {
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractPetalaceInfo() {
+        foreach (var (@in, @out) in NAME_DESC) {
+            var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\System\ContentsIdSystem\LvBuffCage\Normal\LvBuffCage_{@in}.msg.17").GetLangIdMap(SubCategoryType.LvC_Normal, false);
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\PETALACE_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+            if (@in == "Name") {
+                CreateConstantsFile(msg[Global.LangIndex.eng], "PetalaceConstants", true);
+            }
+        }
+    }
+
+    private static void CreateConstantsFile(Dictionary<uint, string> engDict, string className, bool asHex = false) {
         using var writer = new StreamWriter(File.Create($@"{BASE_PROJ_PATH}\Constants\{className}.cs"));
         writer.WriteLine("using System.Diagnostics.CodeAnalysis;");
         writer.WriteLine("");
@@ -212,7 +224,12 @@ public static class Program {
                                 .Replace(' ', '_');
             if (namesUsed.Contains(constName)) continue;
             namesUsed.Add(constName);
-            writer.WriteLine($"    public const uint {constName} = {key};");
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+            if (asHex) {
+                writer.WriteLine($"    public const uint {constName} = 0x{key:X8};");
+            } else {
+                writer.WriteLine($"    public const uint {constName} = {key};");
+            }
         }
         writer.WriteLine("}");
     }

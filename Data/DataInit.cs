@@ -41,6 +41,8 @@ public static class DataInit {
         DataHelper.RAMPAGE_DECORATION_DESC_LOOKUP = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.RAMPAGE_DECORATION_DESC_LOOKUP);
         DataHelper.RAMPAGE_SKILL_NAME_LOOKUP      = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.RAMPAGE_SKILL_NAME_LOOKUP);
         DataHelper.SKILL_NAME_LOOKUP              = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.SKILL_NAME_LOOKUP);
+        DataHelper.SWITCH_SKILL_NAME_LOOKUP       = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.SWITCH_SKILL_NAME_LOOKUP);
+        DataHelper.SWITCH_SKILL_DESC_LOOKUP       = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.SWITCH_SKILL_DESC_LOOKUP);
         DataHelper.WEAPON_NAME_LOOKUP             = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.WEAPON_NAME_LOOKUP);
         DataHelper.WEAPON_DESC_LOOKUP             = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.WEAPON_DESC_LOOKUP);
 

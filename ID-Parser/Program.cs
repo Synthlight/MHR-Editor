@@ -29,6 +29,7 @@ public static class Program {
         ExtractCatDogArmorInfo();
         ExtractCatDogWeaponInfo();
         ExtractPetalaceInfo();
+        ExtractSwitchSkillInfo();
     }
 
     private static Dictionary<Global.LangIndex, Dictionary<uint, string>> GetMergedMrTexts(string path, SubCategoryType type, bool startAtOne, uint offsetToAdd, bool addAfter = false) {
@@ -195,6 +196,14 @@ public static class Program {
             if (@in == "Name") {
                 CreateConstantsFile(msg[Global.LangIndex.eng], "PetalaceConstants", true);
             }
+        }
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractSwitchSkillInfo() {
+        foreach (var (@in, @out) in NAME_DESC) {
+            var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlSwitchAction\PlayerSwitchAction_{@in}{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\SWITCH_SKILL_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }
 

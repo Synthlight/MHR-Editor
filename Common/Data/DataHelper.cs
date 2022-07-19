@@ -29,6 +29,8 @@ public static class DataHelper {
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> RAMPAGE_DECORATION_DESC_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> RAMPAGE_SKILL_NAME_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> SKILL_NAME_LOOKUP;
+    public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> SWITCH_SKILL_NAME_LOOKUP;
+    public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> SWITCH_SKILL_DESC_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> WEAPON_NAME_LOOKUP;
     public static          Dictionary<Global.LangIndex, Dictionary<uint, string>> WEAPON_DESC_LOOKUP;
 }

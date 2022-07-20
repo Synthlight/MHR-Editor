@@ -10,9 +10,6 @@ using MHR_Editor.Models.Structs;
 
 namespace MHR_Editor {
     public static class WikiDump {
-        private const string IN_PATH  = @"V:\MHR\re_chunk_000";
-        private const string OUT_PATH = @"R:\Games\Monster Hunter Rise\Wiki Dump";
-
         public static void DumpAll() {
             DumpArmor();
             DumpItems();
@@ -22,9 +19,9 @@ namespace MHR_Editor {
         }
 
         public static void DumpArmor() {
-            var armor = ReDataFile.Read(IN_PATH + @"\natives\STM\data\Define\Player\Armor\ArmorBaseData.user.2")
+            var armor = ReDataFile.Read(PathHelper.CHUNK_PATH + PathHelper.ARMOR_BASE_PATH)
                                   .rsz.objectData.OfType<Snow_data_ArmorBaseUserData_Param>();
-            using var writer = new StreamWriter(File.Create(OUT_PATH + @"\Armor.md"));
+            using var writer = new StreamWriter(File.Create(PathHelper.WIKI_PATH + @"\Armor.md"));
             foreach (var a in armor) {
                 if ((Snow_data_ContentsIdSystem_SubCategoryType) a.GetArmorType() == Snow_data_ContentsIdSystem_SubCategoryType.C_Unclassified) continue;
                 writer.WriteLine($"| {a.Id:X8}" +
@@ -42,9 +39,9 @@ namespace MHR_Editor {
         }
 
         public static void DumpItems() {
-            var item = ReDataFile.Read(IN_PATH + @"\natives\STM\data\System\ContentsIdSystem\Item\Normal\ItemData.user.2")
+            var item = ReDataFile.Read(PathHelper.CHUNK_PATH + PathHelper.ITEM_DATA_PATH)
                                  .rsz.objectData.OfType<Snow_data_ItemUserData_Param>();
-            using var writer = new StreamWriter(File.Create(OUT_PATH + @"\Items.md"));
+            using var writer = new StreamWriter(File.Create(PathHelper.WIKI_PATH + @"\Items.md"));
             foreach (var a in item) {
                 if ((Snow_data_ContentsIdSystem_SubCategoryType) a.GetItemType() == Snow_data_ContentsIdSystem_SubCategoryType.C_Unclassified) continue;
                 var dict = DataHelper.ITEM_NAME_LOOKUP[Global.locale];
@@ -60,9 +57,9 @@ namespace MHR_Editor {
         }
 
         public static void DumpSkills() {
-            var item = ReDataFile.Read(IN_PATH + @"\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlEquipSkillBaseData.user.2")
+            var item = ReDataFile.Read(PathHelper.CHUNK_PATH + PathHelper.PLAYER_SKILL_PATH)
                                  .rsz.objectData.OfType<Snow_data_PlEquipSkillBaseUserData_Param>();
-            using var writer = new StreamWriter(File.Create(OUT_PATH + @"\Skills.md"));
+            using var writer = new StreamWriter(File.Create(PathHelper.WIKI_PATH + @"\Skills.md"));
             foreach (var a in item) {
                 if (a.Id <= 0) continue;
                 writer.WriteLine($"| {a.Id}" +
@@ -72,11 +69,10 @@ namespace MHR_Editor {
         }
 
         public static void DumpWeapons() {
-            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in Global.WEAPON_TYPES) {
-                var weapon = ReDataFile.Read(IN_PATH + $@"\natives\STM\data\Define\Player\Weapon\{type}\{type}BaseData.user.2")
+                var weapon = ReDataFile.Read(PathHelper.CHUNK_PATH + $@"\natives\STM\data\Define\Player\Weapon\{type}\{type}BaseData.user.2")
                                        .rsz.objectData.OfType<IWeapon>();
-                using var writer = new StreamWriter(File.Create(OUT_PATH + $@"\{type}.md"));
+                using var writer = new StreamWriter(File.Create(PathHelper.WIKI_PATH + $@"\{type}.md"));
                 foreach (var a in weapon.OrderBy(w => w.Id)) {
                     if (a.ModelId == Snow_data_ParamEnum_WeaponModelId.None) continue;
                     writer.WriteLine($"| {a.Id:X8}" +
@@ -90,11 +86,11 @@ namespace MHR_Editor {
         }
 
         public static void DumpArmorIdToLayeredIdForLayeredProgressionMod() {
-            var armor = ReDataFile.Read(IN_PATH + @"\natives\STM\data\Define\Player\Armor\ArmorBaseData.user.2")
+            var armor = ReDataFile.Read(PathHelper.CHUNK_PATH + PathHelper.ARMOR_BASE_PATH)
                                   .rsz.objectData.OfType<Snow_data_ArmorBaseUserData_Param>();
-            var layeredArmor = ReDataFile.Read(IN_PATH + @"\natives\STM\data\Define\Player\Armor\PlOverwearBaseData.user.2")
+            var layeredArmor = ReDataFile.Read(PathHelper.CHUNK_PATH + PathHelper.LAYERED_ARMOR_BASE_PATH)
                                          .rsz.objectData.OfType<Snow_equip_PlOverwearBaseUserData_Param>();
-            var writer                = new StreamWriter(File.Create(OUT_PATH + @"\Layered Armor.lua"));
+            var writer                = new StreamWriter(File.Create(PathHelper.WIKI_PATH + @"\Layered Armor.lua"));
             var armorIdToLayeredIdMap = new Dictionary<uint, string>();
             var modelIdToLayeredId    = new Dictionary<Snow_data_DataDef_PlArmorModelId, uint>();
             var modelIdToLayeredName  = new Dictionary<Snow_data_DataDef_PlArmorModelId, string>();

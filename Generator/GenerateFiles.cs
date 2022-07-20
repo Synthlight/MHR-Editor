@@ -11,12 +11,10 @@ using Newtonsoft.Json;
 namespace MHR_Editor.Generator;
 
 public class GenerateFiles {
-    public const string BASE_GEN_PATH    = @"..\..\..\Generated"; // @"C:\Temp\Gen"
-    public const string BASE_PROJ_PATH   = @"..\..\..";
-    public const string ENUM_GEN_PATH    = $@"{BASE_GEN_PATH}\Enums";
-    public const string STRUCT_GEN_PATH  = $@"{BASE_GEN_PATH}\Structs";
-    public const string STRUCT_JSON_PATH = @"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json";
-    public const string ENUM_HEADER_PATH = @"C:\SteamLibrary\common\MonsterHunterRise\Enums_Internal.hpp";
+    public const string BASE_GEN_PATH   = @"..\..\..\Generated"; // @"C:\Temp\Gen"
+    public const string BASE_PROJ_PATH  = @"..\..\..";
+    public const string ENUM_GEN_PATH   = $@"{BASE_GEN_PATH}\Enums";
+    public const string STRUCT_GEN_PATH = $@"{BASE_GEN_PATH}\Structs";
 
     private static readonly List<string> WHITELIST = new() {
         "Snow_data_ArmorBaseUserData",
@@ -98,7 +96,7 @@ public class GenerateFiles {
 
     public readonly  Dictionary<string, EnumType>   enumTypes   = new();
     public readonly  Dictionary<string, StructType> structTypes = new();
-    private readonly Dictionary<string, StructJson> structJson  = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(STRUCT_JSON_PATH))!;
+    private readonly Dictionary<string, StructJson> structJson  = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(PathHelper.STRUCT_JSON_PATH))!;
 
     public void Go(string[] args) {
         var useWhitelist = args.Length > 0 && args.Contains("useWhitelist");
@@ -201,7 +199,7 @@ public class GenerateFiles {
      * Goes through the enum header file and preps templates to generate the enum code file.
      */
     private void PrepTemplatesForFoundTypes() {
-        var enumHpp = File.ReadAllText(ENUM_HEADER_PATH);
+        var enumHpp = File.ReadAllText(PathHelper.ENUM_HEADER_PATH);
         var regex   = new Regex(@"namespace ((?:snow::[^ ]+|snow|via::[^ ]+|via)) {\s+enum ([^ ]+) ({[^}]+})", RegexOptions.Singleline);
         var matches = regex.Matches(enumHpp);
         foreach (Match match in matches) {

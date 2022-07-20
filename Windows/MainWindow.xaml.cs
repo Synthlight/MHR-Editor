@@ -92,6 +92,7 @@ public partial class MainWindow {
         btn_wiki_dump.Visibility  = visibility;
         btn_test.Visibility       = visibility;
         btn_all_cheats.Visibility = visibility;
+        btn_make_mods.Visibility  = visibility;
 
         UpdateCheck.Run(this);
 

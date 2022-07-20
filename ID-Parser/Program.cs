@@ -8,8 +8,7 @@ using Newtonsoft.Json;
 namespace MHR_Editor.ID_Parser;
 
 public static class Program {
-    public const string BASE_PROJ_PATH  = @"..\..\..";
-    public const string PAK_FOLDER_PATH = @"V:\MHR\re_chunk_000";
+    public const string BASE_PROJ_PATH = @"..\..\..";
 
     private static readonly List<Tuple<string, string>> NAME_DESC = new() {
         new("Name", "NAME"),
@@ -55,7 +54,7 @@ public static class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractItemInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var result = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\System\ContentsIdSystem\Item\Normal\Item{@in}{MR}.msg.17", SubCategoryType.I_Normal, true, 2001);
+            var result = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\System\ContentsIdSystem\Item\Normal\Item{@in}{MR}.msg.17", SubCategoryType.I_Normal, true, 2001);
 
             if (@in == "Name") {
                 var potion = result[Global.LangIndex.eng][0x4100006];
@@ -74,7 +73,7 @@ public static class Program {
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in types) {
                 var enumType = Enum.Parse<SubCategoryType>($"A_{type}");
-                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Armor\{type}\A_{type}_{@in}{MR}.msg.17", enumType, false, 300));
+                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\{type}\A_{type}_{@in}{MR}.msg.17", enumType, false, 300));
             }
             var result = msgLists.MergeDictionaries();
 
@@ -89,7 +88,7 @@ public static class Program {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractArmorSeriesInfo() {
-        var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 300);
+        var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 300);
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ARMOR_SERIES_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
         CreateConstantsFile(msg[Global.LangIndex.eng], "ArmorConstants");
@@ -97,17 +96,17 @@ public static class Program {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractSkillInfo() {
-        var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 112);
+        var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 112);
 
         var engSkills = msg[Global.LangIndex.eng];
         Debug.Assert(engSkills[1] == "Attack Boost");
 
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
-        msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
+        msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\RAMPAGE_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
-        msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
+        msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DANGO_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
         CreateConstantsFile(engSkills, "SkillConstants");
@@ -120,14 +119,14 @@ public static class Program {
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in Global.WEAPON_TYPES) {
                 var enumType = Enum.Parse<SubCategoryType>($"W_{type}");
-                var msg      = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}{MR}.msg.17", enumType, false, 300);
+                var msg      = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}{MR}.msg.17", enumType, false, 300);
                 msgLists.Add(msg);
                 if (@in == "Name") {
                     CreateConstantsFile(msg[Global.LangIndex.eng], $"{type}Constants", true);
                 }
             }
             if (@in == "Name") {
-                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Weapon\Insect\IG_Insect_{@in}{MR}.msg.17", SubCategoryType.W_Insect, true, 100));
+                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Weapon\Insect\IG_Insect_{@in}{MR}.msg.17", SubCategoryType.W_Insect, true, 100));
             }
             var result = msgLists.MergeDictionaries();
 
@@ -143,11 +142,11 @@ public static class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractDecorationInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Equip\Decorations\Decorations_{@in}{MR}.msg.17", SubCategoryType.C_Unclassified, false, 109);
+            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Equip\Decorations\Decorations_{@in}{MR}.msg.17", SubCategoryType.C_Unclassified, false, 109);
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDeco_{@in}_MR.msg.17").GetLangIdMap(SubCategoryType.C_Normal, false);
+            var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDeco_{@in}_MR.msg.17").GetLangIdMap(SubCategoryType.C_Normal, false);
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\RAMPAGE_DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }
@@ -155,7 +154,7 @@ public static class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractDangoInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Lobby\Facility\Kitchen\Dango_{@in}{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
+            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Lobby\Facility\Kitchen\Dango_{@in}{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DANGO_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }
@@ -168,9 +167,9 @@ public static class Program {
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in types) {
                 var catEnumType = Enum.Parse<SubCategoryType>($"OtArmor_Airou_{type}");
-                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtAirouArmor_{type}_{@in}{MR}.msg.17", catEnumType, false, 200));
+                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtAirouArmor_{type}_{@in}{MR}.msg.17", catEnumType, false, 200));
                 var dogEnumType = Enum.Parse<SubCategoryType>($"OtArmor_Dog_{type}");
-                msgLists.Add(GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtDogArmor_{type}_{@in}{MR}.msg.17", dogEnumType, false, 200));
+                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtDogArmor_{type}_{@in}{MR}.msg.17", dogEnumType, false, 200));
             }
             var result = msgLists.MergeDictionaries();
 
@@ -181,8 +180,8 @@ public static class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractCatDogWeaponInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var catMsg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeapon_{@in}{MR}.msg.17", SubCategoryType.OtWeapon_Dog, true, 200);
-            var dogMsg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtAirouWeapon_{@in}{MR}.msg.17", SubCategoryType.OtWeapon_Airou, true, 200);
+            var catMsg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeapon_{@in}{MR}.msg.17", SubCategoryType.OtWeapon_Dog, true, 200);
+            var dogMsg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtAirouWeapon_{@in}{MR}.msg.17", SubCategoryType.OtWeapon_Airou, true, 200);
             var result = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>> {catMsg, dogMsg}.MergeDictionaries();
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\CAT_DOG_WEAPON_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }
@@ -191,7 +190,7 @@ public static class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractPetalaceInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = MSG.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\System\ContentsIdSystem\LvBuffCage\Normal\LvBuffCage_{@in}.msg.17").GetLangIdMap(SubCategoryType.LvC_Normal, false);
+            var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\data\System\ContentsIdSystem\LvBuffCage\Normal\LvBuffCage_{@in}.msg.17").GetLangIdMap(SubCategoryType.LvC_Normal, false);
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\PETALACE_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
             if (@in == "Name") {
                 CreateConstantsFile(msg[Global.LangIndex.eng], "PetalaceConstants", true);
@@ -202,7 +201,7 @@ public static class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractSwitchSkillInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = GetMergedMrTexts($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlSwitchAction\PlayerSwitchAction_{@in}{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
+            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlSwitchAction\PlayerSwitchAction_{@in}{MR}.msg.17", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\SWITCH_SKILL_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }

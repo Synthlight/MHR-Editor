@@ -23,20 +23,17 @@
                    VerticalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Right"
                         Orientation="Horizontal">
-                <Button Name="btn_open"
-                        Margin="0,0,0,0"
+                <Button Margin="0,0,0,0"
                         HorizontalAlignment="Left"
                         Click="Btn_open_Click"
                         Content="Open"/>
-                <xctk:SplitButton Name="btn_save"
-                                  Margin="8,0,0,0"
+                <xctk:SplitButton Margin="8,0,0,0"
                                   HorizontalAlignment="Left"
                                   Click="Btn_save_Click"
                                   Content="Save (Ctrl+S)">
                     <xctk:SplitButton.DropDownContent>
                         <StackPanel Orientation="Vertical">
-                            <Button Name="btn_save_as"
-                                    Margin="0,0,0,0"
+                            <Button Margin="0,0,0,0"
                                     HorizontalAlignment="Left"
                                     Click="Btn_save_as_Click"
                                     Content="Save As (Ctrl+Shift+S)"/>
@@ -62,14 +59,12 @@
                    VerticalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Center"
                         Orientation="Horizontal">
-                <CheckBox Name="cb_single_click_edit"
-                          Margin="8,0,0,0"
+                <CheckBox Margin="8,0,0,0"
                           HorizontalAlignment="Right"
                           VerticalAlignment="Center"
                           Content="Single Click to Edit Mode"
                           IsChecked="{Binding SingleClickToEditMode}"/>
-                <CheckBox Name="cb_show_id_before_name"
-                          Margin="8,0,0,0"
+                <CheckBox Margin="8,0,0,0"
                           HorizontalAlignment="Right"
                           VerticalAlignment="Center"
                           Content="Show Id Before Name"
@@ -90,7 +85,7 @@
                                   Margin="8,0,0,0"
                                   HorizontalAlignment="Left"
                                   Click="Btn_all_cheats_Click"
-                                  Content="All Cheats">
+                                  Content="Cheats (All)">
                     <xctk:SplitButton.DropDownContent>
                         <StackPanel Orientation="Vertical">
                             <Button Margin="0,0,0,0"
@@ -113,14 +108,28 @@
                                     HorizontalAlignment="Left"
                                     Click="Btn_no_unlock_flag_Click"
                                     Content="No Unlock Flags"/>
+                        </StackPanel>
+                    </xctk:SplitButton.DropDownContent>
+                </xctk:SplitButton>
+                <xctk:SplitButton Name="btn_make_mods"
+                                  Margin="8,0,0,0"
+                                  HorizontalAlignment="Left"
+                                  Click="Btn_make_all_mods_Click"
+                                  Content="Make Mods (All)">
+                    <xctk:SplitButton.DropDownContent>
+                        <StackPanel Orientation="Vertical">
                             <Button Margin="0,0,0,0"
                                     HorizontalAlignment="Left"
                                     Click="Btn_create_cheat_mods_Click"
-                                    Content="- Create Cheat Mods"/>
+                                    Content="Create Cheat Mods"/>
+                            <Button Margin="0,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    Click="Btn_create_no_requirement_mods_Click"
+                                    Content="Create No Requirement Mods"/>
                             <Button Margin="0,0,0,0"
                                     HorizontalAlignment="Left"
                                     Click="Btn_create_sorted_gem_mods_Click"
-                                    Content="- Create Sorted Gem Mods"/>
+                                    Content="Create Sorted Gem Mods"/>
                         </StackPanel>
                     </xctk:SplitButton.DropDownContent>
                 </xctk:SplitButton>
@@ -157,8 +166,7 @@
                           Visibility="Visible"/>
             </StackPanel>
         </DockPanel>
-        <ScrollViewer Name="scroll_viewer"
-                      Grid.Row="1"
+        <ScrollViewer Grid.Row="1"
                       Grid.Column="0"
                       Grid.ColumnSpan="3"
                       HorizontalScrollBarVisibility="Auto"

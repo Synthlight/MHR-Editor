@@ -14,8 +14,7 @@ namespace MHR_Editor.Data_Helper_Extractor;
  * Separate from the ID-Parser since it needs to load user.2 files which means including the generated files.
  */
 public static class Program {
-    public const string BASE_PROJ_PATH  = @"..\..\..";
-    public const string PAK_FOLDER_PATH = @"V:\MHR\re_chunk_000";
+    public const string BASE_PROJ_PATH = @"..\..\..";
 
     public static void Main() {
         // We can't call `DataInit.Init()` directly since that is something we're directly altering here.
@@ -37,7 +36,7 @@ public static class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractSkillEnumToIdLookup() {
         var skillEnumToIdLookup = new Dictionary<Global.LangIndex, Dictionary<Snow_data_DataDef_PlEquipSkillId, string>>();
-        var skills = ReDataFile.Read($@"{PAK_FOLDER_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlEquipSkillBaseData.user.2")
+        var skills = ReDataFile.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlEquipSkillBaseData.user.2")
                                .rsz.objectData.OfType<Snow_data_PlEquipSkillBaseUserData_Param>()
                                .ToList();
         foreach (var lang in Enum.GetValues<Global.LangIndex>()) {

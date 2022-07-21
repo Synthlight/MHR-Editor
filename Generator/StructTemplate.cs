@@ -177,6 +177,7 @@ public class StructTemplate {
             "snow.data.DataDef.PlEquipSkillId" => DataSourceType.SKILLS,
             "snow.data.DataDef.PlHyakuryuSkillId" => DataSourceType.RAMPAGE_SKILLS,
             "snow.data.DataDef.PlKitchenSkillId" => DataSourceType.DANGO_SKILLS,
+            "snow.data.DataDef.PlWeaponActionId" => DataSourceType.SWITCH_SKILLS,
             _ => null
         };
     }
@@ -192,8 +193,9 @@ public class StructTemplate {
         return dataSourceType switch {
             DataSourceType.DANGO_SKILLS => nameof(DataHelper.DANGO_SKILL_NAME_LOOKUP),
             DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
-            DataSourceType.SKILLS => nameof(DataHelper.SKILL_NAME_LOOKUP),
             DataSourceType.RAMPAGE_SKILLS => nameof(DataHelper.RAMPAGE_SKILL_NAME_LOOKUP),
+            DataSourceType.SKILLS => nameof(DataHelper.SKILL_NAME_LOOKUP),
+            DataSourceType.SWITCH_SKILLS => nameof(DataHelper.SWITCH_SKILL_NAME_LOOKUP),
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
     }

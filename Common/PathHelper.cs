@@ -34,6 +34,7 @@ public static class PathHelper {
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum WeaponDataType {
         Base,
         Change,

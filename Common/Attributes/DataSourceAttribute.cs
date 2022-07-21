@@ -10,7 +10,8 @@ public class DataSourceAttribute : Attribute {
 
 public enum DataSourceType {
     DANGO_SKILLS,
-    SKILLS,
+    ITEMS,
     RAMPAGE_SKILLS,
-    ITEMS
+    SKILLS,
+    SWITCH_SKILLS
 }

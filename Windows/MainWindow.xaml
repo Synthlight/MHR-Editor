@@ -77,7 +77,8 @@
                    VerticalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Right"
                         Orientation="Horizontal">
-                <Button Name="btn_wiki_dump" Margin="0,0,0,0"
+                <Button Name="btn_wiki_dump"
+                        Margin="0,0,0,0"
                         HorizontalAlignment="Left"
                         Click="Btn_wiki_dump_Click"
                         Content="Wiki Dump"/>
@@ -145,9 +146,9 @@
                 <xctk:SplitButton Name="btn_sort_gems_by_skill_name"
                                   Margin="8,0,0,0"
                                   HorizontalAlignment="Left"
-                                  Visibility="Collapsed"
                                   Click="Btn_sort_gems_by_skill_name_Click"
-                                  Content="Sort Gems by Skill Name">
+                                  Content="Sort Gems by Skill Name"
+                                  Visibility="Collapsed">
                     <xctk:SplitButton.DropDownContent>
                         <StackPanel Orientation="Vertical">
                             <Button Margin="0,0,0,0"
@@ -166,13 +167,5 @@
                           Visibility="Visible"/>
             </StackPanel>
         </DockPanel>
-        <ScrollViewer Grid.Row="1"
-                      Grid.Column="0"
-                      Grid.ColumnSpan="3"
-                      HorizontalScrollBarVisibility="Auto"
-                      IsDeferredScrollingEnabled="True"
-                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-            <Grid Name="sub_grids"/>
-        </ScrollViewer>
     </Grid>
 </Window>

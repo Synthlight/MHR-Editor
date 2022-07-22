@@ -1,0 +1,11 @@
+{
+    "profiles": {
+        "[None]": {
+            "commandName": "Project"
+        },
+        "Whitelist": {
+            "commandName": "Project",
+            "commandLineArgs": "useWhitelist"
+        }
+    }
+}

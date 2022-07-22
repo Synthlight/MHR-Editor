@@ -38,7 +38,7 @@ public partial class MainWindow {
         set {
             Global.locale = value;
             if (file?.rsz.objectData == null) return;
-            foreach (var grid in GetAllDataGrids()) {
+            foreach (var grid in GetGrids().OfType<AutoDataGrid>()) {
                 grid.RefreshHeaderText();
             }
             foreach (var item in file!.rsz.objectData) {
@@ -118,11 +118,7 @@ public partial class MainWindow {
             targetFile = target;
             Title      = Path.GetFileName(targetFile);
 
-            sub_grids.Children.Clear();
-            sub_grids.UpdateLayout();
-
-            ClearDataGrids(main_grid);
-            ClearDataGrids(sub_grids);
+            ClearGrids(main_grid);
 
             GC.Collect();
 
@@ -137,10 +133,24 @@ public partial class MainWindow {
             var objectDataIndex     = (int) rszObjectInfo[0] - 1; // 1 based.
             var entryPointRszObject = rszObjectData[objectDataIndex];
 
-            var (type, items) = GetItemAndTypeToUseAsRoot(rszObjectData, entryPointRszObject);
-            var dataGrid = MakeDataGrid((dynamic) items);
-            Debug.WriteLine($"Loading type: {type.Name}");
-            AddMainDataGrid(dataGrid);
+            /*
+             * Gets the items & typeName to use as the root entry in the dataGrid.
+             * For param types, the is the list of params. (A shortcut we make.)
+             * For the rest, it's the entry point & type.
+             */
+            var structInfo = entryPointRszObject.structInfo;
+            if (structInfo.fields is {Count: 1} && structInfo.fields[0].array && structInfo.fields[0].type == "Object") {
+                var type     = rszObjectData[0].GetType();
+                var items    = rszObjectData.GetGenericItemsOfType(type);
+                var dataGrid = MakeDataGrid((dynamic) items);
+                Debug.WriteLine($"Loading type: {type.Name}");
+                AddMainDataGrid(dataGrid);
+            } else {
+                var type       = entryPointRszObject.GetType();
+                var structGrid = MakeStructGrid((dynamic) Convert.ChangeType(entryPointRszObject, type));
+                Debug.WriteLine($"Loading type: {type.Name}");
+                AddStructGrid(structGrid);
+            }
 
             btn_sort_gems_by_skill_name.Visibility = target.Contains("DecorationsBaseData.user.2") || target.Contains("HyakuryuDecoBaseData.user.2") ? Visibility.Visible : Visibility.Collapsed;
         } catch (FileNotSupported) {
@@ -150,11 +160,6 @@ public partial class MainWindow {
         }
     }
 
-    /**
-     * Gets the items & typeName to use as the root entry in the dataGrid.
-     * For param types, the is the list of params. (A shortcut we make.)
-     * For the rest, it's the entry point & type.
-     */
     private static (Type, object) GetItemAndTypeToUseAsRoot(IReadOnlyList<RszObject> rszObjectData, RszObject entryPointRszObject) {
         var structInfo = entryPointRszObject.structInfo;
         if (structInfo.fields is {Count: 1} && structInfo.fields[0].array && structInfo.fields[0].type == "Object") {
@@ -226,29 +231,49 @@ public partial class MainWindow {
         return dataGrid;
     }
 
+    public static StructGridGeneric<T> MakeStructGrid<T>(T item) where T : RszObject {
+        var dataGrid = new StructGridGeneric<T>();
+        dataGrid.SetItem(item);
+        return dataGrid;
+    }
+
     public void AddMainDataGrid(AutoDataGrid dataGrid) {
         dataGrid.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
         dataGrid.VerticalScrollBarVisibility   = ScrollBarVisibility.Auto;
 
-        main_grid.AddControl(dataGrid);
+        AddMainControl(dataGrid);
+    }
 
-        Grid.SetRow(dataGrid, 1);
-        Grid.SetColumn(dataGrid, 0);
-        Grid.SetColumnSpan(dataGrid, 3);
+    public void AddStructGrid(StructGrid structGrid) {
+        structGrid.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+        structGrid.VerticalScrollBarVisibility   = ScrollBarVisibility.Auto;
+
+        AddMainControl(structGrid);
+    }
+
+    private void AddMainControl(UIElement uiElement) {
+        main_grid.AddControl(uiElement);
+
+        Grid.SetRow(uiElement, 1);
+        Grid.SetColumn(uiElement, 0);
+        Grid.SetColumnSpan(uiElement, 3);
 
         main_grid.UpdateLayout();
     }
 
-    public void AddSubDataGrid(AutoDataGrid dataGrid) {
-        sub_grids.AddControl(dataGrid);
-    }
-
-    public static void ClearDataGrids(Panel panel) {
-        var grids = GetDataGrids(panel).ToList();
+    public void ClearGrids(Panel panel) {
+        var grids = GetGrids().ToList();
 
         // Remove them.
         foreach (var grid in grids) {
-            grid.SetItems(null);
+            switch (grid) {
+                case AutoDataGrid mhwGrid:
+                    mhwGrid.SetItems(null);
+                    break;
+                case StructGrid structGrid:
+                    structGrid.SetItem(null);
+                    break;
+            }
             panel.Children.Remove(grid);
         }
 
@@ -258,19 +283,13 @@ public partial class MainWindow {
         }
     }
 
-    public IEnumerable<AutoDataGrid> GetAllDataGrids() {
-        foreach (var grid in GetDataGrids(main_grid)) {
-            yield return grid;
-        }
-        foreach (var grid in GetDataGrids(sub_grids)) {
-            yield return grid;
-        }
-    }
-
-    public static IEnumerable<AutoDataGrid> GetDataGrids(Panel panel) {
-        foreach (UIElement child in panel.Children) {
-            if (child is AutoDataGrid mhwGrid) {
-                yield return mhwGrid;
+    public IEnumerable<UIElement> GetGrids() {
+        foreach (UIElement child in main_grid.Children) {
+            switch (child) {
+                case AutoDataGrid:
+                case StructGrid:
+                    yield return child;
+                    break;
             }
         }
     }

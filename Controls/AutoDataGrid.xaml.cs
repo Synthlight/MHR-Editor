@@ -35,7 +35,8 @@ public interface IAutoDataGrid<T> : IAutoDataGrid {
 }
 
 public abstract partial class AutoDataGrid : IAutoDataGrid {
-    protected static readonly Brush BACKGROUND_BRUSH = (Brush) new BrushConverter().ConvertFrom("#c0e1fb");
+    protected static readonly Brush           BACKGROUND_BRUSH = (Brush) new BrushConverter().ConvertFrom("#c0e1fb");
+    public static readonly    SolidColorBrush ALT_ROW_BRUSH    = new(Color.FromRgb(230, 230, 230));
 
     public abstract bool IsAddingAllowed { get; set; }
 
@@ -221,7 +222,7 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
 
                 if (shadeThisColumn) {
                     column.CellStyle = new(typeof(DataGridCell));
-                    column.CellStyle.Setters.Add(new Setter(BackgroundProperty, new SolidColorBrush(Color.FromRgb(230, 230, 230))));
+                    column.CellStyle.Setters.Add(new Setter(BackgroundProperty, ALT_ROW_BRUSH));
                     shadeThisColumn = !shadeThisColumn;
                 } else {
                     shadeThisColumn = !shadeThisColumn;
@@ -327,8 +328,12 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
             var obj              = frameworkElement.DataContext;
             var list             = propertyInfo.GetGetMethod()?.Invoke(obj, null);
             var listType         = list?.GetType().GenericTypeArguments[0];
+            var isList           = (IsListAttribute) propertyInfo.GetCustomAttribute(typeof(IsListAttribute), true) != null;
             var viewType         = typeof(SubStructViewDynamic<>).MakeGenericType(listType ?? throw new InvalidOperationException());
-            var subStructView    = (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, list, propertyInfo);
+            var subStructView = isList switch {
+                true => (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, list, propertyInfo),
+                false => (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, ((dynamic) list)[0])
+            };
 
             ColorCell(frameworkElement);
             subStructView?.ShowDialog();

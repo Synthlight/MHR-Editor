@@ -125,14 +125,19 @@ public class StructTemplate {
                 foreach (var additionalAttributes in GetAdditionalAttributesForDataSourceType(buttonType)) {
                     file.WriteLine($"    {additionalAttributes}");
                 }
+                file.WriteLine("    [IsList]");
                 file.WriteLine($"    public ObservableCollection<DataSourceWrapper<{primitiveName}>> {newName} {{ get; set; }}");
             } else if (isObjectType) {
+                file.WriteLine("    [IsList]");
                 file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
             } else if (isNonPrimitive) {
+                file.WriteLine("    [IsList]");
                 file.WriteLine($"    public ObservableCollection<{viaType}> {newName} {{ get; set; }}");
             } else if (isEnumType) {
+                file.WriteLine("    [IsList]");
                 file.WriteLine($"    public ObservableCollection<GenericWrapper<{typeName}>> {newName} {{ get; set; }}");
             } else if (isPrimitive) {
+                file.WriteLine("    [IsList]");
                 file.WriteLine($"    public ObservableCollection<GenericWrapper<{primitiveName}>> {newName} {{ get; set; }}");
             } else {
                 throw new InvalidDataException("Not a primitive, enum, or object array type.");

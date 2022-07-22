@@ -26,5 +26,20 @@ namespace MHR_Editor.Windows {
 
             AddChild(dataGrid);
         }
+
+        public SubStructViewDynamic(Window window, string name, T item) {
+            Title  = name;
+            Owner  = window;
+            Width  = window.Width;
+            Height = window.Height * 0.8d;
+
+            var structGrid = new StructGridGeneric<T> {
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                VerticalScrollBarVisibility   = ScrollBarVisibility.Auto,
+            };
+            structGrid.SetItem(item);
+
+            AddChild(structGrid);
+        }
     }
 }

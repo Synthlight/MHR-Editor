@@ -9,6 +9,9 @@
 		<Nullable>disable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="PropertyChanged.Fody" Version="3.4.1" PrivateAssets="All"/>
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\Common\Common.csproj"/>
 	</ItemGroup>
 </Project>

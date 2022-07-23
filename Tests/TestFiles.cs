@@ -12,16 +12,23 @@ public class TestFiles {
         $@"{IN_PATH}\natives\STM\player\UserData",
     };
 
-    private static IEnumerable<object[]> GetFilesToTest() {
+    private static IEnumerable<object[]> GetUserFilesToTest() {
         return from basePath in TEST_PATHS
                from file in Directory.EnumerateFiles(basePath, "*.user.2", SearchOption.AllDirectories)
                where File.Exists(file)
                select new object[] {file};
     }
 
-    [DynamicData(nameof(GetFilesToTest), DynamicDataSourceType.Method)]
+    private static IEnumerable<object[]> GetTextFilesToTest() {
+        return from basePath in TEST_PATHS
+               from file in Directory.EnumerateFiles(basePath, "*.msg.17", SearchOption.AllDirectories)
+               where File.Exists(file)
+               select new object[] {file};
+    }
+
+    [DynamicData(nameof(GetUserFilesToTest), DynamicDataSourceType.Method)]
     [DataTestMethod]
-    public void TestRead(string file) {
+    public void TestReadUserFile(string file) {
         try {
             ReDataFile.Read(file);
         } catch (FileNotSupported) {
@@ -29,9 +36,9 @@ public class TestFiles {
         }
     }
 
-    [DynamicData(nameof(GetFilesToTest), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetUserFilesToTest), DynamicDataSourceType.Method)]
     [DataTestMethod]
-    public void TestWrite(string file) {
+    public void TestWriteUserFile(string file) {
         try {
             ReDataFile data;
             try {
@@ -52,6 +59,16 @@ public class TestFiles {
             var fileHash = MD5.Create().ComputeHash(File.ReadAllBytes(file));
             var newHash  = MD5.Create().ComputeHash(((MemoryStream) writer.BaseStream).ToArray());
             Debug.Assert(fileHash.SequenceEqual(newHash), $"MD5 expected {BitConverter.ToString(fileHash)}, found {BitConverter.ToString(newHash)}.");
+        } catch (FileNotSupported) {
+            Assert.Inconclusive();
+        }
+    }
+
+    [DynamicData(nameof(GetTextFilesToTest), DynamicDataSourceType.Method)]
+    [DataTestMethod]
+    public void TestReadTextFile(string file) {
+        try {
+            MSG.Read(file);
         } catch (FileNotSupported) {
             Assert.Inconclusive();
         }

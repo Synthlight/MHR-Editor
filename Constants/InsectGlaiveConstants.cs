@@ -263,6 +263,8 @@ public static class InsectGlaiveConstants {
     public const uint ROYAL_ORDERS_GLAIVE = 0x08A001AD;
     public const uint ROYAL_ORDERS_GLAIVE_PLUS = 0x08A001AF;
     public const uint ANTIQUE_MACHINA_IG = 0x08A001B0;
+    public const uint HEAVENS_RATH_GLAIVE = 0x08A001B2;
+    public const uint AOUL_AL_SADIRAHS_ASTERISM = 0x08A001B4;
     public const uint DAWNMOON_GLAIVE_PLUS = 0x08A001BD;
     public const uint HORNED_TYRANT_PLUS = 0x08A001BE;
     public const uint CHAMPION_GLAIVE_II = 0x08A001BF;

@@ -255,6 +255,7 @@ public static class SlashAxeConstants {
     public const uint UNDYING_PURITY = 0x08600197;
     public const uint SKYFALL = 0x08600198;
     public const uint BAZELAVA_ROOKSLAYER = 0x0860019A;
+    public const uint BAZELHEART = 0x0860019B;
     public const uint THUNDERCLAP = 0x0860019C;
     public const uint DAORAS_JANAH_PLUS = 0x0860019E;
     public const uint DAORAS_AJNIHA = 0x0860019F;
@@ -281,6 +282,9 @@ public static class SlashAxeConstants {
     public const uint ROYAL_ORDERS_AXE = 0x086001B6;
     public const uint ROYAL_ORDERS_AXE_PLUS = 0x086001B8;
     public const uint ANTIQUE_MACHINA_SA = 0x086001B9;
+    public const uint RATHSPLICER = 0x086001BB;
+    public const uint GOLDEN_CRESCENT = 0x086001BC;
+    public const uint MIZARS_ASTERISM = 0x086001BE;
     public const uint AXE_OF_GAIA_PLUS = 0x086001C5;
     public const uint CHAMPION_SWITCH_AXE_II = 0x086001C6;
     public const uint CHAMPION_SWITCH_AXE_III = 0x086001C7;

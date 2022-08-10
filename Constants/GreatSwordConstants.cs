@@ -275,6 +275,8 @@ public static class GreatSwordConstants {
     public const uint ANTIQUE_MACHINA_GS = 0x081001B7;
     public const uint DUKES_CLAYMORE = 0x081001B8;
     public const uint DECAPITATOR_SCHNEIDEN = 0x081001B9;
+    public const uint RATHALOS_GLEAMSWORD = 0x081001BB;
+    public const uint MERAKS_ASTERISM = 0x081001BD;
     public const uint CHAMPION_GREAT_SWORD_II = 0x081001C7;
     public const uint CHAMPION_GREAT_SWORD_III = 0x081001C8;
     public const uint GUARDIAN_GREAT_SWORD = 0x081001C9;

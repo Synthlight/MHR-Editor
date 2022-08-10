@@ -246,6 +246,7 @@ public static class LanceConstants {
     public const uint RAGING_DEMON_LANCE = 0x0840019A;
     public const uint SKYBORE_TWISTER = 0x0840019B;
     public const uint BAZEL_MYNIAD_QUEENTAKER = 0x0840019D;
+    public const uint BAZEL_ROCKET_ROOKSEARER = 0x0840019E;
     public const uint SKYBORE_DISCHARGE = 0x0840019F;
     public const uint DAORAS_FANG_PLUS = 0x084001A1;
     public const uint DAORAS_REGULUS = 0x084001A2;
@@ -271,6 +272,8 @@ public static class LanceConstants {
     public const uint DARK_LANCE = 0x084001B9;
     public const uint DARK_LANCE_PLUS = 0x084001BA;
     public const uint DARK_SPEAR = 0x084001BB;
+    public const uint SILVER_PROMINENCE = 0x084001BD;
+    public const uint DUBHES_ASTERISM = 0x084001BF;
     public const uint CHAMPION_LANCE_II = 0x084001C6;
     public const uint CHAMPION_LANCE_III = 0x084001C7;
     public const uint GUARDIAN_LANCE = 0x084001C8;

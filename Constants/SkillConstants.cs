@@ -123,6 +123,9 @@ public static class SkillConstants {
     public const uint MAIL_OF_HELLFIRE = 115;
     public const uint COALESCENCE = 116;
     public const uint BLOODLUST = 117;
+    public const uint DEFIANCE = 118;
+    public const uint SNEAK_ATTACK = 119;
+    public const uint ADRENALINE_RUSH = 120;
     public const uint REDIRECTION = 122;
     public const uint SPIRIBIRDS_CALL = 123;
     public const uint CHARGE_MASTER = 124;
@@ -131,6 +134,9 @@ public static class SkillConstants {
     public const uint GRINDER_S = 127;
     public const uint BLADESCALE_HONE = 128;
     public const uint WALL_RUNNER_BOOST = 129;
+    public const uint ELEMENT_EXPLOIT = 130;
     public const uint CHAIN_CRIT = 131;
+    public const uint GUTS = 132;
     public const uint QUICK_BREATH = 133;
+    public const uint STATUS_TRIGGER = 134;
 }

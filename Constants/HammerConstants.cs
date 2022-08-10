@@ -286,6 +286,8 @@ public static class HammerConstants {
     public const uint ROYAL_ORDERS_BLUDGEON = 0x083001B3;
     public const uint ROYAL_ORDERS_BLUDGEON_PLUS = 0x083001B4;
     public const uint ANTIQUE_MACHINA_H = 0x083001B5;
+    public const uint LEONID_STARCRUSHER = 0x083001B7;
+    public const uint ASCELLAS_ASTERISM = 0x083001B9;
     public const uint CHAMPION_HAMMER_II = 0x083001C0;
     public const uint CHAMPION_HAMMER_III = 0x083001C1;
     public const uint GUARDIAN_HAMMER = 0x083001C2;

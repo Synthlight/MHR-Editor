@@ -268,6 +268,7 @@ public static class LongSwordConstants {
     public const uint EVIL_DEMON_HALBERD = 0x085001A5;
     public const uint PANDEMONIUM = 0x085001A6;
     public const uint BAZEL_JARRE_BLAZER = 0x085001A8;
+    public const uint BAZEL_PROZIO_ROOKSEARER = 0x085001A9;
     public const uint TORRENTIAL_HAIL = 0x085001AA;
     public const uint DAORAS_RAID_PLUS = 0x085001AC;
     public const uint DAORAS_STORM = 0x085001AD;
@@ -290,6 +291,9 @@ public static class LongSwordConstants {
     public const uint ROYAL_ORDERS_CLAYMORE = 0x085001C0;
     public const uint ROYAL_ORDERS_CLAYMORE_PLUS = 0x085001C2;
     public const uint ANTIQUE_MACHINA_LS = 0x085001C3;
+    public const uint WYVERN_BLADE_PALE = 0x085001C5;
+    public const uint WYVERN_BLADE_LUNA = 0x085001C6;
+    public const uint MEGREZS_ASTERISM = 0x085001C8;
     public const uint CHAMPION_LONG_SWORD_II = 0x085001CF;
     public const uint CHAMPION_LONG_SWORD_III = 0x085001D0;
     public const uint GUARDIAN_LONG_SWORD = 0x085001D1;

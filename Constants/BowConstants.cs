@@ -301,6 +301,9 @@ public static class BowConstants {
     public const uint ROYAL_ORDERS_BOW = 0x08E001C2;
     public const uint ROYAL_ORDERS_BOW_PLUS = 0x08E001C4;
     public const uint ANTIQUE_MACHINA_B = 0x08E001C5;
+    public const uint HYPERION = 0x08E001C7;
+    public const uint SELENE_MOONBROKEN = 0x08E001C8;
+    public const uint POLARISS_GUIDANCE = 0x08E001CA;
     public const uint VENOMTONGUE_ABSOLUTE = 0x08E001D1;
     public const uint THE_TERRIBLE_PLUS = 0x08E001D4;
     public const uint CHAMPION_BOW_II = 0x08E001D5;

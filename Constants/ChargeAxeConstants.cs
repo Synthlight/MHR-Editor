@@ -252,6 +252,9 @@ public static class ChargeAxeConstants {
     public const uint ROYAL_ORDERS_BATTLEAXE = 0x08B001A9;
     public const uint ROYAL_ORDERS_BATTLEAXE_PLUS = 0x08B001AB;
     public const uint ANTIQUE_MACHINA_CB = 0x08B001AC;
+    public const uint LUNA_EOSTRE = 0x08B001AE;
+    public const uint HELLSIRE_BLADE = 0x08B001AF;
+    public const uint NUNKIS_ASTERISM = 0x08B001B1;
     public const uint BARROTH_GUARDIAN_PLUS = 0x08B001B8;
     public const uint CERA_CEDIMENT_PLUS = 0x08B001B9;
     public const uint CHAMPION_CHARGE_BLADE_II = 0x08B001BA;

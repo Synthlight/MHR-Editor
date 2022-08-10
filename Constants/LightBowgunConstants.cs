@@ -221,6 +221,7 @@ public static class LightBowgunConstants {
     public const uint TEN_MILLION_VOLTS = 0x08C0018C;
     public const uint SHEARING_WIND = 0x08C0018D;
     public const uint BAZELVALOR_ROOKSLAYER = 0x08C0018F;
+    public const uint BAZELCORE = 0x08C00190;
     public const uint CASCADING_THUNDER = 0x08C00191;
     public const uint DAORAS_HORNET_PLUS = 0x08C00193;
     public const uint DAORAS_YELLOWJACKET = 0x08C00194;
@@ -246,6 +247,9 @@ public static class LightBowgunConstants {
     public const uint HORNET_GUN = 0x08C001AA;
     public const uint HORNET_GUN_PLUS = 0x08C001AB;
     public const uint CARAPACE_CANNON = 0x08C001AC;
+    public const uint SILVER_SPARTACUS = 0x08C001AE;
+    public const uint GOLD_VALKYRIE = 0x08C001AF;
+    public const uint KAUS_BOREALISS_ASTERISM = 0x08C001B1;
     public const uint BARROZOOKA = 0x08C001BA;
     public const uint CHAMPION_LIGHT_BOWGUN_II = 0x08C001BB;
     public const uint CHAMPION_LIGHT_BOWGUN_III = 0x08C001BC;

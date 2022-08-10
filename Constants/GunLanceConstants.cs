@@ -250,6 +250,7 @@ public static class GunLanceConstants {
     public const uint DRAGON_GUNLANCE = 0x08700196;
     public const uint SKYRIFT_TEMPEST = 0x08700197;
     public const uint BAZEL_KINGTOPPER = 0x08700199;
+    public const uint BAZELPRIDE = 0x0870019A;
     public const uint SKYRIFT_THUNDERSTORM = 0x0870019B;
     public const uint DAORAS_BRIGIA_PLUS = 0x0870019D;
     public const uint DAORAS_TEMPEST = 0x0870019E;
@@ -272,6 +273,9 @@ public static class GunLanceConstants {
     public const uint ROYAL_ORDERS_PLEDGE = 0x087001B1;
     public const uint ROYAL_ORDERS_PLEDGE_PLUS = 0x087001B3;
     public const uint ANTIQUE_MACHINA_GL = 0x087001B4;
+    public const uint SILVER_ROOK = 0x087001B6;
+    public const uint QUEENS_PANOPLY = 0x087001B7;
+    public const uint ALIOTHS_ASTERISM = 0x087001B9;
     public const uint THUNDERING_STRIKER = 0x087001C0;
     public const uint DIABLOS_HORNCANNON_PLUS = 0x087001C1;
     public const uint CHAMPION_GUNLANCE_II = 0x087001C4;

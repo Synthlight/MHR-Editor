@@ -255,9 +255,11 @@ public static class HeavyBowgunConstants {
     public const uint INJECTOR_CANNON = 0x08D001B2;
     public const uint INJECTOR_CANNON_PLUS = 0x08D001B3;
     public const uint ZECT_INJECTOR = 0x08D001B4;
+    public const uint POLISS_ASTERISM = 0x08D001B7;
     public const uint HORNED_DEMONICA_PLUS = 0x08D001C0;
     public const uint CHAMPION_HEAVY_BOWGUN_II = 0x08D001C1;
     public const uint CHAMPION_HEAVY_BOWGUN_III = 0x08D001C2;
     public const uint GUARDIAN_HEAVY_BOWGUN = 0x08D001C3;
     public const uint BORDEAUX_CANDLESTICK_PLUS = 0x08D001C4;
+    public const uint MOONLIGHT_SPARKFLIER = 0x08D001C8;
 }

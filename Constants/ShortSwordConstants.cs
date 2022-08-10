@@ -278,6 +278,9 @@ public static class ShortSwordConstants {
     public const uint ROYAL_ORDERS_SWORD = 0x082001B3;
     public const uint ROYAL_ORDERS_SWORD_PLUS = 0x082001B5;
     public const uint ANTIQUE_MACHINA_SS = 0x082001B6;
+    public const uint SHINING_WYVERN_BLADE = 0x082001B8;
+    public const uint LUNATIC_ROSE = 0x082001B9;
+    public const uint PHECDAS_ASTERISM = 0x082001BB;
     public const uint CHAMPION_SWORD_II = 0x082001C2;
     public const uint CHAMPION_SWORD_III = 0x082001C3;
     public const uint GUARDIAN_SWORD = 0x082001C4;

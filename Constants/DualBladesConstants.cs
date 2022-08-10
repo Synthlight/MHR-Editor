@@ -245,6 +245,7 @@ public static class DualBladesConstants {
     public const uint SUZUKA_AKUROU = 0x08800195;
     public const uint TWIN_TWISTERS = 0x08800196;
     public const uint BAZELHOUND_ROOKSLAYER = 0x08800198;
+    public const uint BAZEL_BOMBERS = 0x08800199;
     public const uint DOUBLE_DISCHARGE = 0x0880019A;
     public const uint DAORAS_HOOK_PLUS = 0x0880019C;
     public const uint DAORAS_VENTUS = 0x0880019D;
@@ -275,6 +276,8 @@ public static class DualBladesConstants {
     public const uint ROYAL_ORDERS_RAPIERS = 0x088001B9;
     public const uint ROYAL_ORDERS_RAPIERS_PLUS = 0x088001BB;
     public const uint ANTIQUE_MACHINA_DB = 0x088001BC;
+    public const uint WYVERN_STRIFE = 0x088001BE;
+    public const uint ALKAIDS_ASTERISM = 0x088001C0;
     public const uint ELDER_FUGENS_BLADES = 0x088001D3;
     public const uint ELDER_FUGENS_BLADES_PLUS = 0x088001D4;
     public const uint CHAMPION_DUAL_BLADES_II = 0x088001D5;

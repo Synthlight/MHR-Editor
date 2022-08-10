@@ -247,6 +247,7 @@ public static class HornConstants {
     public const uint DENDEN_DELUGESONG = 0x08900197;
     public const uint SKYTREMOR_TYPHOON = 0x08900198;
     public const uint BASELSIUM_ROOKSLAYER = 0x0890019A;
+    public const uint BAZEL_VALDI_ROOKSEARER = 0x0890019B;
     public const uint SKYTREMOR_RUMBLE = 0x0890019C;
     public const uint DAORAS_BAPHOPHONE_PLUS = 0x0890019E;
     public const uint DAORAS_DIABASSOON = 0x0890019F;
@@ -273,6 +274,8 @@ public static class HornConstants {
     public const uint ROYAL_ORDERS_HORN = 0x089001B7;
     public const uint ROYAL_ORDERS_HORN_PLUS = 0x089001B9;
     public const uint ANTIQUE_MACHINA_HH = 0x089001BA;
+    public const uint GOLD_CHORDMAKER = 0x089001BC;
+    public const uint NAMALSADIRAHS_ASTERISM = 0x089001BE;
     public const uint CHAMPION_HORN_II = 0x089001C5;
     public const uint CHAMPION_HORN_III = 0x089001C6;
     public const uint GUARDIAN_HORN = 0x089001C7;

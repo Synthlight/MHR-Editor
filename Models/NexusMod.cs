@@ -25,6 +25,16 @@ public struct NexusMod : INexusMod {
     public string                  Version  { get; set; }
     public IEnumerable<string>     Files    { get; set; }
     public Action<List<RszObject>> Action   { get; set; }
+
+    public static NexusMod FromVariant(NexusModVariant variant) {
+        return new() {
+            Name     = variant.Name,
+            Filename = variant.Filename,
+            Version  = variant.Version,
+            Files    = variant.Files,
+            Action   = variant.Action
+        };
+    }
 }
 
 public struct NexusModVariant : INexusModVariant {
@@ -38,32 +48,32 @@ public struct NexusModVariant : INexusModVariant {
 }
 
 public static class NexusModExtensions {
-    public static T SetName<T>(this T nexusMod, string name) where T : INexusMod, INexusModVariant {
+    public static T SetName<T>(this T nexusMod, string name) where T : INexusMod {
         nexusMod.Name = name;
         return nexusMod;
     }
 
-    public static T SetFilename<T>(this T nexusMod, string filename) where T : INexusMod, INexusModVariant {
+    public static T SetFilename<T>(this T nexusMod, string filename) where T : INexusMod {
         nexusMod.Filename = filename;
         return nexusMod;
     }
 
-    public static T SetDesc<T>(this T nexusMod, string desc) where T : INexusMod, INexusModVariant {
+    public static T SetDesc<T>(this T nexusMod, string desc) where T : INexusMod {
         nexusMod.Desc = desc;
         return nexusMod;
     }
 
-    public static T SetVersion<T>(this T nexusMod, string version) where T : INexusMod, INexusModVariant {
+    public static T SetVersion<T>(this T nexusMod, string version) where T : INexusMod {
         nexusMod.Version = version;
         return nexusMod;
     }
 
-    public static T SetFiles<T>(this T nexusMod, IEnumerable<string> files) where T : INexusMod, INexusModVariant {
+    public static T SetFiles<T>(this T nexusMod, IEnumerable<string> files) where T : INexusMod {
         nexusMod.Files = files;
         return nexusMod;
     }
 
-    public static T SetAction<T>(this T nexusMod, Action<List<RszObject>> action) where T : INexusMod, INexusModVariant {
+    public static T SetAction<T>(this T nexusMod, Action<List<RszObject>> action) where T : INexusMod {
         nexusMod.Action = action;
         return nexusMod;
     }

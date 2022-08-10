@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MHR_Editor.Common;
 using MHR_Editor.Common.Models;
 using MHR_Editor.Generated.Models;
@@ -11,8 +12,9 @@ namespace MHR_Editor.Mods;
 
 public static class CheatMod {
     public static void Make() {
-        const string bundleName = "Weapon/Armor/Gem/Slot/Skill Cheats";
-        const string outPath    = $@"{PathHelper.MODS_PATH}\{bundleName}";
+        const string bundleName        = "Weapon/Armor/Gem/Slot/Skill Cheats";
+        const string variantBundleName = "All In One (Fluffy Selective Install)";
+        const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
             Version      = "1.1",
@@ -57,7 +59,21 @@ public static class CheatMod {
                 .SetAction(MaxSkills),
         };
 
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath);
+        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, variantBundleName);
+
+        ModMaker.WriteMods(mods.Select(NexusMod.FromVariant)
+                               .Append(NexusMod.FromVariant(baseMod)
+                                               .SetName("All In One")
+                                               .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Base)
+                                                                   .Append(new[] {
+                                                                       PathHelper.ARMOR_BASE_PATH,
+                                                                       PathHelper.DECORATION_PATH
+                                                                   }))
+                                               .SetAction(data => {
+                                                   MaxSlots(data);
+                                                   MaxSkills(data);
+                                                   MaxSharpness(data);
+                                               })), PathHelper.CHUNK_PATH, outPath);
     }
 
     public static void MaxSharpness(List<RszObject> rszObjectData) {

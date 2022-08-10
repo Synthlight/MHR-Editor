@@ -8,7 +8,7 @@ using MHR_Editor.Models;
 namespace MHR_Editor.Util;
 
 public static class ModMaker {
-    public static void WriteMods<T>(IEnumerable<T> mods, string inPath, string outPath) where T : INexusMod {
+    public static void WriteMods<T>(IEnumerable<T> mods, string inPath, string outPath, string variantBundleName = null) where T : INexusMod {
         foreach (var mod in mods) {
             var folderName = mod.Filename ?? mod.Name.Replace('/', '-');
             var variant    = mod as INexusModVariant;
@@ -16,13 +16,18 @@ public static class ModMaker {
 
             var modPath = $@"{outPath.Replace('/', '-')}";
             if (variant != null) {
-                modPath += $@"\{bundleName}"; // Because it works with my compress script.
+                // In a subfolder because it works with my compress script.
+                if (variantBundleName != null) {
+                    modPath += $@"\{variantBundleName}";
+                } else {
+                    modPath += $@"\{bundleName}";
+                }
             }
             modPath += $@"\{folderName}";
             Directory.CreateDirectory(modPath);
 
             var modInfo = new StringWriter();
-            modInfo.WriteLine($"name = {mod.Name}");
+            modInfo.WriteLine($"name={mod.Name}");
             modInfo.WriteLine($"version={mod.Version}");
             modInfo.WriteLine($"description={mod.Desc}");
             modInfo.WriteLine("author=LordGregory");

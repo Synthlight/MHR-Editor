@@ -1,4 +1,5 @@
-﻿using MHR_Editor.Common;
+﻿using System.Linq;
+using MHR_Editor.Common;
 using MHR_Editor.Models;
 using MHR_Editor.Util;
 
@@ -6,8 +7,9 @@ namespace MHR_Editor.Mods;
 
 public static class NoRequirements {
     public static void Make() {
-        const string bundleName = "No Crafting Requirements";
-        const string outPath    = $@"{PathHelper.MODS_PATH}\{bundleName}";
+        const string bundleName        = "No Crafting Requirements";
+        const string variantBundleName = $"{bundleName} (Fluffy Selective Install)";
+        const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
             Version      = "1.6",
@@ -60,6 +62,28 @@ public static class NoRequirements {
                 .SetAction(CheatMod.NoCost)
         };
 
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath);
+        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, variantBundleName);
+
+        ModMaker.WriteMods(mods.Select(variant => {
+                                   var mod = NexusMod.FromVariant(variant);
+                                   return mod.SetName($"{bundleName} ({mod.Name})");
+                               })
+                               .Append(NexusMod.FromVariant(baseMod)
+                                               .SetName($"{bundleName} (All)")
+                                               .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Product)
+                                                                   .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Process))
+                                                                   .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Change))
+                                                                   .Append(new[] {
+                                                                       PathHelper.ARMOR_RECIPE_PATH,
+                                                                       PathHelper.CAT_ARMOR_RECIPE_PATH,
+                                                                       PathHelper.CAT_DOG_LAYERED_ARMOR_RECIPE_PATH,
+                                                                       PathHelper.CAT_WEAPON_RECIPE_PATH,
+                                                                       PathHelper.DECORATION_RECIPE_PATH,
+                                                                       PathHelper.DOG_ARMOR_RECIPE_PATH,
+                                                                       PathHelper.DOG_WEAPON_RECIPE_PATH,
+                                                                       PathHelper.LAYERED_ARMOR_RECIPE_PATH,
+                                                                       PathHelper.RAMPAGE_DECORATION_RECIPE_PATH
+                                                                   }))
+                                               .SetAction(CheatMod.NoCost)), PathHelper.CHUNK_PATH, outPath);
     }
 }

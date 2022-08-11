@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using MHR_Editor.Common;
 using MHR_Editor.Models;
 using MHR_Editor.Util;
@@ -12,7 +13,7 @@ public static class NoRequirements {
         const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
-            Version      = "1.6",
+            Version      = "1.8",
             NameAsBundle = bundleName,
             Desc         = "Removes the item requirements when crafting."
         };
@@ -59,10 +60,22 @@ public static class NoRequirements {
             baseMod
                 .SetName("Cat/Dog (Layered Armor)")
                 .SetFiles(new[] {PathHelper.CAT_DOG_LAYERED_ARMOR_RECIPE_PATH})
+                .SetAction(CheatMod.NoCost),
+            baseMod
+                .SetName("Augment/Qurio Craft")
+                .SetFiles(new[] {
+                    PathHelper.AUGMENT_ARMOR_ENABLE_BASE_PATH,
+                    PathHelper.AUGMENT_WEAPON_ENABLE_BASE_PATH,
+                    PathHelper.AUGMENT_ARMOR_MATERIAL_BASE_PATH,
+                    PathHelper.AUGMENT_WEAPON_MATERIAL_BASE_PATH
+                })
                 .SetAction(CheatMod.NoCost)
         };
 
+        const string allInOneDir = $@"{outPath}\{variantBundleName}\";
+        if (Directory.Exists(allInOneDir)) Directory.Delete(allInOneDir, true);
         ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, variantBundleName);
+        File.Copy($@"{outPath}\{variantBundleName}.rar", $@"{PathHelper.FLUFFY_MODS_PATH}\{variantBundleName}.rar", true);
 
         ModMaker.WriteMods(mods.Select(variant => {
                                    var mod = NexusMod.FromVariant(variant);
@@ -74,6 +87,10 @@ public static class NoRequirements {
                                                                    .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Process))
                                                                    .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Change))
                                                                    .Append(new[] {
+                                                                       PathHelper.AUGMENT_ARMOR_ENABLE_BASE_PATH,
+                                                                       PathHelper.AUGMENT_WEAPON_ENABLE_BASE_PATH,
+                                                                       PathHelper.AUGMENT_ARMOR_MATERIAL_BASE_PATH,
+                                                                       PathHelper.AUGMENT_WEAPON_MATERIAL_BASE_PATH,
                                                                        PathHelper.ARMOR_RECIPE_PATH,
                                                                        PathHelper.CAT_ARMOR_RECIPE_PATH,
                                                                        PathHelper.CAT_DOG_LAYERED_ARMOR_RECIPE_PATH,

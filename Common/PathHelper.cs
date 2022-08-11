@@ -8,6 +8,7 @@ public static class PathHelper {
     public const string STRUCT_JSON_PATH = @"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json";
     public const string WIKI_PATH        = @"R:\Games\Monster Hunter Rise\Wiki Dump";
     public const string MODS_PATH        = @"R:\Games\Monster Hunter Rise\Mods";
+    public const string FLUFFY_MODS_PATH = @"R:\Games\Monster Hunter Rise\modmanager\Games\MHRISE\Mods";
     public const string RAR_SCRIPT       = @"/mnt/r/Games/Monster\ Hunter\ Rise/MHR-Editor/compress-rar.sh";
 
 
@@ -15,6 +16,10 @@ public static class PathHelper {
     public const string ARMOR_RECIPE_PATH                 = @"\natives\STM\data\Define\Player\Armor\ArmorProductData.user.2";
     public const string LAYERED_ARMOR_BASE_PATH           = @"\natives\STM\data\Define\Player\Armor\PlOverwearBaseData.user.2";
     public const string LAYERED_ARMOR_RECIPE_PATH         = @"\natives\STM\data\Define\Player\Armor\PlOverwearProductUserData.user.2";
+    public const string AUGMENT_ARMOR_MATERIAL_BASE_PATH  = @"\natives\STM\data\Define\Player\Equip\CustomBuildup\CustomBuildupArmorMaterialUserData.user.2";
+    public const string AUGMENT_ARMOR_ENABLE_BASE_PATH    = @"\natives\STM\data\Define\Player\Equip\CustomBuildup\CustomBuildupArmorOpenUserData.user.2";
+    public const string AUGMENT_WEAPON_MATERIAL_BASE_PATH = @"\natives\STM\data\Define\Player\Equip\CustomBuildup\CustomBuildupWeaponMaterialUserData.user.2";
+    public const string AUGMENT_WEAPON_ENABLE_BASE_PATH   = @"\natives\STM\data\Define\Player\Equip\CustomBuildup\CustomBuildupWeaponOpenUserData.user.2";
     public const string DECORATION_PATH                   = @"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsBaseData.user.2";
     public const string DECORATION_RECIPE_PATH            = @"\natives\STM\data\Define\Player\Equip\Decorations\DecorationsProductData.user.2";
     public const string RAMPAGE_DECORATION_PATH           = @"\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDecoBaseData.user.2";

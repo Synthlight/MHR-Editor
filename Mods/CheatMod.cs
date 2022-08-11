@@ -173,6 +173,18 @@ public static class CheatMod {
                     }
                     rampageDecoProdData.Point = 0;
                     break;
+                case Snow_data_CustomBuildupOpenUserData_Param augmentEnableData:
+                    augmentEnableData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.Category_000;
+                    augmentEnableData.MaterialCategoryNum = 0;
+                    break;
+                case Snow_data_CustomBuildupArmorMaterialUserData_Param augmentData:
+                    augmentData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.Category_000;
+                    augmentData.MaterialCategoryNum = 0;
+                    break;
+                case Snow_data_CustomBuildupWeaponMaterialUserData_Param augmentData:
+                    augmentData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.Category_000;
+                    augmentData.MaterialCategoryNum = 0;
+                    break;
             }
         }
     }

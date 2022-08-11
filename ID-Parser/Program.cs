@@ -97,7 +97,7 @@ public static class Program {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractSkillInfo() {
-        var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.{MSG_VERSION}", SubCategoryType.C_Unclassified, false, 112);
+        var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.{MSG_VERSION}", SubCategoryType.C_Unclassified, false, 113);
 
         var engSkills = msg[Global.LangIndex.eng];
         Debug.Assert(engSkills[1] == "Attack Boost");

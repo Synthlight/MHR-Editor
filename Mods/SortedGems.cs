@@ -12,30 +12,36 @@ namespace MHR_Editor.Mods;
 
 public static class SortedGems {
     public static void Make() {
-        const string version = "1.1";
-        const string outPath = $@"{PathHelper.MODS_PATH}\Sorted Gems";
+        const string version           = "1.2";
+        const string outPath           = $@"{PathHelper.MODS_PATH}\Sorted Gems";
+        const string bundleByNameName  = "Gems Sorted by Gem Name";
+        const string bundleBySkillName = "Gems Sorted by Skill Name";
 
-        var mods = new List<INexusMod>();
-        foreach (var (lang, name) in Global.LANGUAGE_NAME_LOOKUP) {
-            mods.Add(new NexusMod {
-                Name     = $"Gems Sorted by Gem Name ({name})",
-                Filename = $"Gems Sorted by Gem Name ({lang})",
-                Desc     = "Sorts all the gems by their name.",
-                Files    = new[] {PathHelper.DECORATION_PATH, PathHelper.RAMPAGE_DECORATION_PATH},
-                Action   = data => SortGems(data, GemSortType.GEM_NAME, lang),
-                Version  = version
-            });
-            mods.Add(new NexusMod {
-                Name     = $"Gems Sorted by Skill Name ({name})",
-                Filename = $"Gems Sorted by Skill Name ({lang})",
-                Desc     = "Sorts all the gems by their skill name.",
-                Files    = new[] {PathHelper.DECORATION_PATH, PathHelper.RAMPAGE_DECORATION_PATH},
-                Action   = data => SortGems(data, GemSortType.SKILL_NAME, lang),
-                Version  = version
-            });
-        }
+        var langs = Enum.GetValues<Global.LangIndex>();
 
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath);
+        var mods = new List<INexusModVariant>();
+        mods.AddRange(langs.Select(lang => new NexusModVariant {
+                               Name         = $"{bundleByNameName} ({lang})",
+                               NameAsBundle = bundleByNameName,
+                               Desc         = "Sorts all the gems by their name.",
+                               Files        = new[] {PathHelper.DECORATION_PATH, PathHelper.RAMPAGE_DECORATION_PATH},
+                               Action       = data => SortGems(data, GemSortType.GEM_NAME, lang),
+                               Version      = version
+                           })
+                           .Cast<INexusModVariant>());
+        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, $"{bundleByNameName} (Fluffy Selective Install)");
+
+        mods.Clear();
+        mods.AddRange(langs.Select(lang => new NexusModVariant {
+                               Name         = $"{bundleBySkillName} ({lang})",
+                               NameAsBundle = bundleBySkillName,
+                               Desc         = "Sorts all the gems by their skill name.",
+                               Files        = new[] {PathHelper.DECORATION_PATH, PathHelper.RAMPAGE_DECORATION_PATH},
+                               Action       = data => SortGems(data, GemSortType.SKILL_NAME, lang),
+                               Version      = version
+                           })
+                           .Cast<INexusModVariant>());
+        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, $"{bundleBySkillName} (Fluffy Selective Install)");
     }
 
     public static void SortGems(IEnumerable<RszObject> rszObjectData, GemSortType sortType, Global.LangIndex lang) {

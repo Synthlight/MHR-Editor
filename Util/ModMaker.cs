@@ -8,7 +8,7 @@ using MHR_Editor.Models;
 namespace MHR_Editor.Util;
 
 public static class ModMaker {
-    public static void WriteMods<T>(IEnumerable<T> mods, string inPath, string outPath, string variantBundleName = null) where T : INexusMod {
+    public static void WriteMods<T>(IEnumerable<T> mods, string inPath, string outPath, string variantBundleName = null, bool copyToFluffy = false) where T : INexusMod {
         foreach (var mod in mods) {
             var folderName = mod.Filename ?? mod.Name.Replace('/', '-');
             var variant    = mod as INexusModVariant;
@@ -24,6 +24,7 @@ public static class ModMaker {
                 }
             }
             modPath += $@"\{folderName}";
+            if (Directory.Exists(modPath)) Directory.Delete(modPath, true);
             Directory.CreateDirectory(modPath);
 
             var modInfo = new StringWriter();
@@ -48,6 +49,17 @@ public static class ModMaker {
             }
         }
         CompressTheMod(outPath);
+
+        foreach (var mod in mods) {
+            if (copyToFluffy && variantBundleName == null && mod is NexusMod) {
+                var folderName = mod.Filename ?? mod.Name.Replace('/', '-');
+                File.Copy($@"{outPath.Replace('/', '-')}\{folderName}.rar", $@"{PathHelper.FLUFFY_MODS_PATH}\{folderName}.rar", true);
+            }
+        }
+
+        if (copyToFluffy && variantBundleName != null) {
+            File.Copy($@"{outPath.Replace('/', '-')}\{variantBundleName}.rar", $@"{PathHelper.FLUFFY_MODS_PATH}\{variantBundleName}.rar", true);
+        }
     }
 
     private static void CompressTheMod(string outDir) {

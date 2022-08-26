@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using MHR_Editor.Common;
 using MHR_Editor.Models;
 using MHR_Editor.Util;
@@ -72,10 +71,7 @@ public static class NoRequirements {
                 .SetAction(CheatMod.NoCost)
         };
 
-        const string allInOneDir = $@"{outPath}\{variantBundleName}\";
-        if (Directory.Exists(allInOneDir)) Directory.Delete(allInOneDir, true);
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, variantBundleName);
-        File.Copy($@"{outPath}\{variantBundleName}.rar", $@"{PathHelper.FLUFFY_MODS_PATH}\{variantBundleName}.rar", true);
+        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, variantBundleName, true);
 
         ModMaker.WriteMods(mods.Select(variant => {
                                    var mod = NexusMod.FromVariant(variant);

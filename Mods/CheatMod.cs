@@ -59,7 +59,7 @@ public static class CheatMod {
                 .SetAction(MaxSkills),
         };
 
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, variantBundleName);
+        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, variantBundleName, true);
 
         ModMaker.WriteMods(mods.Select(NexusMod.FromVariant)
                                .Append(NexusMod.FromVariant(baseMod)

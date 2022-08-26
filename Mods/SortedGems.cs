@@ -16,6 +16,7 @@ public static class SortedGems {
         const string outPath           = $@"{PathHelper.MODS_PATH}\Sorted Gems";
         const string bundleByNameName  = "Gems Sorted by Gem Name";
         const string bundleBySkillName = "Gems Sorted by Skill Name";
+        const string bundleBySkillId   = "Gems Sorted by Skill ID";
 
         var langs = Enum.GetValues<Global.LangIndex>();
 
@@ -29,7 +30,7 @@ public static class SortedGems {
                                Version      = version
                            })
                            .Cast<INexusModVariant>());
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, $"{bundleByNameName} (Fluffy Selective Install)");
+        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, $"{bundleByNameName} (Fluffy Selective Install)", true);
 
         mods.Clear();
         mods.AddRange(langs.Select(lang => new NexusModVariant {
@@ -41,7 +42,17 @@ public static class SortedGems {
                                Version      = version
                            })
                            .Cast<INexusModVariant>());
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, $"{bundleBySkillName} (Fluffy Selective Install)");
+        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, $"{bundleBySkillName} (Fluffy Selective Install)", true);
+
+        ModMaker.WriteMods(new List<INexusMod> {
+            new NexusMod {
+                Name    = bundleBySkillId,
+                Desc    = "Sorts all the gems by their skill id.",
+                Files   = new[] {PathHelper.DECORATION_PATH, PathHelper.RAMPAGE_DECORATION_PATH},
+                Action  = data => SortGems(data, GemSortType.SKILL_ID, Global.LangIndex.eng), // Lang doesn't matter for this one.
+                Version = version
+            }
+        }, PathHelper.CHUNK_PATH, outPath, copyToFluffy: true);
     }
 
     public static void SortGems(IEnumerable<RszObject> rszObjectData, GemSortType sortType, Global.LangIndex lang) {
@@ -55,6 +66,9 @@ public static class SortedGems {
             GemSortType.SKILL_NAME => from gem in gems
                                       orderby gem.GetFirstSkillName(Global.locale)
                                       select gem,
+            GemSortType.SKILL_ID => from gem in gems
+                                    orderby gem.GetFirstSkillId(), gem.Level
+                                    select gem,
             _ => throw new ArgumentOutOfRangeException(nameof(sortType), sortType, null)
         };
         var sortId = gems.Any() && gems[0] is Snow_data_HyakuryuDecoBaseUserData_Param ? 15000u : 10000u;

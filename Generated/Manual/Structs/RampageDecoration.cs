@@ -21,6 +21,12 @@ public partial class Snow_data_HyakuryuDecoBaseUserData_Param : IGem {
         return Name;
     }
 
+    public uint GetFirstSkillId() {
+        return (uint) HyakuryuSkillId;
+    }
+
+    public uint Level => (uint) SlotType;
+
     public string GetFirstSkillName(Global.LangIndex lang) {
         return DataHelper.RAMPAGE_SKILL_NAME_LOOKUP[lang].TryGet((uint) HyakuryuSkillId);
     }

@@ -17,7 +17,7 @@ public static class CheatMod {
         const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
-            Version      = "1.1",
+            Version      = "1.3",
             NameAsBundle = bundleName,
             Desc         = "A cheat mod."
         };
@@ -59,7 +59,36 @@ public static class CheatMod {
                 .SetAction(MaxSkills),
         };
 
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, variantBundleName, true);
+        var bundleOnlyMods = mods.Append(new List<NexusModVariant> {
+            baseMod
+                .SetName("GunLance With Lvl 8 Shelling Only")
+                .SetFiles(new[] {PathHelper.GUN_LANCE_BASE_DATA_PATH})
+                .SetAction(Lvl8Shelling),
+            baseMod
+                .SetName("GunLance With Lvl 8 Shelling & Max Slots")
+                .SetFiles(new[] {PathHelper.GUN_LANCE_BASE_DATA_PATH})
+                .SetAction(data => {
+                    Lvl8Shelling(data);
+                    MaxSlots(data);
+                }),
+            baseMod
+                .SetName("GunLance With Lvl 8 Shelling & Max Sharpness")
+                .SetFiles(new[] {PathHelper.GUN_LANCE_BASE_DATA_PATH})
+                .SetAction(data => {
+                    Lvl8Shelling(data);
+                    MaxSharpness(data);
+                }),
+            baseMod
+                .SetName("GunLance With Lvl 8 Shelling, Max Slots & Sharpness")
+                .SetFiles(new[] {PathHelper.GUN_LANCE_BASE_DATA_PATH})
+                .SetAction(data => {
+                    Lvl8Shelling(data);
+                    MaxSlots(data);
+                    MaxSharpness(data);
+                }),
+        });
+
+        ModMaker.WriteMods(bundleOnlyMods, PathHelper.CHUNK_PATH, outPath, variantBundleName, true);
 
         ModMaker.WriteMods(mods.Select(NexusMod.FromVariant)
                                .Append(NexusMod.FromVariant(baseMod)
@@ -201,6 +230,16 @@ public static class CheatMod {
                     decoProdData.ItemFlag     = (uint) Snow_data_ContentsIdSystem_ItemId.I_Unclassified_None;
                     decoProdData.EnemyFlag    = Snow_enemy_EnemyDef_EmTypes.EmTypeNoData;
                     decoProdData.ProgressFlag = Snow_data_DataDef_UnlockProgressTypes.None;
+                    break;
+            }
+        }
+    }
+
+    public static void Lvl8Shelling(List<RszObject> rszObjectData) {
+        foreach (var obj in rszObjectData) {
+            switch (obj) {
+                case Snow_equip_GunLanceBaseUserData_Param gLanceData:
+                    gLanceData.GunLanceFireLv = Snow_data_GunLanceFireData_GunLanceFireLv.Lv8;
                     break;
             }
         }

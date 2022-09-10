@@ -11,6 +11,10 @@
             "commandName": "Project",
             "commandLineArgs": "\"V:/MHR/re_chunk_000/natives/STM/data/Define/Player/Equip/Decorations/DecorationsBaseData.user.2\""
         },
+        "InsectBaseData.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/MHR/re_chunk_000/natives/STM/data/Define/Player/Weapon/Insect/InsectBaseData.user.2\""
+        },
         "ItemData.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/MHR/re_chunk_000/natives/STM/data/System/ContentsIdSystem/Item/Normal/ItemData.user.2\""

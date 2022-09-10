@@ -127,7 +127,7 @@ public static class Program {
                 }
             }
             if (@in == "Name") {
-                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Weapon\Insect\IG_Insect_{@in}{MR}.msg.{MSG_VERSION}", SubCategoryType.W_Insect, true, 100));
+                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Weapon\Insect\IG_Insect_{@in}{MR}.msg.{MSG_VERSION}", SubCategoryType.W_Insect, true, 101));
             }
             var result = msgLists.MergeDictionaries();
 

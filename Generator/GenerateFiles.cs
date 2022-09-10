@@ -54,6 +54,7 @@ public class GenerateFiles {
         "Snow_fallingObject_FallingObjectPlayerHeavyBowgunExtraCartridgeUserData",
         "Snow_npc_fsm_action_NpcFsmAction_StopNavigation", // Via_vec3? This one skipped the via type checking.
         "Snow_player_PlayerUserDataBow",
+        "Snow_player_PlayerUserDataIG_Insect",
     };
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]

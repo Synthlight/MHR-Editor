@@ -23,6 +23,10 @@
             "commandName": "Project",
             "commandLineArgs": "\"V:/MHR/re_chunk_000/natives/STM/data/Define/Player/Weapon/GreatSword/GreatSwordBaseData.user.2\""
         },
+        "PlayerUserDataIG_Insect.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/MHR/re_chunk_000/natives/STM/player/UserData/PlayerUserDataIG_Insect.user.2\""
+        },
         "PlayerUserDataSkillParameter.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/MHR/re_chunk_000/natives/STM/player/UserData/PlayerUserDataSkillParameter.user.2\""

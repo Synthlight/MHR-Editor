@@ -67,7 +67,6 @@ public class GenerateFiles {
         "Frustum",
         "KeyFrame",
         "LineSegment",
-        "Mat4",
         "OBB",
         "Rect",
         "Rect3D",

@@ -11,7 +11,7 @@ public static class PathHelper {
     public const string FLUFFY_MODS_PATH = @"R:\Games\Monster Hunter Rise\modmanager\Games\MHRISE\Mods";
     public const string RAR_SCRIPT       = @"/mnt/r/Games/Monster\ Hunter\ Rise/MHR-Editor/compress-rar.sh";
 
-
+    public const string GUILD_CARD_TITLE_DATA             = @"\natives\STM\data\Define\Common\HunterRecord\AchievementUserDataAsset.user.2";
     public const string ARMOR_BASE_PATH                   = @"\natives\STM\data\Define\Player\Armor\ArmorBaseData.user.2";
     public const string ARMOR_RECIPE_PATH                 = @"\natives\STM\data\Define\Player\Armor\ArmorProductData.user.2";
     public const string LAYERED_ARMOR_BASE_PATH           = @"\natives\STM\data\Define\Player\Armor\PlOverwearBaseData.user.2";

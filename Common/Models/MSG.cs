@@ -139,11 +139,7 @@ public class MSG {
             var id   = idBaseNum + ((uint) type | (uint) (i - (startAtOne ? 1 : 0)));
             var text = subEntries[i].refs[(int) lang];
             if (text == "") continue;
-            if (text.Contains("#Rejected#")) text = "#Rejected#";
-            text     = text.Replace("\r\n", " ");
-            text     = text.Replace("\n", " ");
-            text     = text.Replace("\r", " ");
-            dict[id] = text;
+            SetText(text, dict, id);
         }
         return dict;
     }
@@ -154,6 +150,35 @@ public class MSG {
             dict[lang] = GetIdMap(lang, type, startAtOne, idBaseNum);
         }
         return dict;
+    }
+
+    public Dictionary<T, string> GetIdMap<T>(Global.LangIndex lang, Func<string, T> parseName) where T : notnull {
+        var dict = new Dictionary<T, string>(subEntries.Length);
+        foreach (var entry in subEntries) {
+            var name = entry.first.Replace("_Name", "").Replace("_Explain", "");
+            if (name == "I_None") continue;
+            var id   = parseName(name);
+            var text = entry.refs[(int) lang];
+            if (text == "") continue;
+            SetText(text, dict, id);
+        }
+        return dict;
+    }
+
+    public Dictionary<Global.LangIndex, Dictionary<T, string>> GetLangIdMap<T>(Func<string, T> parseName) where T : notnull {
+        var dict = new Dictionary<Global.LangIndex, Dictionary<T, string>>(Global.LANGUAGES.Count);
+        foreach (var lang in Global.LANGUAGES) {
+            dict[lang] = GetIdMap(lang, parseName);
+        }
+        return dict;
+    }
+
+    private static void SetText<T>(string text, IDictionary<T, string> dict, T id) {
+        if (text.Contains("#Rejected#")) text = "#Rejected#";
+        text     = text.Replace("\r\n", " ");
+        text     = text.Replace("\n", " ");
+        text     = text.Replace("\r", " ");
+        dict[id] = text;
     }
 
     public class SubEntry {

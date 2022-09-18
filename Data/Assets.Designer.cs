@@ -183,6 +183,26 @@ namespace MHR_Editor.Data {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] GC_TITLE_DESC_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("GC_TITLE_DESC_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] GC_TITLE_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("GC_TITLE_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] ITEM_DESC_LOOKUP {
             get {
                 object obj = ResourceManager.GetObject("ITEM_DESC_LOOKUP", resourceCulture);

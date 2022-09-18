@@ -77,6 +77,7 @@ public partial class MainWindow {
         Btn_create_cheat_mods_Click(sender, e);
         Btn_create_no_requirement_mods_Click(sender, e);
         Btn_create_sorted_gem_mods_Click(sender, e);
+        Btn_create_sorted_title_mods_Click(sender, e);
     }
 
     private void Btn_create_cheat_mods_Click(object sender, RoutedEventArgs e) {
@@ -89,6 +90,10 @@ public partial class MainWindow {
 
     private void Btn_create_sorted_gem_mods_Click(object sender, RoutedEventArgs e) {
         SortedGems.Make();
+    }
+
+    private void Btn_create_sorted_title_mods_Click(object sender, RoutedEventArgs e) {
+        SortedTitles.Make();
     }
 
     private void Btn_sort_gems_by_gem_name_Click(object sender, RoutedEventArgs e) {

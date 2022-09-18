@@ -3,6 +3,10 @@
         "[None]": {
             "commandName": "Project"
         },
+        "AchievementUserDataAsset.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/MHR/re_chunk_000/natives/STM/data/Define/Common/HunterRecord/AchievementUserDataAsset.user.2\""
+        },
         "ArmorBaseData.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/MHR/re_chunk_000/natives/STM/data/Define/Player/Armor/ArmorBaseData.user.2\""

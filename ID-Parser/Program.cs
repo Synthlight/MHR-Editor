@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using MHR_Editor.Common;
 using MHR_Editor.Common.Models;
 using MHR_Editor.Generated.Enums;
+using MHR_Editor.Models.Enums;
 using Newtonsoft.Json;
 
 namespace MHR_Editor.ID_Parser;
@@ -30,6 +31,7 @@ public static class Program {
         ExtractCatDogWeaponInfo();
         ExtractPetalaceInfo();
         ExtractSwitchSkillInfo();
+        ExtractGuildCardInfo();
     }
 
     private static Dictionary<Global.LangIndex, Dictionary<uint, string>> GetMergedMrTexts(string path, SubCategoryType type, bool startAtOne, uint offsetToAdd, bool addAfter = false) {
@@ -50,6 +52,16 @@ public static class Program {
             }
             return msgLists.MergeDictionaries();
         }
+    }
+
+    private static Dictionary<Global.LangIndex, Dictionary<T, string>> GetMergedMrTexts<T>(string path, Func<string, T> parseName) where T : notnull {
+        var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<T, string>>>(2) {
+            MSG.Read(path.Replace(MR, ""))
+               .GetLangIdMap(parseName),
+            MSG.Read(path.Replace(MR, "_MR"))
+               .GetLangIdMap(parseName)
+        };
+        return msgLists.MergeDictionaries();
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -205,6 +217,23 @@ public static class Program {
             var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlSwitchAction\PlayerSwitchAction_{@in}{MR}.msg.{MSG_VERSION}", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\SWITCH_SKILL_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractGuildCardInfo() {
+        foreach (var (@in, @out) in NAME_DESC) {
+            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\Message\GuildCard\GC_Achievement_{@in}{MR}.msg.{MSG_VERSION}", name => name.Replace("GC_Achievement_", ""));
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\GC_TITLE_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+        }
+    }
+
+    public static bool TryParseEnum<T>(Type enumType, string? value, bool ignoreCase, out T? result) {
+        result = default;
+        if (Enum.TryParse(enumType, value, false, out var f)) {
+            result = (T) f!;
+            return true;
+        }
+        return false;
     }
 
     private static void CreateConstantsFile(Dictionary<uint, string> engDict, string className, bool asHex = false) {

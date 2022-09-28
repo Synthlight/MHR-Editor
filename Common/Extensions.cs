@@ -311,7 +311,7 @@ public static class Extensions {
         foreach (var dict in dictionaries) {
             foreach (var (key, value) in dict) {
                 if (merged.ContainsKey(key)) {
-                    merged[key] = (new List<Dictionary<B, C>> {merged[key], value}).MergeDictionaries();
+                    merged[key] = new List<Dictionary<B, C>> {merged[key], value}.MergeDictionaries();
                 } else {
                     merged[key] = value;
                 }

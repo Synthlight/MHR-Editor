@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using MHR_Editor.Generated.Enums;
 
@@ -35,7 +36,9 @@ public class MSG {
     public string[]    typeNames;
     public TypeEntry[] types;
 
-    public static MSG Read(string targetFile) {
+    public static MSG Read(string targetFile, bool writeNameIds = false) {
+        Debug.WriteLine($"Reading: {targetFile}");
+
         var       file   = new MSG();
         using var reader = new BinaryReader(File.OpenRead(targetFile));
         file.version        = reader.ReadUInt32();
@@ -92,6 +95,12 @@ public class MSG {
         file.types = new TypeEntry[file.subCount];
         for (var subIndex = 0; subIndex < file.subCount; subIndex++) {
             file.types[subIndex] = file.subEntries[subIndex].type;
+        }
+
+        if (writeNameIds) {
+            foreach (var entry in file.subEntries) {
+                Debug.WriteLine(entry.first);
+            }
         }
 
         return file;
@@ -156,11 +165,13 @@ public class MSG {
         var dict = new Dictionary<T, string>(subEntries.Length);
         foreach (var entry in subEntries) {
             var name = entry.first.Replace("_Name", "").Replace("_Explain", "");
-            if (name == "I_None") continue;
-            var id   = parseName(name);
-            var text = entry.refs[(int) lang];
-            if (text == "") continue;
-            SetText(text, dict, id);
+            try {
+                var id   = parseName(name);
+                var text = entry.refs[(int) lang];
+                if (text == "") continue;
+                SetText(text, dict, id);
+            } catch (SkipReadException) {
+            }
         }
         return dict;
     }
@@ -175,9 +186,11 @@ public class MSG {
 
     private static void SetText<T>(string text, IDictionary<T, string> dict, T id) {
         if (text.Contains("#Rejected#")) text = "#Rejected#";
-        text     = text.Replace("\r\n", " ");
-        text     = text.Replace("\n", " ");
-        text     = text.Replace("\r", " ");
+        text = text.Replace("\r\n", " ");
+        text = text.Replace("\n", " ");
+        text = text.Replace("\r", " ");
+        // Because sometimes the rejected entry would overwrite the good entry.
+        if (dict.ContainsKey(id) && text == "#Rejected#") return;
         dict[id] = text;
     }
 
@@ -237,5 +250,8 @@ public class MSG {
             }
             return typeEntry;
         }
+    }
+
+    public class SkipReadException : Exception {
     }
 }

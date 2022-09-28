@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generated", "Generated\Gene
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{785EB9CE-B8A7-425B-8504-CEAB1839C281}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data-Helper-Extractor", "Data-Helper-Extractor\Data-Helper-Extractor.csproj", "{581BB859-CA9C-4090-8C8A-33025C969A5E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{785EB9CE-B8A7-425B-8504-CEAB1839C281}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{785EB9CE-B8A7-425B-8504-CEAB1839C281}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{785EB9CE-B8A7-425B-8504-CEAB1839C281}.Release|Any CPU.Build.0 = Release|Any CPU
-		{581BB859-CA9C-4090-8C8A-33025C969A5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{581BB859-CA9C-4090-8C8A-33025C969A5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{581BB859-CA9C-4090-8C8A-33025C969A5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{581BB859-CA9C-4090-8C8A-33025C969A5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

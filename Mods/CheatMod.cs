@@ -17,7 +17,7 @@ public static class CheatMod {
         const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
-            Version      = "1.3",
+            Version      = "1.4",
             NameAsBundle = bundleName,
             Desc         = "A cheat mod."
         };
@@ -213,6 +213,12 @@ public static class CheatMod {
                 case Snow_data_CustomBuildupWeaponMaterialUserData_Param augmentData:
                     augmentData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.Category_000;
                     augmentData.MaterialCategoryNum = 0;
+                    break;
+                case Snow_equip_OverwearWeaponProductUserData_Param wpLayeredProdData:
+                    if (wpLayeredProdData.MaterialCategory >= Snow_data_NormalItemData_MaterialCategory.Category_000) {
+                        wpLayeredProdData.MaterialCategory = Snow_data_NormalItemData_MaterialCategory.Category_000;
+                    }
+                    wpLayeredProdData.MaterialCategoryNum = 0;
                     break;
             }
         }

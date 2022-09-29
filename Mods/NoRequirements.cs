@@ -12,7 +12,7 @@ public static class NoRequirements {
         const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
-            Version      = "1.8",
+            Version      = "1.9.1",
             NameAsBundle = bundleName,
             Desc         = "Removes the item requirements when crafting."
         };
@@ -22,11 +22,13 @@ public static class NoRequirements {
                 .SetName("Weapons (Forge/Upgrade/Layer)")
                 .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Product) // Forge
                                     .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Process)) // Upgrade
-                                    .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Change))) // Layer
+                                    .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Change))
+                                    .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.OverwearProduct))) // Layer
                 .SetAction(CheatMod.NoCost),
             baseMod
                 .SetName("Weapons (Layered Only)")
-                .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Change))
+                .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Change)
+                                    .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.OverwearProduct)))
                 .SetAction(CheatMod.NoCost),
             baseMod
                 .SetName("Decorations")
@@ -82,6 +84,7 @@ public static class NoRequirements {
                                                .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Product)
                                                                    .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Process))
                                                                    .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Change))
+                                                                   .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.OverwearProduct))
                                                                    .Append(new[] {
                                                                        PathHelper.AUGMENT_ARMOR_ENABLE_BASE_PATH,
                                                                        PathHelper.AUGMENT_WEAPON_ENABLE_BASE_PATH,

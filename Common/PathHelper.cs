@@ -44,6 +44,8 @@ public static class PathHelper {
     public enum WeaponDataType {
         Base,
         Change,
+        OverwearBase,
+        OverwearProduct,
         Process,
         Product,
         UpdateTree

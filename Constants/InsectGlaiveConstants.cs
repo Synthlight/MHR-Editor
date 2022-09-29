@@ -148,6 +148,7 @@ public static class InsectGlaiveConstants {
     public const uint CURVED_NAGANAGI_PLUS = 0x08A00134;
     public const uint EVENTIDE_KAZANAGI = 0x08A00135;
     public const uint EVENTIDE_KAZANAGI_PLUS = 0x08A00136;
+    public const uint PURE_NAGINATA_SUMI = 0x08A00137;
     public const uint ILLUSORY_FRILLED_JAB_PLUS = 0x08A00138;
     public const uint NIGHTMARE_FRILLED_JAB = 0x08A00139;
     public const uint NIGHTMARE_FRILLED_JAB_PLUS = 0x08A0013A;
@@ -263,6 +264,7 @@ public static class InsectGlaiveConstants {
     public const uint ROYAL_ORDERS_GLAIVE = 0x08A001AD;
     public const uint ROYAL_ORDERS_GLAIVE_PLUS = 0x08A001AF;
     public const uint ANTIQUE_MACHINA_IG = 0x08A001B0;
+    public const uint KAKTUSSPRINGEN = 0x08A001B1;
     public const uint HEAVENS_RATH_GLAIVE = 0x08A001B2;
     public const uint AOUL_AL_SADIRAHS_ASTERISM = 0x08A001B4;
     public const uint DAWNMOON_GLAIVE_PLUS = 0x08A001BD;
@@ -270,4 +272,5 @@ public static class InsectGlaiveConstants {
     public const uint CHAMPION_GLAIVE_II = 0x08A001BF;
     public const uint CHAMPION_GLAIVE_III = 0x08A001C0;
     public const uint GUARDIAN_GLAIVE = 0x08A001C1;
+    public const uint LOST_CODE__TELTH = 0x08A001C6;
 }

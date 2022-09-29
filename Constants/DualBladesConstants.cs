@@ -170,6 +170,7 @@ public static class DualBladesConstants {
     public const uint EVENING_DUSK_PLUS = 0x08800146;
     public const uint DARK_AURORA = 0x08800147;
     public const uint DARK_AURORA_PLUS = 0x08800148;
+    public const uint PURE_BLADES_TSURUGI = 0x08800149;
     public const uint DAWNMOON_DAGGERS = 0x0880014A;
     public const uint DAWNMOON_DAGGERS_PLUS = 0x0880014B;
     public const uint DAWNMOON_DISRUPTERS = 0x0880014C;
@@ -276,6 +277,7 @@ public static class DualBladesConstants {
     public const uint ROYAL_ORDERS_RAPIERS = 0x088001B9;
     public const uint ROYAL_ORDERS_RAPIERS_PLUS = 0x088001BB;
     public const uint ANTIQUE_MACHINA_DB = 0x088001BC;
+    public const uint KAKTUS_EHRGEIZ = 0x088001BD;
     public const uint WYVERN_STRIFE = 0x088001BE;
     public const uint ALKAIDS_ASTERISM = 0x088001C0;
     public const uint ELDER_FUGENS_BLADES = 0x088001D3;
@@ -284,4 +286,5 @@ public static class DualBladesConstants {
     public const uint CHAMPION_DUAL_BLADES_III = 0x088001D6;
     public const uint GUARDIAN_DUAL_BLADES = 0x088001D7;
     public const uint MAGMA_SLICERS_PLUS = 0x088001D8;
+    public const uint LOST_CODE__RAH = 0x088001DC;
 }

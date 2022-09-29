@@ -27,7 +27,8 @@
     "1048601": "オトモへの采配術のスキルを 武器に付与する装飾品。",
     "1048602": "人魂鳥倍加のスキルを 武器に付与する装飾品。",
     "1048603": "<COL RED>【銃槍専用】</COL> 竜杭砲強化のスキルを 武器に付与する装飾品。",
-    "1048604": "牙獣種特効のスキルを 武器に付与する装飾品。"
+    "1048604": "牙獣種特効のスキルを 武器に付与する装飾品。",
+    "1048605": "劫血活性のスキルを 武器に付与する装飾品。"
   },
   "eng": {
     "1048577": "A decoration that gives weapons the Brutal Strike skill.",
@@ -39,7 +40,7 @@
     "1048583": "<COL RED>(Switch Axe only)</COL> A decoration that gives weapons Phial Switch Boost.",
     "1048584": "<COL RED>(Bow only)</COL> A decoration that gives weapons Lasting Arc Shot.",
     "1048585": "#Rejected#",
-    "1048586": "A decoration that gives weapons the Dragon Exploit skill.",
+    "1048586": "A decoration that gives weapons the Wyvern Exploit skill.",
     "1048587": "A decoration that gives weapons the Anti-Aerial Species skill.",
     "1048588": "A decoration that gives weapons the Anti-Aquatic Species skill.",
     "1048589": "A decoration that gives weapons the Small Monster Exploit skill.",
@@ -57,7 +58,8 @@
     "1048601": "A weapon decoration that enhances the Buddy Rally skill.",
     "1048602": "A decoration that gives weapons the Spiribird Doubled skill.",
     "1048603": "<COL RED>(Artillery only)</COL> A decoration that gives weapons Wyrmstake Boost.",
-    "1048604": "A decoration that gives weapons the Fanged Exploit skill."
+    "1048604": "A decoration that gives weapons the Fanged Exploit skill.",
+    "1048605": "A decoration that gives weapons the Bloody Heart skill."
   },
   "fre": {
     "1048577": "Joyau dotant les armes du Talent Coup brutal.",
@@ -69,7 +71,7 @@
     "1048583": "<COL RED>(Pour Morpho-hache)</COL> Joyau qui confère aux armes Boost substi fiole.",
     "1048584": "<COL RED>(Pour Arc)</COL> Joyau qui confère aux armes Tir barrage prolongé.",
     "1048585": "#Rejected#",
-    "1048586": "Joyau dotant les armes du Talent Faibl. dragons.",
+    "1048586": "Joyau dotant les armes du Talent Faiblesse wyvernes.",
     "1048587": "Joyau dotant les armes du Talent Esp. anti-aériennes.",
     "1048588": "Joyau dotant les armes du Talent Esp. anti-aquatiques.",
     "1048589": "Joyau dotant les armes du Talent Faibl. petits monstres.",
@@ -87,7 +89,8 @@
     "1048601": "Joyau d'arme qui augmente le talent Esprit Pilpoil.",
     "1048602": "Joyau dotant les armes du Talent Bonus Spectroiseaux.",
     "1048603": "<COL RED>(Pour Artificier)</COL> Joyau qui confère aux armes Boost wyrm.",
-    "1048604": "Joyau dotant les armes du Talent Exploit à croc."
+    "1048604": "Joyau dotant les armes du Talent Exploit à croc.",
+    "1048605": "Joyau dotant les armes du Talent Cœur sanglant."
   },
   "ita": {
     "1048577": "Dona alle armi l'abilità Colpo brutale.",
@@ -99,7 +102,7 @@
     "1048583": "<COL RED>(Solo spadascia)</COL> Dona alle armi l'abilità Bonus scambio rivestimento.",
     "1048584": "<COL RED>(Solo arco)</COL> Dona alle armi l'abilità Tiro parabolico duraturo.",
     "1048585": "#Rejected#",
-    "1048586": "Dona alle armi l'abilità Debolezza drago.",
+    "1048586": "Dona alle armi l'abilità Debolezza wyvern.",
     "1048587": "Dona alle armi l'abilità Antivolanti.",
     "1048588": "Dona alle armi l'abilità Antiacquatici.",
     "1048589": "Dona alle armi l'abilità Debolezza mostro piccolo.",
@@ -117,7 +120,8 @@
     "1048601": "Potenzia l'effetto dell'abilità Adunata compagno.",
     "1048602": "Dona alle armi l'abilità Spiriuccello doppio.",
     "1048603": "<COL RED>(Solo artiglieria)</COL> Dona alle armi l'abilità Bonus cannone wyvern.",
-    "1048604": "Dona alle armi l'abilità Debolezza zannuta."
+    "1048604": "Dona alle armi l'abilità Debolezza zannuta.",
+    "1048605": "Dona alle armi l'abilità Cuore sanguinario."
   },
   "ger": {
     "1048577": "Diese Dekoration verleiht Waffen die Fähigkeit Brutaler Schlag.",
@@ -129,7 +133,7 @@
     "1048583": "<COL RED>(Nur Morph-Axt)</COL> Diese Dekoration verleiht Waffen Phiolentausch-Bonus.",
     "1048584": "<COL RED>(Nur Bogen)</COL> Diese Dekoration verleiht Waffen Ewiger Bogenschuss.",
     "1048585": "#Rejected#",
-    "1048586": "Diese Dekoration verleiht Waffen die Fähigkeit Drachenvorteil.",
+    "1048586": "Diese Dekoration verleiht Waffen die Fähigkeit Wyvernvorteil.",
     "1048587": "Diese Dekoration verleiht Waffen die Fähigkeit Anti-Luft-Art.",
     "1048588": "Diese Dekoration verleiht Waffen die Fähigkeit Anti-Wasser-Art.",
     "1048589": "Diese Dekoration verleiht Waffen die Fähigkeit Kleine-Monster-Vorteil.",
@@ -147,19 +151,20 @@
     "1048601": "Diese Waffen-Dekoration verstärkt deine Buddy- Versammlung-Fähigkeit.",
     "1048602": "Diese Dekoration verleiht Waffen die Fähigkeit Doppelter Irrlitz.",
     "1048603": "<COL RED>(Nur Artillerie)</COL> Diese Dekoration verleiht Waffen Wyrmstake-Bonus.",
-    "1048604": "Diese Dekoration verleiht Waffen die Fähigkeit Reißzahnvorteil."
+    "1048604": "Diese Dekoration verleiht Waffen die Fähigkeit Reißzahnvorteil.",
+    "1048605": "Diese Dekoration verleiht Waffen die Fähigkeit Blutiges Herz."
   },
   "spa": {
     "1048577": "Un adorno que da a las armas la habilidad Golpe brutal.",
     "1048578": "Un adorno que da a las armas la habilidad Aprovechar elemento.",
     "1048579": "<COL RED>(Solo con gran espada o hacha cargada)</COL> Adorno que complementa las armas con Mueledefensas I.",
     "1048580": "<COL RED>(Solo gran espada/hacha cargada)</COL> Un adorno que da a las armas Mueledefensas II.",
-    "1048581": "<COL RED>(Solo gran espada/hacha cargada)</COL> Un adorno que da a las armas Modo vándalo.",
+    "1048581": "<COL RED>(Solo espadas dobles)</COL> Un adorno que da a las armas Modo vándalo.",
     "1048582": "<COL RED>(Solo cornamusa)</COL> Un adorno que da a las armas Volumen máximo.",
     "1048583": "<COL RED>(Solo hacha espada)</COL> Un adorno que da a las armas Intercambio de vial aumentado.",
     "1048584": "<COL RED>(Solo arco)</COL> Un adorno que da a las armas Tiro parabólico duradero.",
     "1048585": "#Rejected#",
-    "1048586": "Un adorno que da a las armas la habilidad Aprovechar draco.",
+    "1048586": "Un adorno que da a las armas la habilidad Aprovechar wyvern.",
     "1048587": "Un adorno que da a las armas la habilidad Especie antiaérea.",
     "1048588": "Un adorno que da a las armas la habilidad Especie antiacuática.",
     "1048589": "Un adorno que da a las armas la habilidad Aprovechar monstruo pequeño.",
@@ -177,7 +182,8 @@
     "1048601": "Adorno para armamento con el que potenciar la habilidad Camaradas unidos.",
     "1048602": "Un adorno que da a las armas la habilidad Animave duplicada.",
     "1048603": "<COL RED>(Solo artillería)</COL> Un adorno que da a las armas Sierpe potenciada.",
-    "1048604": "Un adorno que da a las armas la habilidad Aprovechar colmillos."
+    "1048604": "Un adorno que da a las armas la habilidad Aprovechar colmillos.",
+    "1048605": "Un adorno que da a las armas la habilidad Corazón sangriento."
   },
   "rus": {
     "1048577": "Украшение. Дает оружию навык \"Жестокий удар\".",
@@ -189,7 +195,7 @@
     "1048583": "<COL RED>(Выкидной топор)</COL> Украшение. Дает оружию \"Быструю смену склянки\".",
     "1048584": "<COL RED>(Лук)</COL> Украшение. Дает оружию \"Длительный выстрел дугой\".",
     "1048585": "#Rejected#",
-    "1048586": "Украшение. Дает оружию навык \"Уязвимость к дракону\".",
+    "1048586": "Украшение. Дает оружию навык \"Уязвимость виверны\".",
     "1048587": "Украшение. Дает оружию навык \"Противолетающий вид\".",
     "1048588": "Украшение. Дает оружию навык \"Противоводный вид\".",
     "1048589": "Украшение. Дает оружию навык \"Уязвимость малых монстров\".",
@@ -207,7 +213,8 @@
     "1048601": "Украшение оружия. Усиливает навык \"Сбор спутников\".",
     "1048602": "Украшение. Дает оружию навык \"Удвоение Духоптиц\".",
     "1048603": "<COL RED>(Артиллерия)</COL> Украшение. Дает оружию \"Драконье усиление\".",
-    "1048604": "Украшение. Дает оружию навык \"Уязвимость к клыкам\"."
+    "1048604": "Украшение. Дает оружию навык \"Уязвимость к клыкам\".",
+    "1048605": "Украшение. Оружие получает навык \"Кровавое сердце\"."
   },
   "ptB": {
     "1048577": "Adorno que concede às armas a habilidade Ataque Brutal.",
@@ -219,7 +226,7 @@
     "1048583": "<COL RED>(Transmachado apenas)</COL> Adorno que dá às armas Reforço de Troca de Frasco.",
     "1048584": "<COL RED>(Arco apenas)</COL> Adorno que dá às armas Tiro Prolong. de Arco.",
     "1048585": "#Rejected#",
-    "1048586": "Adorno que concede às armas a habilidade Expl. de Dragão.",
+    "1048586": "Adorno que concede às armas a habilidade Exploração de Serpe.",
     "1048587": "Adorno que concede às armas a habilidade Espécie Antiaérea.",
     "1048588": "Adorno que concede às armas a habilidade Espécie Antiaquática.",
     "1048589": "Adorno que concede às armas a habilidade Expl. Monstro Pequeno.",
@@ -237,7 +244,8 @@
     "1048601": "Adorno de arma que melhora a habilidade Reunião de Amigos.",
     "1048602": "Adorno que concede às armas a habilidade Espiripássaro Duplo.",
     "1048603": "<COL RED>(Artilharia apenas)</COL> Adorno que dá às armas Ref. de Serpestaca.",
-    "1048604": "Adorno que concede às armas a habilidade Expl. de Presas."
+    "1048604": "Adorno que concede às armas a habilidade Expl. de Presas.",
+    "1048605": "Adorno que concede às armas a habilidade Coração Sangrento."
   },
   "kor": {
     "1048577": "통한의 일격 스킬을 무기에 부여하는 장식품.",
@@ -267,7 +275,8 @@
     "1048601": "동반자 지휘술 스킬을 무기에 부여하는 장식품",
     "1048602": "인혼조 강화 스킬을 무기에 부여하는 장식품.",
     "1048603": "<COL RED>【건랜스 전용】</COL> 용항포 강화 스킬을 무기에 부여하는 장식품.",
-    "1048604": "아수종 특효 스킬을 무기에 부여하는 장식품."
+    "1048604": "아수종 특효 스킬을 무기에 부여하는 장식품.",
+    "1048605": "겁혈 활성 스킬을 무기에 부여하는 장식품."
   },
   "chT": {
     "1048577": "可對武器賦予技能 「悔恨一擊」的裝飾品。",
@@ -297,7 +306,8 @@
     "1048601": "可對武器賦予技能 「隨從指示術」的裝飾品。",
     "1048602": "可對武器賦予技能 「鬼火鳥加倍」的裝飾品。",
     "1048603": "<COL RED>【銃槍專用】</COL> 可對武器賦予技能 「龍杭砲強化」的裝飾品。",
-    "1048604": "可對武器賦予技能 「牙獸種特效」的裝飾品。"
+    "1048604": "可對武器賦予技能 「牙獸種特效」的裝飾品。",
+    "1048605": "可對武器賦予技能 「劫血活化」的裝飾品。"
   },
   "chS": {
     "1048577": "能够赋予武器 痛恨一击技能的装饰品。",
@@ -327,7 +337,8 @@
     "1048601": "能够赋予武器 随从指挥术技能的装饰品。",
     "1048602": "能够赋予武器 鬼火鸟加倍技能的装饰品。",
     "1048603": "<COL RED>【铳枪专用】</COL> 能够赋予武器 龙杭炮强化技能的装饰品。",
-    "1048604": "能够赋予武器 牙兽种特效技能的装饰品。"
+    "1048604": "能够赋予武器 牙兽种特效技能的装饰品。",
+    "1048605": "能够赋予武器 劫血活性技能的装饰品。"
   },
   "ara": {
     "1048577": "إضافة تمنح الأسلحة مهارة الضربة الوحشية.",
@@ -339,7 +350,7 @@
     "1048583": "<COL RED>(تبديل الفأس فقط)</COL> إضافة تمنح الأسلحة تبديل سريع للقارورة.",
     "1048584": "<COL RED>(القوس فقط)</COL> إضافة تمنح الأسلحة طلقة ملتوية دائمة.",
     "1048585": "#Rejected#",
-    "1048586": "إضافة تمنح الأسلحة مهارة استغلال التنين.",
+    "1048586": "إضافة تمنح الأسلحة مهارة استغلال التنين المجنح.",
     "1048587": "إضافة تمنح الأسلحة مهارة كائنات ضد الهواء.",
     "1048588": "إضافة تمنح الأسلحة مهارة كائنات ضد الماء.",
     "1048589": "إضافة تمنح الأسلحة مهارة استغلال الوحش الصغير.",
@@ -357,7 +368,8 @@
     "1048601": "زينة السلاح التي تحسن من مهارة الصديق.",
     "1048602": "إضافة تمنح الأسلحة مهارة مضاعفة طيور سيبيري.",
     "1048603": "<COL RED>(المدفعية فقط)</COL> إضافة تمنح الأسلحة معزز ويرمستايك.",
-    "1048604": "إضافة تمنح الأسلحة مهارة استغلال الأنياب."
+    "1048604": "إضافة تمنح الأسلحة مهارة استغلال الأنياب.",
+    "1048605": "إضافة تمنح الأسلحة مهارة القلب الدامي."
   },
   "pol": {
     "1048585": "#Rejected#"

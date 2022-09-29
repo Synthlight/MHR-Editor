@@ -149,6 +149,7 @@ public static class HornConstants {
     public const uint SUMMONING_BELL_PLUS = 0x08900131;
     public const uint SUBLIME_BELL = 0x08900132;
     public const uint SUBLIME_BELL_PLUS = 0x08900133;
+    public const uint PURE_BELL_INARI = 0x08900134;
     public const uint ARAKNATOOTLE = 0x08900135;
     public const uint ARAKNATOOTLE_PLUS = 0x08900136;
     public const uint DOOMED_BELL = 0x08900137;
@@ -274,9 +275,11 @@ public static class HornConstants {
     public const uint ROYAL_ORDERS_HORN = 0x089001B7;
     public const uint ROYAL_ORDERS_HORN_PLUS = 0x089001B9;
     public const uint ANTIQUE_MACHINA_HH = 0x089001BA;
+    public const uint KAKTUS_SEELE = 0x089001BB;
     public const uint GOLD_CHORDMAKER = 0x089001BC;
     public const uint NAMALSADIRAHS_ASTERISM = 0x089001BE;
     public const uint CHAMPION_HORN_II = 0x089001C5;
     public const uint CHAMPION_HORN_III = 0x089001C6;
     public const uint GUARDIAN_HORN = 0x089001C7;
+    public const uint LOST_CODE__ALOS = 0x089001CB;
 }

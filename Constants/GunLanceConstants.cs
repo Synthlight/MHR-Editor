@@ -152,6 +152,7 @@ public static class GunLanceConstants {
     public const uint MIZUMORI_PLUS = 0x08700131;
     public const uint HARAE_NO_TOBOSHI = 0x08700132;
     public const uint HARAE_NO_TOBOSHI_PLUS = 0x08700133;
+    public const uint PURE_GUNLANCE_IZUNA = 0x08700134;
     public const uint ORTLINDE_PLUS = 0x08700135;
     public const uint GREAT_ORTLINDE = 0x08700136;
     public const uint GREAT_ORTLINDE_PLUS = 0x08700137;
@@ -273,6 +274,7 @@ public static class GunLanceConstants {
     public const uint ROYAL_ORDERS_PLEDGE = 0x087001B1;
     public const uint ROYAL_ORDERS_PLEDGE_PLUS = 0x087001B3;
     public const uint ANTIQUE_MACHINA_GL = 0x087001B4;
+    public const uint KAKTUS_HERRLICH = 0x087001B5;
     public const uint SILVER_ROOK = 0x087001B6;
     public const uint QUEENS_PANOPLY = 0x087001B7;
     public const uint ALIOTHS_ASTERISM = 0x087001B9;
@@ -282,4 +284,5 @@ public static class GunLanceConstants {
     public const uint CHAMPION_GUNLANCE_III = 0x087001C5;
     public const uint GUARDIAN_GUNLANCE = 0x087001C6;
     public const uint FLAMEBRINGER_GUNLANCE_PLUS = 0x087001D3;
+    public const uint LOST_CODE__NIR = 0x087001DD;
 }

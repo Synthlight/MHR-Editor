@@ -120,6 +120,7 @@
     "Pl_EquipSkill_206": "顕如盤石",
     "Pl_EquipSkill_207": "闇討ち",
     "Pl_EquipSkill_208": "巧撃",
+    "Pl_EquipSkill_209": "煽衛",
     "Pl_EquipSkill_210": "合気",
     "Pl_EquipSkill_211": "供応",
     "Pl_EquipSkill_212": "チャージマスター",
@@ -132,7 +133,9 @@
     "Pl_EquipSkill_219": "連撃",
     "Pl_EquipSkill_220": "根性",
     "Pl_EquipSkill_221": "疾之息吹",
-    "Pl_EquipSkill_222": "状態異常確定蓄積"
+    "Pl_EquipSkill_222": "状態異常確定蓄積",
+    "Pl_EquipSkill_223": "剛心",
+    "Pl_EquipSkill_224": "蓄積時攻撃強化"
   },
   "eng": {
     "Pl_EquipSkill_000": "Attack Boost",
@@ -255,6 +258,7 @@
     "Pl_EquipSkill_206": "Defiance",
     "Pl_EquipSkill_207": "Sneak Attack",
     "Pl_EquipSkill_208": "Adrenaline Rush",
+    "Pl_EquipSkill_209": "Embolden",
     "Pl_EquipSkill_210": "Redirection",
     "Pl_EquipSkill_211": "Spiribird's Call",
     "Pl_EquipSkill_212": "Charge Master",
@@ -264,10 +268,12 @@
     "Pl_EquipSkill_216": "Bladescale Hone",
     "Pl_EquipSkill_217": "Wall Runner (Boost)",
     "Pl_EquipSkill_218": "Element Exploit",
-    "Pl_EquipSkill_219": "Chain Crit",
+    "Pl_EquipSkill_219": "Burst",
     "Pl_EquipSkill_220": "Guts",
     "Pl_EquipSkill_221": "Quick Breath",
-    "Pl_EquipSkill_222": "Status Trigger"
+    "Pl_EquipSkill_222": "Status Trigger",
+    "Pl_EquipSkill_223": "Intrepid Heart",
+    "Pl_EquipSkill_224": "Buildup Boost"
   },
   "fre": {
     "Pl_EquipSkill_000": "Machine de guerre",
@@ -390,6 +396,7 @@
     "Pl_EquipSkill_206": "Défiance",
     "Pl_EquipSkill_207": "Attaque furtive",
     "Pl_EquipSkill_208": "Poussée d'adrénaline",
+    "Pl_EquipSkill_209": "Vaillance",
     "Pl_EquipSkill_210": "Redirection",
     "Pl_EquipSkill_211": "Appel Spectroiseau",
     "Pl_EquipSkill_212": "Maître de la charge",
@@ -402,7 +409,9 @@
     "Pl_EquipSkill_219": "Vendetta",
     "Pl_EquipSkill_220": "Courage",
     "Pl_EquipSkill_221": "Souffle rapide",
-    "Pl_EquipSkill_222": "Catalys. d'afflict."
+    "Pl_EquipSkill_222": "Catalys. d'afflict.",
+    "Pl_EquipSkill_223": "Cœur audacieux",
+    "Pl_EquipSkill_224": "Bonus d'accumulation"
   },
   "ita": {
     "Pl_EquipSkill_000": "Bonus attacco",
@@ -525,6 +534,7 @@
     "Pl_EquipSkill_206": "Provocazione",
     "Pl_EquipSkill_207": "Attacco furtivo",
     "Pl_EquipSkill_208": "Flusso di adrenalina",
+    "Pl_EquipSkill_209": "Guardia alata",
     "Pl_EquipSkill_210": "Redirezione",
     "Pl_EquipSkill_211": "Richiamo spiriuccello",
     "Pl_EquipSkill_212": "Maestro di carica",
@@ -534,10 +544,12 @@
     "Pl_EquipSkill_216": "Scaglialama acuta",
     "Pl_EquipSkill_217": "Scalatore (poten.)",
     "Pl_EquipSkill_218": "Debolezza elementale",
-    "Pl_EquipSkill_219": "Serie critica",
+    "Pl_EquipSkill_219": "Ventata",
     "Pl_EquipSkill_220": "Coraggio",
     "Pl_EquipSkill_221": "Attimo di respiro",
-    "Pl_EquipSkill_222": "Attiva stato"
+    "Pl_EquipSkill_222": "Attiva stato",
+    "Pl_EquipSkill_223": "Cuore intrepido",
+    "Pl_EquipSkill_224": "Bonus accumulo"
   },
   "ger": {
     "Pl_EquipSkill_000": "Angriffsbonus",
@@ -660,6 +672,7 @@
     "Pl_EquipSkill_206": "Trotz",
     "Pl_EquipSkill_207": "Schleichangriff",
     "Pl_EquipSkill_208": "Adrenalinschub",
+    "Pl_EquipSkill_209": "Ermutigen",
     "Pl_EquipSkill_210": "Umleitung",
     "Pl_EquipSkill_211": "Irrlitzruf",
     "Pl_EquipSkill_212": "Auflademeister",
@@ -669,10 +682,12 @@
     "Pl_EquipSkill_216": "KlingenschVerbess",
     "Pl_EquipSkill_217": "Wandläufer (Boost)",
     "Pl_EquipSkill_218": "Elementvorteil",
-    "Pl_EquipSkill_219": "Kettenkrit",
+    "Pl_EquipSkill_219": "Salve",
     "Pl_EquipSkill_220": "Mut",
     "Pl_EquipSkill_221": "Atempause",
-    "Pl_EquipSkill_222": "Statusauslöser"
+    "Pl_EquipSkill_222": "Statusauslöser",
+    "Pl_EquipSkill_223": "Furchtloses Herz",
+    "Pl_EquipSkill_224": "Auflade-Booster"
   },
   "spa": {
     "Pl_EquipSkill_000": "Ataque",
@@ -795,6 +810,7 @@
     "Pl_EquipSkill_206": "Rebeldía",
     "Pl_EquipSkill_207": "Ataque sigiloso",
     "Pl_EquipSkill_208": "Subida de adrenalina",
+    "Pl_EquipSkill_209": "Enardecer",
     "Pl_EquipSkill_210": "Redirección",
     "Pl_EquipSkill_211": "Llamada del animave",
     "Pl_EquipSkill_212": "Maestro de cargas",
@@ -804,10 +820,12 @@
     "Pl_EquipSkill_216": "Filoescama afilada",
     "Pl_EquipSkill_217": "Correparedes (impulso)",
     "Pl_EquipSkill_218": "Aprovechar elemento",
-    "Pl_EquipSkill_219": "Serie crítica",
+    "Pl_EquipSkill_219": "Ráfaga",
     "Pl_EquipSkill_220": "Agallas",
     "Pl_EquipSkill_221": "Respiración rápida",
-    "Pl_EquipSkill_222": "Activa estados"
+    "Pl_EquipSkill_222": "Activa estados",
+    "Pl_EquipSkill_223": "Corazón intrépido",
+    "Pl_EquipSkill_224": "Bonus de acumulación"
   },
   "rus": {
     "Pl_EquipSkill_000": "Усиление атаки",
@@ -930,6 +948,7 @@
     "Pl_EquipSkill_206": "Дерзость",
     "Pl_EquipSkill_207": "Тайная атака",
     "Pl_EquipSkill_208": "Прилив адреналина",
+    "Pl_EquipSkill_209": "Воодушевление",
     "Pl_EquipSkill_210": "Перенаправление",
     "Pl_EquipSkill_211": "Зов Духоптицы",
     "Pl_EquipSkill_212": "Сменить мастера",
@@ -939,10 +958,12 @@
     "Pl_EquipSkill_216": "Острая чешуя",
     "Pl_EquipSkill_217": "Бег. по стенам (Ус.)",
     "Pl_EquipSkill_218": "Уязвимость к стихии",
-    "Pl_EquipSkill_219": "Критическая цепь",
+    "Pl_EquipSkill_219": "Выброс",
     "Pl_EquipSkill_220": "Железная воля",
     "Pl_EquipSkill_221": "Учащенное дыхание",
-    "Pl_EquipSkill_222": "Смена статуса"
+    "Pl_EquipSkill_222": "Смена статуса",
+    "Pl_EquipSkill_223": "Бесстрашное сердце",
+    "Pl_EquipSkill_224": "Усиление накопления"
   },
   "ptB": {
     "Pl_EquipSkill_000": "Reforço de Ataque",
@@ -1065,6 +1086,7 @@
     "Pl_EquipSkill_206": "Rebeldia",
     "Pl_EquipSkill_207": "Ataque Sorrateiro",
     "Pl_EquipSkill_208": "Onda de Adrenalina",
+    "Pl_EquipSkill_209": "Bloqueio de Asa",
     "Pl_EquipSkill_210": "Redirecionamento",
     "Pl_EquipSkill_211": "Chamado do Espiripássaro",
     "Pl_EquipSkill_212": "Mestre da Energia",
@@ -1074,10 +1096,12 @@
     "Pl_EquipSkill_216": "Amolação de Lâmina",
     "Pl_EquipSkill_217": "Corr. de Parede (SO)",
     "Pl_EquipSkill_218": "Expl. de Elemento",
-    "Pl_EquipSkill_219": "Crít. em Série",
+    "Pl_EquipSkill_219": "Rajada",
     "Pl_EquipSkill_220": "Bravura",
     "Pl_EquipSkill_221": "Sopro Rápido",
-    "Pl_EquipSkill_222": "Ativação de Status"
+    "Pl_EquipSkill_222": "Ativação de Status",
+    "Pl_EquipSkill_223": "Coração Intrépido",
+    "Pl_EquipSkill_224": "Reforço de Acúmulo"
   },
   "kor": {
     "Pl_EquipSkill_000": "공격",
@@ -1200,6 +1224,7 @@
     "Pl_EquipSkill_206": "현여반석",
     "Pl_EquipSkill_207": "기습",
     "Pl_EquipSkill_208": "교격",
+    "Pl_EquipSkill_209": "선위",
     "Pl_EquipSkill_210": "합기",
     "Pl_EquipSkill_211": "향응",
     "Pl_EquipSkill_212": "차지 마스터",
@@ -1212,7 +1237,9 @@
     "Pl_EquipSkill_219": "연격",
     "Pl_EquipSkill_220": "근성",
     "Pl_EquipSkill_221": "신속의 숨결",
-    "Pl_EquipSkill_222": "상태 이상 확정 축적"
+    "Pl_EquipSkill_222": "상태 이상 확정 축적",
+    "Pl_EquipSkill_223": "강심",
+    "Pl_EquipSkill_224": "축적 시 공격 강화"
   },
   "chT": {
     "Pl_EquipSkill_000": "攻擊",
@@ -1335,6 +1362,7 @@
     "Pl_EquipSkill_206": "堅若磐石",
     "Pl_EquipSkill_207": "奇襲",
     "Pl_EquipSkill_208": "巧擊",
+    "Pl_EquipSkill_209": "煽動",
     "Pl_EquipSkill_210": "合氣",
     "Pl_EquipSkill_211": "款待",
     "Pl_EquipSkill_212": "蓄力大師",
@@ -1347,7 +1375,9 @@
     "Pl_EquipSkill_219": "連擊",
     "Pl_EquipSkill_220": "毅力",
     "Pl_EquipSkill_221": "迅疾吐納",
-    "Pl_EquipSkill_222": "必定累積狀態異常值"
+    "Pl_EquipSkill_222": "必定累積狀態異常值",
+    "Pl_EquipSkill_223": "剛心",
+    "Pl_EquipSkill_224": "異常累積強化"
   },
   "chS": {
     "Pl_EquipSkill_000": "攻击",
@@ -1470,6 +1500,7 @@
     "Pl_EquipSkill_206": "坚如磐石",
     "Pl_EquipSkill_207": "偷袭",
     "Pl_EquipSkill_208": "巧击",
+    "Pl_EquipSkill_209": "嘲讽防御",
     "Pl_EquipSkill_210": "合气",
     "Pl_EquipSkill_211": "提供",
     "Pl_EquipSkill_212": "蓄力大师",
@@ -1482,7 +1513,9 @@
     "Pl_EquipSkill_219": "连击",
     "Pl_EquipSkill_220": "毅力",
     "Pl_EquipSkill_221": "迅之气息",
-    "Pl_EquipSkill_222": "状态异常必定累积"
+    "Pl_EquipSkill_222": "状态异常必定累积",
+    "Pl_EquipSkill_223": "刚心",
+    "Pl_EquipSkill_224": "累积时攻击强化"
   },
   "ara": {
     "Pl_EquipSkill_000": "تعزيز الهجوم",
@@ -1605,6 +1638,7 @@
     "Pl_EquipSkill_206": "تحدٍّ",
     "Pl_EquipSkill_207": "هجوم متسلل",
     "Pl_EquipSkill_208": "تسارع الأدرينالين",
+    "Pl_EquipSkill_209": "حارس الجناح",
     "Pl_EquipSkill_210": "إعادة توجيه",
     "Pl_EquipSkill_211": "نداء طيور سيبيري",
     "Pl_EquipSkill_212": "سيد الشحن",
@@ -1614,10 +1648,12 @@
     "Pl_EquipSkill_216": "شحذ حرشفة النصل",
     "Pl_EquipSkill_217": "الراكض على الجدران <BSL>(SO)</BSL>",
     "Pl_EquipSkill_218": "استغلال عنصر",
-    "Pl_EquipSkill_219": "ضربة سلسلة حرجة",
+    "Pl_EquipSkill_219": "انفجار",
     "Pl_EquipSkill_220": "شجاعة",
     "Pl_EquipSkill_221": "نفثة سريعة",
-    "Pl_EquipSkill_222": "محفز الحالة"
+    "Pl_EquipSkill_222": "محفز الحالة",
+    "Pl_EquipSkill_223": "جسور القلب",
+    "Pl_EquipSkill_224": "معزز التراكم"
   },
   "pol": {}
 }

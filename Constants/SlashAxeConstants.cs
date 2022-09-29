@@ -155,6 +155,7 @@ public static class SlashAxeConstants {
     public const uint PARTING_SLICE_PLUS = 0x08600131;
     public const uint LEAVE_TAKER = 0x08600132;
     public const uint LEAVE_TAKER_PLUS = 0x08600133;
+    public const uint PURE_SWITCH_AXE_MIKADO = 0x08600134;
     public const uint RATH_BLAZE_SPLITTER_PLUS = 0x08600135;
     public const uint HIGH_RUBILLION = 0x08600136;
     public const uint AXE_OF_RIGHTEOUSNESS = 0x08600137;
@@ -282,6 +283,7 @@ public static class SlashAxeConstants {
     public const uint ROYAL_ORDERS_AXE = 0x086001B6;
     public const uint ROYAL_ORDERS_AXE_PLUS = 0x086001B8;
     public const uint ANTIQUE_MACHINA_SA = 0x086001B9;
+    public const uint KAKTUSPRION = 0x086001BA;
     public const uint RATHSPLICER = 0x086001BB;
     public const uint GOLDEN_CRESCENT = 0x086001BC;
     public const uint MIZARS_ASTERISM = 0x086001BE;
@@ -290,4 +292,5 @@ public static class SlashAxeConstants {
     public const uint CHAMPION_SWITCH_AXE_III = 0x086001C7;
     public const uint GUARDIAN_SWITCH_AXE = 0x086001C8;
     public const uint MAGMA_SWITCH_PLUS = 0x086001C9;
+    public const uint LOST_CODE__LABR = 0x086001CD;
 }

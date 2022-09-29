@@ -175,6 +175,7 @@ public static class LightBowgunConstants {
     public const uint NIFL_MIST_PLUS = 0x08C0015B;
     public const uint ENCROACHING_MIST = 0x08C0015C;
     public const uint ENCROACHING_MIST_PLUS = 0x08C0015D;
+    public const uint PURE_BOWGUN_YAO = 0x08C0015E;
     public const uint GALE_BOWGUN_PLUS = 0x08C0015F;
     public const uint GREAT_GALE_BOWGUN = 0x08C00160;
     public const uint FURIOUS_FLAMMENKANONE_PLUS = 0x08C00161;
@@ -204,7 +205,7 @@ public static class LightBowgunConstants {
     public const uint BLIZZARD_SQUALL_PLUS = 0x08C0017A;
     public const uint TABULA_BLIZZARA = 0x08C0017B;
     public const uint GRENADE_REVOLVER_PLUS = 0x08C0017C;
-    public const uint GAIA_EATER = 0x08C0017E;
+    public const uint VOLAREVOLVER = 0x08C0017E;
     public const uint TIGREX_WARGUN_PLUS = 0x08C0017F;
     public const uint GREAT_TIGREX_WARGUN = 0x08C00180;
     public const uint GREAT_TIGREX_WARGUN_PLUS = 0x08C00181;
@@ -247,6 +248,7 @@ public static class LightBowgunConstants {
     public const uint HORNET_GUN = 0x08C001AA;
     public const uint HORNET_GUN_PLUS = 0x08C001AB;
     public const uint CARAPACE_CANNON = 0x08C001AC;
+    public const uint KAKTUS_SIEGEN = 0x08C001AD;
     public const uint SILVER_SPARTACUS = 0x08C001AE;
     public const uint GOLD_VALKYRIE = 0x08C001AF;
     public const uint KAUS_BOREALISS_ASTERISM = 0x08C001B1;
@@ -256,4 +258,5 @@ public static class LightBowgunConstants {
     public const uint GUARDIAN_LIGHT_BOWGUN = 0x08C001BD;
     public const uint CARMIN_LANTERN_PLUS = 0x08C001C4;
     public const uint MAGMA_WEAVER_PLUS = 0x08C001C5;
+    public const uint LOST_CODE__KERA = 0x08C001CC;
 }

@@ -176,6 +176,7 @@ public static class ChargeAxeConstants {
     public const uint FINAL_FIELDBLADE_PLUS = 0x08B0015A;
     public const uint DIVINE_FIELDBLADE = 0x08B0015B;
     public const uint DIVINE_FIELDBLADE_PLUS = 0x08B0015C;
+    public const uint PURE_AXE_OMONSHIRO = 0x08B0015D;
     public const uint KADACHI_OTENTA_PLUS = 0x08B0015E;
     public const uint THUNDERCLAP_OTENTA = 0x08B0015F;
     public const uint THUNDERCLAP_OTENTA_PLUS = 0x08B00160;
@@ -252,6 +253,7 @@ public static class ChargeAxeConstants {
     public const uint ROYAL_ORDERS_BATTLEAXE = 0x08B001A9;
     public const uint ROYAL_ORDERS_BATTLEAXE_PLUS = 0x08B001AB;
     public const uint ANTIQUE_MACHINA_CB = 0x08B001AC;
+    public const uint KAKTUSEMOLGIA = 0x08B001AD;
     public const uint LUNA_EOSTRE = 0x08B001AE;
     public const uint HELLSIRE_BLADE = 0x08B001AF;
     public const uint NUNKIS_ASTERISM = 0x08B001B1;
@@ -260,4 +262,5 @@ public static class ChargeAxeConstants {
     public const uint CHAMPION_CHARGE_BLADE_II = 0x08B001BA;
     public const uint CHAMPION_CHARGE_BLADE_III = 0x08B001BB;
     public const uint GUARDIAN_CHARGE_BLADE = 0x08B001BC;
+    public const uint LOST_CODE__SARA = 0x08B001C0;
 }

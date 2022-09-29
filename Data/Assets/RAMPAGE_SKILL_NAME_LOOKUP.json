@@ -287,7 +287,8 @@
     "284": "オトモへの采配術",
     "285": "人魂鳥倍加",
     "286": "竜杭砲強化",
-    "287": "牙獣種特効"
+    "287": "牙獣種特効",
+    "288": "劫血活性"
   },
   "eng": {
     "0": "#Rejected#",
@@ -577,7 +578,8 @@
     "284": "Buddy Rally",
     "285": "Spiribird Doubled",
     "286": "Wyrmstake Boost",
-    "287": "Fanged Exploit"
+    "287": "Fanged Exploit",
+    "288": "Bloody Heart"
   },
   "fre": {
     "0": "#Rejected#",
@@ -867,7 +869,8 @@
     "284": "Esprit Pilpoil",
     "285": "Bonus Spectroiseaux",
     "286": "Bonus Wyvernator",
-    "287": "Exploit à croc"
+    "287": "Exploit à croc",
+    "288": "Cœur sanglant"
   },
   "ita": {
     "0": "#Rejected#",
@@ -1157,7 +1160,8 @@
     "284": "Adunata compagno",
     "285": "Spiriuccello doppio",
     "286": "Bonus cannone wyvern",
-    "287": "Debolezza zannuta"
+    "287": "Debolezza zannuta",
+    "288": "Cuore sanguinario"
   },
   "ger": {
     "0": "#Rejected#",
@@ -1447,7 +1451,8 @@
     "284": "Buddy-Versammlung",
     "285": "Doppelter Irrlitz",
     "286": "WyrmstakeKanoneBonus",
-    "287": "Reißzahnvorteil"
+    "287": "Reißzahnvorteil",
+    "288": "Blutiges Herz"
   },
   "spa": {
     "0": "#Rejected#",
@@ -1737,7 +1742,8 @@
     "284": "Camaradas unidos",
     "285": "Animave duplicada",
     "286": "Bonus derribawyverns",
-    "287": "Aprovechar colmillos"
+    "287": "Aprovechar colmillos",
+    "288": "Corazón sangriento"
   },
   "rus": {
     "0": "#Rejected#",
@@ -2027,7 +2033,8 @@
     "284": "Сбор спутников",
     "285": "Удвоение Духоптиц",
     "286": "Драконье усиление",
-    "287": "Уязвимость к клыкам"
+    "287": "Уязвимость к клыкам",
+    "288": "Кровавое сердце"
   },
   "ptB": {
     "0": "#Rejected#",
@@ -2317,7 +2324,8 @@
     "284": "Reunião de Amigos",
     "285": "Espiripássaro Duplo",
     "286": "Ref. de Serpestaca",
-    "287": "Exploração de Presas"
+    "287": "Exploração de Presas",
+    "288": "Coração Sangrento"
   },
   "kor": {
     "0": "#Rejected#",
@@ -2607,7 +2615,8 @@
     "284": "동반자 지휘술",
     "285": "인혼조 강화",
     "286": "용항포 강화",
-    "287": "아수종 특효"
+    "287": "아수종 특효",
+    "288": "겁혈 활성"
   },
   "chT": {
     "0": "#Rejected#",
@@ -2897,7 +2906,8 @@
     "284": "隨從指示術",
     "285": "鬼火鳥加倍",
     "286": "龍杭砲強化",
-    "287": "牙獸種特效"
+    "287": "牙獸種特效",
+    "288": "劫血活化"
   },
   "chS": {
     "0": "#Rejected#",
@@ -3187,7 +3197,8 @@
     "284": "随从指挥术",
     "285": "鬼火鸟加倍",
     "286": "龙杭炮强化",
-    "287": "牙兽种特效"
+    "287": "牙兽种特效",
+    "288": "劫血活性"
   },
   "ara": {
     "0": "#Rejected#",
@@ -3477,7 +3488,8 @@
     "284": "حشد الأصدقاء",
     "285": "ضعف طيور سيبيري",
     "286": "معزز ويرمستايك",
-    "287": "استغلال الأنياب"
+    "287": "استغلال الأنياب",
+    "288": "قلب دامٍ"
   },
   "pol": {
     "0": "#Rejected#",

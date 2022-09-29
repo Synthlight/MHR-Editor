@@ -183,6 +183,7 @@ public static class LongSwordConstants {
     public const uint TAMONOWO_PLUS = 0x0850014E;
     public const uint TAMONOWO_ZEKKAREI = 0x0850014F;
     public const uint TAMONOWO_ZEKKAREI_PLUS = 0x08500150;
+    public const uint PURE_SWORD_ICHIMONJI = 0x08500151;
     public const uint DARKEST_NIGHT = 0x08500152;
     public const uint DARKEST_NIGHT_PLUS = 0x08500153;
     public const uint AVIDYA_SABER = 0x08500154;
@@ -291,6 +292,7 @@ public static class LongSwordConstants {
     public const uint ROYAL_ORDERS_CLAYMORE = 0x085001C0;
     public const uint ROYAL_ORDERS_CLAYMORE_PLUS = 0x085001C2;
     public const uint ANTIQUE_MACHINA_LS = 0x085001C3;
+    public const uint KAKTUS_HIMMEL = 0x085001C4;
     public const uint WYVERN_BLADE_PALE = 0x085001C5;
     public const uint WYVERN_BLADE_LUNA = 0x085001C6;
     public const uint MEGREZS_ASTERISM = 0x085001C8;
@@ -298,4 +300,5 @@ public static class LongSwordConstants {
     public const uint CHAMPION_LONG_SWORD_III = 0x085001D0;
     public const uint GUARDIAN_LONG_SWORD = 0x085001D1;
     public const uint MAGMA_DISASTER_PLUS = 0x085001D2;
+    public const uint LOST_CODE__KIRI = 0x085001D6;
 }

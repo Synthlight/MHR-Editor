@@ -278,6 +278,7 @@ public static class ArmorConstants {
     public const uint STORGE = 391;
     public const uint SEREGIOS = 392;
     public const uint ASTALOS = 393;
+    public const uint ONMYO = 394;
     public const uint SINISTER_GRUDGE = 395;
     public const uint ORANGATEN = 396;
     public const uint AURORACANTH = 397;
@@ -311,6 +312,7 @@ public static class ArmorConstants {
     public const uint YUKUMO_SKY = 427;
     public const uint GOLDEN_LUNE = 428;
     public const uint SILVER_SOL = 429;
+    public const uint FLAMING_ESPINAS = 430;
     public const uint LUCENT_NARGA = 431;
     public const uint AZURE = 432;
     public const uint LIEN = 434;
@@ -322,6 +324,7 @@ public static class ArmorConstants {
     public const uint ETHEREAL_DIADEM = 446;
     public const uint RELUNEA = 447;
     public const uint SUMMER = 448;
+    public const uint FALL = 449;
     public const uint DRAGONSBANE = 454;
     public const uint FORMAL_DRAGON = 455;
     public const uint DIGNIFIED = 456;
@@ -331,5 +334,10 @@ public static class ArmorConstants {
     public const uint ELGADO = 461;
     public const uint FIORAYNE = 462;
     public const uint UTSUSHI = 463;
+    public const uint ARLOW = 464;
     public const uint QURIO_CROWN = 481;
+    public const uint CLOCKWORK = 482;
+    public const uint ELFIN_CROWN = 483;
+    public const uint MONOCLE_OF_CLARITY = 484;
+    public const uint RISEN_MIZUHA = 491;
 }

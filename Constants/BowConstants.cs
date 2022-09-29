@@ -168,6 +168,7 @@ public static class BowConstants {
     public const uint HEAVENS_MANNA_PLUS = 0x08E00136;
     public const uint ELYSIAN_MANNA = 0x08E00137;
     public const uint ELYSIAN_MANNA_PLUS = 0x08E00138;
+    public const uint PURE_BOW_KUZUNOHA = 0x08E00139;
     public const uint GRAND_GLOWING_OATH = 0x08E0013A;
     public const uint GRAND_GLOWING_OATH_PLUS = 0x08E0013B;
     public const uint EXALTED_VOW = 0x08E0013C;
@@ -301,6 +302,7 @@ public static class BowConstants {
     public const uint ROYAL_ORDERS_BOW = 0x08E001C2;
     public const uint ROYAL_ORDERS_BOW_PLUS = 0x08E001C4;
     public const uint ANTIQUE_MACHINA_B = 0x08E001C5;
+    public const uint KAKTUS_SICHEL = 0x08E001C6;
     public const uint HYPERION = 0x08E001C7;
     public const uint SELENE_MOONBROKEN = 0x08E001C8;
     public const uint POLARISS_GUIDANCE = 0x08E001CA;
@@ -311,4 +313,5 @@ public static class BowConstants {
     public const uint GUARDIAN_BOW = 0x08E001D7;
     public const uint KORAEIL_MESMERBOW_PLUS = 0x08E001E4;
     public const uint WELDING_RUST_PLUS = 0x08E001E5;
+    public const uint LOST_CODE__IRU = 0x08E001EF;
 }

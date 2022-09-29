@@ -6,6 +6,7 @@ using MHR_Editor.Common.Models;
 using MHR_Editor.Generated.Enums;
 using MHR_Editor.Models.Enums;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MHR_Editor.ID_Parser;
 
@@ -248,6 +249,8 @@ public static class Program {
             var animal = match.Groups[1].Value;
             var slot   = match.Groups[2].Value;
             var num    = match.Groups[3].Value;
+            var max    = GetOneBelowMax<Snow_data_DataDef_OtArmorId>($"OtArmor_{animal}_{slot}_Max");
+            if (int.Parse(num) > max) throw new MSG.SkipReadException();
             return ParseEnum(typeof(Snow_data_DataDef_OtArmorId), $"OtArmor_{animal}_{slot}_{num}");
         }
 
@@ -273,6 +276,8 @@ public static class Program {
             var animal = match.Groups[1].Value;
             var num    = match.Groups[2].Value;
             if (num == "None") throw new MSG.SkipReadException();
+            var max = GetOneBelowMax<Snow_data_DataDef_OtWeaponId>($"OtWeapon_{animal}_Max");
+            if (int.Parse(num) > max) throw new MSG.SkipReadException();
             return ParseEnum(typeof(Snow_data_DataDef_OtWeaponId), $"OtWeapon_{animal}_{num}");
         }
 
@@ -355,7 +360,8 @@ public static class Program {
                                 .Replace("&", "AND")
                                 .Replace("+", "_PLUS")
                                 .Replace('-', '_')
-                                .Replace(' ', '_');
+                                .Replace(' ', '_')
+                                .Replace(':', '_');
             if (namesUsed.Contains(constName)) continue;
             namesUsed.Add(constName);
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression

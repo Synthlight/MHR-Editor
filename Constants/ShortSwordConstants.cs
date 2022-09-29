@@ -155,6 +155,7 @@ public static class ShortSwordConstants {
     public const uint KURENAWI_OUGI_PLUS = 0x08200132;
     public const uint KURENAWI_KUNPUU = 0x08200133;
     public const uint KURENAWI_KUNPUU_PLUS = 0x08200134;
+    public const uint PURE_SILVER_FAN_HIME = 0x08200135;
     public const uint CROWN_OF_THE_PROTECTOR = 0x08200136;
     public const uint CROWN_OF_THE_PROTECTOR_PLUS = 0x08200137;
     public const uint HEAVENLY_KINGS_SWORD = 0x08200138;
@@ -278,10 +279,12 @@ public static class ShortSwordConstants {
     public const uint ROYAL_ORDERS_SWORD = 0x082001B3;
     public const uint ROYAL_ORDERS_SWORD_PLUS = 0x082001B5;
     public const uint ANTIQUE_MACHINA_SS = 0x082001B6;
-    public const uint SHINING_WYVERN_BLADE = 0x082001B8;
+    public const uint KAKTUS_GEDEIHEN = 0x082001B7;
+    public const uint PLATINUM_DAWN = 0x082001B8;
     public const uint LUNATIC_ROSE = 0x082001B9;
     public const uint PHECDAS_ASTERISM = 0x082001BB;
     public const uint CHAMPION_SWORD_II = 0x082001C2;
     public const uint CHAMPION_SWORD_III = 0x082001C3;
     public const uint GUARDIAN_SWORD = 0x082001C4;
+    public const uint LOST_CODE__CARNHAN = 0x082001C8;
 }

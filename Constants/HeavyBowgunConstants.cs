@@ -139,6 +139,7 @@ public static class HeavyBowgunConstants {
     public const uint MOUNTAINOUS_ROAR_PLUS = 0x08D00134;
     public const uint MOUNTAINOUS_TORRENT = 0x08D00135;
     public const uint MOUNTAINOUS_TORRENT_PLUS = 0x08D00136;
+    public const uint PURE_CANNON_TAMAMO = 0x08D00137;
     public const uint REVERSAL_BARRAGE_PLUS = 0x08D00138;
     public const uint GRAND_REVERSAL_BARRAGE = 0x08D00139;
     public const uint GRAND_REVERSAL_BARRAGE_PLUS = 0x08D0013A;
@@ -171,7 +172,7 @@ public static class HeavyBowgunConstants {
     public const uint FROSTMOON_HOWLITZER_PLUS = 0x08D00157;
     public const uint EGIL = 0x08D00158;
     public const uint EARTH_EATER_PLUS = 0x08D00159;
-    public const uint VOLAREVOLVER = 0x08D0015B;
+    public const uint GAIA_EATER = 0x08D0015B;
     public const uint MARINO_CANNON_PLUS = 0x08D0015C;
     public const uint PURPLE_OCTOBER = 0x08D0015D;
     public const uint PURPLE_OCTOBER_PLUS = 0x08D0015E;
@@ -255,6 +256,7 @@ public static class HeavyBowgunConstants {
     public const uint INJECTOR_CANNON = 0x08D001B2;
     public const uint INJECTOR_CANNON_PLUS = 0x08D001B3;
     public const uint ZECT_INJECTOR = 0x08D001B4;
+    public const uint KAKTUS_PRIMA = 0x08D001B5;
     public const uint POLISS_ASTERISM = 0x08D001B7;
     public const uint HORNED_DEMONICA_PLUS = 0x08D001C0;
     public const uint CHAMPION_HEAVY_BOWGUN_II = 0x08D001C1;
@@ -262,4 +264,5 @@ public static class HeavyBowgunConstants {
     public const uint GUARDIAN_HEAVY_BOWGUN = 0x08D001C3;
     public const uint BORDEAUX_CANDLESTICK_PLUS = 0x08D001C4;
     public const uint MOONLIGHT_SPARKFLIER = 0x08D001C8;
+    public const uint LOST_CODE__JURA = 0x08D001C9;
 }

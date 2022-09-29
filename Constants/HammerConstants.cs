@@ -157,6 +157,7 @@ public static class HammerConstants {
     public const uint SINTER_HAMMER_PLUS = 0x08300131;
     public const uint ENLIGHTENMENT_HAMMER = 0x08300132;
     public const uint ENLIGHTENMENT_HAMMER_PLUS = 0x08300133;
+    public const uint PURE_HAMMER_MITAMA = 0x08300134;
     public const uint ARMORED_GOGUE_PLUS = 0x08300135;
     public const uint ARMORED_MEGAGOGUE = 0x08300136;
     public const uint ARMORED_MEGAGOGUE_PLUS = 0x08300137;
@@ -286,10 +287,12 @@ public static class HammerConstants {
     public const uint ROYAL_ORDERS_BLUDGEON = 0x083001B3;
     public const uint ROYAL_ORDERS_BLUDGEON_PLUS = 0x083001B4;
     public const uint ANTIQUE_MACHINA_H = 0x083001B5;
+    public const uint KAKTUS_UNWETTER = 0x083001B6;
     public const uint LEONID_STARCRUSHER = 0x083001B7;
     public const uint ASCELLAS_ASTERISM = 0x083001B9;
     public const uint CHAMPION_HAMMER_II = 0x083001C0;
     public const uint CHAMPION_HAMMER_III = 0x083001C1;
     public const uint GUARDIAN_HAMMER = 0x083001C2;
     public const uint MAGMA_MASHER_PLUS = 0x083001C3;
+    public const uint LOST_CODE__MJO = 0x083001C7;
 }

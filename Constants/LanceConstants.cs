@@ -153,6 +153,7 @@ public static class LanceConstants {
     public const uint KIMI_GA_KIRU_PLUS = 0x08400134;
     public const uint KIMI_GA_KIRU_KASA = 0x08400135;
     public const uint KIMI_GA_KIRU_KASA_PLUS = 0x08400136;
+    public const uint PURE_SPEAR_OSAKI = 0x08400137;
     public const uint DEVTA_SERPENTBLADE_PLUS = 0x08400138;
     public const uint OUROBOROS_SERPENTBLADE = 0x08400139;
     public const uint CROAKER_PLUS = 0x0840013A;
@@ -272,9 +273,11 @@ public static class LanceConstants {
     public const uint DARK_LANCE = 0x084001B9;
     public const uint DARK_LANCE_PLUS = 0x084001BA;
     public const uint DARK_SPEAR = 0x084001BB;
+    public const uint KAKTUS_BEGIERDE = 0x084001BC;
     public const uint SILVER_PROMINENCE = 0x084001BD;
     public const uint DUBHES_ASTERISM = 0x084001BF;
     public const uint CHAMPION_LANCE_II = 0x084001C6;
     public const uint CHAMPION_LANCE_III = 0x084001C7;
     public const uint GUARDIAN_LANCE = 0x084001C8;
+    public const uint LOST_CODE__MIA = 0x084001CC;
 }

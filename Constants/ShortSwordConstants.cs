@@ -287,4 +287,6 @@ public static class ShortSwordConstants {
     public const uint CHAMPION_SWORD_III = 0x082001C3;
     public const uint GUARDIAN_SWORD = 0x082001C4;
     public const uint LOST_CODE__CARNHAN = 0x082001C8;
+    public const uint LÜGEN_VÉRITÉ = 0x082001C9;
+    public const uint STUFFED_ZINOGRE = 0x082001CA;
 }

@@ -293,4 +293,6 @@ public static class SlashAxeConstants {
     public const uint GUARDIAN_SWITCH_AXE = 0x086001C8;
     public const uint MAGMA_SWITCH_PLUS = 0x086001C9;
     public const uint LOST_CODE__LABR = 0x086001CD;
+    public const uint FREVEL_SURSIS = 0x086001CE;
+    public const uint STUFFED_LUNAGARON = 0x086001CF;
 }

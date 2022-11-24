@@ -285,4 +285,6 @@ public static class GunLanceConstants {
     public const uint GUARDIAN_GUNLANCE = 0x087001C6;
     public const uint FLAMEBRINGER_GUNLANCE_PLUS = 0x087001D3;
     public const uint LOST_CODE__NIR = 0x087001DD;
+    public const uint MAUER_GUERRE = 0x087001DE;
+    public const uint STUFFED_MAGNAMALO = 0x087001DF;
 }

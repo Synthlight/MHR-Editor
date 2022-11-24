@@ -265,4 +265,6 @@ public static class HeavyBowgunConstants {
     public const uint BORDEAUX_CANDLESTICK_PLUS = 0x08D001C4;
     public const uint MOONLIGHT_SPARKFLIER = 0x08D001C8;
     public const uint LOST_CODE__JURA = 0x08D001C9;
+    public const uint URSPRUNG_MORT = 0x08D001CA;
+    public const uint STUFFED_MIZUTSUNE = 0x08D001CB;
 }

@@ -142,4 +142,8 @@ public static class SkillConstants {
     public const uint STATUS_TRIGGER = 134;
     public const uint INTREPID_HEART = 135;
     public const uint BUILDUP_BOOST = 136;
+    public const uint BERSERK = 137;
+    public const uint WIND_MANTLE = 138;
+    public const uint POWDER_MANTLE = 139;
+    public const uint STRIFE = 145;
 }

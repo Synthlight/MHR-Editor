@@ -282,4 +282,6 @@ public static class HornConstants {
     public const uint CHAMPION_HORN_III = 0x089001C6;
     public const uint GUARDIAN_HORN = 0x089001C7;
     public const uint LOST_CODE__ALOS = 0x089001CB;
+    public const uint GRIMM_JOIE = 0x089001CC;
+    public const uint STUFFED_TIGREX = 0x089001CD;
 }

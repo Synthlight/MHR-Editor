@@ -283,4 +283,6 @@ public static class GreatSwordConstants {
     public const uint CHAMPION_GREAT_SWORD_III = 0x081001C8;
     public const uint GUARDIAN_GREAT_SWORD = 0x081001C9;
     public const uint LOST_CODE__ASCA = 0x081001CD;
+    public const uint ANFANG_FIN = 0x081001CE;
+    public const uint STUFFED_RATHALOS = 0x081001CF;
 }

@@ -301,4 +301,6 @@ public static class LongSwordConstants {
     public const uint GUARDIAN_LONG_SWORD = 0x085001D1;
     public const uint MAGMA_DISASTER_PLUS = 0x085001D2;
     public const uint LOST_CODE__KIRI = 0x085001D6;
+    public const uint CHAOS_LOI = 0x085001D7;
+    public const uint STUFFED_NARGACUGA = 0x085001D8;
 }

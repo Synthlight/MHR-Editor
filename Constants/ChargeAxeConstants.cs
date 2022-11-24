@@ -263,4 +263,6 @@ public static class ChargeAxeConstants {
     public const uint CHAMPION_CHARGE_BLADE_III = 0x08B001BB;
     public const uint GUARDIAN_CHARGE_BLADE = 0x08B001BC;
     public const uint LOST_CODE__SARA = 0x08B001C0;
+    public const uint FRIEDE_DÉSASTRE = 0x08B001C1;
+    public const uint STUFFED_GARANGOLM = 0x08B001C2;
 }

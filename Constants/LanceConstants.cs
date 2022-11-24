@@ -280,4 +280,6 @@ public static class LanceConstants {
     public const uint CHAMPION_LANCE_III = 0x084001C7;
     public const uint GUARDIAN_LANCE = 0x084001C8;
     public const uint LOST_CODE__MIA = 0x084001CC;
+    public const uint LUZIFER_SAGE = 0x084001CD;
+    public const uint STUFFED_MALZENO = 0x084001CE;
 }

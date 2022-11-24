@@ -295,4 +295,6 @@ public static class HammerConstants {
     public const uint GUARDIAN_HAMMER = 0x083001C2;
     public const uint MAGMA_MASHER_PLUS = 0x083001C3;
     public const uint LOST_CODE__MJO = 0x083001C7;
+    public const uint VERGEHEN_NAISSANCE = 0x083001C8;
+    public const uint STUFFED_DIABLOS = 0x083001C9;
 }

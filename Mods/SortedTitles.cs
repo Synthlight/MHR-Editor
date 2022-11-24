@@ -11,7 +11,7 @@ namespace MHR_Editor.Mods;
 
 public static class SortedTitles {
     public static void Make() {
-        const string version      = "1.1";
+        const string version      = "1.2";
         const string outPath      = $@"{PathHelper.MODS_PATH}\Sorted Titles";
         const string bundleByName = "Titles Sorted by Name";
 

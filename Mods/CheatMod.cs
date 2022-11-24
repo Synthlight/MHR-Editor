@@ -17,7 +17,7 @@ public static class CheatMod {
         const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
-            Version      = "1.4",
+            Version      = "1.5",
             NameAsBundle = bundleName,
             Desc         = "A cheat mod."
         };

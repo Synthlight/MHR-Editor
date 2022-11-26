@@ -205,20 +205,27 @@ public static class CheatMod {
                 case Snow_data_CustomBuildupOpenUserData_Param augmentEnableData:
                     augmentEnableData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.Category_000;
                     augmentEnableData.MaterialCategoryNum = 0;
+                    augmentEnableData.Price               = 0;
                     break;
                 case Snow_data_CustomBuildupArmorMaterialUserData_Param augmentData:
-                    augmentData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.Category_000;
-                    augmentData.MaterialCategoryNum = 0;
+                    augmentData.MaterialCategory          = Snow_data_NormalItemData_MaterialCategory.Category_000;
+                    augmentData.MaterialCategoryNum       = 0;
+                    augmentData.MaterialCategoryNum_Def   = 0;
+                    augmentData.MaterialCategoryNum_Skill = 0;
+                    augmentData.MaterialCategoryNum_Slot  = 0;
+                    augmentData.Price                     = 0;
                     break;
                 case Snow_data_CustomBuildupWeaponMaterialUserData_Param augmentData:
                     augmentData.MaterialCategory    = Snow_data_NormalItemData_MaterialCategory.Category_000;
                     augmentData.MaterialCategoryNum = 0;
+                    augmentData.Price               = 0;
                     break;
                 case Snow_equip_OverwearWeaponProductUserData_Param wpLayeredProdData:
                     if (wpLayeredProdData.MaterialCategory >= Snow_data_NormalItemData_MaterialCategory.Category_000) {
                         wpLayeredProdData.MaterialCategory = Snow_data_NormalItemData_MaterialCategory.Category_000;
                     }
                     wpLayeredProdData.MaterialCategoryNum = 0;
+                    wpLayeredProdData.Price               = 0;
                     break;
             }
         }

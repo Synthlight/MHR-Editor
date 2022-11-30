@@ -347,4 +347,8 @@ public static class ArmorConstants {
     public const uint BLACK_WING_EARRINGS = 486;
     public const uint PALAMASK = 487;
     public const uint RISEN_MIZUHA = 491;
+    public const uint RISEN_KUSHALA = 492;
+    public const uint RISEN_KAISER = 493;
+    public const uint CHAOTIC_GORE = 494;
+    public const uint NEPHILIM = 495;
 }

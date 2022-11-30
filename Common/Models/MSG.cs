@@ -77,12 +77,14 @@ public class MSG {
             file.languages[langIndex] = reader.ReadInt32();
         }
 
+        file.unknown = reader.ReadBytes((int)(reader.BaseStream.Position % 8));
+
         file.typeIds = new int[file.typeCount];
         for (var typeIndex = 0; typeIndex < file.typeCount; typeIndex++) {
             file.typeIds[typeIndex] = reader.ReadInt32();
         }
 
-        file.unknown = reader.ReadBytes((int) (file.typenameOffset - (ulong) reader.BaseStream.Position));
+        file.unknown = reader.ReadBytes((int)(reader.BaseStream.Position % 8));
 
         file.typeNameStringOffsets = new ulong[file.typeCount];
         file.typeNames             = new string[file.typeCount];

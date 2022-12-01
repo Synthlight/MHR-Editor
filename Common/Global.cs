@@ -19,12 +19,12 @@ public static class Global {
         ger,
         spa,
         rus,
+        pol,
         ptB = 10,
         kor,
         chT,
         chS,
         ara = 21,
-        pol = 26
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]

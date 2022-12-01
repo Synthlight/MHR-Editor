@@ -117,6 +117,22 @@
     "403701772": "Абсолютный Лепес.",
     "403701773": "Лепестр. подз. мира"
   },
+  "pol": {
+    "403701760": "Floria łowiecka I",
+    "403701761": "Floria siły I",
+    "403701762": "Floria hartu I",
+    "403701763": "Floria demona I",
+    "403701764": "Floria łowiecka II",
+    "403701765": "Floria siły II",
+    "403701766": "Floria hartu II",
+    "403701767": "Floria demona II",
+    "403701768": "Floria łowiecka III",
+    "403701769": "Floria siły III",
+    "403701770": "Floria hartu III",
+    "403701771": "Floria demona III",
+    "403701772": "Floria absolutna",
+    "403701773": "Floria zaświatów"
+  },
   "ptB": {
     "403701760": "Petalar de Caça I",
     "403701761": "Força Petalar I",
@@ -196,6 +212,5 @@
     "403701771": "بيتاليس العفريت 3",
     "403701772": "بيتاليس المطلق",
     "403701773": "بيتاليس عالم سفلي"
-  },
-  "pol": {}
+  }
 }

@@ -117,6 +117,22 @@
     "403701772": "Браслет, заметно повышающий определенные харак-ки. Чистый запах.",
     "403701773": "Браслет, заметно повышающий определенные харак-ки. Странный запах."
   },
+  "pol": {
+    "403701760": "Bransoleta równomiernie podwyższająca atrybuty. Przepięknie pachnie.",
+    "403701761": "Znacząco wzmacnia zdrowie i wytrzymałość. Wydziela bardzo żywy zapach.",
+    "403701762": "Znacząco wzmacnia obronę i wytrzymałość. Wydziela intensywny zapach.",
+    "403701763": "Bransoleta znacznie wzmacniająca atrybuty ataku. Bardzo mocno pachnie.",
+    "403701764": "Bransoleta równomiernie podwyższająca atrybuty. Przepięknie pachnie.",
+    "403701765": "Znacząco wzmacnia zdrowie i wytrzymałość. Wydziela bardzo żywy zapach.",
+    "403701766": "Znacząco wzmacnia obronę i wytrzymałość. Wydziela intensywny zapach.",
+    "403701767": "Bransoleta znacznie wzmacniająca atrybuty ataku. Bardzo mocno pachnie.",
+    "403701768": "Bransoleta równomiernie podwyższająca atrybuty. Przepięknie pachnie.",
+    "403701769": "Znacząco wzmacnia zdrowie i wytrzymałość. Wydziela bardzo żywy zapach.",
+    "403701770": "Znacząco wzmacnia obronę i wytrzymałość. Wydziela intensywny zapach.",
+    "403701771": "Bransoleta znacznie wzmacniająca atrybuty ataku. Bardzo mocno pachnie.",
+    "403701772": "Znacznie podwyższa niektóre atrybuty. Rozsiewa wokół czysty zapach.",
+    "403701773": "Znacznie podwyższa niektóre atrybuty. Rozsiewa wokół dziwny zapach."
+  },
   "ptB": {
     "403701760": "Concede aumento equilibrado aos atributos. Exala aromas exuberantes.",
     "403701761": "Impulsiona a vida e o vigor consideravelmente. Exala um aroma picante.",
@@ -196,6 +212,5 @@
     "403701771": "سوار يعزز إحصائيات الهجوم بشكل كبير. وتنبعث منه رائحة شديدة.",
     "403701772": "سوار يزيد إحصائيات محددة بشكل كبير. وتنبعث منه رائحة نظيفة.",
     "403701773": "سوار يزيد إحصائيات محددة بشكل كبير. وتنبعث منه رائحة غريبة."
-  },
-  "pol": {}
+  }
 }

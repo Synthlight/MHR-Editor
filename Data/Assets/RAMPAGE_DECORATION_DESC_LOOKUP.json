@@ -216,6 +216,37 @@
     "1048604": "Украшение. Дает оружию навык \"Уязвимость к клыкам\".",
     "1048605": "Украшение. Оружие получает навык \"Кровавое сердце\"."
   },
+  "pol": {
+    "1048577": "Ozdoba dodająca do broni umiejętność brutalny cios.",
+    "1048578": "Ozdoba dodająca do broni umiejętność wykorzystanie żywiołu.",
+    "1048579": "<COL RED>(Tylko miecz dwur. / ład. ostr.)</COL> Ozdoba dodająca do broni Młynek Obrony I.",
+    "1048580": "<COL RED>(Tylko miecz dwur. / ład. ostr.)</COL> Ozdoba dodająca do broni Młynek Obrony II.",
+    "1048581": "<COL RED>(Tylko bliźniacze ostrza)</COL> Ozdoba dodająca do broni tryb czarta.",
+    "1048582": "<COL RED>(Tylko róg łowiecki)</COL> Ozdoba dodająca do broni maksymalną głośność.",
+    "1048583": "<COL RED>(Tylko topór sprężynowy)</COL> Ozdoba dodająca do broni wzmocnienie zmiany fiolki.",
+    "1048584": "<COL RED>(Tylko łuk)</COL> Ozdoba dodająca do broni trwałostrzał po łuku.",
+    "1048585": "#Rejected#",
+    "1048586": "Ozdoba dodająca do broni umiejętność wykorzystanie wiwerny.",
+    "1048587": "Ozdoba dodająca do broni umiejętność antypowietrzne gatunki.",
+    "1048588": "Ozdoba dodająca do broni umiejętność antywodne gatunki.",
+    "1048589": "Ozdoba dodająca do broni umiejętność wykorzystanie małych potworów.",
+    "1048590": "Ozdoba dodająca do broni umiejętność wykorzystanie plagi ognia.",
+    "1048591": "Ozdoba dodająca do broni umiejętność wykorzystanie plagi wody.",
+    "1048592": "Ozdoba dodająca do broni umiejętność wykorzystanie plagi pioruna.",
+    "1048593": "Ozdoba dodająca do broni umiejętność wykorzystanie plagi lodu.",
+    "1048594": "Ozdoba dodająca do broni umiejętność dusza Magnamalo.",
+    "1048595": "Ozdoba dodająca do broni umiejętność dusza Valstraxa.",
+    "1048596": "Ozdoba dodająca do broni umiejętność dusza Chameleosa.",
+    "1048597": "Ozdoba dodająca do broni umiejętność dusza Kushali Daory.",
+    "1048598": "Ozdoba dodająca do broni umiejętność dusza Teostry.",
+    "1048599": "Ozdoba dodająca do broni umiejętność dusza Ibushiego.",
+    "1048600": "Ozdoba dodająca do broni umiejętność dusza Narwy.",
+    "1048601": "Ozdoba broni wzmacniająca umiejętność mobilizacja kompana.",
+    "1048602": "Ozdoba dodająca do broni umiejętność podwójny duchoptak.",
+    "1048603": "<COL RED>(Tylko artyleria)</COL> Ozdoba dodająca do broni wzmocnienie smoczy śrut.",
+    "1048604": "Ozdoba dodająca do broni umiejętność wykorzystania zębatych.",
+    "1048605": "Ozdoba dodająca do broni umiejętność Krwawiące serce."
+  },
   "ptB": {
     "1048577": "Adorno que concede às armas a habilidade Ataque Brutal.",
     "1048578": "Adorno que concede às armas a habilidade Expl. de Elemento.",
@@ -370,8 +401,5 @@
     "1048603": "<COL RED>(المدفعية فقط)</COL> إضافة تمنح الأسلحة معزز ويرمستايك.",
     "1048604": "إضافة تمنح الأسلحة مهارة استغلال الأنياب.",
     "1048605": "إضافة تمنح الأسلحة مهارة القلب الدامي."
-  },
-  "pol": {
-    "1048585": "#Rejected#"
   }
 }

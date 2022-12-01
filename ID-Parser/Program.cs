@@ -125,11 +125,14 @@ public static class Program {
         var regex       = new Regex(@"ArmorSeries_.*?_(\d\d\d)$");
         var oneBelowMax = GetOneBelowMax<Snow_data_DataDef_PlArmorSeriesTypes>(nameof(Snow_data_DataDef_PlArmorSeriesTypes.PL_A_Series_Max));
 
-        var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.{MSG_VERSION}", name => {
-            var value = regex.Match(name).Groups[1].Value;
-            if (int.Parse(value) > oneBelowMax) throw new MSG.SkipReadException();
-            return ParseEnum(typeof(Snow_data_DataDef_PlArmorSeriesTypes), $"PL_A_Series_{value}");
-        });
+        // the entry name could be wrong as narwa is 65 but marked as 66. So revert back to the old method.
+        ////var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.{MSG_VERSION}", name => {
+        ////    var value = regex.Match(name).Groups[1].Value;
+        ////    if (int.Parse(value) > oneBelowMax) throw new MSG.SkipReadException();
+        ////    return ParseEnum(typeof(Snow_data_DataDef_PlArmorSeriesTypes), $"PL_A_Series_{value}");
+        ////});
+        
+        var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.{MSG_VERSION}", SubCategoryType.C_Unclassified, false, 300);
         
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ARMOR_SERIES_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 

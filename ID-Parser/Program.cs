@@ -130,6 +130,8 @@ public static class Program {
             if (int.Parse(value) > oneBelowMax) throw new MSG.SkipReadException();
             return ParseEnum(typeof(Snow_data_DataDef_PlArmorSeriesTypes), $"PL_A_Series_{value}");
         });
+        
+        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ARMOR_SERIES_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
         CreateConstantsFile(msg[Global.LangIndex.eng], "ArmorConstants");
     }

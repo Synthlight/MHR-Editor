@@ -31,7 +31,7 @@ namespace MHR_Editor {
                                  $" | {(uint) a.ModelId}" +
                                  $" | {a.ModelId}" +
                                  $" | {(uint) a.Series}" +
-                                 $" | {DataHelper.ARMOR_SERIES_LOOKUP[Global.LangIndex.eng].TryGet((uint) a.Series, "")}" +
+                                 $" | {DataHelper.ARMOR_SERIES_LOOKUP[Global.locale].TryGet((uint) a.Series, "")}" +
                                  $" | 0x{(uint) a.IdAfterExChange:X8}" +
                                  $" | {a.SortId}" +
                                  $" | {a.IsValid} |");

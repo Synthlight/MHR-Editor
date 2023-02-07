@@ -12,7 +12,7 @@ namespace MHR_Editor.Mods;
 
 public static class SortedGems {
     public static void Make() {
-        const string version           = "1.4";
+        const string version           = "1.5";
         const string outPath           = $@"{PathHelper.MODS_PATH}\Sorted Gems";
         const string bundleByNameName  = "Gems Sorted by Gem Name";
         const string bundleBySkillName = "Gems Sorted by Skill Name";

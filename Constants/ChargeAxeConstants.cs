@@ -265,4 +265,5 @@ public static class ChargeAxeConstants {
     public const uint LOST_CODE__SARA = 0x08B001C0;
     public const uint FRIEDE_DÉSASTRE = 0x08B001C1;
     public const uint STUFFED_GARANGOLM = 0x08B001C2;
+    public const uint REGAL_DARUQ = 0x08B001C3;
 }

@@ -282,4 +282,5 @@ public static class LanceConstants {
     public const uint LOST_CODE__MIA = 0x084001CC;
     public const uint LUZIFER_SAGE = 0x084001CD;
     public const uint STUFFED_MALZENO = 0x084001CE;
+    public const uint KNIGHTLY_ECTIS = 0x084001CF;
 }

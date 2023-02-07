@@ -275,4 +275,5 @@ public static class InsectGlaiveConstants {
     public const uint LOST_CODE__TELTH = 0x08A001C6;
     public const uint WEHMUT_MERVEILLE = 0x08A001C7;
     public const uint STUFFED_RAKNA_KADAKI = 0x08A001C8;
+    public const uint WISE_FYLOS = 0x08A001C9;
 }

@@ -316,4 +316,5 @@ public static class BowConstants {
     public const uint LOST_CODE__IRU = 0x08E001EF;
     public const uint AUFTAUCHEN_DISPARITION = 0x08E001F0;
     public const uint STUFFED_RAJANG = 0x08E001F1;
+    public const uint ALLURING_EVELIA = 0x08E001F2;
 }

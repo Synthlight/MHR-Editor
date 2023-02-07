@@ -156,8 +156,11 @@
     "471859464": "騎士団装備と比べ遜色無い性能 の剣。騎士団の象徴たる金色の 装飾は皆の尊敬と憧れの対象。",
     "471859465": "ご主人様が愛情をこめて焼いた 手作りパンや高原で摘んだ花が たっぷり詰まったバスケット。",
     "471859466": "伝説の海賊が振るった名剣の レプリカ。よく斬れるので 遊びに使ってはならない。",
+    "471859467": "お花に包まれた可愛い見た目の 武器。内側のベルはガルク好み の凛とした音色を響かせる。",
     "471859468": "とある怪盗が愛用していた… と言われる不思議な杖。 杖上部の宝石が不気味に光る。",
     "471859470": "渾沌に呑まれた端材からつくら れた特異なオトモ用武器。刃の 先で捉えるのは、お肉か骨か。",
+    "471859471": "冷気を纏いし氷霜の刃は、 幾層にも重なる斬撃を成し、 まこと優雅に、獲物を裂く。",
+    "471859473": "#Rejected#",
     "470810624": "カムラの里に自生する丈夫な 木で造られた模造刀。軽くて 扱いやすく、初心者にも人気。",
     "470810625": "アイルー族の間で広く使われる 伝統的な斬撃武器。先端部には 頑丈な骨が用いられている。",
     "470810626": "アイルー族の間で広く使われる 伝統的な打撃武器。先端部には 頑丈な木が用いられている。",
@@ -342,8 +345,11 @@
     "470810897": "王たるネコが使う儀礼用の剣。 柄のネコ耳が女性に大人気で レプリカが飛ぶように売れる。",
     "470810898": "異国の童話をもとに作られた バスケット。パンとお花しか 入っていないが異様に重い。",
     "470810899": "海に生きる荒くれアイルーが 好むカトラス。刀身の模様には 使い手の肉球が使われる。",
+    "470810900": "このステッキを見ててニャ！ それニャンゴロニャニャ～ン！ おまじないは効いたかニャ？",
     "470810901": "この虫眼鏡を持ったからには、 すべてを見通して、どんな 手がかりも見逃さないのニャ！",
-    "470810903": "渾沌に呑まれた端材からつくら れた特異なオトモ用武器。灯が 照らして示すのは、鮪か鶏か。"
+    "470810903": "渾沌に呑まれた端材からつくら れた特異なオトモ用武器。灯が 照らして示すのは、鮪か鶏か。",
+    "470810904": "冷気を纏いし氷柱の槍は、 オトモの心が砕けぬ限り、 何度でも再生し、獲物を穿つ。",
+    "470810906": "#Rejected#"
   },
   "eng": {
     "471859200": "Good ol' Kamura steel, sharpened to easily cleave hard bone and shells.",
@@ -502,8 +508,11 @@
     "471859464": "Blade comparable to Order steel. Its golden insignia garners respect and admiration.",
     "471859465": "A basket packed with flowers picked in the hills, and bread baked with love for master.",
     "471859466": "Replica of a legendary pirate's blade. Very sharp, keep away from children!",
+    "471859467": "A pretty weapon adorned with a flower-shaped bell that makes a pleasing sound for Canynes.",
     "471859468": "The fabled accoutrement of a renowned thief. See how its gem sparkles and shines!",
     "471859470": "Settle an argument: Does this resemble beef or a bone? What do you think?",
+    "471859471": "This frosty blade consists of several layers, allowing its wielder to slice with elegance.",
+    "471859473": "#Rejected#",
     "470810624": "A dummy sword made from sturdy Kamura timber. Light and easy to swing.",
     "470810625": "A customary slashing weapon favored by Felynes. A solid bone is placed at its edge.",
     "470810626": "A customary blunt weapon favored by Felynes. Sturdy wood is used in the head.",
@@ -688,8 +697,11 @@
     "470810897": "Ceremonial sword of the Felyne king. So cute, the replicas practically sell themselves!",
     "470810898": "A basket based on an old fairy tale. Super heavy because it's full of goodies for Grammeow.",
     "470810899": "Beloved cutlass of a nautical Felyne felon, blade patterned after his pilfering paw pads.",
+    "470810900": "Look at this stick! What's it fur? Is it magic, purrhaps?",
     "470810901": "A magnifying glass providing a purr-spicacious gaze. Leave no stone unturned!",
-    "470810903": "Settle an argument: Does this resemble tuna or chicken? What do you think?"
+    "470810903": "Settle an argument: Does this resemble tuna or chicken? What do you think?",
+    "470810904": "This Velkhana icicle spear will continue piercing its prey as long as your Palico's spirit is intact.",
+    "470810906": "#Rejected#"
   },
   "fre": {
     "471859200": "Acier de Kamura, aiguisé pour pouvoir fendre les os et les coquilles.",
@@ -848,8 +860,11 @@
     "471859464": "Lame comparable à l'acier de l'Ordre Royal. Son insigne doré suscite respect et admiration.",
     "471859465": "Panier rempli de fleurs sauvages contenant aussi du pain cuit avec amour pour le maître.",
     "471859466": "Réplique d'une lame de pirate légendaire. Maintenir hors de portée des enfants !",
+    "471859467": "Arme incrustée d'une cloche en forme de fleur émettant un son plaisant aux Canynes.",
     "471859468": "Accessoire légendaire d'un voleur célèbre. Brille de mille feux !",
     "471859470": "Est-ce que ça ressemble à du bœuf ou à un os ? Vous en pensez quoi ?",
+    "471859471": "Lame givrée multi-couches qui permet au porteur de découper en toute élégance.",
+    "471859473": "#Rejected#",
     "470810624": "Épée d'entraînement en bois de Kamura robuste. Légère et maniable.",
     "470810625": "Arme tranchante prisée des Felynes. Dotée d'un os sur le bord.",
     "470810626": "Arme contondante prisée des Felynes. La patte est composée de bois solide.",
@@ -1034,8 +1049,11 @@
     "470810897": "Épée de cérémonie du roi Felyne. Si belle qu'on s'arrache les répliques !",
     "470810898": "Basé sur un vieux conte de fée. Super lourd car plein de cadeaux pour grand-mère.",
     "470810899": "Sabre adoré d'un criminel Felyne dont la lame reprend le motif de ses coussinets.",
+    "470810900": "Regarde ce bâton ! Il sert à quoi ? Pour de la magie, peut-être ?",
     "470810901": "Loupe offrant une vision perspicace. Ne ratez pas un détail !",
-    "470810903": "Est-ce que ça ressemble à du thon ou du poulet ? Vous en pensez quoi ?"
+    "470810903": "Est-ce que ça ressemble à du thon ou du poulet ? Vous en pensez quoi ?",
+    "470810904": "Cette lance stalactine Velkhana percera ses proies tant que l'esprit de votre Palico est intact.",
+    "470810906": "#Rejected#"
   },
   "ita": {
     "471859200": "In buon acciaio di Kamura, affilato per penetrare ossa e carapaci con facilità.",
@@ -1194,8 +1212,11 @@
     "471859464": "Lama simile all'acciaio dell'Ordine. Il marchio d'oro ispira stima e ammirazione.",
     "471859465": "Un cestino colmo di fiori colti sulle colline e pane preparato con amore.",
     "471859466": "Replica della lama di un pirata leggendario. Affilatissima, da tenere lontano dai bambini.",
+    "471859467": "Un'arma graziosa con un campanello a forma di fiore dal piacevole suono per i Canyne.",
     "471859468": "Mitico equipaggiamento di un celebre ladro. Guarda come brilla quella gemma!",
     "471859470": "La domanda sorge spontanea: assomiglia a una bistecca o a un osso? Tu che ne pensi?",
+    "471859471": "Lama gelata dai numerosi strati che permettono di squarciare con eleganza.",
+    "471859473": "#Rejected#",
     "470810624": "Spada finta ricavata dal robusto legname di Kamura. Leggera e maneggevole.",
     "470810625": "Arma da taglio tradizionale dei Felyne, la cui sommità è ricavata da osso robusto.",
     "470810626": "Arma speciale dei Felyne, la cui sommità è ricavata da legno robusto.",
@@ -1380,8 +1401,11 @@
     "470810897": "Spada cerimoniale del re Felyne, così carina che le repliche vanno a ruba.",
     "470810898": "Cesto ispirato a un'antica fiaba. Molto pesante perché pieno di leccornie per la nonna gatta.",
     "470810899": "Amata sciabola di un Felyne marinaro, dalla lama decorata con impronte sgraffignanti.",
+    "470810900": "Guarda che bacchetta! A che serve? È magica, forse?",
     "470810901": "Lente d'ingrandimento per uno sguardo inda-gattore che cerca dappertutto.",
-    "470810903": "La domanda sorge spontanea: assomiglia a un tonno o a un pollo? Tu che ne pensi?"
+    "470810903": "La domanda sorge spontanea: assomiglia a un tonno o a un pollo? Tu che ne pensi?",
+    "470810904": "Nulla può infrangere questa lancia di ghiaccio di Velkhana, se impugnata da zampe sapienti.",
+    "470810906": "#Rejected#"
   },
   "ger": {
     "471859200": "Guter alter Kamura-Stahl, der harte Knochen und Panzer mühelos spaltet.",
@@ -1540,8 +1564,11 @@
     "471859464": "Klinge vergleichbar mit Ordensstahl. Die goldenen Insignien erzeugen Respekt.",
     "471859465": "Ein Korb voller in den Bergen gepflückter Blumen und mit Liebe gebackenem Brot.",
     "471859466": "Replik einer legendären Piratenklinge. Sehr scharf, von Kindern fernhalten!",
+    "471859467": "Schöne Waffe, mit einer blu- menförmigen Glocke, die Musik in den Ohren von Canynes ist.",
     "471859468": "Die Ausrüstung eines renom- mierten Diebes. Sieh nur, wie der Edelstein funkelt!",
     "471859470": "Eins gibt es noch zu klären: Erinnert dies an ein Rind oder an einen Knochen?",
+    "471859471": "Frostige Klinge aus mehreren Schichten, die es ermöglichen, mit Eleganz zu kämpfen.",
+    "471859473": "#Rejected#",
     "470810624": "Eine Schwertattrappe aus festem Kamura-Holz. Leicht und mühelos schwingbar.",
     "470810625": "Eine übliche, von Felynen bevorzugte Hiebwaffe. Die Schneide ziert ein Knochen.",
     "470810626": "Eine übliche, von Felynen bevorzugte Hiebwaffe. Der Kopf ist aus stabilem Holz.",
@@ -1726,8 +1753,11 @@
     "470810897": "Zeremonielles Schwert des Felyne-Königs. So süß, die Repliken verkaufen sich gut!",
     "470810898": "Einem alten Märchen nach- empfundener Korb. Voller Gaben für die Großmutter.",
     "470810899": "Geliebte Machete eines nautischen Felyne-Verbrechers. Mit Pfotenballen-Klinge.",
+    "470810900": "Schau mal, dieser Stab! Wofür ist er? Vielleicht zum Zaubern?",
     "470810901": "Eine Lupe, die dir den Durchblick verschafft. Lasse nichts unversucht!",
-    "470810903": "Eins gibt es noch zu klären: Erinnert dies an einen Thun- fisch oder an ein Huhn?"
+    "470810903": "Eins gibt es noch zu klären: Erinnert dies an einen Thun- fisch oder an ein Huhn?",
+    "470810904": "Der eisige Velkhana-Speer wird Beute aufspießen, solange dein Palico damit zurechtkommt.",
+    "470810906": "#Rejected#"
   },
   "spa": {
     "471859200": "Buen acero de Kamura, tan afilado que cercenará huesos y caparazones.",
@@ -1886,8 +1916,11 @@
     "471859464": "Filo cuyo acero recuerda al de la Orden. Su insignia dorada inspira respeto y admiración.",
     "471859465": "Una cesta repleta de flores de las praderas y pan horneado para el amo con mucho mimo.",
     "471859466": "Réplica de la espada de un mítico pirata. Muy afilada y no apta para niños.",
+    "471859467": "Bonita arma envuelta en una campanilla con forma de flor que agrada a los Canyne.",
     "471859468": "Mítico complemento de un famoso ladrón. ¡Mira qué joya y mira cómo brilla!",
     "471859470": "¿Esto se parece a ternera o a un hueso? Tú decides, porque no está muy claro.",
+    "471859471": "Este filo helado consta de varias capas con las que poder rebanar con suma elegancia.",
+    "471859473": "#Rejected#",
     "470810624": "Una espada de práctica hecha de madera de Kamura. Ligera y fácil de empuñar.",
     "470810625": "El arma personalizada favorita de los Felyne. El filo es de hueso duro.",
     "470810626": "Arma contundente tradicional preferida por los Felyne. Extremo de madera robusta.",
@@ -2072,8 +2105,11 @@
     "470810897": "Arma ceremonial del rey Felyne. Es tan linda que sus réplicas se venden como rosquillas.",
     "470810898": "Una cesta de un viejo cuento de hadas. Pesa porque tiene cosas para miaubuelita.",
     "470810899": "Sable de un rufián marinero Felyne, inspirado en sus sisadoras zarpas.",
+    "470810900": "¡Mira qué palo! ¿Para qué servirá? ¿Será que es miáugico?",
     "470810901": "Lupa para mirar con felina perspicacia. ¡Estudia hasta los mininos detalles!",
-    "470810903": "¿Esto se parece a un atún o a un pollo? Tú decides, porque no está muy claro."
+    "470810903": "¿Esto se parece a un atún o a un pollo? Tú decides, porque no está muy claro.",
+    "470810904": "Un arpón hecho con un témpano de Velkhana. Puede seguir perforando si tu camarada sigue luchando.",
+    "470810906": "#Rejected#"
   },
   "rus": {
     "471859200": "Старая добрая сталь Камуры. Заточена так, чтобы колоть кости и панцири.",
@@ -2232,8 +2268,11 @@
     "471859464": "Этот клинок не хуже стали Ордена. Золотая эмблема вну- шает уважение и восхищение.",
     "471859465": "Корзинка со свежими цветами и хлебом, испеченным с любо- вью специально для хозяина.",
     "471859466": "Точная копия легендарного пиратского клинка. Очень острый — детям не игрушка. ",
+    "471859467": "Стильное оружие. Украшено цветочным колокольчиком, привлекающим Собакков.",
     "471859468": "Знаменитый аксессуар известного вора. Посмотрите, как сияет камень!",
     "471859470": "Разрешите наш спор. На что это похоже — на мясо или на кость? Что думаете?",
+    "471859471": "Ледяной многослойный клинок. Позволяет разить врага элегантно.",
+    "471859473": "#Rejected#",
     "470810624": "Тренировочный меч из прочной камурской древесины. Легок в обращении.",
     "470810625": "Рубящее оружие с прочной костью, которое любят Котты. ",
     "470810626": "Ударное оружие с прочной деревяшкой, которое любят Котты.",
@@ -2418,8 +2457,11 @@
     "470810897": "Церемониальный меч короля Коттов. Такой милый, что его копии невероятно популярны.",
     "470810898": "Корзина по мотивам старой сказки. Очень тяжелая, ведь набита сластями для бабули.",
     "470810899": "Любимая сабля Котта-пирата. Узоры на клинке напоминают подушечки его вороватых лап.",
+    "470810900": "Взгляни на этот посох! Для чего он мур-нужен? Магический, мур-может?",
     "470810901": "Увеличительное стекло, чтобы от вашего взгляда не укрылось ничего.",
-    "470810903": "Разрешите наш спор. На что это похоже — на рыбу или на курицу? Что думаете?"
+    "470810903": "Разрешите наш спор. На что это похоже — на рыбу или на курицу? Что думаете?",
+    "470810904": "Это ледяное копье велханы будет пронзать жертву, пока цел дух у Палико.",
+    "470810906": "#Rejected#"
   },
   "pol": {
     "471859200": "Dobra, ostra stal z Kamury. Z łatwością przecina kości i skorupy.",
@@ -2578,8 +2620,11 @@
     "471859464": "Ostrze porównywalne do stali Orderu. Jego złote ozdoby są podziwiane.",
     "471859465": "Koszyk z kwiatami zebranymi na zboczach i chlebem upieczonym z miłością.",
     "471859466": "Replika legendarnego ostrza pirata. Bardzo ostra! Trzymać z dala od dzieci!",
+    "471859467": "Ładna broń ozdobiona dzwonkiem w kształcie kwiatu. Brzmienie miłe dla kynosich uszu.",
     "471859468": "Słynny ekwipunek znanego złodzieja. Zobacz, jak błyszczy jego klejnot!",
     "471859470": "Rozsądź spór. Czy to wygląda na wołowinę czy na kość? Jak sądzisz?",
+    "471859471": "To mroźne ostrze składa się z wielu warstw, dzięki czemu tnie z niezrównaną elegancją.",
+    "471859473": "#Rejected#",
     "470810624": "Drewniany miecz wykonany z drewna Kamury. Lekki i łatwy w użyciu.",
     "470810625": "Zwykła broń tnąca, lubiana przez feliny. Na ostrzu umieszczono kość.",
     "470810626": "Zwykła broń obuchowa, lubiana przez feliny. W głowni użyto drewna.",
@@ -2764,8 +2809,11 @@
     "470810897": "Ceremonialny miecz króla felinów. Tak śliczny, że repliki są rozchwytywane!",
     "470810898": "Koszyk inspirowany starą baśnią. Bardzo ciężki, bo pełen smakołyków dla babci.",
     "470810899": "Ukochany kordelas ściganego felina. Ma wzory jego kradnących łapek.",
+    "470810900": "Spójrz tylko na ten kij! Do czego służy? Czy jest miau-giczny?",
     "470810901": "Lupa zapewniająca wspaniałe powiększenie. Zauważysz każdy detal!",
-    "470810903": "Rozsądź spór. Czy to wygląda na tuńczyka czy na kurczaka? Jak sądzisz?"
+    "470810903": "Rozsądź spór. Czy to wygląda na tuńczyka czy na kurczaka? Jak sądzisz?",
+    "470810904": "Ta lodowa włócznia z Velkhana będzie przebijać ofiary, póki koleżkotowi starczy ducha.",
+    "470810906": "#Rejected#"
   },
   "ptB": {
     "471859200": "Bom e velho aço de Kamura, afiado para cortar facilmente ossos e conchas.",
@@ -2924,8 +2972,11 @@
     "471859464": "Lâmina comparável ao aço da Ordem. Sua insígnia dourada junta respeito e admiração.",
     "471859465": "Cesto cheio de flores colhidas nas montanhas e pão feito com amor para o mestre.",
     "471859466": "Réplica de uma lâmina lendá- ria de pirata. Muito afiada, deixe longe das crianças.",
+    "471859467": "Bela arma adornada com flores e um sino floral com som agradável para Canynos.",
     "471859468": "Lendário acessório de um famoso ladrão. Veja como a gema faísca e brilha!",
     "471859470": "Decida a discussão: Isso parece carne ou osso? O que você acha?",
+    "471859471": "Lâmina gelada de várias camadas, permitindo que o usuário corte com elegância.",
+    "471859473": "#Rejected#",
     "470810624": "Espada falsa feita com a madeira de Kamura sólida. Leve e fácil de usar.",
     "470810625": "Arma de corte comum usada por Felynos. Um osso sólido é posto em sua extremidade.",
     "470810626": "Arma de contusão comum usada por Felyno. Usa-se madeira maciça na cabeça.",
@@ -3110,8 +3161,11 @@
     "470810897": "Esp. cerimonial do rei Felyno. Tão fofa que as réplicas quase se vendem sozinhas.",
     "470810898": "Um cesto baseado num conto de fadas antigo. Bem pesado, cheio de doces pra vovozinha.",
     "470810899": "Alfanje amado de um bandido náutico Felyno, lâmina com padrão das patinhas rapaces.",
+    "470810900": "Olha só esse graveto! Prra quê que serve? Será que é mágico?",
     "470810901": "Lupa que oferece um olhar prrrspicaz. Não deixe pedra sobre pedra!",
-    "470810903": "Decida a discussão: Isso parece atum ou frango? O que você acha?"
+    "470810903": "Decida a discussão: Isso parece atum ou frango? O que você acha?",
+    "470810904": "Lança de gelo de Velkhana que perfura inimigos enquanto o espírito do Amigato viver.",
+    "470810906": "#Rejected#"
   },
   "kor": {
     "471859200": "카무라 마을의 철로 만든 검. 잘 연마된 칼날은 사냥감의 뼈와 등딱지를 쉽게 잘라낸다.",
@@ -3270,8 +3324,11 @@
     "471859464": "기사단 장비 못지않은 성능의 검. 기사단의 상징인 금빛 장식은 존경과 동경의 대상.",
     "471859465": "주인님이 사랑을 담아 구운 수제 빵과 고원에서 꺾은 꽃이 가득 담긴 바구니.",
     "471859466": "전설의 해적이 사용한 명검의 레플리카. 날카롭기 때문에 장난으로 사용하면 안 된다.",
+    "471859467": "꽃에 감싸인 디자인이 귀여운 무기. 안에 달린 종은 가루크 가 좋아하는 맑은 소리를 낸다.",
     "471859468": "어느 괴도가 애용…했다고 하는 신비한 지팡이. 위에 있는 보석이 기묘하게 빛난다.",
     "471859470": "혼돈에 잠식된 편린으로 만든 특이한 동반자 무기. 칼끝에 붙은 건 고기인가 뼈인가.",
+    "471859471": "냉기를 두른 얼음 칼날은 몇 겹이나 되는 참격을 날리며 우아하게 사냥감을 찢는다.",
+    "471859473": "#Rejected#",
     "470810624": "카무라 마을에 자생하는 질긴 나무로 만든 목도. 가볍고 다루기 쉬워 초보자에게 인기.",
     "470810625": "아이루족 사이에 널리 쓰여온 전통적인 참격 무기. 끝부분은 튼튼한 뼈로 만들어져 있다.",
     "470810626": "아이루족 사이에 널리 쓰여온 전통적인 타격 무기. 끝부분은 튼튼한 나무로 만들어져 있다.",
@@ -3456,8 +3513,11 @@
     "470810897": "고양이 왕이 사용하는 의전용 검. 고양이 귀 모양의 자루 덕분에 불티나게 팔린다.",
     "470810898": "이국의 동화를 모티브로 만든 바구니. 빵과 꽃밖에 없지만 이상하게 무겁다.",
     "470810899": "바다에 사는 터프한 아이루가 좋아하는 커틀러스. 고양이의 발바닥 모양이 그려져 있다.",
+    "470810900": "이 지팡이를 봐라냥! 수리수리 마수리~냥! 주문은 효과가 있을까냥?",
     "470810901": "이 돋보기만 있으면 뭐든지 꿰뚫어봐서 사소한 단서도 절대 놓치지 않는다냥!",
-    "470810903": "혼돈에 잠식된 편린으로 만든 특이한 동반자 무기. 그 빛이 비추는 것은 참치인가 닭인가."
+    "470810903": "혼돈에 잠식된 편린으로 만든 특이한 동반자 무기. 그 빛이 비추는 것은 참치인가 닭인가.",
+    "470810904": "냉기를 두른 얼음 기둥의 창은 동반자의 마음이 버티는 한 계속 재생하여 적을 꿰뚫는다.",
+    "470810906": "#Rejected#"
   },
   "chT": {
     "471859200": "以神火村鋼鐵打造而成的刀。 經過磨製的刀身能輕易斬斷 獵物堅硬的骨頭或甲殼。",
@@ -3616,8 +3676,11 @@
     "471859464": "與騎士團裝備相比也毫不遜色的 劍。金色裝飾為騎士團的象徵， 是眾人尊敬且憧憬的對象。",
     "471859465": "在這提籃中裝滿了來自高原的 美麗花朵，以及主人注入滿滿 愛意烤製而成的手工麵包。",
     "471859466": "為傳說海賊所持名劍之複製品。 由於相當鋒利， 絕對不能拿來玩耍。",
+    "471859467": "上頭布滿花朵、外觀相當可愛 的武器。內側的鈴鐺會發出 加爾克喜歡的清亮音色。",
     "471859468": "據說是過去某位怪盜愛用的 神秘拐杖。杖上的寶石散發著 令人毛骨悚然的光芒。",
     "471859470": "以被混沌吞噬的餘料製作出的 特異隨從武器。刃尖所觸及的， 究竟是牛肉還是骨頭呢？",
+    "471859471": "散發寒氣的冰霜之刃 能化為重重斬擊， 極其優雅地切開獵物。",
+    "471859473": "#Rejected#",
     "470810624": "以生長於神火村的結實樹木所 製成的模造刀。由於輕巧且易於 使用，因此也很受初學者喜愛。",
     "470810625": "在艾路族間廣泛使用的 傳統斬擊武器。 前端部分是使用堅硬的骨製成。",
     "470810626": "在艾路族間廣泛使用的 傳統打擊武器。 前端部分是使用堅硬的木頭。",
@@ -3802,8 +3865,11 @@
     "470810897": "貓之王者所使用的儀式用劍。 劍柄上有著貓耳裝飾，廣受 女性喜愛，複製品相當熱賣。",
     "470810898": "以外國的童話為藍本製作 而成的籃子。裡頭只有麵包 和鮮花，卻相當沉重。",
     "470810899": "在海上生活的粗莽艾路 愛用的彎刀。刀身上的 花紋為使用者的肉球圖案。",
+    "470810900": "看著這根魔杖喵！ 嘰哩喵咕嚕喵喵～！ 咒語生效了沒有喵？",
     "470810901": "只要有了這隻放大鏡 就能看穿一切謎團， 絕不會放過任何蛛絲馬跡喵！",
-    "470810903": "以被混沌吞噬的餘料製作出的 特異隨從武器。燈所照出的， 究竟是鮪魚還是雞呢？"
+    "470810903": "以被混沌吞噬的餘料製作出的 特異隨從武器。燈所照出的， 究竟是鮪魚還是雞呢？",
+    "470810904": "只要隨從仍有鬥志， 散發寒氣的冰柱之槍 將可不斷再生，貫穿獵物。",
+    "470810906": "#Rejected#"
   },
   "chS": {
     "471859200": "炎火村出产的铁锻造的刀。 经过磨砺的刀身能够轻易斩断 猎物强韧的骨头与甲壳。",
@@ -3962,8 +4028,11 @@
     "471859464": "此剑性能堪比骑士团的装备。 象征骑士团的金色装饰，备受 众人尊敬和向往。",
     "471859465": "篮子中装满了主人亲手烤制的， 充满爱意的面包，还有在高原 采摘的鲜花。",
     "471859466": "传说中的海盗使用过的 名刀的复制品。十分锋利， 切勿用于嬉戏。",
+    "471859467": "以鲜花点缀的可爱武器。 内侧的铃铛会奏响牙猎犬 喜爱的庄严音色。",
     "471859468": "据说曾是某怪盗喜爱的 神奇手杖。手杖上方的 宝石闪烁着诡异的光芒。",
     "471859470": "使用被混沌吞噬的余料制成的 奇特随从用武器。用刀尖感触 的是肉还是骨？",
+    "471859471": "散发寒气的冰霜之刃 划出层层重叠的斩击， 优雅地将猎物撕裂。",
+    "471859473": "#Rejected#",
     "470810624": "使用生长于炎火村的结实树木 制成的模型刀。 轻便易用，在新手中颇有人气。",
     "470810625": "艾露猫一族内广泛使用的 传统斩击武器。 前端部分使用了坚固的骨头。",
     "470810626": "艾露猫一族内广泛使用的 传统打击武器。 前端部分使用了坚固的木头。",
@@ -4148,8 +4217,11 @@
     "470810897": "王者猫使用的仪式用剑。 剑柄上的猫耳深受女性喜爱， 其仿制品很快就销售一空。",
     "470810898": "以异国童话为主题制作的篮子。 篮子里只装了面包和花，却莫 名沉重。",
     "470810899": "在海上生活的豪放艾露猫 喜爱的短刀。刀身上的纹 样是使用者的肉球。",
+    "470810900": "看着这根棍子喵！ 喵隆隆喵喵～喵！ 魔法生效了喵？",
     "470810901": "只要手持这个放大镜， 就能看穿一切，任何蛛丝 马迹都不会看漏喵！",
-    "470810903": "使用被混沌吞噬的余料制成的 奇特随从用武器。灯光照亮的 是金枪鱼还是鸡肉呢？"
+    "470810903": "使用被混沌吞噬的余料制成的 奇特随从用武器。灯光照亮的 是金枪鱼还是鸡肉呢？",
+    "470810904": "只要随从心无旁鹜，此散发着 寒气的冰柱之枪便能不断再生， 贯穿猎物。",
+    "470810906": "#Rejected#"
   },
   "ara": {
     "471859200": "فولاذ كامورا الجيد الذي تم شحذه ليشق العظام والصدفات الصلبة بسهولة.",
@@ -4308,8 +4380,11 @@
     "471859464": "نصل مماثل لفولاذ النظام. شارته الذهبية تحظى بالاحترام والإعجاب.",
     "471859465": "سلة مليئة بالزهور المقطوفة من التلال، والخبز من أجل السيد.",
     "471859466": "نسخة مقلدة من نصل القرصان الأسطوري. حاد جدًا، يُحفظ بعيدًا عن متناول الأطفال!",
+    "471859467": "سلاح جميل مزين بجرس على شكل زهرة، ويصدر صوتًا ممتعًا للكناين.",
     "471859468": "عتاد أسطوري للص مشهور. انظر كيف تتألق وتلمع أحجاره!",
     "471859470": "ساعدنا في حل خلاف: هل يشبه هذا اللحم، أم العظام؟ ما رأيك؟",
+    "471859471": "يتكون هذا النصل المتجمد من عدة طبقات؛ مما يسمح لمستخدمه بالتقطيع بأناقة.",
+    "471859473": "#Rejected#",
     "470810624": "سيف مزيف مصنوع من خشب كامورا القوي. خفيف ويسهل التلويح به.",
     "470810625": "سلاح بتّار مألوف مُفضل لدى قطط الفيلاين. توضع عظمة صلبة على طرفه.",
     "470810626": "سلاح غير حاد مألوف مُفضل لدى قطط الفيلاين. خشب متين يُستخدم في الرأس.",
@@ -4494,7 +4569,10 @@
     "470810897": "سيف مراسم لملك فيلاين. لطيف جدًّا، النسخ المقلدة تبيع نفسها عمليًّا!",
     "470810898": "سلة من حكاية خيالية قديمة. ثقيل للغاية لأنه مليء بالأشياء الطيبة من أجل الجدة.",
     "470810899": "سيف مقوس محبوب لمجرم فيلاين بحري، نصله يشبه مخالبه السارقة.",
+    "470810900": "انظر إلى هذه العصا! ما هو الفراء؟ هل هو سحر، ربما؟",
     "470810901": "عدسة مكبرة توفر نظرة ثاقبة. لا تدخر أي جهد!",
-    "470810903": "ساعدنا في حل الخلاف: هل يشبه هذا التونة أم الدجاج؟ ما رأيك؟"
+    "470810903": "ساعدنا في حل الخلاف: هل يشبه هذا التونة أم الدجاج؟ ما رأيك؟",
+    "470810904": "سيستمر رمح فيلكانا الجليدي هذا في اختراق فريسته طالما أن روح باليكو سليمة.",
+    "470810906": "#Rejected#"
   }
 }

@@ -267,4 +267,5 @@ public static class HeavyBowgunConstants {
     public const uint LOST_CODE__JURA = 0x08D001C9;
     public const uint URSPRUNG_MORT = 0x08D001CA;
     public const uint STUFFED_MIZUTSUNE = 0x08D001CB;
+    public const uint RIGHTEOUS_VARKA = 0x08D001CC;
 }

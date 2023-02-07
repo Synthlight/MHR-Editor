@@ -287,4 +287,5 @@ public static class GunLanceConstants {
     public const uint LOST_CODE__NIR = 0x087001DD;
     public const uint MAUER_GUERRE = 0x087001DE;
     public const uint STUFFED_MAGNAMALO = 0x087001DF;
+    public const uint VORPAL_ICEFORT = 0x087001E0;
 }

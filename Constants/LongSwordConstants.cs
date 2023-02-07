@@ -153,7 +153,7 @@ public static class LongSwordConstants {
     public const uint KAMURA_WARRIOR_RAPIER_PLUS = 0x0850012D;
     public const uint FINE_KAMURA_RAPIER = 0x0850012E;
     public const uint DESPOT_BOLTBREAKER_PLUS = 0x0850012F;
-    public const uint OPPRESSORS_ABYSS = 0x08500130;
+    public const uint OPPRESSORS_LAW = 0x08500130;
     public const uint DAYSPRING_BLADE = 0x08500131;
     public const uint DAYSPRING_BLADE_PLUS = 0x08500132;
     public const uint DAWNLIGHT_BLADE = 0x08500133;
@@ -303,4 +303,5 @@ public static class LongSwordConstants {
     public const uint LOST_CODE__KIRI = 0x085001D6;
     public const uint CHAOS_LOI = 0x085001D7;
     public const uint STUFFED_NARGACUGA = 0x085001D8;
+    public const uint REVERENT_ELUSARCA = 0x085001D9;
 }

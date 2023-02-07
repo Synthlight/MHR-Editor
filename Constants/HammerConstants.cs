@@ -297,4 +297,5 @@ public static class HammerConstants {
     public const uint LOST_CODE__MJO = 0x083001C7;
     public const uint VERGEHEN_NAISSANCE = 0x083001C8;
     public const uint STUFFED_DIABLOS = 0x083001C9;
+    public const uint VICTORIOUS_NORTHLEIN = 0x083001CA;
 }

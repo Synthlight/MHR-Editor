@@ -139,6 +139,8 @@
     "Pl_EquipSkill_225": "狂化",
     "Pl_EquipSkill_226": "風纏",
     "Pl_EquipSkill_227": "粉塵纏",
+    "Pl_EquipSkill_228": "冰気錬成",
+    "Pl_EquipSkill_229": "龍気変換",
     "Pl_EquipSkill_233": "奮闘"
   },
   "eng": {
@@ -281,6 +283,8 @@
     "Pl_EquipSkill_225": "Berserk",
     "Pl_EquipSkill_226": "Wind Mantle",
     "Pl_EquipSkill_227": "Powder Mantle",
+    "Pl_EquipSkill_228": "Frostcraft",
+    "Pl_EquipSkill_229": "Dragon Conversion",
     "Pl_EquipSkill_233": "Strife"
   },
   "fre": {
@@ -423,6 +427,8 @@
     "Pl_EquipSkill_225": "Berserk",
     "Pl_EquipSkill_226": "Cape du vent",
     "Pl_EquipSkill_227": "Mante Poudre",
+    "Pl_EquipSkill_228": "Nuée de givre",
+    "Pl_EquipSkill_229": "Conversion de dragon",
     "Pl_EquipSkill_233": "Lutte"
   },
   "ita": {
@@ -565,6 +571,8 @@
     "Pl_EquipSkill_225": "Delirante",
     "Pl_EquipSkill_226": "Mantello ventoso",
     "Pl_EquipSkill_227": "Mantello polveroso",
+    "Pl_EquipSkill_228": "Criosintesi",
+    "Pl_EquipSkill_229": "Conversione drago",
     "Pl_EquipSkill_233": "Lotta"
   },
   "ger": {
@@ -707,6 +715,8 @@
     "Pl_EquipSkill_225": "Berserker",
     "Pl_EquipSkill_226": "Wind-Mantel",
     "Pl_EquipSkill_227": "Pulver-Mantel",
+    "Pl_EquipSkill_228": "Eiskunst",
+    "Pl_EquipSkill_229": "Drachenumwandlung",
     "Pl_EquipSkill_233": "Kampf"
   },
   "spa": {
@@ -849,6 +859,8 @@
     "Pl_EquipSkill_225": "Frenético",
     "Pl_EquipSkill_226": "Manto de viento",
     "Pl_EquipSkill_227": "Manto de polvo",
+    "Pl_EquipSkill_228": "Destreza helada",
+    "Pl_EquipSkill_229": "Conversión de draco",
     "Pl_EquipSkill_233": "Pugna"
   },
   "rus": {
@@ -991,6 +1003,8 @@
     "Pl_EquipSkill_225": "Безумец",
     "Pl_EquipSkill_226": "Мантия ветра",
     "Pl_EquipSkill_227": "Порошковый покров",
+    "Pl_EquipSkill_228": "Мастерство мороза",
+    "Pl_EquipSkill_229": "Преобраз-е дракона",
     "Pl_EquipSkill_233": "Борьба"
   },
   "pol": {
@@ -1133,6 +1147,8 @@
     "Pl_EquipSkill_225": "Berserk",
     "Pl_EquipSkill_226": "Opończa wiatru",
     "Pl_EquipSkill_227": "Opończa proszku",
+    "Pl_EquipSkill_228": "Sztuka Mrozu",
+    "Pl_EquipSkill_229": "Smocza skuteczność",
     "Pl_EquipSkill_233": "Bój"
   },
   "ptB": {
@@ -1249,7 +1265,7 @@
     "Pl_EquipSkill_110": "Tempestalma",
     "Pl_EquipSkill_200": "Mente e Corpo",
     "Pl_EquipSkill_201": "Abandono",
-    "Pl_EquipSkill_202": "Indignação",
+    "Pl_EquipSkill_202": "Furioso",
     "Pl_EquipSkill_203": "Cota Fogo do Inferno",
     "Pl_EquipSkill_204": "Coalescência",
     "Pl_EquipSkill_205": "Sede de Sangue",
@@ -1275,6 +1291,8 @@
     "Pl_EquipSkill_225": "Berserk",
     "Pl_EquipSkill_226": "Manto de Vento",
     "Pl_EquipSkill_227": "Manto de Pó",
+    "Pl_EquipSkill_228": "Frigidez",
+    "Pl_EquipSkill_229": "Conversão Dracônica",
     "Pl_EquipSkill_233": "Luta"
   },
   "kor": {
@@ -1417,6 +1435,8 @@
     "Pl_EquipSkill_225": "광화",
     "Pl_EquipSkill_226": "풍전",
     "Pl_EquipSkill_227": "분진전",
+    "Pl_EquipSkill_228": "냉기 연성",
+    "Pl_EquipSkill_229": "용기 변환",
     "Pl_EquipSkill_233": "분투"
   },
   "chT": {
@@ -1559,6 +1579,8 @@
     "Pl_EquipSkill_225": "狂化",
     "Pl_EquipSkill_226": "暴風纏身",
     "Pl_EquipSkill_227": "粉塵飛舞",
+    "Pl_EquipSkill_228": "寒氣鍊成",
+    "Pl_EquipSkill_229": "龍氣轉換",
     "Pl_EquipSkill_233": "奮鬥"
   },
   "chS": {
@@ -1701,6 +1723,8 @@
     "Pl_EquipSkill_225": "狂化",
     "Pl_EquipSkill_226": "风绕",
     "Pl_EquipSkill_227": "粉尘绕",
+    "Pl_EquipSkill_228": "寒气炼成",
+    "Pl_EquipSkill_229": "龙气转换",
     "Pl_EquipSkill_233": "奋斗"
   },
   "ara": {
@@ -1843,6 +1867,8 @@
     "Pl_EquipSkill_225": "مسعور",
     "Pl_EquipSkill_226": "غطاء الريح",
     "Pl_EquipSkill_227": "غطاء المسحوق",
+    "Pl_EquipSkill_228": "صناعة الصقيع",
+    "Pl_EquipSkill_229": "تحول التنين",
     "Pl_EquipSkill_233": "صراع"
   }
 }

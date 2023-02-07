@@ -295,4 +295,5 @@ public static class SlashAxeConstants {
     public const uint LOST_CODE__LABR = 0x086001CD;
     public const uint FREVEL_SURSIS = 0x086001CE;
     public const uint STUFFED_LUNAGARON = 0x086001CF;
+    public const uint WICKED_NIDDOQ = 0x086001D0;
 }

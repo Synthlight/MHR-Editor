@@ -145,5 +145,7 @@ public static class SkillConstants {
     public const uint BERSERK = 137;
     public const uint WIND_MANTLE = 138;
     public const uint POWDER_MANTLE = 139;
+    public const uint FROSTCRAFT = 140;
+    public const uint DRAGON_CONVERSION = 141;
     public const uint STRIFE = 145;
 }

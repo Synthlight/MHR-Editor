@@ -12,9 +12,10 @@ namespace MHR_Editor.Mods;
 
 public static class CheatMod {
     public static void Make() {
-        const string bundleName        = "Weapon/Armor/Gem/Slot/Skill Cheats";
-        const string variantBundleName = "All In One (Fluffy Selective Install)";
-        const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
+        const string bundleName          = "Weapon/Armor/Gem/Slot/Skill Cheats";
+        const string variantBundleName   = "All In One (Fluffy Selective Install)";
+        const string variantGpBundleName = "All In One (Fluffy Selective Install - GamePass)";
+        const string outPath             = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
             Version      = "1.6",
@@ -88,7 +89,14 @@ public static class CheatMod {
                 }),
         });
 
-        ModMaker.WriteMods(bundleOnlyMods, PathHelper.CHUNK_PATH, outPath, variantBundleName, true);
+        var bundleMods = bundleOnlyMods.ToList();
+        ModMaker.WriteMods(bundleMods, PathHelper.CHUNK_PATH, outPath, variantBundleName, true);
+
+        var gpBundleMods = (from mod in bundleMods
+                            let newPaths = from path in mod.Files
+                                           select path.Replace("STM", "MSG")
+                            select mod.SetFiles(newPaths)).ToList();
+        ModMaker.WriteMods(gpBundleMods, PathHelper.CHUNK_PATH, outPath, variantGpBundleName, true);
 
         ModMaker.WriteMods(mods.Select(NexusMod.FromVariant)
                                .Append(NexusMod.FromVariant(baseMod)

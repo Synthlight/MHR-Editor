@@ -46,9 +46,23 @@ public static class NoRequirements {
                 .SetFiles(new[] {PathHelper.ARMOR_RECIPE_PATH})
                 .SetAction(CheatMod.NoCost),
             baseMod
+                .SetName("Armor (Normal, Ignore Unlock Flags)")
+                .SetFiles(new[] {PathHelper.ARMOR_RECIPE_PATH})
+                .SetAction(list => {
+                    CheatMod.NoCost(list);
+                    CheatMod.NoUnlockFlag(list);
+                }),
+            baseMod
                 .SetName("Armor (Layered)")
                 .SetFiles(new[] {PathHelper.LAYERED_ARMOR_RECIPE_PATH})
                 .SetAction(CheatMod.NoCost),
+            baseMod
+                .SetName("Armor (Layered, Ignore Unlock Flags)")
+                .SetFiles(new[] {PathHelper.LAYERED_ARMOR_RECIPE_PATH})
+                .SetAction(list => {
+                    CheatMod.NoCost(list);
+                    CheatMod.NoUnlockFlag(list);
+                }),
             baseMod
                 .SetName("Cat/Dog (Armor/Weapons)")
                 .SetFiles(new[] {

@@ -234,6 +234,16 @@ public static class CheatMod {
     public static void NoUnlockFlag(List<RszObject> rszObjectData) {
         foreach (var obj in rszObjectData) {
             switch (obj) {
+                case Snow_data_ArmorProductUserData_Param armorProdData:
+                    armorProdData.ItemFlag     = (uint) Snow_data_ContentsIdSystem_ItemId.I_Unclassified_None;
+                    armorProdData.EnemyFlag    = Snow_enemy_EnemyDef_EmTypes.EmTypeNoData;
+                    armorProdData.ProgressFlag = Snow_data_DataDef_UnlockProgressTypes.None;
+                    break;
+                case Snow_equip_PlOverwearProductUserData_Param armorProdData:
+                    armorProdData.ItemFlag     = (uint) Snow_data_ContentsIdSystem_ItemId.I_Unclassified_None;
+                    armorProdData.EnemyFlag    = Snow_enemy_EnemyDef_EmTypes.EmTypeNoData;
+                    armorProdData.ProgressFlag = Snow_data_DataDef_UnlockProgressTypes.None;
+                    break;
                 case Snow_data_DecorationsProductUserData_Param decoProdData:
                     decoProdData.ItemFlag     = (uint) Snow_data_ContentsIdSystem_ItemId.I_Unclassified_None;
                     decoProdData.EnemyFlag    = Snow_enemy_EnemyDef_EmTypes.EmTypeNoData;

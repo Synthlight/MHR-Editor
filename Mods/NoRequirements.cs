@@ -12,7 +12,7 @@ public static class NoRequirements {
         const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
-            Version      = "1.11",
+            Version      = "1.12",
             NameAsBundle = bundleName,
             Desc         = "Removes the item requirements when crafting."
         };
@@ -26,7 +26,25 @@ public static class NoRequirements {
                                     .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.OverwearProduct))) // Layer
                 .SetAction(CheatMod.NoCost),
             baseMod
+                .SetName("Weapons (Forge/Upgrade/Layer, Ignore Unlock Flags)")
+                .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Product) // Forge
+                                    .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Process)) // Upgrade
+                                    .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Change))
+                                    .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.OverwearProduct))) // Layer
+                .SetAction(list => {
+                    CheatMod.NoCost(list);
+                    CheatMod.NoUnlockFlag(list);
+                }),
+            baseMod
                 .SetName("Weapons (Layered Only)")
+                .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Change)
+                                    .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.OverwearProduct)))
+                .SetAction(list => {
+                    CheatMod.NoCost(list);
+                    CheatMod.NoUnlockFlag(list);
+                }),
+            baseMod
+                .SetName("Weapons (Layered Only, Ignore Unlock Flags)")
                 .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Change)
                                     .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.OverwearProduct)))
                 .SetAction(CheatMod.NoCost),

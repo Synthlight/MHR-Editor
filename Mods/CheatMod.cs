@@ -262,6 +262,26 @@ public static class CheatMod {
                     decoProdData.EnemyFlag    = Snow_enemy_EnemyDef_EmTypes.EmTypeNoData;
                     decoProdData.ProgressFlag = Snow_data_DataDef_UnlockProgressTypes.None;
                     break;
+                case Snow_data_WeaponProductUserData_Param weaponProdData:
+                    weaponProdData.ItemFlag     = (uint) Snow_data_ContentsIdSystem_ItemId.I_Unclassified_None;
+                    weaponProdData.EnemyFlag    = Snow_enemy_EnemyDef_EmTypes.EmTypeNoData;
+                    weaponProdData.ProgressFlag = Snow_data_DataDef_UnlockProgressTypes.None;
+                    break;
+                case Snow_data_WeaponChangeUserData_Param weaponChangeData:
+                    weaponChangeData.ItemFlag     = (uint) Snow_data_ContentsIdSystem_ItemId.I_Unclassified_None;
+                    weaponChangeData.EnemyFlag    = Snow_enemy_EnemyDef_EmTypes.EmTypeNoData;
+                    weaponChangeData.ProgressFlag = Snow_data_DataDef_UnlockProgressTypes.None;
+                    break;
+                case Snow_data_WeaponProcessUserData_Param weaponProcessData:
+                    weaponProcessData.ItemFlag     = (uint) Snow_data_ContentsIdSystem_ItemId.I_Unclassified_None;
+                    weaponProcessData.EnemyFlag    = Snow_enemy_EnemyDef_EmTypes.EmTypeNoData;
+                    weaponProcessData.ProgressFlag = Snow_data_DataDef_UnlockProgressTypes.None;
+                    break;
+                case Snow_equip_OverwearWeaponProductUserData_Param wpLayeredProdData:
+                    wpLayeredProdData.ItemFlag     = (uint) Snow_data_ContentsIdSystem_ItemId.I_Unclassified_None;
+                    wpLayeredProdData.EnemyFlag    = Snow_enemy_EnemyDef_EmTypes.EmTypeNoData;
+                    wpLayeredProdData.ProgressFlag = Snow_data_DataDef_UnlockProgressTypes.None;
+                    break;
             }
         }
     }

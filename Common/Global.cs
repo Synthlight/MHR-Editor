@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace MHR_Editor.Common;
+namespace RE_Editor.Common;
 
 public static class Global {
     public static bool      showIdBeforeName = true;
@@ -55,6 +55,4 @@ public static class Global {
             }
         }
     };
-
-    public static readonly List<string> WEAPON_TYPES = new() {"Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"};
 }

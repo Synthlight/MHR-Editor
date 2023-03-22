@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using MHR_Editor.Common.Models;
+using RE_Editor.Common.Models;
 
-namespace MHR_Editor.Common.Structs;
+namespace RE_Editor.Common.Structs;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public class Mat4 : RszObject, IViaType {
@@ -59,5 +59,26 @@ public class Mat4 : RszObject, IViaType {
         writer.Write(Y4);
         writer.Write(Z4);
         writer.Write(W4);
+    }
+
+    public Mat4 Copy() {
+        return new() {
+            X1 = X1,
+            X2 = X2,
+            X3 = X3,
+            X4 = X4,
+            Y1 = Y1,
+            Y2 = Y2,
+            Y3 = Y3,
+            Y4 = Y4,
+            Z1 = Z1,
+            Z2 = Z2,
+            Z3 = Z3,
+            Z4 = Z4,
+            W1 = W1,
+            W2 = W2,
+            W3 = W3,
+            W4 = W4
+        };
     }
 }

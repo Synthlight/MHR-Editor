@@ -8,7 +8,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace MHR_Editor.Controls {
+namespace RE_Editor.Controls {
     public class AutoFilteredComboBox : ComboBox {
         // https://stackoverflow.com/a/55190176
 

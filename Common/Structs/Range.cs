@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using MHR_Editor.Common.Models;
+using RE_Editor.Common.Models;
 
-namespace MHR_Editor.Common.Structs;
+namespace RE_Editor.Common.Structs;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public class Range : RszObject, IViaType {
@@ -17,5 +17,12 @@ public class Range : RszObject, IViaType {
     public void Write(BinaryWriter writer) {
         writer.Write(R);
         writer.Write(S);
+    }
+
+    public Range Copy() {
+        var obj = base.Copy<Range>();
+        obj.R = R;
+        obj.S = S;
+        return obj;
     }
 }

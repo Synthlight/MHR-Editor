@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,14 +14,14 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using JetBrains.Annotations;
-using MHR_Editor.Common;
-using MHR_Editor.Common.Attributes;
-using MHR_Editor.Common.Controls.Models;
-using MHR_Editor.Common.Data;
-using MHR_Editor.Common.Models;
-using MHR_Editor.Windows;
+using RE_Editor.Common;
+using RE_Editor.Common.Attributes;
+using RE_Editor.Common.Controls.Models;
+using RE_Editor.Common.Data;
+using RE_Editor.Common.Models;
+using RE_Editor.Windows;
 
-namespace MHR_Editor.Controls;
+namespace RE_Editor.Controls;
 
 public interface IAutoDataGrid {
     bool IsAddingAllowed { get; set; }
@@ -326,8 +327,8 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
         try {
             var frameworkElement = (FrameworkElement) sender;
             var obj              = frameworkElement.DataContext;
-            var list             = propertyInfo.GetGetMethod()?.Invoke(obj, null);
-            var listType         = list?.GetType().GenericTypeArguments[0];
+            var list             = (IList) propertyInfo.GetGetMethod()?.Invoke(obj, null);
+            var listType         = list?.Count > 0 ? list[0]?.GetType() : list?.GetType().GenericTypeArguments[0];
             var isList           = (IsListAttribute) propertyInfo.GetCustomAttribute(typeof(IsListAttribute), true) != null;
             var viewType         = typeof(SubStructViewDynamic<>).MakeGenericType(listType ?? throw new InvalidOperationException());
             var subStructView = isList switch {
@@ -355,19 +356,16 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
         if (cell.DataContext is not IOnPropertyChanged obj) return false;
 
         // `sourceProperty` will only have a value if we come from a button.
+        // Use it if it does, and if not, use the target column.
 
         var property       = obj.GetType().GetProperty(propertyName.Replace("_button", ""), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)!;
         var propertyType   = property.PropertyType;
         var value          = property.GetValue(obj);
-        var dataSourceType = ((DataSourceAttribute) (sourceProperty ?? property).GetCustomAttribute(typeof(DataSourceAttribute), true))?.dataType;
-        var showAsHex      = (ButtonIdAsHexAttribute) (sourceProperty ?? property).GetCustomAttribute(typeof(ButtonIdAsHexAttribute), true) != null;
+        var propToUse      = sourceProperty?.GetCustomAttribute(typeof(DataSourceAttribute), true) != null ? sourceProperty : property;
+        var dataSourceType = ((DataSourceAttribute) propToUse.GetCustomAttribute(typeof(DataSourceAttribute), true))?.dataType;
+        var showAsHex      = (ButtonIdAsHexAttribute) propToUse.GetCustomAttribute(typeof(ButtonIdAsHexAttribute), true) != null;
 
         dynamic dataSource = dataSourceType switch {
-            DataSourceType.DANGO_SKILLS => DataHelper.DANGO_SKILL_NAME_LOOKUP[Global.locale],
-            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
-            DataSourceType.RAMPAGE_SKILLS => DataHelper.RAMPAGE_SKILL_NAME_LOOKUP[Global.locale],
-            DataSourceType.SKILLS => DataHelper.SKILL_NAME_LOOKUP[Global.locale],
-            DataSourceType.SWITCH_SKILLS => DataHelper.SWITCH_SKILL_NAME_LOOKUP[Global.locale],
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
 

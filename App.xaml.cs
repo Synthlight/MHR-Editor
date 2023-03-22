@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using MHR_Editor.Data;
+using RE_Editor.Data;
 
-namespace MHR_Editor;
+namespace RE_Editor;
 
 public partial class App {
     protected override void OnStartup(StartupEventArgs e) {

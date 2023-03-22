@@ -4,7 +4,7 @@ using System.Text;
 
 #pragma warning disable CS8618
 
-namespace MHR_Editor.Common.Models;
+namespace RE_Editor.Common.Models;
 
 public class ReDataFile {
     public Magic              magic;

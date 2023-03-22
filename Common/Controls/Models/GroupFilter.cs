@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace MHR_Editor.Common.Controls.Models;
+namespace RE_Editor.Common.Controls.Models;
 
 public class GroupFilter {
     private readonly Dictionary<PropertyInfo, string?> filterMap = new();

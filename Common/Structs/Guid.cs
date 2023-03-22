@@ -1,12 +1,20 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using MHR_Editor.Common.Models;
+using RE_Editor.Common.Models;
 
-namespace MHR_Editor.Common.Structs;
+namespace RE_Editor.Common.Structs;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public class Guid : RszObject, IViaType {
     public System.Guid Value { get; set; }
+
+    public static ObservableCollection<Guid> NewIdInAList =>
+        new() {
+            new() {
+                Value = System.Guid.NewGuid()
+            }
+        };
 
     public void Read(BinaryReader reader) {
         Value = new(reader.ReadBytes(16));

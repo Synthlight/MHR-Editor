@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
-using MHR_Editor.Common.Models;
+using RE_Editor.Common.Models;
 
-namespace MHR_Editor.Common.Structs;
+namespace RE_Editor.Common.Structs;
 
 #pragma warning disable CS8618
 
@@ -25,5 +25,11 @@ public class Color : RszObject, IViaType {
         writer.Write(byte.Parse(RGBA[3..5], NumberStyles.HexNumber));
         writer.Write(byte.Parse(RGBA[5..7], NumberStyles.HexNumber));
         writer.Write(byte.Parse(RGBA[7..9], NumberStyles.HexNumber));
+    }
+
+    public Color Copy() {
+        return new() {
+            RGBA = RGBA
+        };
     }
 }

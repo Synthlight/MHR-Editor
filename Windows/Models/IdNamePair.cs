@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
-using MHR_Editor.Common;
+using RE_Editor.Common;
 
-namespace MHR_Editor.Windows.Models;
+namespace RE_Editor.Windows.Models;
 
 [UsedImplicitly]
 public struct IdNamePair<T> where T : struct {

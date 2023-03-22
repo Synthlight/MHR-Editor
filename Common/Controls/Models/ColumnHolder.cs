@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace MHR_Editor.Common.Controls.Models;
+namespace RE_Editor.Common.Controls.Models;
 
 public class ColumnHolder {
     public readonly DataGridColumn column;

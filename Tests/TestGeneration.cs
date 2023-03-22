@@ -1,6 +1,6 @@
-using MHR_Editor.Generator;
+using RE_Editor.Generator;
 
-namespace Tests;
+namespace RE_Editor.Tests;
 
 [TestClass]
 public class TestGeneration {

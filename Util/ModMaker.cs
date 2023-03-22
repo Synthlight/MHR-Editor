@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using MHR_Editor.Common;
-using MHR_Editor.Common.Models;
-using MHR_Editor.Models;
+using RE_Editor.Common;
+using RE_Editor.Common.Models;
+using RE_Editor.Models;
 
-namespace MHR_Editor.Util;
+namespace RE_Editor.Util;
 
 public static class ModMaker {
     public static void WriteMods<T>(IEnumerable<T> mods, string inPath, string outPath, string variantBundleName = null, bool copyToFluffy = false) where T : INexusMod {
         foreach (var mod in mods) {
-            var folderName = mod.Filename ?? mod.Name.Replace('/', '-');
+            var folderName = mod.Filename ?? mod.Name.Replace('/', '-').Replace(':', '-');
             var variant    = mod as INexusModVariant;
             var bundleName = variant?.NameAsBundle.Replace('/', '-');
 
@@ -34,6 +34,11 @@ public static class ModMaker {
             modInfo.WriteLine("author=LordGregory");
             if (variant != null) {
                 modInfo.WriteLine($"NameAsBundle={bundleName}");
+            }
+            if (mod.Image != null) {
+                var imageFileName = Path.GetFileName(mod.Image);
+                modInfo.WriteLine($"screenshot={imageFileName}");
+                File.Copy(mod.Image!, @$"{modPath}\{imageFileName}", true);
             }
             File.WriteAllText(@$"{modPath}\modinfo.ini", modInfo.ToString());
 

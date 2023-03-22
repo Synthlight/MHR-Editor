@@ -1,11 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using MHR_Editor.Generated.Enums;
 
 #pragma warning disable CS8618
 
-namespace MHR_Editor.Common.Models;
+namespace RE_Editor.Common.Models;
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "NotAccessedField.Global")]
@@ -77,14 +76,14 @@ public class MSG {
             file.languages[langIndex] = reader.ReadInt32();
         }
 
-        file.unknown = reader.ReadBytes((int)(reader.BaseStream.Position % 8));
+        file.unknown = reader.ReadBytes((int) (reader.BaseStream.Position % 8));
 
         file.typeIds = new int[file.typeCount];
         for (var typeIndex = 0; typeIndex < file.typeCount; typeIndex++) {
             file.typeIds[typeIndex] = reader.ReadInt32();
         }
 
-        file.unknown = reader.ReadBytes((int)(reader.BaseStream.Position % 8));
+        file.unknown = reader.ReadBytes((int) (reader.BaseStream.Position % 8));
 
         file.typeNameStringOffsets = new ulong[file.typeCount];
         file.typeNames             = new string[file.typeCount];
@@ -144,7 +143,7 @@ public class MSG {
         return result;
     }
 
-    public Dictionary<uint, string> GetIdMap(Global.LangIndex lang, SubCategoryType type, bool startAtOne, uint idBaseNum) {
+    public Dictionary<uint, string> GetIdMap(Global.LangIndex lang, uint type, bool startAtOne, uint idBaseNum) {
         var dict = new Dictionary<uint, string>(subEntries.Length);
         for (var i = startAtOne ? 1 : 0; i < subEntries.Length; i++) {
             var id   = idBaseNum + ((uint) type | (uint) (i - (startAtOne ? 1 : 0)));
@@ -155,7 +154,7 @@ public class MSG {
         return dict;
     }
 
-    public Dictionary<Global.LangIndex, Dictionary<uint, string>> GetLangIdMap(SubCategoryType type, bool startAtOne, uint idBaseNum = 0) {
+    public Dictionary<Global.LangIndex, Dictionary<uint, string>> GetLangIdMap(uint type, bool startAtOne, uint idBaseNum = 0) {
         var dict = new Dictionary<Global.LangIndex, Dictionary<uint, string>>(Global.LANGUAGES.Count);
         foreach (var lang in Global.LANGUAGES) {
             dict[lang] = GetIdMap(lang, type, startAtOne, idBaseNum);

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
-namespace MHR_Editor.Common.Models;
+namespace RE_Editor.Common.Models;
 
 [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
 public class InstanceInfo {

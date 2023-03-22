@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using MHR_Editor.Windows.Models;
+using RE_Editor.Windows.Models;
 using Application = System.Windows.Application;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
-namespace MHR_Editor.Windows {
+namespace RE_Editor.Windows {
     // A fuck ton of dynamic because we can't make an xaml window generic.
     public partial class GetNewItemId {
         public dynamic CurrentItem { get; set; }

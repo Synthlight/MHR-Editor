@@ -3,7 +3,7 @@ using System.IO;
 
 #pragma warning disable CS8618
 
-namespace MHR_Editor.Common.Models;
+namespace RE_Editor.Common.Models;
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
@@ -12,7 +12,7 @@ public class RSZ {
     public uint                  magic; // We only support: 0x52535A00
     public uint                  version; // We only support: 16
     public uint                  reserved; // Might be padding?
-    public List<uint>            objectInfo; // Outermost data type.
+    public List<uint>            objectEntryPoints; // Outermost data type.
     public List<InstanceInfo>    instanceInfo; // Array type info. (Contents of the 'outermost' data type, given the outermost type is an array.)
     public List<RszUserDataInfo> userDataInfo; // String names of other files being referenced. MUST MATCH THE OUTER ONE IN `ReDataFile`.
     public List<RszObject>       objectData; // Array data. USED ONLY FOR READ.
@@ -30,9 +30,9 @@ public class RSZ {
         var dataOffset     = reader.ReadUInt64();
         var userDataOffset = reader.ReadUInt64();
 
-        rsz.objectInfo = new(objectInfoCount);
+        rsz.objectEntryPoints = new(objectInfoCount);
         for (var i = 0; i < objectInfoCount; i++) {
-            rsz.objectInfo.Add(reader.ReadUInt32());
+            rsz.objectEntryPoints.Add(reader.ReadUInt32());
         }
 
         reader.BaseStream.Seek(rsz.position + (long) instanceOffset, SeekOrigin.Begin);
@@ -44,7 +44,8 @@ public class RSZ {
         reader.BaseStream.Seek(rsz.position + (long) userDataOffset, SeekOrigin.Begin);
         rsz.userDataInfo = new(userDataCount);
         for (var i = 0; i < userDataCount; i++) {
-            rsz.userDataInfo.Add(RszUserDataInfo.Read(reader, rsz));
+            var userDataInfo = RszUserDataInfo.Read(reader, rsz);
+            rsz.userDataInfo.Add(userDataInfo);
         }
 
         reader.BaseStream.Seek(rsz.position + (long) dataOffset, SeekOrigin.Begin);
@@ -52,8 +53,14 @@ public class RSZ {
         for (var index = 0; index < instanceCount; index++) {
             var hash = rsz.instanceInfo[index].hash;
             if (hash == 0) continue;
-            var userDataRef = userDataCount >= index ? index - 1 : -1; // index - 1 due to the first instance info always being null.
-            var obj         = RszObject.Read(reader, hash, rsz, userDataRef);
+            var userDataRef = -1; // index - 1 due to the first instance info always being null.
+            for (var i = 0; i < rsz.userDataInfo.Count; i++) {
+                if (rsz.userDataInfo[i].instanceId == index) {
+                    userDataRef = i;
+                    break;
+                }
+            }
+            var obj = RszObject.Read(reader, hash, rsz, userDataRef);
             obj.Index = index;
             rsz.objectData.Add(obj);
         }
@@ -63,23 +70,44 @@ public class RSZ {
         return rsz;
     }
 
+    [SuppressMessage("ReSharper", "ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator")]
+    [SuppressMessage("ReSharper", "ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator")]
     public void Write(BinaryWriter writer, ulong rszOffsetStart, bool testWritePosition) {
         // We need to pre-calculate the instance info array before we write it.
         // This will also give us the entry object, but we're just not supporting adding/removing instances for now.
-
         instanceInfo.Clear();
         instanceInfo.Add(new() {hash = 0, crc = 0});
 
-        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
-        foreach (var obj in objectInfo) {
-            // Find entry objects and tell it to setup the instance info.
-            var entryPointRszObject = objectData[(int) obj - 1]; // 1 based.
-            entryPointRszObject.SetupInstanceInfo(instanceInfo);
+        // Re-create the `objectData` array in case we've added data.
+        // First, get a list of entry objects.
+        var rootObjects = new List<RszObject>();
+        foreach (var entryIndex in objectEntryPoints) {
+            var entryPointObject = objectData[(int) entryIndex - 1]; // 1 based.
+            rootObjects.Add(entryPointObject);
+        }
+        // Then, call each in order so they can rebuild the list in the right order.
+        objectData.Clear();
+        foreach (var rootObject in rootObjects) {
+            var objectChain = new List<RszObject>();
+            // Build the object data chain.
+            rootObject.WriteObjectList(objectChain);
+            objectData.AddRange(objectChain);
+            // And build the instance info chain.
+            rootObject.SetupInstanceInfo(instanceInfo);
+        }
+        // Finally, rebuild the `objectInfo` list with the new entries from where our `rootObjects` now live.
+        objectEntryPoints.Clear();
+        for (var i = 0; i < objectData.Count; i++) {
+            foreach (var rootObject in rootObjects) {
+                if (objectData[i] == rootObject) {
+                    objectEntryPoints.Add((uint) (i + 1));
+                }
+            }
         }
 
         writer.Write(magic);
         writer.Write(version);
-        writer.Write(objectInfo.Count);
+        writer.Write(objectEntryPoints.Count);
         writer.Write(instanceInfo.Count);
         writer.Write(userDataInfo.Count);
         writer.Write(reserved);
@@ -91,7 +119,7 @@ public class RSZ {
         var userDataOffsetPos = writer.BaseStream.Position;
         writer.Write(0ul);
 
-        foreach (var obj in objectInfo) {
+        foreach (var obj in objectEntryPoints) {
             writer.Write(obj);
         }
 
@@ -112,12 +140,9 @@ public class RSZ {
         writer.PadTill(() => writer.BaseStream.Position % 16 != 0);
         writer.WriteValueAtOffset((ulong) writer.BaseStream.Position - rszOffsetStart, dataOffsetPos);
 
-        // Find entry objects and 'write' from there. Those will need to handle writing out the objects as needed.
-        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
-        foreach (var obj in objectInfo) {
-            var objectDataIndex     = obj - 1; // 1 based. TODO: Needs to handle adding/removing objects.
-            var entryPointRszObject = objectData[(int) objectDataIndex];
-            entryPointRszObject.Write(writer, testWritePosition);
+        // Call `Write` from the root objects. Those will handle writing out the objects in the correct order.
+        foreach (var rootObject in rootObjects) {
+            rootObject.Write(writer, testWritePosition);
         }
     }
 }

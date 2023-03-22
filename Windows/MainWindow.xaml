@@ -1,4 +1,4 @@
-﻿<Window x:Class="MHR_Editor.Windows.MainWindow"
+﻿<Window x:Class="RE_Editor.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
@@ -77,65 +77,14 @@
                    VerticalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Right"
                         Orientation="Horizontal">
-                <Button Name="btn_wiki_dump"
-                        Margin="0,0,0,0"
-                        HorizontalAlignment="Left"
-                        Click="Btn_wiki_dump_Click"
-                        Content="Wiki Dump"/>
-                <xctk:SplitButton Name="btn_all_cheats"
-                                  Margin="8,0,0,0"
-                                  HorizontalAlignment="Left"
-                                  Click="Btn_all_cheats_Click"
-                                  Content="Cheats (All)">
-                    <xctk:SplitButton.DropDownContent>
-                        <StackPanel Orientation="Vertical">
-                            <Button Margin="0,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="Btn_max_sharpness_Click"
-                                    Content="Max Sharpness"/>
-                            <Button Margin="0,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="Btn_max_slots_Click"
-                                    Content="Max Slots"/>
-                            <Button Margin="0,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="Btn_max_skills_Click"
-                                    Content="Max Skills"/>
-                            <Button Margin="0,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="Btn_no_cost_Click"
-                                    Content="No Cost"/>
-                            <Button Margin="0,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="Btn_no_unlock_flag_Click"
-                                    Content="No Unlock Flags"/>
-                        </StackPanel>
-                    </xctk:SplitButton.DropDownContent>
-                </xctk:SplitButton>
                 <xctk:SplitButton Name="btn_make_mods"
                                   Margin="8,0,0,0"
                                   HorizontalAlignment="Left"
                                   Click="Btn_make_all_mods_Click"
                                   Content="Make Mods (All)">
                     <xctk:SplitButton.DropDownContent>
-                        <StackPanel Orientation="Vertical">
-                            <Button Margin="0,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="Btn_create_cheat_mods_Click"
-                                    Content="Create Cheat Mods"/>
-                            <Button Margin="0,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="Btn_create_no_requirement_mods_Click"
-                                    Content="Create No Requirement Mods"/>
-                            <Button Margin="0,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="Btn_create_sorted_gem_mods_Click"
-                                    Content="Create Sorted Gem Mods"/>
-                            <Button Margin="0,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="Btn_create_sorted_title_mods_Click"
-                                    Content="Create Sorted Title Mods"/>
-                        </StackPanel>
+                        <StackPanel Name="panel_mods"
+                                    Orientation="Vertical"/>
                     </xctk:SplitButton.DropDownContent>
                 </xctk:SplitButton>
                 <Button Name="btn_test"
@@ -147,21 +96,6 @@
                         HorizontalAlignment="Right"
                         Click="Btn_open_wiki_OnClick"
                         Content="Wiki"/>
-                <xctk:SplitButton Name="btn_sort_gems_by_skill_name"
-                                  Margin="8,0,0,0"
-                                  HorizontalAlignment="Left"
-                                  Click="Btn_sort_gems_by_skill_name_Click"
-                                  Content="Sort Gems by Skill Name"
-                                  Visibility="Collapsed">
-                    <xctk:SplitButton.DropDownContent>
-                        <StackPanel Orientation="Vertical">
-                            <Button Margin="0,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    Click="Btn_sort_gems_by_gem_name_Click"
-                                    Content="Sort Gems by Gem Name"/>
-                        </StackPanel>
-                    </xctk:SplitButton.DropDownContent>
-                </xctk:SplitButton>
                 <ComboBox Name="cbx_localization"
                           Margin="8,0,0,0"
                           HorizontalAlignment="Right"

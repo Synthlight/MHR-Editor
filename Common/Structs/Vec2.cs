@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using MHR_Editor.Common.Models;
+using RE_Editor.Common.Models;
 
-namespace MHR_Editor.Common.Structs;
+namespace RE_Editor.Common.Structs;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public class Vec2 : RszObject, IViaType {
@@ -21,5 +21,12 @@ public class Vec2 : RszObject, IViaType {
         writer.Write(Y);
         writer.Write(0f);
         writer.Write(0f);
+    }
+
+    public Vec2 Copy() {
+        return new() {
+            X = X,
+            Y = Y
+        };
     }
 }

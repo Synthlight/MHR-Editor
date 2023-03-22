@@ -1,6 +1,6 @@
-﻿using MHR_Editor.Common.Models;
+﻿using RE_Editor.Common.Models;
 
-namespace MHR_Editor.Common.Controls.Models;
+namespace RE_Editor.Common.Controls.Models;
 
 public class HeaderInfo : OnPropertyChangedBase {
     private readonly string                               originalText;

@@ -2,9 +2,9 @@
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using MHR_Editor.Controls;
+using RE_Editor.Controls;
 
-namespace MHR_Editor.Windows {
+namespace RE_Editor.Windows {
     public partial class SubStructView {
         public SubStructView() {
             InitializeComponent();

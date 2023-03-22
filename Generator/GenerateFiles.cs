@@ -2,59 +2,24 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using MHR_Editor.Common;
-using MHR_Editor.Common.Models;
-using MHR_Editor.Generator.Models;
 using Microsoft.CSharp;
 using Newtonsoft.Json;
+using RE_Editor.Common;
+using RE_Editor.Common.Models;
+using RE_Editor.Generator.Models;
 
-namespace MHR_Editor.Generator;
+namespace RE_Editor.Generator;
 
 public class GenerateFiles {
-    public const string BASE_GEN_PATH   = @"..\..\..\Generated"; // @"C:\Temp\Gen"
-    public const string BASE_PROJ_PATH  = @"..\..\..";
-    public const string ENUM_GEN_PATH   = $@"{BASE_GEN_PATH}\Enums";
-    public const string STRUCT_GEN_PATH = $@"{BASE_GEN_PATH}\Structs";
+    public const string BASE_GEN_PATH         = @"..\..\..\Generated"; // @"C:\Temp\Gen"
+    public const string BASE_PROJ_PATH        = @"..\..\..";
+    public const string ENUM_GEN_PATH         = $@"{BASE_GEN_PATH}\Enums";
+    public const string STRUCT_GEN_PATH       = $@"{BASE_GEN_PATH}\Structs";
+    public const string ROOT_STRUCT_NAMESPACE = "";
+    public const string ENUM_REGEX            = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
 
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static readonly List<string> WHITELIST = new() {
-        "Snow_data_ArmorBaseUserData",
-        "Snow_data_ContentsIdSystem_ItemId",
-        "Snow_data_ContentsIdSystem_SubCategoryType",
-        "Snow_data_DangoBaseUserData",
-        "Snow_data_DataDef_PlEquipSkillId",
-        "Snow_data_DecorationsBaseUserData",
-        "Snow_data_ItemUserData",
-        "Snow_data_NormalLvBuffCageBaseUserData",
-        "Snow_data_OtAirouArmorBaseUserData",
-        "Snow_data_OtDogArmorBaseUserData",
-        "Snow_data_OtDogWeaponBaseUserData",
-        "Snow_data_OtWeaponBaseUserData",
-        "Snow_data_PlEquipSkillBaseUserData",
-        "Snow_data_PlHyakuryuSkillBaseUserData",
-        "Snow_enemy_em134_Em134_00UniqueData", // Nested generics.
-        "Snow_envCreature_Ec019Trajectory_TimeEffectSetting", // Nested generics.
-        "Snow_equip_BowBaseUserData",
-        "Snow_equip_ChargeAxeBaseUserData",
-        "Snow_equip_DualBladesBaseUserData",
-        "Snow_equip_GreatSwordBaseUserData",
-        "Snow_equip_GunLanceBaseUserData",
-        "Snow_equip_HammerBaseUserData",
-        "Snow_equip_HeavyBowgunBaseUserData",
-        "Snow_equip_HornBaseUserData",
-        "Snow_equip_InsectBaseUserData",
-        "Snow_equip_InsectGlaiveBaseUserData",
-        "Snow_equip_LanceBaseUserData",
-        "Snow_equip_LightBowgunBaseUserData",
-        "Snow_equip_LongSwordBaseUserData",
-        "Snow_equip_OtOverwearBaseUserData_Param",
-        "Snow_equip_OtOverwearRecipeUserData_Param",
-        "Snow_equip_PlOverwearBaseUserData",
-        "Snow_equip_ShortSwordBaseUserData",
-        "Snow_equip_SlashAxeBaseUserData",
-        "Snow_fallingObject_FallingObjectPlayerHeavyBowgunExtraCartridgeUserData",
-        "Snow_npc_fsm_action_NpcFsmAction_StopNavigation", // Via_vec3? This one skipped the via type checking.
-        "Snow_player_PlayerUserDataBow",
-        "Snow_player_PlayerUserDataIG_Insect",
     };
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -73,23 +38,11 @@ public class GenerateFiles {
         "Sphere",
         "Torus",
         "Triangle",
-        "UserData",
     };
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly List<string> UNSUPPORTED_OBJECT_TYPES = new() { // TODO: Implement support for these.
-        "snow.camera.CameraUtility.BufferingParam`",
-        "snow.data.StmKeyconfigSystem.ConfigCodeSet`",
-        "snow.shell.Em", // There's one for each monster variant. Exclude the whole shebang for now.
-        "snow.enemy.EnemyCarryChangeTrack`",
-        "snow.enemy.EnemyEditStepActionData`",
-        "snow.envCreature.EnvironmentCreatureActionController`",
-        "snow.eventcut.EventPlayerMediator.FaceMaterialConfig`",
-        "snow.StmDefaultKeyconfigData.EnumSet2`",
-        "snow.StmGuiKeyconfigData.EnumItemSystemMessage`",
-        "snow.StmGuiKeyconfigData.EnumMessage`",
         "System.Collections.Generic.Dictionary`",
-        "System.Collections.Generic.List`1<snow.enemy.em134.Em", // Nested generics.
         "System.Collections.Generic.Queue`1<System.Tuple`", // Nested generics.
         "System.Collections.Generic.Queue`1<via.vec3>", // Because this breaks generation and I need a better way of handling generics.
     };
@@ -200,7 +153,7 @@ public class GenerateFiles {
      */
     private void PrepTemplatesForFoundTypes() {
         var enumHpp = File.ReadAllText(PathHelper.ENUM_HEADER_PATH);
-        var regex   = new Regex(@"namespace ((?:snow::[^ ]+|snow|via::[^ ]+|via)) {\s+enum ([^ ]+) ({[^}]+})", RegexOptions.Singleline);
+        var regex   = new Regex(ENUM_REGEX, RegexOptions.Singleline);
         var matches = regex.Matches(enumHpp);
         foreach (Match match in matches) {
             var hppName = $"{match.Groups[1].Value}::{match.Groups[2].Value}";
@@ -208,7 +161,17 @@ public class GenerateFiles {
             var name     = hppName.ToConvertedTypeName();
             var contents = match.Groups[3].Value;
             if (name != null && enumTypes.ContainsKey(name)) {
-                enumTypes[name].Contents = contents;
+                var enumType = enumTypes[name];
+                if (contents.Contains("= -")) {
+                    enumType.type = enumType.type switch {
+                        "ushort" => "short",
+                        "uint" => "int",
+                        "ulong" => "long",
+                        "byte" => "sbyte",
+                        _ => enumType.type
+                    };
+                }
+                enumType.Contents = contents;
             }
         }
     }
@@ -252,7 +215,7 @@ public class GenerateFiles {
                  || structInfo.name.Contains("List`")
                  || structInfo.name.Contains("Culture=neutral")
                  || structInfo.name.StartsWith("System")
-                 || !structInfo.name.StartsWith("snow") && !structInfo.name.StartsWith("via"));
+                 || !structInfo.name.StartsWith(ROOT_STRUCT_NAMESPACE) && !structInfo.name.StartsWith("via"));
     }
 
     /**
@@ -262,6 +225,7 @@ public class GenerateFiles {
         // Whitelist more commonly used things.
         foreach (var name in WHITELIST.ToList()) {
             WHITELIST.Add(name + "_Param");
+            WHITELIST.Add(name + "_Data");
         }
         // Make sure to keep whitelisted enums/structs.
         enumTypes.Keys
@@ -275,17 +239,7 @@ public class GenerateFiles {
     }
 
     private static bool IsWhitelisted(string key) {
-        return WHITELIST.Contains(key)
-               || key.ContainsIgnoreCase("ContentsIdSystem")
-               || key.ContainsIgnoreCase("Snow_data_DataDef")
-               || key.ContainsIgnoreCase("ProductUserData")
-               || key.ContainsIgnoreCase("ChangeUserData")
-               || key.ContainsIgnoreCase("ProcessUserData")
-               || key.ContainsIgnoreCase("RecipeUserData")
-               || key.ContainsIgnoreCase("PlayerUserData")
-               || key.ContainsIgnoreCase("Snow_equip")
-               || key.ContainsIgnoreCase("Snow_data")
-               || key.ContainsIgnoreCase("Snow_player");
+        return WHITELIST.Contains(key);
     }
 
     /**
@@ -294,8 +248,9 @@ public class GenerateFiles {
     private void UpdateUsingCounts() {
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
         foreach (var structType in structTypes.Values) {
+            if (structType.name.GetViaType() != null) continue;
             if (structType.useCount > 0) {
-                structType.UpdateUsingCounts(this);
+                structType.UpdateUsingCounts(this, new());
             }
         }
     }
@@ -317,6 +272,7 @@ public class GenerateFiles {
                       where IsStructNameValid(entry.Value)
                       let name = entry.Value.name
                       where !string.IsNullOrEmpty(name)
+                      where name.GetViaType() == null
                       let typeName = name?.ToConvertedTypeName()
                       where !enumTypes.ContainsKey(typeName) && !structTypes.ContainsKey(typeName)
                       select entry.Key);
@@ -339,7 +295,9 @@ public class GenerateFiles {
     }
 
     private void GenerateStructs(bool dryRun) {
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
         foreach (var structType in structTypes.Values) {
+            if (structType.name.GetViaType() != null) continue;
             new StructTemplate(this, structType).Generate(dryRun);
         }
     }

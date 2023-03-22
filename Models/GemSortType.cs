@@ -1,4 +1,4 @@
-﻿namespace MHR_Editor.Models;
+﻿namespace RE_Editor.Models;
 
 public enum GemSortType {
     GEM_NAME,

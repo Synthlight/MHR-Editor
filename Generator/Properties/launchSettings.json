@@ -3,9 +3,17 @@
         "[None]": {
             "commandName": "Project"
         },
+        "DryRun": {
+            "commandName": "Project",
+            "commandLineArgs": "dryRun"
+        },
         "Whitelist": {
             "commandName": "Project",
             "commandLineArgs": "useWhitelist"
+        },
+        "Whitelist (DryRun)": {
+            "commandName": "Project",
+            "commandLineArgs": "useWhitelist dryRun"
         }
     }
 }

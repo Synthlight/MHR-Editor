@@ -1,27 +1,22 @@
 using System.Diagnostics;
 using System.Security.Cryptography;
-using MHR_Editor.Common.Models;
+using RE_Editor.Common;
+using RE_Editor.Common.Models;
 
-namespace Tests;
+namespace RE_Editor.Tests;
 
 [TestClass]
 public class TestFiles {
-    private const string IN_PATH = @"V:\MHR\re_chunk_000";
-    private static readonly string[] TEST_PATHS = {
-        $@"{IN_PATH}\natives\STM\data\",
-        $@"{IN_PATH}\natives\STM\player\UserData",
-    };
-
     private static IEnumerable<object[]> GetUserFilesToTest() {
-        return from basePath in TEST_PATHS
-               from file in Directory.EnumerateFiles(basePath, "*.user.2", SearchOption.AllDirectories)
+        return from basePath in PathHelper.TEST_PATHS
+               from file in Directory.EnumerateFiles(PathHelper.CHUNK_PATH + basePath, "*.user.2", SearchOption.AllDirectories)
                where File.Exists(file)
                select new object[] {file};
     }
 
     private static IEnumerable<object[]> GetTextFilesToTest() {
-        return from basePath in TEST_PATHS
-               from file in Directory.EnumerateFiles(basePath, "*.msg.17", SearchOption.AllDirectories)
+        return from basePath in PathHelper.TEST_PATHS
+               from file in Directory.EnumerateFiles(PathHelper.CHUNK_PATH + basePath, "*.msg.17", SearchOption.AllDirectories)
                where File.Exists(file)
                select new object[] {file};
     }

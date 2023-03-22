@@ -4,7 +4,7 @@ using System.Reflection;
 #pragma warning disable CS8600
 #pragma warning disable CS8618
 
-namespace MHR_Editor.Common.Controls.Models;
+namespace RE_Editor.Common.Controls.Models;
 
 public class ButtonSorter : ICustomSorterWithPropertyName {
     public ListSortDirection SortDirection { get; set; } = ListSortDirection.Ascending;

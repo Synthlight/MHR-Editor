@@ -1,4 +1,4 @@
-﻿namespace MHR_Editor.Common.Attributes;
+﻿namespace RE_Editor.Common.Attributes;
 
 public class IsListAttribute : Attribute {
 }

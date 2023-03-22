@@ -6,9 +6,9 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using MHR_Editor.Common;
+using RE_Editor.Common;
 
-namespace MHR_Editor;
+namespace RE_Editor;
 
 public static class Extensions {
     public static void AddControl(this Grid grid, UIElement control) {

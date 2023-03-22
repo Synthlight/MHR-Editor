@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace MHR_Editor.Common.Models.List_Wrappers;
+namespace RE_Editor.Common.Models.List_Wrappers;
 
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 public interface IListWrapper<T> : INotifyPropertyChanged {

@@ -3,9 +3,9 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using MHR_Editor.Common.Models;
+using RE_Editor.Common.Models;
 
-namespace MHR_Editor.Common;
+namespace RE_Editor.Common;
 
 public static class Extensions {
     private static readonly Dictionary<string, string> VIA_TYPE_NAME_LOOKUPS = new();
@@ -301,8 +301,13 @@ public static class Extensions {
     }
 
     public static Dictionary<A, B> MergeDictionaries<A, B>(this IEnumerable<Dictionary<A, B>> dictionaries) where A : notnull {
-        return dictionaries.SelectMany(dict => dict)
-                           .ToDictionary(pair => pair.Key, pair => pair.Value);
+        var dictionary = new Dictionary<A, B>();
+        foreach (var dict in dictionaries) {
+            foreach (var pair in dict) {
+                dictionary[pair.Key] = pair.Value;
+            }
+        }
+        return dictionary;
     }
 
     public static Dictionary<A, Dictionary<B, C>> MergeDictionaries<A, B, C>(this IEnumerable<Dictionary<A, Dictionary<B, C>>> dictionaries) where A : notnull

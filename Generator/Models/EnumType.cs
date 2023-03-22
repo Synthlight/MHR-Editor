@@ -1,7 +1,7 @@
-﻿namespace MHR_Editor.Generator.Models {
+﻿namespace RE_Editor.Generator.Models {
     public class EnumType {
         public readonly string  name;
-        public readonly string  type;
+        public          string  type;
         public          int     useCount;
         private         string? contents;
         public string? Contents {

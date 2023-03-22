@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace MHR_Editor.Common.Models.List_Wrappers;
+namespace RE_Editor.Common.Models.List_Wrappers;
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
@@ -17,5 +17,9 @@ public sealed class GenericWrapper<T> : ListWrapper<T> {
 
     public override string? ToString() {
         return Value?.ToString();
+    }
+
+    public GenericWrapper<T> Copy() {
+        return new(Index, Value);
     }
 }

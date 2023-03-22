@@ -1,6 +1,6 @@
-﻿using MHR_Editor.Common.Attributes;
+﻿using RE_Editor.Common.Attributes;
 
-namespace MHR_Editor.Common.Models;
+namespace RE_Editor.Common.Models;
 
 public class UserDataShell : RszObject {
     [SortOrder(500)]

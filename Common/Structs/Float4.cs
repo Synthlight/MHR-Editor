@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using MHR_Editor.Common.Models;
+using RE_Editor.Common.Models;
 
-namespace MHR_Editor.Common.Structs;
+namespace RE_Editor.Common.Structs;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public class Float4 : RszObject, IViaType {
@@ -23,5 +23,14 @@ public class Float4 : RszObject, IViaType {
         writer.Write(Y);
         writer.Write(Z);
         writer.Write(W);
+    }
+
+    public Float4 Copy() {
+        return new() {
+            X = X,
+            Y = Y,
+            Z = Z,
+            W = W
+        };
     }
 }

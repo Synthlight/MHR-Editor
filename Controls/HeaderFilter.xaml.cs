@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using MHR_Editor.Common.Controls.Models;
+using RE_Editor.Common.Controls.Models;
 
-namespace MHR_Editor.Controls;
+namespace RE_Editor.Controls;
 
 public partial class HeaderFilter {
     public static readonly DependencyProperty HeaderInfoProperty = DependencyProperty.Register(nameof(HeaderInfo), typeof(HeaderInfo), typeof(HeaderFilter), new());

@@ -1,4 +1,4 @@
-﻿namespace MHR_Editor.Generator;
+﻿namespace RE_Editor.Generator;
 
 public static class Program {
     public static void Main(string[] args) {

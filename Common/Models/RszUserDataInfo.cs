@@ -3,7 +3,7 @@ using System.IO;
 
 #pragma warning disable CS8618
 
-namespace MHR_Editor.Common.Models;
+namespace RE_Editor.Common.Models;
 
 [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
 public class RszUserDataInfo {

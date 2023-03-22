@@ -1,6 +1,6 @@
-using MHR_Editor.Data;
+using RE_Editor.Data;
 
-namespace Tests;
+namespace RE_Editor.Tests;
 
 [TestClass]
 public class Setup {

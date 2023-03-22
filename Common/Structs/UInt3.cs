@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using MHR_Editor.Common.Models;
+using RE_Editor.Common.Models;
 
-namespace MHR_Editor.Common.Structs;
+namespace RE_Editor.Common.Structs;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public class UInt3 : RszObject, IViaType {
@@ -20,5 +20,13 @@ public class UInt3 : RszObject, IViaType {
         writer.Write(X);
         writer.Write(Y);
         writer.Write(Z);
+    }
+
+    public UInt3 Copy() {
+        return new() {
+            X = X,
+            Y = Y,
+            Z = Z
+        };
     }
 }

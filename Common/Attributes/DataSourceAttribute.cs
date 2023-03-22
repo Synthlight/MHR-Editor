@@ -1,4 +1,4 @@
-namespace MHR_Editor.Common.Attributes;
+namespace RE_Editor.Common.Attributes;
 
 public class DataSourceAttribute : Attribute {
     public readonly DataSourceType dataType;
@@ -9,9 +9,4 @@ public class DataSourceAttribute : Attribute {
 }
 
 public enum DataSourceType {
-    DANGO_SKILLS,
-    ITEMS,
-    RAMPAGE_SKILLS,
-    SKILLS,
-    SWITCH_SKILLS
 }

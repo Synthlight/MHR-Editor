@@ -9,12 +9,12 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
-using MHR_Editor.Common;
-using MHR_Editor.Common.Attributes;
-using MHR_Editor.Common.Controls.Models;
-using MHR_Editor.Windows;
+using RE_Editor.Common;
+using RE_Editor.Common.Attributes;
+using RE_Editor.Common.Controls.Models;
+using RE_Editor.Windows;
 
-namespace MHR_Editor.Controls;
+namespace RE_Editor.Controls;
 
 public interface IStructGrid {
     void SetItem(object item);

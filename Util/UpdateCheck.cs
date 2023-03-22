@@ -7,11 +7,11 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using JetBrains.Annotations;
-using MHR_Editor.Windows;
 using Newtonsoft.Json;
+using RE_Editor.Windows;
 
 // Separate because `using System.Windows.Forms;` in an xaml class causes ReSharper to imagine annoying problems.
-namespace MHR_Editor.Util;
+namespace RE_Editor.Util;
 
 public static class UpdateCheck {
     private const string NEXUS_LINK = "https://www.nexusmods.com/monsterhunterrise/mods/114";

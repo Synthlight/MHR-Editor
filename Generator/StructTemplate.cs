@@ -1,12 +1,10 @@
-﻿using System.Diagnostics;
-using MHR_Editor.Common;
-using MHR_Editor.Common.Attributes;
-using MHR_Editor.Common.Data;
-using MHR_Editor.Common.Models;
-using MHR_Editor.Common.Structs;
-using MHR_Editor.Generator.Models;
+﻿using RE_Editor.Common;
+using RE_Editor.Common.Attributes;
+using RE_Editor.Common.Models;
+using RE_Editor.Common.Structs;
+using RE_Editor.Generator.Models;
 
-namespace MHR_Editor.Generator;
+namespace RE_Editor.Generator;
 
 public class StructTemplate {
     private readonly GenerateFiles           generator;
@@ -15,12 +13,14 @@ public class StructTemplate {
     private readonly string                  className;
     private readonly Dictionary<string, int> usedNames = new();
     private          int                     sortOrder = 1000;
+    private readonly string?                 parentClass;
 
     public StructTemplate(GenerateFiles generator, StructType structType) {
         this.generator = generator;
         hash           = structType.hash;
         structInfo     = structType.structInfo;
         className      = structType.name;
+        parentClass    = GetParent();
     }
 
     public void Generate(bool dryRun) {
@@ -35,6 +35,8 @@ public class StructTemplate {
                 WriteProperty(file, field);
             }
         }
+        WriteClassCreate(file);
+        WriteClassCopy(file);
         WriteClassFooter(file);
         file.Flush();
         file.Close();
@@ -45,16 +47,16 @@ public class StructTemplate {
         file.WriteLine("using System.ComponentModel;");
         file.WriteLine("using System.Diagnostics.CodeAnalysis;");
         file.WriteLine("using System.Globalization;");
-        file.WriteLine("using MHR_Editor.Common;");
-        file.WriteLine("using MHR_Editor.Common.Attributes;");
-        file.WriteLine("using MHR_Editor.Common.Data;");
-        file.WriteLine("using MHR_Editor.Common.Models;");
-        file.WriteLine("using MHR_Editor.Common.Models.List_Wrappers;");
-        file.WriteLine("using MHR_Editor.Common.Structs;");
-        file.WriteLine("using MHR_Editor.Models.Enums;");
-        file.WriteLine("using DateTime = MHR_Editor.Common.Structs.DateTime;");
-        file.WriteLine("using Guid = MHR_Editor.Common.Structs.Guid;");
-        file.WriteLine("using Range = MHR_Editor.Common.Structs.Range;");
+        file.WriteLine("using RE_Editor.Common;");
+        file.WriteLine("using RE_Editor.Common.Attributes;");
+        file.WriteLine("using RE_Editor.Common.Data;");
+        file.WriteLine("using RE_Editor.Common.Models;");
+        file.WriteLine("using RE_Editor.Common.Models.List_Wrappers;");
+        file.WriteLine("using RE_Editor.Common.Structs;");
+        file.WriteLine("using RE_Editor.Models.Enums;");
+        file.WriteLine("using DateTime = RE_Editor.Common.Structs.DateTime;");
+        file.WriteLine("using Guid = RE_Editor.Common.Structs.Guid;");
+        file.WriteLine("using Range = RE_Editor.Common.Structs.Range;");
     }
 
     private void WriteClassHeader(TextWriter file) {
@@ -65,37 +67,29 @@ public class StructTemplate {
         file.WriteLine("#pragma warning disable CS8603");
         file.WriteLine("#pragma warning disable CS8618");
         file.WriteLine("");
-        file.WriteLine("namespace MHR_Editor.Models.Structs;");
+        file.WriteLine("namespace RE_Editor.Models.Structs;");
         file.WriteLine("");
         file.WriteLine("[SuppressMessage(\"ReSharper\", \"InconsistentNaming\")]");
         file.WriteLine("[SuppressMessage(\"ReSharper\", \"UnusedMember.Global\")]");
         file.WriteLine("[SuppressMessage(\"ReSharper\", \"ClassNeverInstantiated.Global\")]");
         file.WriteLine("[MhrStruct]");
-        file.WriteLine($"public partial class {className} : RszObject {{");
-        file.WriteLine($"    public const uint HASH = 0x{hash};");
+        file.WriteLine($"public partial class {className} : {parentClass ?? "RszObject"} {{");
+        file.WriteLine($"    public {(parentClass == null ? "const" : "new const")} uint HASH = 0x{hash};");
     }
 
     private void WriteProperty(TextWriter file, StructJson.Field field) {
         if (GenerateFiles.UNSUPPORTED_DATA_TYPES.Contains(field.type!)) return;
         if (GenerateFiles.UNSUPPORTED_OBJECT_TYPES.Any(s => field.originalType!.Contains(s))) return;
 
-        var     newName        = field.name?.ToConvertedFieldName()!;
-        var     primitiveName  = field.GetCSharpType();
-        var     typeName       = field.originalType!.ToConvertedTypeName();
-        var     isPrimitive    = primitiveName != null;
-        var     isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
-        var     buttonType     = GetButtonType(field);
-        var     isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
-        var     isObjectType   = field.type == "Object";
-        string? viaType        = null;
-
-        if (isNonPrimitive && !isObjectType) {
-            // This makes sure we've implemented the via type during generation.
-            viaType = field.type!.GetViaType() ?? throw new NotImplementedException($"Hard-coded type '{field.type}' not implemented.");
-        } else if (typeName == "Via_Prefab") {
-            viaType      = nameof(Prefab);
-            isObjectType = false;
-        }
+        var newName        = field.name?.ToConvertedFieldName()!;
+        var primitiveName  = field.GetCSharpType();
+        var typeName       = field.originalType!.ToConvertedTypeName();
+        var isPrimitive    = primitiveName != null;
+        var isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
+        var buttonType     = GetButtonType(field);
+        var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
+        var isObjectType   = field.type is "Object" or "UserData";
+        var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType);
 
         if (usedNames.ContainsKey(newName)) {
             usedNames[newName]++;
@@ -105,10 +99,6 @@ public class StructTemplate {
         }
 
         file.WriteLine("");
-
-        if (newName == "RotOffset") {
-            Debug.Write("");
-        }
 
         if (field.name!.ToLower() == "_id") {
             file.WriteLine("    [ShowAsHex]");
@@ -151,7 +141,7 @@ public class StructTemplate {
                 file.WriteLine("");
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    [DisplayName(\"{newName}\")]");
-                file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) Convert.ChangeType({newName}, TypeCode.UInt32)).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
+                file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName});");
             } else if (isObjectType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
@@ -172,35 +162,118 @@ public class StructTemplate {
         sortOrder += 100;
     }
 
+    private static string? GetViaType(StructJson.Field field, bool isNonPrimitive, string? typeName, ref bool isObjectType) {
+        string? viaType = null;
+
+        if (isNonPrimitive && !isObjectType) {
+            // This makes sure we've implemented the via type during generation.
+            viaType = field.type!.GetViaType() ?? throw new NotImplementedException($"Hard-coded type '{field.type}' not implemented.");
+        } else if (typeName == "Via_Prefab") {
+            viaType      = nameof(Prefab);
+            isObjectType = false;
+        }
+        return viaType;
+    }
+
+    private void WriteClassCreate(TextWriter file) {
+        if (className.StartsWith("Via_")) return;
+
+        var modifier = parentClass == null ? "" : "new ";
+
+        file.WriteLine("");
+        file.WriteLine($"    public static {modifier}{className} Create(RSZ rsz) {{");
+        file.WriteLine($"        var obj = Create<{className}>(rsz, HASH);");
+
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var field in structInfo.fields!) {
+            if (string.IsNullOrEmpty(field.name) || string.IsNullOrEmpty(field.originalType)) continue;
+            if (GenerateFiles.UNSUPPORTED_DATA_TYPES.Contains(field.type!)) continue;
+            if (GenerateFiles.UNSUPPORTED_OBJECT_TYPES.Any(s => field.originalType!.Contains(s))) continue;
+
+            var newName        = field.name?.ToConvertedFieldName()!;
+            var primitiveName  = field.GetCSharpType();
+            var typeName       = field.originalType!.ToConvertedTypeName();
+            var isPrimitive    = primitiveName != null;
+            var isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
+            var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
+            var isObjectType   = field.type is "Object" or "UserData";
+            var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType);
+
+            if (viaType == nameof(System.Guid)) {
+                file.WriteLine($"        obj.{newName} = Guid.NewIdInAList;");
+            }
+        }
+
+        file.WriteLine($"        return obj;");
+        file.WriteLine("    }");
+    }
+
+    private void WriteClassCopy(TextWriter file) {
+        if (className.StartsWith("Via_")) return;
+
+        var modifier = parentClass == null ? "virtual" : "override";
+
+        file.WriteLine("");
+        file.WriteLine($"    public {modifier} {className} Copy() {{");
+        file.WriteLine($"        var obj = base.Copy<{className}>();");
+
+        foreach (var field in structInfo.fields!) {
+            if (string.IsNullOrEmpty(field.name) || string.IsNullOrEmpty(field.originalType)) continue;
+            if (GenerateFiles.UNSUPPORTED_DATA_TYPES.Contains(field.type!)) continue;
+            if (GenerateFiles.UNSUPPORTED_OBJECT_TYPES.Any(s => field.originalType!.Contains(s))) continue;
+
+            var newName        = field.name?.ToConvertedFieldName()!;
+            var primitiveName  = field.GetCSharpType();
+            var typeName       = field.originalType!.ToConvertedTypeName();
+            var isPrimitive    = primitiveName != null;
+            var isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
+            var buttonType     = GetButtonType(field);
+            var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
+            var isObjectType   = field.type is "Object" or "UserData";
+            var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType);
+
+            // TODO: Fix generic/dataSource wrappers.
+
+            if (viaType == nameof(System.Guid)) {
+                file.WriteLine($"        obj.{newName} = Guid.NewIdInAList;");
+            } else if ((field.array || isObjectType || isNonPrimitive) && buttonType == null) {
+                file.WriteLine($"        obj.{newName} ??= new();");
+                file.WriteLine($"        foreach (var x in {newName}) {{");
+                file.WriteLine($"            obj.{newName}.Add(x.Copy());");
+                file.WriteLine("        }");
+            } else {
+                file.WriteLine($"        obj.{newName} = {newName};");
+            }
+        }
+
+        file.WriteLine("        return obj;");
+        file.WriteLine("    }");
+    }
+
     private void WriteClassFooter(TextWriter file) {
         file.Write("}");
     }
 
     private static DataSourceType? GetButtonType(StructJson.Field field) {
         return field.originalType?.Replace("[]", "") switch {
-            "snow.data.ContentsIdSystem.ItemId" => DataSourceType.ITEMS,
-            "snow.data.DataDef.PlEquipSkillId" => DataSourceType.SKILLS,
-            "snow.data.DataDef.PlHyakuryuSkillId" => DataSourceType.RAMPAGE_SKILLS,
-            "snow.data.DataDef.PlKitchenSkillId" => DataSourceType.DANGO_SKILLS,
-            "snow.data.DataDef.PlWeaponActionId" => DataSourceType.SWITCH_SKILLS,
+            _ => null
+        };
+    }
+
+    private string? GetParent() {
+        return className switch {
             _ => null
         };
     }
 
     private static List<string> GetAdditionalAttributesForDataSourceType(DataSourceType? dataSourceType) {
         return dataSourceType switch {
-            DataSourceType.ITEMS => new() {"[ButtonIdAsHex]"},
             _ => new()
         };
     }
 
     public static string GetLookupForDataSourceType(DataSourceType? dataSourceType) {
         return dataSourceType switch {
-            DataSourceType.DANGO_SKILLS => nameof(DataHelper.DANGO_SKILL_NAME_LOOKUP),
-            DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
-            DataSourceType.RAMPAGE_SKILLS => nameof(DataHelper.RAMPAGE_SKILL_NAME_LOOKUP),
-            DataSourceType.SKILLS => nameof(DataHelper.SKILL_NAME_LOOKUP),
-            DataSourceType.SWITCH_SKILLS => nameof(DataHelper.SWITCH_SKILL_NAME_LOOKUP),
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
     }

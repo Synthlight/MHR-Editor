@@ -11,13 +11,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using JetBrains.Annotations;
-using MHR_Editor.Common;
-using MHR_Editor.Common.Models;
-using MHR_Editor.Controls;
-using MHR_Editor.Util;
 using Microsoft.Win32;
+using RE_Editor.Common;
+using RE_Editor.Common.Models;
+using RE_Editor.Controls;
+using RE_Editor.Models;
+using RE_Editor.Util;
 
-namespace MHR_Editor.Windows;
+namespace RE_Editor.Windows;
 
 public partial class MainWindow {
 #if DEBUG
@@ -26,12 +27,13 @@ public partial class MainWindow {
     private const bool ENABLE_CHEAT_BUTTONS = false;
     public const  bool SHOW_RAW_BYTES = false;
 #endif
-    private const string TITLE = "MHR Editor";
+    private const string TITLE = "RE Editor";
 
     [CanBeNull] private CancellationTokenSource savedTimer;
     [CanBeNull] private ReDataFile              file;
     public              string                  targetFile { get; private set; }
-    public readonly     string                  filter = $"MHR Data Files|{string.Join(";", Global.FILE_TYPES)}";
+    public readonly     string                  filter            = $"RE Data Files|{string.Join(";", Global.FILE_TYPES)}";
+    public readonly     List<MethodInfo>        allMakeModMethods = new();
 
     public Global.LangIndex Locale {
         get => Global.locale;
@@ -89,10 +91,18 @@ public partial class MainWindow {
         SetupKeybind(new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift), (_, _) => Save(true));
 
         var visibility = File.Exists($@"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}\enable_cheats") ? Visibility.Visible : Visibility.Collapsed;
-        btn_wiki_dump.Visibility  = visibility;
-        btn_test.Visibility       = visibility;
-        btn_all_cheats.Visibility = visibility;
-        btn_make_mods.Visibility  = visibility;
+        btn_make_mods.Visibility = visibility;
+        btn_test.Visibility      = visibility;
+
+        foreach (var modType in NexusModExtensions.GetAllModTypes()) {
+            var button = new Button {
+                Content = $"Create \"{modType.Name}\" Mod"
+            };
+            var make = modType.GetMethod("Make", BindingFlags.Static | BindingFlags.Public);
+            allMakeModMethods.Add(make);
+            button.Click += (_, _) => { make!.Invoke(null, null); };
+            panel_mods.Children.Add(button);
+        }
 
         UpdateCheck.Run(this);
 
@@ -126,7 +136,7 @@ public partial class MainWindow {
 
             var rszObjectData = file?.rsz.objectData;
             if (rszObjectData == null || rszObjectData.Count == 0) throw new("Error loading data; rszObjectData is null/empty.\n\nPlease report the path/name of the file you are trying to load.");
-            var rszObjectInfo = file?.rsz.objectInfo;
+            var rszObjectInfo = file?.rsz.objectEntryPoints;
             if (rszObjectInfo == null || rszObjectInfo.Count == 0) throw new("Error loading data; rszObjectInfo is null/empty.\n\nPlease report the path/name of the file you are trying to load.");
 
             // Find entry object & type.
@@ -140,7 +150,7 @@ public partial class MainWindow {
              */
             var structInfo = entryPointRszObject.structInfo;
             if (structInfo.fields is {Count: 1} && structInfo.fields[0].array && structInfo.fields[0].type == "Object") {
-                var type     = rszObjectData[0].GetType();
+                var type     = rszObjectData[^2].GetType();
                 var items    = rszObjectData.GetGenericItemsOfType(type);
                 var dataGrid = MakeDataGrid((dynamic) items);
                 Debug.WriteLine($"Loading type: {type.Name}");
@@ -151,8 +161,6 @@ public partial class MainWindow {
                 Debug.WriteLine($"Loading type: {type.Name}");
                 AddStructGrid(structGrid);
             }
-
-            btn_sort_gems_by_skill_name.Visibility = target.Contains("DecorationsBaseData.user.2") || target.Contains("HyakuryuDecoBaseData.user.2") ? Visibility.Visible : Visibility.Collapsed;
         } catch (FileNotSupported) {
             MessageBox.Show("Please check the stickied comments on the nexus page and if it's not listed there, leave a comment about it.", "File not supported.", MessageBoxButton.OK, MessageBoxImage.Error);
         } catch (Exception e) when (!Debugger.IsAttached) {
@@ -267,8 +275,8 @@ public partial class MainWindow {
         // Remove them.
         foreach (var grid in grids) {
             switch (grid) {
-                case AutoDataGrid mhwGrid:
-                    mhwGrid.SetItems(null);
+                case AutoDataGrid dataGrid:
+                    dataGrid.SetItems(null);
                     break;
                 case StructGrid structGrid:
                     structGrid.SetItem(null);

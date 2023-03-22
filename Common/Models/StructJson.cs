@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MHR_Editor.Common.Models;
+namespace RE_Editor.Common.Models;
 
 public class StructJson {
     public string?      crc;

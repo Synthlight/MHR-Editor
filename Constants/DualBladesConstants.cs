@@ -290,4 +290,5 @@ public static class DualBladesConstants {
     public const uint SHANGRI_LA_HADES = 0x088001DD;
     public const uint STUFFED_GOSS_HARAG = 0x088001DE;
     public const uint UNTOUCHED_HEL = 0x088001DF;
+    public const uint STORMWIND_FANS = 0x088001E0;
 }

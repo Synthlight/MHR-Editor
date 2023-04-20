@@ -288,4 +288,5 @@ public static class GunLanceConstants {
     public const uint MAUER_GUERRE = 0x087001DE;
     public const uint STUFFED_MAGNAMALO = 0x087001DF;
     public const uint VORPAL_ICEFORT = 0x087001E0;
+    public const uint OMINOUS_MONSOON = 0x087001E1;
 }

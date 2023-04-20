@@ -290,4 +290,5 @@ public static class ShortSwordConstants {
     public const uint LÜGEN_VÉRITÉ = 0x082001C9;
     public const uint STUFFED_ZINOGRE = 0x082001CA;
     public const uint NOBLE_ANA_PALAS = 0x082001CB;
+    public const uint OMINOUS_TREASURE = 0x082001CC;
 }

@@ -142,7 +142,10 @@
     "139": "粉塵纏",
     "140": "冰気錬成",
     "141": "龍気変換",
-    "145": "奮闘"
+    "142": "天衣無崩",
+    "143": "狂竜症【翔】",
+    "145": "奮闘",
+    "146": "緩衝"
   },
   "eng": {
     "0": "#Rejected#",
@@ -287,7 +290,10 @@
     "139": "Powder Mantle",
     "140": "Frostcraft",
     "141": "Dragon Conversion",
-    "145": "Strife"
+    "142": "Heaven-Sent",
+    "143": "Frenzied Bloodlust",
+    "145": "Strife",
+    "146": "Shock Absorber"
   },
   "fre": {
     "0": "#Rejected#",
@@ -432,7 +438,10 @@
     "139": "Mante Poudre",
     "140": "Nuée de givre",
     "141": "Conversion de dragon",
-    "145": "Lutte"
+    "142": "Envoyé des cieux",
+    "143": "Soif de sang frénét",
+    "145": "Lutte",
+    "146": "Anti-chocs"
   },
   "ita": {
     "0": "#Rejected#",
@@ -577,7 +586,10 @@
     "139": "Mantello polveroso",
     "140": "Criosintesi",
     "141": "Conversione drago",
-    "145": "Lotta"
+    "142": "Dono dal cielo",
+    "143": "Sete di sangue frenesia",
+    "145": "Lotta",
+    "146": "Assorbimento danni"
   },
   "ger": {
     "0": "#Rejected#",
@@ -722,7 +734,10 @@
     "139": "Pulver-Mantel",
     "140": "Eiskunst",
     "141": "Drachenumwandlung",
-    "145": "Kampf"
+    "142": "Wie gerufen",
+    "143": "Raserei-Blutdurst",
+    "145": "Kampf",
+    "146": "Schockabsorber"
   },
   "spa": {
     "0": "#Rejected#",
@@ -867,7 +882,10 @@
     "139": "Manto de polvo",
     "140": "Destreza helada",
     "141": "Conversión de draco",
-    "145": "Pugna"
+    "142": "Enviado del cielo",
+    "143": "Sed sangre colérica",
+    "145": "Pugna",
+    "146": "Absorbedescargas"
   },
   "rus": {
     "0": "#Rejected#",
@@ -1012,7 +1030,10 @@
     "139": "Порошковый покров",
     "140": "Мастерство мороза",
     "141": "Преобраз-е дракона",
-    "145": "Борьба"
+    "142": "Божий посланник",
+    "143": "Буйная кровожадность",
+    "145": "Борьба",
+    "146": "Поглощение ударов"
   },
   "pol": {
     "0": "#Rejected#",
@@ -1157,7 +1178,10 @@
     "139": "Opończa proszku",
     "140": "Sztuka Mrozu",
     "141": "Smocza skuteczność",
-    "145": "Bój"
+    "142": "Dar niebios",
+    "143": "Wściekła żądza krwi",
+    "145": "Bój",
+    "146": "Pochłaniacz uderzeń"
   },
   "ptB": {
     "0": "#Rejected#",
@@ -1302,7 +1326,10 @@
     "139": "Manto de Pó",
     "140": "Frigidez",
     "141": "Conversão Dracônica",
-    "145": "Luta"
+    "142": "Celestial",
+    "143": "Sede de Sangue Colérica",
+    "145": "Luta",
+    "146": "Amortecedor"
   },
   "kor": {
     "0": "#Rejected#",
@@ -1447,7 +1474,10 @@
     "139": "분진전",
     "140": "냉기 연성",
     "141": "용기 변환",
-    "145": "분투"
+    "142": "천의무붕",
+    "143": "광룡증【상】",
+    "145": "분투",
+    "146": "완충"
   },
   "chT": {
     "0": "#Rejected#",
@@ -1592,7 +1622,10 @@
     "139": "粉塵飛舞",
     "140": "寒氣鍊成",
     "141": "龍氣轉換",
-    "145": "奮鬥"
+    "142": "天衣無縫",
+    "143": "狂龍症【翔】",
+    "145": "奮鬥",
+    "146": "緩衝"
   },
   "chS": {
     "0": "#Rejected#",
@@ -1737,7 +1770,10 @@
     "139": "粉尘绕",
     "140": "寒气炼成",
     "141": "龙气转换",
-    "145": "奋斗"
+    "142": "天衣无缝",
+    "143": "狂龙症【翔】",
+    "145": "奋斗",
+    "146": "缓冲"
   },
   "ara": {
     "0": "#Rejected#",
@@ -1882,6 +1918,9 @@
     "139": "غطاء المسحوق",
     "140": "صناعة الصقيع",
     "141": "تحول التنين",
-    "145": "صراع"
+    "142": "هدية من السماء",
+    "143": "تعطش جنوني للدماء",
+    "145": "صراع",
+    "146": "ممتص الصدمات"
   }
 }

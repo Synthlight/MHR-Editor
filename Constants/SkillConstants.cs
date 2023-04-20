@@ -147,5 +147,8 @@ public static class SkillConstants {
     public const uint POWDER_MANTLE = 139;
     public const uint FROSTCRAFT = 140;
     public const uint DRAGON_CONVERSION = 141;
+    public const uint HEAVEN_SENT = 142;
+    public const uint FRENZIED_BLOODLUST = 143;
     public const uint STRIFE = 145;
+    public const uint SHOCK_ABSORBER = 146;
 }

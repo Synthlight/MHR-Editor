@@ -28,7 +28,13 @@
     "1048602": "人魂鳥倍加のスキルを 武器に付与する装飾品。",
     "1048603": "<COL RED>【銃槍専用】</COL> 竜杭砲強化のスキルを 武器に付与する装飾品。",
     "1048604": "牙獣種特効のスキルを 武器に付与する装飾品。",
-    "1048605": "劫血活性のスキルを 武器に付与する装飾品。"
+    "1048605": "劫血活性のスキルを 武器に付与する装飾品。",
+    "1048606": "翔蟲効果持続のスキルを 武器に付与する装飾品。",
+    "1048607": "研鑽のスキルを 武器に付与する装飾品。",
+    "1048608": "<COL RED>【ハンマー専用】</COL> 溜打強化のスキルを 武器に付与する装飾品。",
+    "1048609": "<COL RED>【双剣専用】</COL> 鬼人強走のスキルを 武器に付与する装飾品。",
+    "1048610": "<COL RED>【操虫棍専用】</COL> 猟虫激化のスキルを 武器に付与する装飾品。",
+    "1048611": "<COL RED>【ランス専用】</COL> ガードバッシュのスキルを 武器に付与する装飾品。"
   },
   "eng": {
     "1048577": "A decoration that gives weapons the Brutal Strike skill.",
@@ -59,7 +65,13 @@
     "1048602": "A decoration that gives weapons the Spiribird Doubled skill.",
     "1048603": "<COL RED>(Artillery only)</COL> A decoration that gives weapons Wyrmstake Boost.",
     "1048604": "A decoration that gives weapons the Fanged Exploit skill.",
-    "1048605": "A decoration that gives weapons the Bloody Heart skill."
+    "1048605": "A decoration that gives weapons the Bloody Heart skill.",
+    "1048606": "A decoration that gives weapons the Wirebug Wrangler skill.",
+    "1048607": "A decoration that gives weapons the Self-Improvement skill.",
+    "1048608": "<COL RED>(Hammer only)</COL> A decoration that gives weapons Charge Up.",
+    "1048609": "<COL RED>(Dual Blades only)</COL> A decoration that gives weapons Demon Rage.",
+    "1048610": "<COL RED>(Insect Glaive only)</COL> A decoration that gives weapons the Kinsect Supercharge skill.",
+    "1048611": "<COL RED>(Lance only)</COL> A decoration that gives weapons the Guard Bash skill."
   },
   "fre": {
     "1048577": "Joyau dotant les armes du Talent Coup brutal.",
@@ -90,7 +102,13 @@
     "1048602": "Joyau dotant les armes du Talent Bonus Spectroiseaux.",
     "1048603": "<COL RED>(Pour Artificier)</COL> Joyau qui confère aux armes Boost wyrm.",
     "1048604": "Joyau dotant les armes du Talent Exploit à croc.",
-    "1048605": "Joyau dotant les armes du Talent Cœur sanglant."
+    "1048605": "Joyau dotant les armes du Talent Cœur sanglant.",
+    "1048606": "Joyau dotant les armes du Talent Dresseur Filoptère.",
+    "1048607": "Joyau dotant les armes du Talent Auto-amélioration.",
+    "1048608": "<COL RED>(Pour marteau)</COL> Joyau qui confère aux armes Charge.",
+    "1048609": "<COL RED>(Pour lames doubles)</COL> Joyau qui confère aux armes Rage démoniaque.",
+    "1048610": "<COL RED>(Pour insectoglaive)</COL> Joyau qui confère aux armes Surcharge kinsecte.",
+    "1048611": "<COL RED>(Pour lance)</COL> Joyau qui confère aux armes Coup défensif."
   },
   "ita": {
     "1048577": "Dona alle armi l'abilità Colpo brutale.",
@@ -121,7 +139,13 @@
     "1048602": "Dona alle armi l'abilità Spiriuccello doppio.",
     "1048603": "<COL RED>(Solo artiglieria)</COL> Dona alle armi l'abilità Bonus cannone wyvern.",
     "1048604": "Dona alle armi l'abilità Debolezza zannuta.",
-    "1048605": "Dona alle armi l'abilità Cuore sanguinario."
+    "1048605": "Dona alle armi l'abilità Cuore sanguinario.",
+    "1048606": "Dona alle armi l'abilità Insetto filo rissoso.",
+    "1048607": "Dona alle armi l'abilità Miglioramento.",
+    "1048608": "<COL RED>(Solo martello)</COL> Dona alle armi l'abilità Carica+.",
+    "1048609": "<COL RED>(Solo doppie lame)</COL> Dona alle armi l'abilità Ira demoniaca.",
+    "1048610": "<COL RED>(Solo falcione insetto)</COL> Dona alle armi l'abilità Supercarica kinsetto.",
+    "1048611": "<COL RED>(Solo lancia)</COL> Dona alle armi l'abilità Colpo difensivo."
   },
   "ger": {
     "1048577": "Diese Dekoration verleiht Waffen die Fähigkeit Brutaler Schlag.",
@@ -152,7 +176,13 @@
     "1048602": "Diese Dekoration verleiht Waffen die Fähigkeit Doppelter Irrlitz.",
     "1048603": "<COL RED>(Nur Artillerie)</COL> Diese Dekoration verleiht Waffen Wyrmstake-Bonus.",
     "1048604": "Diese Dekoration verleiht Waffen die Fähigkeit Reißzahnvorteil.",
-    "1048605": "Diese Dekoration verleiht Waffen die Fähigkeit Blutiges Herz."
+    "1048605": "Diese Dekoration verleiht Waffen die Fähigkeit Blutiges Herz.",
+    "1048606": "Diese Dekoration verleiht Waffen die Fähigkeit Seilkäfer-Streithahn.",
+    "1048607": "Diese Dekoration verleiht Waffen die Fähigkeit Selbstverbesserung.",
+    "1048608": "<COL RED>(Nur Hammer)</COL> Diese Dekoration verleiht Waffen Aufladen.",
+    "1048609": "<COL RED>(Nur Doppelklingen)</COL> Diese Dekoration verleiht Waffen Dämonenwut.",
+    "1048610": "<COL RED>(Nur Glefe)</COL> Diese Dekoration verleiht Waffen die Fähigkeit Kinsekt-Überladung.",
+    "1048611": "<COL RED>(Nur Lanze)</COL> Diese Dekoration verleiht Waffen die Fähigkeit Block-Stoß."
   },
   "spa": {
     "1048577": "Un adorno que da a las armas la habilidad Golpe brutal.",
@@ -183,7 +213,13 @@
     "1048602": "Un adorno que da a las armas la habilidad Animave duplicada.",
     "1048603": "<COL RED>(Solo artillería)</COL> Un adorno que da a las armas Sierpe potenciada.",
     "1048604": "Un adorno que da a las armas la habilidad Aprovechar colmillos.",
-    "1048605": "Un adorno que da a las armas la habilidad Corazón sangriento."
+    "1048605": "Un adorno que da a las armas la habilidad Corazón sangriento.",
+    "1048606": "Un adorno que da a las armas la habilidad Cordóptero combatiente.",
+    "1048607": "Un adorno que da a las armas la habilidad Automejora.",
+    "1048608": "<COL RED>(Solo martillo)</COL> Un adorno que da a las armas Más carga.",
+    "1048609": "<COL RED>(Solo espadas dobles)</COL> Un adorno que da a las armas Furia demoníaca.",
+    "1048610": "<COL RED>(Solo glaive insecto)</COL> Un adorno que da a las armas la habil. Supercarga kinsecto.",
+    "1048611": "<COL RED>(Solo lanza)</COL> Un adorno que da a las armas la habilidad Golpe de bloqueo."
   },
   "rus": {
     "1048577": "Украшение. Дает оружию навык \"Жестокий удар\".",
@@ -214,7 +250,13 @@
     "1048602": "Украшение. Дает оружию навык \"Удвоение Духоптиц\".",
     "1048603": "<COL RED>(Артиллерия)</COL> Украшение. Дает оружию \"Драконье усиление\".",
     "1048604": "Украшение. Дает оружию навык \"Уязвимость к клыкам\".",
-    "1048605": "Украшение. Оружие получает навык \"Кровавое сердце\"."
+    "1048605": "Украшение. Оружие получает навык \"Кровавое сердце\".",
+    "1048606": "Украшение. Дает оружию навык \"Укротитель Прутожука\".",
+    "1048607": "Украшение. Дает оружию навык \"Самосовершенствование\".",
+    "1048608": "<COL RED>(Молот)</COL> Украшение. Дает оружию навык \"Мощный заряд\".",
+    "1048609": "<COL RED>(Два клинка)</COL> Украшение. Дает оружию навык \"Гнев демона\".",
+    "1048610": "<COL RED>(Глефа насекомых)</COL> Украшение. Дает оружию навык \"Суперзаряд кинсекта\".",
+    "1048611": "<COL RED>(Копье)</COL> Украшение. Дает оружию навык \"Защитный удар\"."
   },
   "pol": {
     "1048577": "Ozdoba dodająca do broni umiejętność brutalny cios.",
@@ -245,7 +287,13 @@
     "1048602": "Ozdoba dodająca do broni umiejętność podwójny duchoptak.",
     "1048603": "<COL RED>(Tylko artyleria)</COL> Ozdoba dodająca do broni wzmocnienie smoczy śrut.",
     "1048604": "Ozdoba dodająca do broni umiejętność wykorzystania zębatych.",
-    "1048605": "Ozdoba dodająca do broni umiejętność Krwawiące serce."
+    "1048605": "Ozdoba dodająca do broni umiejętność Krwawiące serce.",
+    "1048606": "Ozdoba dodająca do broni umiejętność Ujeżdżacz kablobaków.",
+    "1048607": "Ozdoba dodająca do broni umiejętność Samodoskonalenie.",
+    "1048608": "<COL RED>(Tylko młot)</COL> Ozdoba dodająca do broni Ładowanie.",
+    "1048609": "<COL RED>(Tylko bliźniacze ostrza)</COL> Ozdoba dodająca do broni Gniew demona.",
+    "1048610": "<COL RED>(Tylko owadzia glewia)</COL> Ozdoba dodająca do broni umiej. Supernaładowanie kinsekta.",
+    "1048611": "<COL RED>(Tylko lanca)</COL> Ozdoba dodająca do broni umiejętność Uderzenie z gardy."
   },
   "ptB": {
     "1048577": "Adorno que concede às armas a habilidade Ataque Brutal.",
@@ -276,7 +324,13 @@
     "1048602": "Adorno que concede às armas a habilidade Espiripássaro Duplo.",
     "1048603": "<COL RED>(Artilharia apenas)</COL> Adorno que dá às armas Ref. de Serpestaca.",
     "1048604": "Adorno que concede às armas a habilidade Expl. de Presas.",
-    "1048605": "Adorno que concede às armas a habilidade Coração Sangrento."
+    "1048605": "Adorno que concede às armas a habilidade Coração Sangrento.",
+    "1048606": "Adorno que concede às armas a habilidade Domador de Cabinseto.",
+    "1048607": "Adorno que concede às armas a habilidade Autoaprimoramento.",
+    "1048608": "<COL RED>(Martelo apenas)</COL> Adorno que dá às armas Energizar.",
+    "1048609": "<COL RED>(Duplas-lâminas apenas)</COL> Adorno que dá às armas Ira Demoníaca.",
+    "1048610": "<COL RED>(Glaive Inseto apenas)</COL> Adorno que dá às armas Sobrecarga de Kinseto.",
+    "1048611": "<COL RED>(Lança apenas)</COL> Adorno que dá às armas Golpe de Guarda."
   },
   "kor": {
     "1048577": "통한의 일격 스킬을 무기에 부여하는 장식품.",
@@ -307,7 +361,13 @@
     "1048602": "인혼조 강화 스킬을 무기에 부여하는 장식품.",
     "1048603": "<COL RED>【건랜스 전용】</COL> 용항포 강화 스킬을 무기에 부여하는 장식품.",
     "1048604": "아수종 특효 스킬을 무기에 부여하는 장식품.",
-    "1048605": "겁혈 활성 스킬을 무기에 부여하는 장식품."
+    "1048605": "겁혈 활성 스킬을 무기에 부여하는 장식품.",
+    "1048606": "밧줄벌레 효과 지속 스킬을 무기에 부여하는 장식품.",
+    "1048607": "연찬 스킬을 무기에 부여하는 장식품.",
+    "1048608": "<COL RED>【해머 전용】</COL> 모으기 타격 강화 스킬을 무기에 부여하는 장식품.",
+    "1048609": "<COL RED>【쌍검 전용】</COL> 귀인 강주 스킬을 무기에 부여하는 장식품.",
+    "1048610": "<COL RED>【조충곤 전용】</COL> 사냥벌레 격화 스킬을 무기에 부여하는 장식품.",
+    "1048611": "<COL RED>【랜스 전용】</COL> 가드 배시 스킬을 무기에 부여하는 장식품."
   },
   "chT": {
     "1048577": "可對武器賦予技能 「悔恨一擊」的裝飾品。",
@@ -338,7 +398,13 @@
     "1048602": "可對武器賦予技能 「鬼火鳥加倍」的裝飾品。",
     "1048603": "<COL RED>【銃槍專用】</COL> 可對武器賦予技能 「龍杭砲強化」的裝飾品。",
     "1048604": "可對武器賦予技能 「牙獸種特效」的裝飾品。",
-    "1048605": "可對武器賦予技能 「劫血活化」的裝飾品。"
+    "1048605": "可對武器賦予技能 「劫血活化」的裝飾品。",
+    "1048606": "可對武器賦予技能 「翔蟲效果持續」的裝飾品。",
+    "1048607": "可對武器賦予技能 「鑽研」的裝飾品。",
+    "1048608": "<COL RED>【大錘專用】</COL> 可對武器賦予技能 「蓄攻強化」的裝飾品。",
+    "1048609": "<COL RED>【雙劍專用】</COL> 可對武器賦予技能 「鬼人強走」的裝飾品。",
+    "1048610": "<COL RED>【操蟲棍專用】</COL> 可對武器賦予技能 「獵蟲激化」的裝飾品。",
+    "1048611": "<COL RED>【長槍專用】</COL> 可對武器賦予技能 「防禦強鎚」的裝飾品。"
   },
   "chS": {
     "1048577": "能够赋予武器 痛恨一击技能的装饰品。",
@@ -369,7 +435,13 @@
     "1048602": "能够赋予武器 鬼火鸟加倍技能的装饰品。",
     "1048603": "<COL RED>【铳枪专用】</COL> 能够赋予武器 龙杭炮强化技能的装饰品。",
     "1048604": "能够赋予武器 牙兽种特效技能的装饰品。",
-    "1048605": "能够赋予武器 劫血活性技能的装饰品。"
+    "1048605": "能够赋予武器 劫血活性技能的装饰品。",
+    "1048606": "能够赋予武器 翔虫效果持续技能的装饰品。",
+    "1048607": "能够赋予武器 钻研技能的装饰品。",
+    "1048608": "<COL RED>【大锤专用】</COL> 能够赋予武器 蓄击强化技能的装饰品。",
+    "1048609": "<COL RED>【双剑专用】</COL> 能够赋予武器 鬼人强走技能的装饰品。",
+    "1048610": "<COL RED>【操虫棍专用】</COL> 能够赋予武器 猎虫激化技能的装饰品。",
+    "1048611": "<COL RED>【长枪专用】</COL> 能够赋予武器 防御重击技能的装饰品。"
   },
   "ara": {
     "1048577": "إضافة تمنح الأسلحة مهارة الضربة الوحشية.",
@@ -400,6 +472,12 @@
     "1048602": "إضافة تمنح الأسلحة مهارة مضاعفة طيور سيبيري.",
     "1048603": "<COL RED>(المدفعية فقط)</COL> إضافة تمنح الأسلحة معزز ويرمستايك.",
     "1048604": "إضافة تمنح الأسلحة مهارة استغلال الأنياب.",
-    "1048605": "إضافة تمنح الأسلحة مهارة القلب الدامي."
+    "1048605": "إضافة تمنح الأسلحة مهارة القلب الدامي.",
+    "1048606": "إضافة تمنح الأسلحة مهارة مروض حشرة الحرير.",
+    "1048607": "إضافة تمنح الأسلحة مهارة التحسّن الذاتي.",
+    "1048608": "<COL RED>(المطرقة فقط)</COL> إضافة تمنح الأسلحة شحنًا إضافيًا.",
+    "1048609": "<COL RED>(النصال المزدوجة فقط)</COL> إضافة تمنح الأسلحة غضب العفريت.",
+    "1048610": "<COL RED>[سيف الحشرة فقط]</COL> إضافة تمنح الأسلحة مهارة شحن كينسيكت الفائق.",
+    "1048611": "<COL RED>(الرمح فقط)</COL> إضافة تمنح الأسلحة مهارة سحق الحراس."
   }
 }

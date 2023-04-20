@@ -286,4 +286,5 @@ public static class GreatSwordConstants {
     public const uint ANFANG_FIN = 0x081001CE;
     public const uint STUFFED_RATHALOS = 0x081001CF;
     public const uint WINGED_SERAPHYD = 0x081001D0;
+    public const uint ROILCLOUD_SWORD = 0x081001D1;
 }

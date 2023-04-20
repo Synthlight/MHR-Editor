@@ -285,4 +285,5 @@ public static class HornConstants {
     public const uint GRIMM_JOIE = 0x089001CC;
     public const uint STUFFED_TIGREX = 0x089001CD;
     public const uint SONOROUS_EISFYL = 0x089001CE;
+    public const uint AUTUMN_LUTE = 0x089001CF;
 }

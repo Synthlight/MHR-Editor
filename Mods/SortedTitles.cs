@@ -14,7 +14,7 @@ namespace RE_Editor.Mods;
 public class SortedTitles : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string version      = "1.3";
+        const string version      = "1.4";
         const string outPath      = $@"{PathHelper.MODS_PATH}\Sorted Titles";
         const string bundleByName = "Titles Sorted by Name";
 

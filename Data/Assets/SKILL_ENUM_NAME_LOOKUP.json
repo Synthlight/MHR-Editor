@@ -141,7 +141,10 @@
     "Pl_EquipSkill_227": "粉塵纏",
     "Pl_EquipSkill_228": "冰気錬成",
     "Pl_EquipSkill_229": "龍気変換",
-    "Pl_EquipSkill_233": "奮闘"
+    "Pl_EquipSkill_230": "天衣無崩",
+    "Pl_EquipSkill_231": "狂竜症【翔】",
+    "Pl_EquipSkill_233": "奮闘",
+    "Pl_EquipSkill_234": "緩衝"
   },
   "eng": {
     "Pl_EquipSkill_000": "Attack Boost",
@@ -285,7 +288,10 @@
     "Pl_EquipSkill_227": "Powder Mantle",
     "Pl_EquipSkill_228": "Frostcraft",
     "Pl_EquipSkill_229": "Dragon Conversion",
-    "Pl_EquipSkill_233": "Strife"
+    "Pl_EquipSkill_230": "Heaven-Sent",
+    "Pl_EquipSkill_231": "Frenzied Bloodlust",
+    "Pl_EquipSkill_233": "Strife",
+    "Pl_EquipSkill_234": "Shock Absorber"
   },
   "fre": {
     "Pl_EquipSkill_000": "Machine de guerre",
@@ -429,7 +435,10 @@
     "Pl_EquipSkill_227": "Mante Poudre",
     "Pl_EquipSkill_228": "Nuée de givre",
     "Pl_EquipSkill_229": "Conversion de dragon",
-    "Pl_EquipSkill_233": "Lutte"
+    "Pl_EquipSkill_230": "Envoyé des cieux",
+    "Pl_EquipSkill_231": "Soif de sang frénét",
+    "Pl_EquipSkill_233": "Lutte",
+    "Pl_EquipSkill_234": "Anti-chocs"
   },
   "ita": {
     "Pl_EquipSkill_000": "Bonus attacco",
@@ -573,7 +582,10 @@
     "Pl_EquipSkill_227": "Mantello polveroso",
     "Pl_EquipSkill_228": "Criosintesi",
     "Pl_EquipSkill_229": "Conversione drago",
-    "Pl_EquipSkill_233": "Lotta"
+    "Pl_EquipSkill_230": "Dono dal cielo",
+    "Pl_EquipSkill_231": "Sete di sangue frenesia",
+    "Pl_EquipSkill_233": "Lotta",
+    "Pl_EquipSkill_234": "Assorbimento danni"
   },
   "ger": {
     "Pl_EquipSkill_000": "Angriffsbonus",
@@ -717,7 +729,10 @@
     "Pl_EquipSkill_227": "Pulver-Mantel",
     "Pl_EquipSkill_228": "Eiskunst",
     "Pl_EquipSkill_229": "Drachenumwandlung",
-    "Pl_EquipSkill_233": "Kampf"
+    "Pl_EquipSkill_230": "Wie gerufen",
+    "Pl_EquipSkill_231": "Raserei-Blutdurst",
+    "Pl_EquipSkill_233": "Kampf",
+    "Pl_EquipSkill_234": "Schockabsorber"
   },
   "spa": {
     "Pl_EquipSkill_000": "Ataque",
@@ -861,7 +876,10 @@
     "Pl_EquipSkill_227": "Manto de polvo",
     "Pl_EquipSkill_228": "Destreza helada",
     "Pl_EquipSkill_229": "Conversión de draco",
-    "Pl_EquipSkill_233": "Pugna"
+    "Pl_EquipSkill_230": "Enviado del cielo",
+    "Pl_EquipSkill_231": "Sed sangre colérica",
+    "Pl_EquipSkill_233": "Pugna",
+    "Pl_EquipSkill_234": "Absorbedescargas"
   },
   "rus": {
     "Pl_EquipSkill_000": "Усиление атаки",
@@ -1005,7 +1023,10 @@
     "Pl_EquipSkill_227": "Порошковый покров",
     "Pl_EquipSkill_228": "Мастерство мороза",
     "Pl_EquipSkill_229": "Преобраз-е дракона",
-    "Pl_EquipSkill_233": "Борьба"
+    "Pl_EquipSkill_230": "Божий посланник",
+    "Pl_EquipSkill_231": "Буйная кровожадность",
+    "Pl_EquipSkill_233": "Борьба",
+    "Pl_EquipSkill_234": "Поглощение ударов"
   },
   "pol": {
     "Pl_EquipSkill_000": "Wzmocnienie ataku",
@@ -1149,7 +1170,10 @@
     "Pl_EquipSkill_227": "Opończa proszku",
     "Pl_EquipSkill_228": "Sztuka Mrozu",
     "Pl_EquipSkill_229": "Smocza skuteczność",
-    "Pl_EquipSkill_233": "Bój"
+    "Pl_EquipSkill_230": "Dar niebios",
+    "Pl_EquipSkill_231": "Wściekła żądza krwi",
+    "Pl_EquipSkill_233": "Bój",
+    "Pl_EquipSkill_234": "Pochłaniacz uderzeń"
   },
   "ptB": {
     "Pl_EquipSkill_000": "Reforço de Ataque",
@@ -1293,7 +1317,10 @@
     "Pl_EquipSkill_227": "Manto de Pó",
     "Pl_EquipSkill_228": "Frigidez",
     "Pl_EquipSkill_229": "Conversão Dracônica",
-    "Pl_EquipSkill_233": "Luta"
+    "Pl_EquipSkill_230": "Celestial",
+    "Pl_EquipSkill_231": "Sede de Sangue Colérica",
+    "Pl_EquipSkill_233": "Luta",
+    "Pl_EquipSkill_234": "Amortecedor"
   },
   "kor": {
     "Pl_EquipSkill_000": "공격",
@@ -1437,7 +1464,10 @@
     "Pl_EquipSkill_227": "분진전",
     "Pl_EquipSkill_228": "냉기 연성",
     "Pl_EquipSkill_229": "용기 변환",
-    "Pl_EquipSkill_233": "분투"
+    "Pl_EquipSkill_230": "천의무붕",
+    "Pl_EquipSkill_231": "광룡증【상】",
+    "Pl_EquipSkill_233": "분투",
+    "Pl_EquipSkill_234": "완충"
   },
   "chT": {
     "Pl_EquipSkill_000": "攻擊",
@@ -1581,7 +1611,10 @@
     "Pl_EquipSkill_227": "粉塵飛舞",
     "Pl_EquipSkill_228": "寒氣鍊成",
     "Pl_EquipSkill_229": "龍氣轉換",
-    "Pl_EquipSkill_233": "奮鬥"
+    "Pl_EquipSkill_230": "天衣無縫",
+    "Pl_EquipSkill_231": "狂龍症【翔】",
+    "Pl_EquipSkill_233": "奮鬥",
+    "Pl_EquipSkill_234": "緩衝"
   },
   "chS": {
     "Pl_EquipSkill_000": "攻击",
@@ -1725,7 +1758,10 @@
     "Pl_EquipSkill_227": "粉尘绕",
     "Pl_EquipSkill_228": "寒气炼成",
     "Pl_EquipSkill_229": "龙气转换",
-    "Pl_EquipSkill_233": "奋斗"
+    "Pl_EquipSkill_230": "天衣无缝",
+    "Pl_EquipSkill_231": "狂龙症【翔】",
+    "Pl_EquipSkill_233": "奋斗",
+    "Pl_EquipSkill_234": "缓冲"
   },
   "ara": {
     "Pl_EquipSkill_000": "تعزيز الهجوم",
@@ -1869,6 +1905,9 @@
     "Pl_EquipSkill_227": "غطاء المسحوق",
     "Pl_EquipSkill_228": "صناعة الصقيع",
     "Pl_EquipSkill_229": "تحول التنين",
-    "Pl_EquipSkill_233": "صراع"
+    "Pl_EquipSkill_230": "هدية من السماء",
+    "Pl_EquipSkill_231": "تعطش جنوني للدماء",
+    "Pl_EquipSkill_233": "صراع",
+    "Pl_EquipSkill_234": "ممتص الصدمات"
   }
 }

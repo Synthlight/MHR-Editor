@@ -1,31 +1,30 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
-using RE_Editor.Models.Enums;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
 using RE_Editor.Generated.Models;
 using RE_Editor.Models;
+using RE_Editor.Models.Enums;
 using RE_Editor.Models.Structs;
 using RE_Editor.Util;
+
 namespace RE_Editor.Mods;
 
 [UsedImplicitly]
 public class CheatMod : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName          = "Weapon/Armor/Gem/Slot/Skill Cheats";
-        const string variantBundleName   = "All In One (Fluffy Selective Install)";
-        const string variantGpBundleName = "All In One (Fluffy Selective Install - GamePass)";
-        const string outPath             = $@"{PathHelper.MODS_PATH}\{bundleName}";
+        const string bundleName        = "Weapon/Armor/Gem/Slot/Skill Cheats";
+        const string variantBundleName = "All In One (Fluffy Selective Install)";
+        const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
-            Version      = "1.6",
+            Version      = "1.7",
             NameAsBundle = bundleName,
             Desc         = "A cheat mod."
         };
 
-        var mods = new[] {
+        var bundleMods = new[] {
             baseMod
                 .SetName("Armor With Max Slots Only")
                 .SetFiles(new[] {PathHelper.ARMOR_BASE_PATH})
@@ -60,9 +59,6 @@ public class CheatMod : IMod {
                 .SetName("One Gem to Max Skill")
                 .SetFiles(new[] {PathHelper.DECORATION_PATH})
                 .SetAction(MaxSkills),
-        };
-
-        var bundleOnlyMods = mods.Append(new List<NexusModVariant> {
             baseMod
                 .SetName("GunLance With Lvl 8 Shelling Only")
                 .SetFiles(new[] {PathHelper.GUN_LANCE_BASE_DATA_PATH})
@@ -89,30 +85,9 @@ public class CheatMod : IMod {
                     MaxSlots(data);
                     MaxSharpness(data);
                 }),
-        });
+        };
 
-        var bundleMods = bundleOnlyMods.ToList();
         ModMaker.WriteMods(bundleMods, PathHelper.CHUNK_PATH, outPath, variantBundleName, true);
-
-        var gpBundleMods = (from mod in bundleMods
-                            let newPaths = from path in mod.Files
-                                           select path.Replace("STM", "MSG")
-                            select mod.SetFiles(newPaths)).ToList();
-        ModMaker.WriteMods(gpBundleMods, PathHelper.CHUNK_PATH, outPath, variantGpBundleName, true);
-
-        ModMaker.WriteMods(mods.Select(NexusMod.FromVariant)
-                               .Append(NexusMod.FromVariant(baseMod)
-                                               .SetName("All In One")
-                                               .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Base)
-                                                                   .Append(new[] {
-                                                                       PathHelper.ARMOR_BASE_PATH,
-                                                                       PathHelper.DECORATION_PATH
-                                                                   }))
-                                               .SetAction(data => {
-                                                   MaxSlots(data);
-                                                   MaxSkills(data);
-                                                   MaxSharpness(data);
-                                               })), PathHelper.CHUNK_PATH, outPath);
     }
 
     public static void MaxSharpness(List<RszObject> rszObjectData) {

@@ -321,6 +321,7 @@ public static class ArmorConstants {
     public const uint REFLET = 436;
     public const uint MARINE = 437;
     public const uint DUSK = 438;
+    public const uint ALICE = 440;
     public const uint HEAVY_KNIGHT = 441;
     public const uint KNIGHT_SQUIRE = 442;
     public const uint ROYAL_ARTILLERY_CORPS = 443;
@@ -331,6 +332,8 @@ public static class ArmorConstants {
     public const uint SUMMER = 448;
     public const uint FALL = 449;
     public const uint FLUFFY_FUR = 450;
+    public const uint WILD = 451;
+    public const uint BLOODMALICE = 452;
     public const uint FACE_SCARF = 453;
     public const uint DRAGONSBANE = 454;
     public const uint FORMAL_DRAGON = 455;
@@ -344,6 +347,7 @@ public static class ArmorConstants {
     public const uint ARLOW = 464;
     public const uint HINOA = 465;
     public const uint MINOTO = 466;
+    public const uint RONDINE = 467;
     public const uint QURIO_CROWN = 481;
     public const uint CLOCKWORK = 482;
     public const uint ELFIN_CROWN = 483;
@@ -361,4 +365,9 @@ public static class ArmorConstants {
     public const uint RAN_PAGE = 497;
     public const uint RIMEGUARD = 498;
     public const uint CRIMSON_VALSTRAX___EPOCH = 499;
+    public const uint TEMPEST = 500;
+    public const uint VIRTUE = 501;
+    public const uint LAGOMBI_EARS = 503;
+    public const uint BUFF_BODY = 504;
+    public const uint PRUDENCE = 506;
 }

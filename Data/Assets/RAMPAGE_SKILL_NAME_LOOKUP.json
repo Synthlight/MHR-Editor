@@ -288,7 +288,14 @@
     "285": "人魂鳥倍加",
     "286": "竜杭砲強化",
     "287": "牙獣種特効",
-    "288": "劫血活性"
+    "288": "劫血活性",
+    "289": "翔蟲効果持続",
+    "290": "研鑽",
+    "291": "溜打強化",
+    "292": "鬼人強走",
+    "293": "猟虫激化",
+    "294": "ガードバッシュ",
+    "295": "#Rejected#"
   },
   "eng": {
     "0": "#Rejected#",
@@ -579,7 +586,14 @@
     "285": "Spiribird Doubled",
     "286": "Wyrmstake Boost",
     "287": "Fanged Exploit",
-    "288": "Bloody Heart"
+    "288": "Bloody Heart",
+    "289": "Wirebug Wrangler",
+    "290": "Self-Improvement",
+    "291": "Charge Up",
+    "292": "Demon Rage",
+    "293": "Kinsect Supercharge",
+    "294": "Guard Bash",
+    "295": "#Rejected#"
   },
   "fre": {
     "0": "#Rejected#",
@@ -870,7 +884,14 @@
     "285": "Bonus Spectroiseaux",
     "286": "Bonus Wyvernator",
     "287": "Exploit à croc",
-    "288": "Cœur sanglant"
+    "288": "Cœur sanglant",
+    "289": "Dresseur Filoptère",
+    "290": "Auto-amélioration",
+    "291": "Surcharge",
+    "292": "Rage démoniaque",
+    "293": "Surcharge kinsecte",
+    "294": "Coup défensif",
+    "295": "#Rejected#"
   },
   "ita": {
     "0": "#Rejected#",
@@ -1161,7 +1182,14 @@
     "285": "Spiriuccello doppio",
     "286": "Bonus cannone wyvern",
     "287": "Debolezza zannuta",
-    "288": "Cuore sanguinario"
+    "288": "Cuore sanguinario",
+    "289": "Insetto filo rissoso",
+    "290": "Miglioramento",
+    "291": "Carica+",
+    "292": "Ira demoniaca",
+    "293": "Supercarica kinsetto",
+    "294": "Colpo difensivo",
+    "295": "#Rejected#"
   },
   "ger": {
     "0": "#Rejected#",
@@ -1452,7 +1480,14 @@
     "285": "Doppelter Irrlitz",
     "286": "WyrmstakeKanoneBonus",
     "287": "Reißzahnvorteil",
-    "288": "Blutiges Herz"
+    "288": "Blutiges Herz",
+    "289": "Seilkäfer-Streithahn",
+    "290": "Selbstverbesserung",
+    "291": "Aufladen",
+    "292": "Dämonenwut",
+    "293": "Kinsekt-Überladung",
+    "294": "Block-Stoß",
+    "295": "#Rejected#"
   },
   "spa": {
     "0": "#Rejected#",
@@ -1743,7 +1778,14 @@
     "285": "Animave duplicada",
     "286": "Bonus derribawyverns",
     "287": "Aprovechar colmillos",
-    "288": "Corazón sangriento"
+    "288": "Corazón sangriento",
+    "289": "Cordóptero combatiente",
+    "290": "Automejora",
+    "291": "Más carga",
+    "292": "Furia demoníaca",
+    "293": "Supercarga kinsecto",
+    "294": "Golpe de guardia",
+    "295": "#Rejected#"
   },
   "rus": {
     "0": "#Rejected#",
@@ -2034,7 +2076,14 @@
     "285": "Удвоение Духоптиц",
     "286": "Драконье усиление",
     "287": "Уязвимость к клыкам",
-    "288": "Кровавое сердце"
+    "288": "Кровавое сердце",
+    "289": "Укротитель Прутожука",
+    "290": "Саморазвитие",
+    "291": "Мощный заряд",
+    "292": "Гнев демона",
+    "293": "Суперзаряд кинсекта",
+    "294": "Защитный удар",
+    "295": "#Rejected#"
   },
   "pol": {
     "0": "#Rejected#",
@@ -2325,7 +2374,14 @@
     "285": "Podwójny duchoptak",
     "286": "Wzmoc. smoczy śrut",
     "287": "Wykorzyst. zębatych",
-    "288": "Krwawiące serce"
+    "288": "Krwawiące serce",
+    "289": "Ujeżdżacz kablobaków",
+    "290": "Samodoskonalenie",
+    "291": "Ładowanie",
+    "292": "Gniew demona",
+    "293": "Supernał. kinsekta",
+    "294": "Uderzenie z gardy",
+    "295": "#Rejected#"
   },
   "ptB": {
     "0": "#Rejected#",
@@ -2616,7 +2672,14 @@
     "285": "Espiripássaro Duplo",
     "286": "Ref. de Serpestaca",
     "287": "Exploração de Presas",
-    "288": "Coração Sangrento"
+    "288": "Coração Sangrento",
+    "289": "Domador de Cabinseto",
+    "290": "Autoaprimoramento",
+    "291": "Energizar",
+    "292": "Ira Demoníaca",
+    "293": "Sobrecarga de Kinseto",
+    "294": "Golpe de Guarda",
+    "295": "#Rejected#"
   },
   "kor": {
     "0": "#Rejected#",
@@ -2907,7 +2970,14 @@
     "285": "인혼조 강화",
     "286": "용항포 강화",
     "287": "아수종 특효",
-    "288": "겁혈 활성"
+    "288": "겁혈 활성",
+    "289": "밧줄벌레 효과 지속",
+    "290": "연찬",
+    "291": "모으기 타격 강화",
+    "292": "귀인 강주",
+    "293": "사냥벌레 격화",
+    "294": "가드 배시",
+    "295": "#Rejected#"
   },
   "chT": {
     "0": "#Rejected#",
@@ -3198,7 +3268,14 @@
     "285": "鬼火鳥加倍",
     "286": "龍杭砲強化",
     "287": "牙獸種特效",
-    "288": "劫血活化"
+    "288": "劫血活化",
+    "289": "翔蟲效果持續",
+    "290": "鑽研",
+    "291": "蓄攻強化",
+    "292": "鬼人強走",
+    "293": "獵蟲激化",
+    "294": "防禦強鎚",
+    "295": "#Rejected#"
   },
   "chS": {
     "0": "#Rejected#",
@@ -3489,7 +3566,14 @@
     "285": "鬼火鸟加倍",
     "286": "龙杭炮强化",
     "287": "牙兽种特效",
-    "288": "劫血活性"
+    "288": "劫血活性",
+    "289": "翔虫效果持续",
+    "290": "钻研",
+    "291": "蓄击强化",
+    "292": "鬼人强走",
+    "293": "猎虫激化",
+    "294": "防御重击",
+    "295": "#Rejected#"
   },
   "ara": {
     "0": "#Rejected#",
@@ -3780,6 +3864,13 @@
     "285": "ضعف طيور سيبيري",
     "286": "معزز ويرمستايك",
     "287": "استغلال الأنياب",
-    "288": "قلب دامٍ"
+    "288": "قلب دامٍ",
+    "289": "مروض حشرة الحرير",
+    "290": "التحسّن الذاتي",
+    "291": "الشحن",
+    "292": "غضب العفريت",
+    "293": "شحن كينسيكت الفائق",
+    "294": "ضربة الحارس",
+    "295": "#Rejected#"
   }
 }

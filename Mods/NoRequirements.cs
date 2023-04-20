@@ -53,6 +53,10 @@ public class NoRequirements : IMod {
                                     .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.OverwearProduct)))
                 .SetAction(CheatMod.NoCost),
             baseMod
+                .SetName("Rampage Skills")
+                .SetFiles(new[] {PathHelper.RAMPAGE_SKILL_RECIPE_PATH})
+                .SetAction(CheatMod.NoCost),
+            baseMod
                 .SetName("Decorations")
                 .SetFiles(new[] {PathHelper.DECORATION_RECIPE_PATH, PathHelper.RAMPAGE_DECORATION_RECIPE_PATH})
                 .SetAction(CheatMod.NoCost),

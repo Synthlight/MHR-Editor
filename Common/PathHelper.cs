@@ -32,6 +32,7 @@ public static class PathHelper {
     public const string RAMPAGE_DECORATION_RECIPE_PATH    = @"\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDecoProductData.user.2";
     public const string GUN_LANCE_BASE_DATA_PATH          = @"\natives\STM\data\Define\Player\Weapon\GunLance\GunLanceBaseData.user.2";
     public const string PLAYER_SKILL_PATH                 = @"\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlEquipSkillBaseData.user.2";
+    public const string RAMPAGE_SKILL_RECIPE_PATH         = @"\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkillRecipeData.user.2";
     public const string CAT_ARMOR_RECIPE_PATH             = @"\natives\STM\data\Define\Otomo\Equip\Armor\OtAirouArmorProductData.user.2";
     public const string DOG_ARMOR_RECIPE_PATH             = @"\natives\STM\data\Define\Otomo\Equip\Armor\OtDogArmorProductData.user.2";
     public const string CAT_DOG_LAYERED_ARMOR_RECIPE_PATH = @"\natives\STM\data\Define\Otomo\Equip\Overwear\OtOverwearRecipeData.user.2";

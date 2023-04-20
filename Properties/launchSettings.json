@@ -1,47 +1,7 @@
 {
-  "profiles": {
-    "[None]": {
-      "commandName": "Project"
-    },
-    "ch1f1z0ShellHarpoonShellInfo.user.2": {
-      "commandName": "Project",
-      "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\Character\\ch1f1z0\\UserData\\Harpoon\\ch1f1z0ShellHarpoonShellInfo.user.2\""
-    },
-    "InGameShopItemSettingUserdata.user.2": {
-      "commandName": "Project",
-      "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\UI\\UserData\\InGameShopItemSettingUserdata.user.2\""
-    },
-    "InventoryCatalog_Main.user.2": {
-      "commandName": "Project",
-      "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\Inventory\\InventoryCatalog\\InventoryCatalog_Main.user.2\""
-    },
-    "ItemCraftSettingUserData.user.2": {
-      "commandName": "Project",
-      "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\UI\\UserData\\ItemCraftSettingUserData.user.2\""
-    },
-    "ItemDefinitionUserData.user.2": {
-      "commandName": "Project",
-      "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\UI\\UserData\\ItemDefinitionUserData.user.2\""
-    },
-    "ItemDefinitionUserData_MC.user.2": {
-      "commandName": "Project",
-      "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Mercenaries\\AppSystem\\UI\\UserData\\ItemDefinitionUserData_MC.user.2\""
-    },
-    "ItemDefinitionUserData_OVR_MC.user.2": {
-      "commandName": "Project",
-      "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Mercenaries\\AppSystem\\UI\\UserData\\ItemDefinitionUserData_OVR_MC.user.2\""
-    },
-    "WeaponCustomUserdata.user.2": {
-      "commandName": "Project",
-      "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\WeaponCustom\\WeaponCustomUserdata.user.2\""
-    },
-    "WeaponDetailCustomUserdata.user.2": {
-      "commandName": "Project",
-      "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\WeaponCustom\\WeaponDetailCustomUserdata.user.2\""
-    },
-    "WeaponEquipParamCatalogUserData.user.2": {
-      "commandName": "Project",
-      "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\Weapon\\WeaponEquipParamCatalogUserData.user.2\""
+    "profiles": {
+        "[None]": {
+            "commandName": "Project"
+        }
     }
-  }
 }

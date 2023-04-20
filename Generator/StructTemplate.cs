@@ -1,5 +1,6 @@
 ﻿using RE_Editor.Common;
 using RE_Editor.Common.Attributes;
+using RE_Editor.Common.Data;
 using RE_Editor.Common.Models;
 using RE_Editor.Common.Structs;
 using RE_Editor.Generator.Models;
@@ -141,7 +142,7 @@ public class StructTemplate {
                 file.WriteLine("");
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    [DisplayName(\"{newName}\")]");
-                file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName});");
+                file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
             } else if (isObjectType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
@@ -256,6 +257,11 @@ public class StructTemplate {
 
     private static DataSourceType? GetButtonType(StructJson.Field field) {
         return field.originalType?.Replace("[]", "") switch {
+            "snow.data.ContentsIdSystem.ItemId" => DataSourceType.ITEMS,
+            "snow.data.DataDef.PlEquipSkillId" => DataSourceType.SKILLS,
+            "snow.data.DataDef.PlHyakuryuSkillId" => DataSourceType.RAMPAGE_SKILLS,
+            "snow.data.DataDef.PlKitchenSkillId" => DataSourceType.DANGO_SKILLS,
+            "snow.data.DataDef.PlWeaponActionId" => DataSourceType.SWITCH_SKILLS,
             _ => null
         };
     }
@@ -268,12 +274,18 @@ public class StructTemplate {
 
     private static List<string> GetAdditionalAttributesForDataSourceType(DataSourceType? dataSourceType) {
         return dataSourceType switch {
+            DataSourceType.ITEMS => new() {"[ButtonIdAsHex]"},
             _ => new()
         };
     }
 
     public static string GetLookupForDataSourceType(DataSourceType? dataSourceType) {
         return dataSourceType switch {
+            DataSourceType.DANGO_SKILLS => nameof(DataHelper.DANGO_SKILL_NAME_LOOKUP),
+            DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
+            DataSourceType.RAMPAGE_SKILLS => nameof(DataHelper.RAMPAGE_SKILL_NAME_LOOKUP),
+            DataSourceType.SKILLS => nameof(DataHelper.SKILL_NAME_LOOKUP),
+            DataSourceType.SWITCH_SKILLS => nameof(DataHelper.SWITCH_SKILL_NAME_LOOKUP),
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
     }

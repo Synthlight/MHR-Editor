@@ -118,7 +118,88 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ARMOR_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\armor_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ARMOR_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\armor_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ARMOR_SERIES_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\armor_series_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CAT_DOG_ARMOR_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\cat_dog_armor_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CAT_DOG_ARMOR_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\cat_dog_armor_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CAT_DOG_WEAPON_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\cat_dog_weapon_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CAT_DOG_WEAPON_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\cat_dog_weapon_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DANGO_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\dango_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DANGO_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\dango_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DANGO_SKILL_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\dango_skill_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DECORATION_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\decoration_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="DECORATION_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\decoration_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GC_TITLE_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\gc_title_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GC_TITLE_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\gc_title_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ITEM_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\item_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ITEM_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\item_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PETALACE_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\petalace_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PETALACE_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\petalace_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RAMPAGE_DECORATION_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\rampage_decoration_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RAMPAGE_DECORATION_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\rampage_decoration_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RAMPAGE_SKILL_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\rampage_skill_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SKILL_ENUM_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\skill_enum_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SKILL_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\skill_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="STRUCT_INFO" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\struct_info.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SWITCH_SKILL_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\switch_skill_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SWITCH_SKILL_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\switch_skill_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WEAPON_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\weapon_desc_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WEAPON_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>assets\weapon_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

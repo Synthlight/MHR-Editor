@@ -9,8 +9,8 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<LangVersion>latest</LangVersion>
 		<ApplicationManifest>App.manifest</ApplicationManifest>
-		<AssemblyName>RE-Editor</AssemblyName>
-		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<AssemblyName>MHR-Editor</AssemblyName>
+		<AssemblyVersion>1.3.5.0</AssemblyVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0">

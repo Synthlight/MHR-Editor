@@ -15,11 +15,49 @@ public class GenerateFiles {
     public const string BASE_PROJ_PATH        = @"..\..\..";
     public const string ENUM_GEN_PATH         = $@"{BASE_GEN_PATH}\Enums";
     public const string STRUCT_GEN_PATH       = $@"{BASE_GEN_PATH}\Structs";
-    public const string ROOT_STRUCT_NAMESPACE = "";
+    public const string ROOT_STRUCT_NAMESPACE = "snow";
     public const string ENUM_REGEX            = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static readonly List<string> WHITELIST = new() {
+        "Snow_data_ArmorBaseUserData",
+        "Snow_data_ContentsIdSystem_ItemId",
+        "Snow_data_ContentsIdSystem_SubCategoryType",
+        "Snow_data_DangoBaseUserData",
+        "Snow_data_DataDef_PlEquipSkillId",
+        "Snow_data_DecorationsBaseUserData",
+        "Snow_data_ItemUserData",
+        "Snow_data_NormalLvBuffCageBaseUserData",
+        "Snow_data_OtAirouArmorBaseUserData",
+        "Snow_data_OtDogArmorBaseUserData",
+        "Snow_data_OtDogWeaponBaseUserData",
+        "Snow_data_OtWeaponBaseUserData",
+        "Snow_data_PlEquipSkillBaseUserData",
+        "Snow_data_PlHyakuryuSkillBaseUserData",
+        "Snow_enemy_em134_Em134_00UniqueData", // Nested generics.
+        "Snow_envCreature_Ec019Trajectory_TimeEffectSetting", // Nested generics.
+        "Snow_equip_BowBaseUserData",
+        "Snow_equip_ChargeAxeBaseUserData",
+        "Snow_equip_DualBladesBaseUserData",
+        "Snow_equip_GreatSwordBaseUserData",
+        "Snow_equip_GunLanceBaseUserData",
+        "Snow_equip_HammerBaseUserData",
+        "Snow_equip_HeavyBowgunBaseUserData",
+        "Snow_equip_HornBaseUserData",
+        "Snow_equip_InsectBaseUserData",
+        "Snow_equip_InsectGlaiveBaseUserData",
+        "Snow_equip_LanceBaseUserData",
+        "Snow_equip_LightBowgunBaseUserData",
+        "Snow_equip_LongSwordBaseUserData",
+        "Snow_equip_OtOverwearBaseUserData_Param",
+        "Snow_equip_OtOverwearRecipeUserData_Param",
+        "Snow_equip_PlOverwearBaseUserData",
+        "Snow_equip_ShortSwordBaseUserData",
+        "Snow_equip_SlashAxeBaseUserData",
+        "Snow_fallingObject_FallingObjectPlayerHeavyBowgunExtraCartridgeUserData",
+        "Snow_npc_fsm_action_NpcFsmAction_StopNavigation", // Via_vec3? This one skipped the via type checking.
+        "Snow_player_PlayerUserDataBow",
+        "Snow_player_PlayerUserDataIG_Insect",
     };
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -42,7 +80,18 @@ public class GenerateFiles {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly List<string> UNSUPPORTED_OBJECT_TYPES = new() { // TODO: Implement support for these.
+        "snow.camera.CameraUtility.BufferingParam`",
+        "snow.data.StmKeyconfigSystem.ConfigCodeSet`",
+        "snow.shell.Em", // There's one for each monster variant. Exclude the whole shebang for now.
+        "snow.enemy.EnemyCarryChangeTrack`",
+        "snow.enemy.EnemyEditStepActionData`",
+        "snow.envCreature.EnvironmentCreatureActionController`",
+        "snow.eventcut.EventPlayerMediator.FaceMaterialConfig`",
+        "snow.StmDefaultKeyconfigData.EnumSet2`",
+        "snow.StmGuiKeyconfigData.EnumItemSystemMessage`",
+        "snow.StmGuiKeyconfigData.EnumMessage`",
         "System.Collections.Generic.Dictionary`",
+        "System.Collections.Generic.List`1<snow.enemy.em134.Em", // Nested generics.
         "System.Collections.Generic.Queue`1<System.Tuple`", // Nested generics.
         "System.Collections.Generic.Queue`1<via.vec3>", // Because this breaks generation and I need a better way of handling generics.
     };
@@ -239,7 +288,17 @@ public class GenerateFiles {
     }
 
     private static bool IsWhitelisted(string key) {
-        return WHITELIST.Contains(key);
+        return WHITELIST.Contains(key)
+               || key.ContainsIgnoreCase("ContentsIdSystem")
+               || key.ContainsIgnoreCase("Snow_data_DataDef")
+               || key.ContainsIgnoreCase("ProductUserData")
+               || key.ContainsIgnoreCase("ChangeUserData")
+               || key.ContainsIgnoreCase("ProcessUserData")
+               || key.ContainsIgnoreCase("RecipeUserData")
+               || key.ContainsIgnoreCase("PlayerUserData")
+               || key.ContainsIgnoreCase("Snow_equip")
+               || key.ContainsIgnoreCase("Snow_data")
+               || key.ContainsIgnoreCase("Snow_player");
     }
 
     /**

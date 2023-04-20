@@ -347,7 +347,7 @@ public static class RszObjectExtensions {
     }
 
     public static Type? AsType(this string? typeName) {
-        return typeName == null ? null : Type.GetType("MHR_Editor.Common.Structs." + typeName, true);
+        return typeName == null ? null : Type.GetType("RE_Editor.Common.Structs." + typeName, true);
     }
 
     public static List<T> GetDataAsList<T>(this byte[] bytes, int size, int arrayCount, StructJson.Field field) {

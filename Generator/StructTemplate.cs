@@ -239,7 +239,7 @@ public class StructTemplate {
             } else if ((field.array || isObjectType || isNonPrimitive) && buttonType == null) {
                 file.WriteLine($"        obj.{newName} ??= new();");
                 file.WriteLine($"        foreach (var x in {newName}) {{");
-                file.WriteLine($"            obj.{newName}.Add(x.Copy());");
+                file.WriteLine($"            obj.{newName}.Add({(isEnumType ? "x" : "x.Copy()")});");
                 file.WriteLine("        }");
             } else {
                 file.WriteLine($"        obj.{newName} = {newName};");

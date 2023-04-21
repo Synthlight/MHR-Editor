@@ -1,4 +1,5 @@
 ﻿using System.CodeDom;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -47,41 +48,50 @@ public class GenerateFiles {
         "System.Collections.Generic.Queue`1<via.vec3>", // Because this breaks generation and I need a better way of handling generics.
     };
 
+    private static readonly List<uint> GREYLIST = new(); // Hashes used in a given location.
+
     public readonly  Dictionary<string, EnumType>   enumTypes   = new();
     public readonly  Dictionary<string, StructType> structTypes = new();
     private readonly Dictionary<string, StructJson> structJson  = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(PathHelper.STRUCT_JSON_PATH))!;
 
     public void Go(string[] args) {
         var useWhitelist = args.Length > 0 && args.Contains("useWhitelist");
+        var useGreylist  = args.Length > 0 && args.Contains("useGreylist");
         var dryRun       = args.Length > 0 && args.Contains("dryRun");
 
-        Console.WriteLine("Finding enum placeholders in the struct json.");
+        Log("Finding enum placeholders in the struct json.");
         FindAllEnumUnderlyingTypes();
 
         if (!dryRun) {
-            Console.WriteLine("Removing existing generated files.");
+            Log("Removing existing generated files.");
             CleanupGeneratedFiles(ENUM_GEN_PATH);
             CleanupGeneratedFiles(STRUCT_GEN_PATH);
         }
 
-        Console.WriteLine("Parsing enums.");
+        Log("Parsing enums.");
         ParseEnums();
-        Console.WriteLine("Parsing structs.");
+        Log("Parsing structs.");
         ParseStructs();
 
         if (useWhitelist) {
             FilterWhitelisted();
+        }
+        if (useGreylist) {
+            FindAllHashesBeingUsed();
+            FilterGreylisted();
+        }
+        if (useWhitelist || useGreylist) {
             UpdateUsingCounts();
             RemoveUnusedTypes();
         }
 
-        Console.WriteLine($"Generating {enumTypes.Count} enums, {structTypes.Count} structs.");
+        Log($"Generating {enumTypes.Count} enums, {structTypes.Count} structs.");
         GenerateEnums(dryRun);
-        Console.WriteLine("Enums written.");
+        Log("Enums written.");
         GenerateStructs(dryRun);
-        Console.WriteLine("Structs written.");
+        Log("Structs written.");
         WriteStructInfo(dryRun);
-        Console.WriteLine("Struct info written.");
+        Log("Struct info written.");
     }
 
     private void WriteStructInfo(bool dryRun) {
@@ -160,8 +170,7 @@ public class GenerateFiles {
             if (hppName.Contains('<') || hppName.Contains('`')) continue;
             var name     = hppName.ToConvertedTypeName();
             var contents = match.Groups[3].Value;
-            if (name != null && enumTypes.ContainsKey(name)) {
-                var enumType = enumTypes[name];
+            if (name != null && enumTypes.TryGetValue(name, out var enumType)) {
                 if (contents.Contains("= -")) {
                     enumType.type = enumType.type switch {
                         "ushort" => "short",
@@ -288,6 +297,61 @@ public class GenerateFiles {
         }
     }
 
+    private void FindAllHashesBeingUsed() {
+        var allUserFiles = from basePath in PathHelper.TEST_PATHS
+                           from file in Directory.EnumerateFiles(PathHelper.CHUNK_PATH + basePath, "*.user.2", SearchOption.AllDirectories)
+                           where File.Exists(file)
+                           select file;
+
+        foreach (var file in allUserFiles) {
+            var rsz = ReDataFile.Read(file, justReadHashes: true);
+            var hashes = from instanceInfo in rsz.rsz.instanceInfo
+                         select instanceInfo.hash;
+            hashes = hashes.Distinct();
+            foreach (var hash in hashes) {
+                if (GREYLIST.Contains(hash)) continue;
+                GREYLIST.Add(hash);
+            }
+        }
+    }
+
+    /**
+     * Increases the useCount of enums/structs marked as whitelisted.
+     */
+    private void FilterGreylisted() {
+        // Make a list of structs by hash.
+        var structsByHash = new Dictionary<uint, StructType>();
+        foreach (var (_, structType) in structTypes) {
+            if (structType.name.GetViaType() != null) continue;
+            structsByHash[uint.Parse(structType.hash, NumberStyles.HexNumber)] = structType;
+        }
+
+        // Include structs for all the target files.
+        foreach (var hash in GREYLIST.Where(structsByHash.ContainsKey)) {
+            structsByHash[hash].useCount++;
+        }
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var structType in structTypes.Values) {
+            if (structType.useCount == 0) continue;
+            if (structType.name.GetViaType() != null) continue;
+
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var field in structType.structInfo.fields!) {
+                if (string.IsNullOrEmpty(field.name) || string.IsNullOrEmpty(field.originalType)) continue;
+
+                var typeName = field.originalType!.ToConvertedTypeName();
+                if (typeName == null) continue;
+
+                if (enumTypes.TryGetValue(typeName, out var enumType)) {
+                    enumType.useCount++;
+                }
+            }
+        }
+
+        // Because this one doesn't appear in the fields but we still use it.
+        enumTypes["Snow_data_ContentsIdSystem_SubCategoryType"].useCount++;
+    }
+
     private void GenerateEnums(bool dryRun) {
         foreach (var enumType in enumTypes.Values) {
             new EnumTemplate(enumType).Generate(dryRun);
@@ -300,5 +364,10 @@ public class GenerateFiles {
             if (structType.name.GetViaType() != null) continue;
             new StructTemplate(this, structType).Generate(dryRun);
         }
+    }
+
+    private static void Log(string msg) {
+        Console.WriteLine(msg);
+        Debug.WriteLine(msg);
     }
 }

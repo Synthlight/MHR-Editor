@@ -8,6 +8,7 @@ public static class PathHelper {
     public const string FLUFFY_MODS_PATH = @"";
     public const string RAR_SCRIPT       = @"/mnt/r/Games/Monster\ Hunter\ Rise/RE-Editor/compress-rar.sh";
 
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly string[] TEST_PATHS = {
     };
 }

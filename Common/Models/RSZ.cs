@@ -17,7 +17,7 @@ public class RSZ {
     public List<RszUserDataInfo> userDataInfo; // String names of other files being referenced. MUST MATCH THE OUTER ONE IN `ReDataFile`.
     public List<RszObject>       objectData; // Array data. USED ONLY FOR READ.
 
-    public static RSZ Read(BinaryReader reader) {
+    public static RSZ Read(BinaryReader reader, bool justReadHashes) {
         var rsz = new RSZ();
         rsz.position = reader.BaseStream.Position;
         rsz.magic    = reader.ReadUInt32();
@@ -40,6 +40,8 @@ public class RSZ {
         for (var i = 0; i < instanceCount; i++) {
             rsz.instanceInfo.Add(InstanceInfo.Read(reader));
         }
+
+        if (justReadHashes) return rsz;
 
         reader.BaseStream.Seek(rsz.position + (long) userDataOffset, SeekOrigin.Begin);
         rsz.userDataInfo = new(userDataCount);

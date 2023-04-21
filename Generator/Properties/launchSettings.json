@@ -14,6 +14,14 @@
         "Whitelist (DryRun)": {
             "commandName": "Project",
             "commandLineArgs": "useWhitelist dryRun"
+        },
+        "Greylist": {
+            "commandName": "Project",
+            "commandLineArgs": "useGreylist"
+        },
+        "Greylist (DryRun)": {
+            "commandName": "Project",
+            "commandLineArgs": "useGreylist dryRun"
         }
     }
 }

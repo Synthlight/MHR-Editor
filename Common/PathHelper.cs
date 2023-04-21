@@ -12,8 +12,9 @@ public static class PathHelper {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly string[] TEST_PATHS = {
-        $@"\natives\STM\data\",
-        $@"\natives\STM\player\UserData",
+        $@"\natives\STM\data",
+        $@"\natives\STM\otomo",
+        $@"\natives\STM\player",
     };
 
     public const string WIKI_PATH = @"R:\Games\Monster Hunter Rise\Wiki Dump";

@@ -10,6 +10,11 @@ public class TestGeneration {
     }
 
     [TestMethod]
+    public void TestWithGreylist() {
+        Program.Main(new[] {"useGreylist", "dryRun"});
+    }
+
+    [TestMethod]
     public void TestWithoutWhitelist() {
         Program.Main(new[] {"dryRun"});
     }

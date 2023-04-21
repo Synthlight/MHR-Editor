@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -351,7 +352,7 @@ public static class Extensions {
 
     public static string? GetViaType(this string name) {
         name = name.ToLower();
-        return VIA_TYPE_NAME_LOOKUPS.ContainsKey(name) ? VIA_TYPE_NAME_LOOKUPS[name] : null;
+        return VIA_TYPE_NAME_LOOKUPS.TryGetValue(name, out var value) ? value : null;
     }
 
     public static string ToUpperFirstLetter(this string source) {
@@ -361,6 +362,7 @@ public static class Extensions {
         return new(letters);
     }
 
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static string? ToConvertedTypeName(this string? source, bool fixTypos = false) {
         if (source == null) return null;
         var name = source.ToUpperFirstLetter()

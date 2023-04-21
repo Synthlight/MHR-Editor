@@ -14,7 +14,7 @@ public class ReDataFile {
     public List<UserDataInfo> userDataInfo; // String names of other files being referenced. MUST MATCH THE INNER ONE IN `RSZ`.
     public RSZ                rsz;
 
-    public static ReDataFile Read(string targetFile) {
+    public static ReDataFile Read(string targetFile, bool justReadHashes = false) {
         var       file   = new ReDataFile();
         using var reader = new BinaryReader(File.OpenRead(targetFile));
         file.magic         = (Magic) reader.ReadUInt32();
@@ -32,7 +32,7 @@ public class ReDataFile {
         }
 
         reader.BaseStream.Seek((long) dataOffset, SeekOrigin.Begin);
-        file.rsz = RSZ.Read(reader);
+        file.rsz = RSZ.Read(reader, justReadHashes);
 
         return file;
     }

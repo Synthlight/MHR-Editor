@@ -8,20 +8,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
+using RE_Editor.Common;
 using RE_Editor.Windows;
 
 // Separate because `using System.Windows.Forms;` in an xaml class causes ReSharper to imagine annoying problems.
 namespace RE_Editor.Util;
 
 public static class UpdateCheck {
-    private const string NEXUS_LINK = "https://www.nexusmods.com/monsterhunterrise/mods/114";
-
     [CanBeNull] public static NotifyIcon notifyIcon;
 
     public static async void Run(MainWindow mainWindow) {
         await Task.Run(() => {
             try {
-                var json           = GetHttpText("http://brutsches.com/MHR-Editor.version.json");
+                var json           = GetHttpText(PathHelper.JSON_VERSION_CHECK_URL);
                 var currentVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
                 var newestVersion  = JsonConvert.DeserializeObject<VersionCheck>(json)?.latest;
 
@@ -35,7 +34,7 @@ public static class UpdateCheck {
                                    "Click to go to the mod page."
                         };
                         //notifyIcon.BalloonTipClosed += (s, e) => notifyIcon.Visible = false;
-                        notifyIcon.MouseClick += (sender, args) => { Process.Start(NEXUS_LINK); };
+                        notifyIcon.MouseClick += (sender, args) => { Process.Start(PathHelper.NEXUS_URL); };
 
                         notifyIcon.Visible = true;
                         notifyIcon.ShowBalloonTip(10000, "Update Available", "A newer version has been detected.\r\n" +

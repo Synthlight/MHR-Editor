@@ -5,17 +5,17 @@ namespace RE_Editor.Tests;
 [TestClass]
 public class TestGeneration {
     [TestMethod]
-    public void TestWithWhitelist() {
+    public void TestWhitelistGeneration() {
         Program.Main(new[] {"useWhitelist", "dryRun"});
     }
 
     [TestMethod]
-    public void TestWithGreylist() {
+    public void TestGreylistGeneration() {
         Program.Main(new[] {"useGreylist", "dryRun"});
     }
 
     [TestMethod]
-    public void TestWithoutWhitelist() {
+    public void TestFullGeneration() {
         Program.Main(new[] {"dryRun"});
     }
 }

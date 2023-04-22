@@ -42,24 +42,32 @@
 		<Compile Remove="Generated\**"/>
 		<Compile Remove="Generator\**"/>
 		<Compile Remove="ID-Parser\**"/>
+		<Compile Remove="Test-Result-Parser\**"/>
+		<Compile Remove="TestResults\**"/>
 		<Compile Remove="Tests\**"/>
 		<EmbeddedResource Remove="Common\**"/>
 		<EmbeddedResource Remove="Data-Helper-Extractor\**"/>
 		<EmbeddedResource Remove="Generated\**"/>
 		<EmbeddedResource Remove="Generator\**"/>
 		<EmbeddedResource Remove="ID-Parser\**"/>
+		<EmbeddedResource Remove="Test-Result-Parser\**"/>
+		<EmbeddedResource Remove="TestResults\**"/>
 		<EmbeddedResource Remove="Tests\**"/>
 		<None Remove="Common\**"/>
 		<None Remove="Data-Helper-Extractor\**"/>
 		<None Remove="Generated\**"/>
 		<None Remove="Generator\**"/>
 		<None Remove="ID-Parser\**"/>
+		<None Remove="Test-Result-Parser\**"/>
+		<None Remove="TestResults\**"/>
 		<None Remove="Tests\**"/>
 		<Page Remove="Common\**"/>
 		<Page Remove="Data-Helper-Extractor\**"/>
 		<Page Remove="Generated\**"/>
 		<Page Remove="Generator\**"/>
 		<Page Remove="ID-Parser\**"/>
+		<Page Remove="Test-Result-Parser\**"/>
+		<Page Remove="TestResults\**"/>
 		<Page Remove="Tests\**"/>
 	</ItemGroup>
 </Project>

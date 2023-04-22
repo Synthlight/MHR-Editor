@@ -11,6 +11,7 @@ public static class PathHelper {
 
     public const string NEXUS_URL              = "https://www.nexusmods.com/monsterhunterrise/mods/114";
     public const string JSON_VERSION_CHECK_URL = "http://brutsches.com/MHR-Editor.version.json";
+    public const string WIKI_URL               = "https://github.com/Synthlight/MHR-Editor/wiki";
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly string[] TEST_PATHS = {

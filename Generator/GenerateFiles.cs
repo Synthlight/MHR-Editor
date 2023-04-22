@@ -357,13 +357,31 @@ public class GenerateFiles {
     }
 
     private static void FindAllHashesBeingUsed() {
-        var allUserFiles = from basePath in PathHelper.TEST_PATHS
-                           from file in Directory.EnumerateFiles(PathHelper.CHUNK_PATH + basePath, "*.user.2", SearchOption.AllDirectories)
-                           where File.Exists(file)
-                           select file;
+        foreach (var path in PathHelper.TEST_PATHS) {
+            Console.WriteLine($"Finding all files in: {PathHelper.CHUNK_PATH + path}");
+        }
 
-        foreach (var file in allUserFiles) {
-            var rsz = ReDataFile.Read(file, justReadHashes: true);
+        var allUserFiles = (from basePath in PathHelper.TEST_PATHS
+                            from file in Directory.EnumerateFiles(PathHelper.CHUNK_PATH + basePath, "*.user.2", SearchOption.AllDirectories)
+                            where File.Exists(file)
+                            select file).ToList();
+
+        var count = allUserFiles.Count;
+        Console.WriteLine($"Found {count} files.");
+
+        var now = DateTime.Now;
+        Console.WriteLine("");
+
+        for (var i = 0; i < allUserFiles.Count; i++) {
+            var newNow = DateTime.Now;
+            if (newNow > now.AddSeconds(1)) {
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                Console.WriteLine($"Parsed {i}/{count}.");
+                now = newNow;
+            }
+
+            var file = allUserFiles[i];
+            var rsz  = ReDataFile.Read(file, justReadHashes: true);
             var hashes = from instanceInfo in rsz.rsz.instanceInfo
                          select instanceInfo.hash;
             hashes = hashes.Distinct();
@@ -372,6 +390,9 @@ public class GenerateFiles {
                 GREYLIST.Add(hash);
             }
         }
+
+        Console.SetCursorPosition(0, Console.CursorTop - 1);
+        Console.WriteLine($"Parsed {count}/{count}.");
     }
 
     /**

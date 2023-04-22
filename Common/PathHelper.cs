@@ -11,6 +11,7 @@ public static class PathHelper {
 
     public const string NEXUS_URL              = "";
     public const string JSON_VERSION_CHECK_URL = "";
+    public const string WIKI_URL               = "";
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly string[] TEST_PATHS = {

@@ -1,5 +1,7 @@
-﻿using System.Windows;
-using RE_Editor.Mods;
+﻿using System;
+using System.Diagnostics;
+using System.Windows;
+using RE_Editor.Common;
 
 namespace RE_Editor.Windows;
 
@@ -20,13 +22,17 @@ public partial class MainWindow {
         if (file == null) return;
     }
 
-    private void Btn_wiki_dump_Click(object sender, RoutedEventArgs e) {
-        WikiDump.DumpAll();
-    }
-
     private void Btn_make_all_mods_Click(object sender, RoutedEventArgs e) {
         foreach (var make in allMakeModMethods) {
             make.Invoke(null, null);
+        }
+    }
+
+    private void Btn_open_wiki_OnClick(object sender, RoutedEventArgs e) {
+        try {
+            Process.Start(new ProcessStartInfo("cmd", $"/c start {PathHelper.WIKI_URL}") {CreateNoWindow = true});
+        } catch (Exception err) {
+            Console.Error.WriteLine(err);
         }
     }
 }

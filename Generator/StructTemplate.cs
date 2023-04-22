@@ -200,7 +200,7 @@ public class StructTemplate {
             var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType);
 
             if (viaType == nameof(System.Guid)) {
-                file.WriteLine($"        obj.{newName} = Guid.NewIdInAList;");
+                file.WriteLine($"        obj.{newName} = RE_Editor.Common.Structs.Guid.NewIdInAList;");
             }
         }
 
@@ -235,7 +235,7 @@ public class StructTemplate {
             // TODO: Fix generic/dataSource wrappers.
 
             if (viaType == nameof(System.Guid)) {
-                file.WriteLine($"        obj.{newName} = Guid.NewIdInAList;");
+                file.WriteLine($"        obj.{newName} = RE_Editor.Common.Structs.Guid.NewIdInAList;"); // Because the field name might be `Guid`.
             } else if ((field.array || isObjectType || isNonPrimitive) && buttonType == null) {
                 file.WriteLine($"        obj.{newName} ??= new();");
                 file.WriteLine($"        foreach (var x in {newName}) {{");

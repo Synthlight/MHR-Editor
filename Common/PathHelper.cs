@@ -10,6 +10,9 @@ public static class PathHelper {
     public const string FLUFFY_MODS_PATH = @"R:\Games\Monster Hunter Rise\modmanager\Games\MHRISE\Mods";
     public const string RAR_SCRIPT       = @"/mnt/r/Games/Monster\ Hunter\ Rise/MHR-Editor/compress-rar.sh";
 
+    public const string NEXUS_URL              = "";
+    public const string JSON_VERSION_CHECK_URL = "";
+
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly string[] TEST_PATHS = {
         $@"\natives\STM\data",

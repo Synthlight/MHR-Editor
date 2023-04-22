@@ -43,7 +43,7 @@ public class StructTemplate {
         file.Close();
     }
 
-    private void WriteUsings(TextWriter file) {
+    private static void WriteUsings(TextWriter file) {
         file.WriteLine("using System.Collections.ObjectModel;");
         file.WriteLine("using System.ComponentModel;");
         file.WriteLine("using System.Diagnostics.CodeAnalysis;");
@@ -251,7 +251,7 @@ public class StructTemplate {
         file.WriteLine("    }");
     }
 
-    private void WriteClassFooter(TextWriter file) {
+    private static void WriteClassFooter(TextWriter file) {
         file.Write("}");
     }
 
@@ -288,23 +288,5 @@ public class StructTemplate {
             DataSourceType.SWITCH_SKILLS => nameof(DataHelper.SWITCH_SKILL_NAME_LOOKUP),
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
-    }
-
-    public class ListForInit {
-        public readonly string           newName;
-        public readonly StructJson.Field field;
-        public readonly DataSourceType?  buttonType;
-        public readonly string?          enumType;
-        public readonly string           typeName;
-        public readonly bool             isObjectType;
-
-        public ListForInit(string newName, StructJson.Field field, DataSourceType? buttonType, string? enumType, string typeName, bool isObjectType) {
-            this.newName      = newName;
-            this.field        = field;
-            this.buttonType   = buttonType;
-            this.enumType     = enumType;
-            this.typeName     = typeName;
-            this.isObjectType = isObjectType;
-        }
     }
 }

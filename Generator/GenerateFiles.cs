@@ -430,9 +430,6 @@ public class GenerateFiles {
                 }
             }
         }
-
-        // Because this one doesn't appear in the fields but we still use it.
-        enumTypes["Snow_data_ContentsIdSystem_SubCategoryType"].useCount++;
     }
 
     private void GenerateEnums(bool dryRun) {

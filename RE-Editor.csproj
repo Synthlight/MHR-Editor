@@ -17,8 +17,9 @@
 			<NoWarn>NU1701</NoWarn>
 		</PackageReference>
 		<PackageReference Include="JetBrains.Annotations" Version="2022.3.1"/>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.2"/>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All"/>
+		<PackageReference Include="SharpZipLib" Version="1.4.2"/>
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="Common\Common.csproj"/>
@@ -42,24 +43,32 @@
 		<Compile Remove="Generated\**"/>
 		<Compile Remove="Generator\**"/>
 		<Compile Remove="ID-Parser\**"/>
+		<Compile Remove="Test-Result-Parser\**"/>
+		<Compile Remove="TestResults\**"/>
 		<Compile Remove="Tests\**"/>
 		<EmbeddedResource Remove="Common\**"/>
 		<EmbeddedResource Remove="Data-Helper-Extractor\**"/>
 		<EmbeddedResource Remove="Generated\**"/>
 		<EmbeddedResource Remove="Generator\**"/>
 		<EmbeddedResource Remove="ID-Parser\**"/>
+		<EmbeddedResource Remove="Test-Result-Parser\**"/>
+		<EmbeddedResource Remove="TestResults\**"/>
 		<EmbeddedResource Remove="Tests\**"/>
 		<None Remove="Common\**"/>
 		<None Remove="Data-Helper-Extractor\**"/>
 		<None Remove="Generated\**"/>
 		<None Remove="Generator\**"/>
 		<None Remove="ID-Parser\**"/>
+		<None Remove="Test-Result-Parser\**"/>
+		<None Remove="TestResults\**"/>
 		<None Remove="Tests\**"/>
 		<Page Remove="Common\**"/>
 		<Page Remove="Data-Helper-Extractor\**"/>
 		<Page Remove="Generated\**"/>
 		<Page Remove="Generator\**"/>
 		<Page Remove="ID-Parser\**"/>
+		<Page Remove="Test-Result-Parser\**"/>
+		<Page Remove="TestResults\**"/>
 		<Page Remove="Tests\**"/>
 	</ItemGroup>
 </Project>

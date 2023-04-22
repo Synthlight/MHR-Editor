@@ -201,7 +201,7 @@ public class GenerateFiles {
         foreach (var (hash, structInfo) in structJson) {
             if (!IsStructNameValid(structInfo)) continue;
             // Also ignore structs that are just enum placeholders.
-            if (structInfo.fields?.Count == 1 && structInfo.fields[0].name == "value__") continue;
+            if (structInfo.fields is [{name: "value__"}]) continue;
             // Ignore the 'via.thing' placeholders.
             if (structInfo.name!.GetViaType() != null) continue;
             var name       = structInfo.name.ToConvertedTypeName()!;
@@ -297,7 +297,7 @@ public class GenerateFiles {
         }
     }
 
-    private void FindAllHashesBeingUsed() {
+    private static void FindAllHashesBeingUsed() {
         var allUserFiles = from basePath in PathHelper.TEST_PATHS
                            from file in Directory.EnumerateFiles(PathHelper.CHUNK_PATH + basePath, "*.user.2", SearchOption.AllDirectories)
                            where File.Exists(file)
@@ -338,6 +338,9 @@ public class GenerateFiles {
             // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var field in structType.structInfo.fields!) {
                 if (string.IsNullOrEmpty(field.name) || string.IsNullOrEmpty(field.originalType)) continue;
+
+                if (UNSUPPORTED_DATA_TYPES.Contains(field.type!)) continue;
+                if (UNSUPPORTED_OBJECT_TYPES.Any(s => field.originalType!.Contains(s))) continue;
 
                 var typeName = field.originalType!.ToConvertedTypeName();
                 if (typeName == null) continue;

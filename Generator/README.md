@@ -8,7 +8,15 @@ For best results, close the solution in VS and run the generator.
 
 No, seriously, don't leave the project open when you generate. VS chokes enough trying to build this, don't make it harder.
 
-## Whitelist builds are fast! Full builds will take 20+ minutes!
+#### Three main methods of generation
+| Name | Desc |
+| --- | --- |
+| Full | This will try to make structs for every single struct in the json dump. This will make 50k+ files. Avoid this unless you absolutely have to. There's no guarantee it'll even compile them and it's a bitch and a half to debug given the sheer length of time required to compile that many files. |
+| Greylist | **This is the preferred method!** This reads all the extracted user files (see `PathHelper.cs` below) and builds a list of all hashes used and generates files from this. This is the best support with the minimal amount of files generated. |
+| Whitelist | This works based upon a preset list of classes and structs that are included and will produce more than needed, but typically works without issue.<br>Edit the whitelist in `GenerateFiles.cs` if you need to. |
+
+
+## Whitelist/Greylist builds are fast! Full builds will take 20+ minutes!
 And may also involve force-closing VS and then try to build again.
 Don't do full builds unless you're prepared to wait.
 
@@ -25,5 +33,7 @@ Arguments
 
 | Name | Desc |
 | --- | --- |
-| useWhitelist | By default the generator creates 50k+ files for all the structs. This makes debugging a nightmare so this option was added.<br>Edit the whitelist in `GenerateFiles.cs` if you need to. |
-| dryRun | Writes to throwaway memory streams instead of files. This makes unit testing possible. |
+| \<None\> | Does a full generation. (See above.) |
+| useGreylist | Generates files. (See above.) |
+| useWhitelist | Generates files. (See above.) |
+| dryRun | Writes to throwaway memory streams instead of files. This makes unit testing possible. Can be used with any other arguments and will print the generated file count for reference. |

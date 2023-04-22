@@ -8,7 +8,6 @@ public static class PathHelper {
     public const string STRUCT_JSON_PATH = @"";
     public const string MODS_PATH        = @"";
     public const string FLUFFY_MODS_PATH = @"";
-    public const string RAR_SCRIPT       = @"/mnt/r/Games/Monster\ Hunter\ Rise/RE-Editor/compress-rar.sh";
 
     public const string NEXUS_URL              = "";
     public const string JSON_VERSION_CHECK_URL = "";

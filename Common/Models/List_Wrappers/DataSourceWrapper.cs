@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Controls.Models;
+using RE_Editor.Common.Data;
 
 namespace RE_Editor.Common.Models.List_Wrappers;
 
@@ -36,12 +37,14 @@ public sealed class DataSourceWrapper<T> : ListWrapper<T> where T : struct {
 
     private Dictionary<Global.LangIndex, Dictionary<uint, string>> GetDataLookupSource() {
         return field.originalType?.Replace("[]", "") switch {
+            "chainsaw.ItemID" => DataHelper.ITEM_NAME_LOOKUP,
             _ => throw new InvalidOperationException($"No data source lookup known for: {field.originalType}")
         };
     }
 
     private bool ShowAsHex() {
         return field.originalType?.Replace("[]", "") switch {
+            "chainsaw.ItemID" => true,
             _ => false
         };
     }

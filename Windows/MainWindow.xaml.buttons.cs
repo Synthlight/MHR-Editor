@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 using RE_Editor.Common;
+using RE_Editor.Mods;
 
 namespace RE_Editor.Windows;
 
@@ -20,6 +21,7 @@ public partial class MainWindow {
 
     private void Btn_test_Click(object sender, RoutedEventArgs e) {
         if (file == null) return;
+        if (targetFile.EndsWith("InventoryCatalog_Main.user.2")) OpGameStart.MakeNewInventory(file.rsz.objectData, OpGameStart.Target.WITHOUT_BONUS_WEAPONS);
     }
 
     private void Btn_make_all_mods_Click(object sender, RoutedEventArgs e) {

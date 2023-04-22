@@ -63,9 +63,29 @@ namespace RE_Editor.Data {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] ITEM_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("ITEM_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] STRUCT_INFO {
             get {
                 object obj = ResourceManager.GetObject("STRUCT_INFO", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] WEAPON_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("WEAPON_NAME_LOOKUP", resourceCulture);
                 return ((byte[])(obj));
             }
         }

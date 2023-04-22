@@ -1,5 +1,6 @@
 ﻿using RE_Editor.Common;
 using RE_Editor.Common.Attributes;
+using RE_Editor.Common.Data;
 using RE_Editor.Common.Models;
 using RE_Editor.Common.Structs;
 using RE_Editor.Generator.Models;
@@ -141,7 +142,7 @@ public class StructTemplate {
                 file.WriteLine("");
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    [DisplayName(\"{newName}\")]");
-                file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName});");
+                file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
             } else if (isObjectType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
@@ -256,24 +257,34 @@ public class StructTemplate {
 
     private static DataSourceType? GetButtonType(StructJson.Field field) {
         return field.originalType?.Replace("[]", "") switch {
+            "chainsaw.ItemID" => DataSourceType.ITEMS,
+            "chainsaw.WeaponID" => DataSourceType.WEAPONS,
             _ => null
         };
     }
 
     private string? GetParent() {
         return className switch {
+            "Chainsaw_ItemUseResult_HealHitPoint" => "Chainsaw_ItemUseResultInfoBase",
+            "Chainsaw_ItemUseResult_IncreaseHitPoint" => "Chainsaw_ItemUseResultInfoBase",
+            "Chainsaw_WeaponItem" => "Chainsaw_Item",
+            "Chainsaw_UniqueItem" => "Chainsaw_Item",
             _ => null
         };
     }
 
     private static List<string> GetAdditionalAttributesForDataSourceType(DataSourceType? dataSourceType) {
         return dataSourceType switch {
+            DataSourceType.ITEMS => new() {"[ButtonIdAsHex]"},
+            DataSourceType.WEAPONS => new() {"[ButtonIdAsHex]"},
             _ => new()
         };
     }
 
     public static string GetLookupForDataSourceType(DataSourceType? dataSourceType) {
         return dataSourceType switch {
+            DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
+            DataSourceType.WEAPONS => nameof(DataHelper.WEAPON_NAME_LOOKUP),
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
     }

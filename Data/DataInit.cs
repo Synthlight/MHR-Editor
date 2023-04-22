@@ -19,6 +19,9 @@ public static class DataInit {
 
         DataHelper.STRUCT_INFO = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
 
+        DataHelper.ITEM_NAME_LOOKUP   = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ITEM_NAME_LOOKUP);
+        DataHelper.WEAPON_NAME_LOOKUP = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.WEAPON_NAME_LOOKUP);
+
         foreach (var lang in Enum.GetValues<Global.LangIndex>()) {
             if (!Global.TRANSLATION_MAP.ContainsKey(lang)) Global.TRANSLATION_MAP[lang] = new();
         }

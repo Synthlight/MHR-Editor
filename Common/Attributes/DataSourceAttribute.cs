@@ -9,4 +9,6 @@ public class DataSourceAttribute : Attribute {
 }
 
 public enum DataSourceType {
+    ITEMS,
+    WEAPONS
 }

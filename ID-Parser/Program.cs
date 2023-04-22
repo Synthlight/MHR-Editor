@@ -1,12 +1,76 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using RE_Editor.Common;
+using RE_Editor.Common.Models;
+using RE_Editor.Models.Enums;
 
 namespace RE_Editor.ID_Parser;
 
 public static class Program {
     public const string BASE_PROJ_PATH = @"..\..\..";
-    public const string MSG_VERSION    = "";
+    public const string MSG_VERSION    = "22";
 
     public static void Main() {
+        ExtractItemInfo();
+        ExtractWeaponInfo();
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractItemInfo() {
+        var regex = new Regex(@"(?:CH|MC|AO)_Mes_Main_(WEAPON_NAME|ITEM_NAME)_(.+?)_000");
+        var msgs = new List<string> {
+                       $@"{PathHelper.CHUNK_PATH}\natives\STM\_Chainsaw\Message\Mes_Main_Item\CH_Mes_Main_Item_Name.msg.{MSG_VERSION}",
+                       $@"{PathHelper.CHUNK_PATH}\natives\STM\_Mercenaries\Message\Mes_Main_Item\MC_Mes_Main_Item_Name.msg.{MSG_VERSION}",
+                       $@"{PathHelper.CHUNK_PATH}\natives\STM\_Mercenaries\Message\Mes_Main_Item\MC_Mes_Main_Item_Name_Misc.msg.{MSG_VERSION}",
+                   }
+                   .Select(file => MSG.Read(file)
+                                      .GetLangIdMap(name => {
+                                          var match   = regex.Match(name);
+                                          var subType = match.Groups[1].Value;
+                                          var value   = match.Groups[2].Value.ToLower();
+                                          value = subType switch {
+                                              "ITEM_NAME" => $"it_sm{value}",
+                                              "WEAPON_NAME" => $"it_{value}",
+                                              _ => value
+                                          };
+                                          try {
+                                              return (uint) (int) Enum.Parse(typeof(Chainsaw_ItemID), value);
+                                          } catch (Exception) {
+                                              throw new MSG.SkipReadException();
+                                          }
+                                      }))
+                   .ToList();
+        var msg = msgs.MergeDictionaries();
+        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ITEM_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+
+        CreateConstantsFile(msg[Global.LangIndex.eng], "ItemConstants");
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractWeaponInfo() {
+        var regex = new Regex(@"(?:CH|MC)_Mes_Main_WEAPON_NAME_([a-zA-Z0-9]+?)_");
+        var msg = new List<string> {
+                      $@"{PathHelper.CHUNK_PATH}\natives\STM\_Chainsaw\Message\Mes_Main_Item\CH_Mes_Main_Item_Name.msg.{MSG_VERSION}",
+                      $@"{PathHelper.CHUNK_PATH}\natives\STM\_Mercenaries\Message\Mes_Main_Item\MC_Mes_Main_Item_Name.msg.{MSG_VERSION}",
+                      $@"{PathHelper.CHUNK_PATH}\natives\STM\_Mercenaries\Message\Mes_Main_Item\MC_Mes_Main_Item_Name_Misc.msg.{MSG_VERSION}",
+                  }
+                  .Select(file => MSG.Read(file)
+                                     .GetLangIdMap(name => {
+                                         var match = regex.Match(name);
+                                         if (!match.Success) throw new MSG.SkipReadException();
+                                         var value = match.Groups[1].Value.ToLower();
+                                         try {
+                                             return (uint) (int) Enum.Parse(typeof(Chainsaw_WeaponID), value);
+                                         } catch (Exception) {
+                                             throw new MSG.SkipReadException();
+                                         }
+                                     }))
+                  .ToList()
+                  .MergeDictionaries();
+        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\WEAPON_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+
+        CreateConstantsFile(msg[Global.LangIndex.eng], "WeaponConstants");
     }
 
     public static uint ParseEnum(Type enumType, string value) {

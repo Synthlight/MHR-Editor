@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection.PortableExecutable;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
 using RE_Editor.Common.Structs;
@@ -21,8 +20,7 @@ public partial class Via_AnimationCurve : RszObject, ICustomReadWrite {
     public float                      V6 { get; set; }
 
     public void Read(BinaryReader reader) {
-        V0 = new();
-        ReadDataArray(reader, V0);
+        V0 = reader.ReadVec4Array();
         reader.BaseStream.Align(4);
         V1 = reader.ReadSingle();
         reader.BaseStream.Align(4);
@@ -37,21 +35,8 @@ public partial class Via_AnimationCurve : RszObject, ICustomReadWrite {
         V6 = reader.ReadSingle();
     }
 
-    public static void ReadDataArray(BinaryReader reader, ObservableCollection<Vec4> v) {
-        reader.BaseStream.Align(16);
-        var count = reader.ReadInt32();
-        if (count > 0) {
-            reader.BaseStream.Align(16);
-            for (var i = 0; i < count; i++) {
-                var vec4 = new Vec4();
-                vec4.Read(reader);
-                v.Add(vec4);
-            }
-        }
-    }
-
     public void Write(BinaryWriter writer) {
-        WriteDataArray(writer, V0);
+        writer.WriteVec4Array(V0);
         writer.BaseStream.Align(4);
         writer.Write(V1);
         writer.BaseStream.Align(4);
@@ -64,17 +49,6 @@ public partial class Via_AnimationCurve : RszObject, ICustomReadWrite {
         writer.Write(V5);
         writer.BaseStream.Align(4);
         writer.Write(V6);
-    }
-
-    public static void WriteDataArray(BinaryWriter writer, ObservableCollection<Vec4> v) {
-        writer.BaseStream.Align(16);
-        writer.Write(v.Count);
-        if (v.Count > 0) {
-            writer.BaseStream.Align(16);
-            foreach (var vec4 in v) {
-                vec4.Write(writer);
-            }
-        }
     }
 
     public Via_AnimationCurve Copy() {

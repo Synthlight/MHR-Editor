@@ -22,12 +22,9 @@ public partial class Via_AnimationCurve3D : RszObject, ICustomReadWrite {
     public float                      V8 { get; set; }
 
     public void Read(BinaryReader reader) {
-        V0 = new();
-        Via_AnimationCurve.ReadDataArray(reader, V0);
-        V1 = new();
-        Via_AnimationCurve.ReadDataArray(reader, V1);
-        V2 = new();
-        Via_AnimationCurve.ReadDataArray(reader, V2);
+        V0 = reader.ReadVec4Array();
+        V1 = reader.ReadVec4Array();
+        V2 = reader.ReadVec4Array();
         reader.BaseStream.Align(4);
         V3 = reader.ReadSingle();
         reader.BaseStream.Align(4);
@@ -43,9 +40,9 @@ public partial class Via_AnimationCurve3D : RszObject, ICustomReadWrite {
     }
 
     public void Write(BinaryWriter writer) {
-        Via_AnimationCurve.WriteDataArray(writer, V0);
-        Via_AnimationCurve.WriteDataArray(writer, V1);
-        Via_AnimationCurve.WriteDataArray(writer, V2);
+        writer.WriteVec4Array(V0);
+        writer.WriteVec4Array(V1);
+        writer.WriteVec4Array(V2);
         writer.BaseStream.Align(4);
         writer.Write(V3);
         writer.BaseStream.Align(4);
@@ -67,11 +64,11 @@ public partial class Via_AnimationCurve3D : RszObject, ICustomReadWrite {
             obj.V0.Add(x.Copy());
         }
         obj.V1 ??= new();
-        foreach (var x in V0) {
+        foreach (var x in V1) {
             obj.V1.Add(x.Copy());
         }
         obj.V2 ??= new();
-        foreach (var x in V0) {
+        foreach (var x in V2) {
             obj.V2.Add(x.Copy());
         }
         obj.V3 = V3;

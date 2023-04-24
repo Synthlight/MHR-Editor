@@ -86,6 +86,11 @@ public class GenerateFiles {
         "System.Collections.Generic.Dictionary`",
         "System.Collections.Generic.Queue`1<System.Tuple`", // Nested generics.
         "System.Collections.Generic.Queue`1<via.vec3>", // Because this breaks generation and I need a better way of handling generics.
+        "chainsaw.AIMapNodeScore.Param`1<",
+        "chainsaw.NetworkRankingSettingUserdata.BoardNameTable`1<",
+        "chainsaw.CameraCurveUserDataParam.CurveParamTable`1<",
+        "soundlib.SoundStateApp`1<",
+        "soundlib.SoundSwitchApp`1<",
     };
 
     private static readonly List<uint> GREYLIST = new(); // Hashes used in a given location.
@@ -264,7 +269,7 @@ public class GenerateFiles {
                  || structInfo.name.Contains("List`")
                  || structInfo.name.Contains("Culture=neutral")
                  || structInfo.name.StartsWith("System")
-                 || !structInfo.name.StartsWith(ROOT_STRUCT_NAMESPACE) && !structInfo.name.StartsWith("via") && !structInfo.name.StartsWith("share"));
+                 || !structInfo.name.StartsWith(ROOT_STRUCT_NAMESPACE) && !structInfo.name.StartsWith("via") && !structInfo.name.StartsWith("share") && !structInfo.name.StartsWith("ace"));
     }
 
     /**

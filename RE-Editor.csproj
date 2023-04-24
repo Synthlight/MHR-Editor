@@ -9,7 +9,7 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<LangVersion>latest</LangVersion>
 		<ApplicationManifest>App.manifest</ApplicationManifest>
-		<AssemblyName>RE-Editor</AssemblyName>
+		<AssemblyName>RE4-Editor</AssemblyName>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 	</PropertyGroup>
 	<ItemGroup>

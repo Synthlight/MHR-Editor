@@ -15,17 +15,7 @@ public static class PathHelper {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly string[] TEST_PATHS = {
-        @"\natives\STM\_Chainsaw\AppSystem\Inventory\",
-        @"\natives\STM\_Chainsaw\AppSystem\Weapon\",
-        @"\natives\STM\_Chainsaw\AppSystem\WeaponCustom\",
-        @"\natives\STM\_Chainsaw\AppSystem\UI\",
-        @"\natives\STM\_Chainsaw\AppSystem\Shell\",
-        @"\natives\STM\_Chainsaw\AppSystem\Character\ch1f1z0\UserData\Harpoon\",
-        @"\natives\STM\_Mercenaries\AppSystem\Inventory\",
-        @"\natives\STM\_Mercenaries\AppSystem\Weapon\",
-        @"\natives\STM\_Mercenaries\AppSystem\WeaponCustom\",
-        @"\natives\STM\_Mercenaries\AppSystem\UI\",
-        @"\natives\STM\_Mercenaries\AppSystem\Shell\",
+        @"\natives\STM\",
     };
 
     public const string ITEM_DATA_PATH               = @"\natives\STM\_Chainsaw\AppSystem\UI\UserData\ItemDefinitionUserData.user.2";

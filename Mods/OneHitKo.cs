@@ -31,7 +31,8 @@ public class OneHitKo : IMod {
                 Version = version,
                 Desc    = description,
                 Files   = PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Base, "MSG"),
-                Action  = ChangeDamage
+                Action  = ChangeDamage,
+                ForGp   = true
             }
         };
 

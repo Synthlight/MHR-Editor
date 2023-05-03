@@ -122,6 +122,7 @@ public class NoRequirements : IMod {
             newMod.NameAsBundle += " (GamePass)";
             newMod.Files = from file in newMod.Files
                            select file.Replace(@"\STM\", @"\MSG\");
+            newMod.ForGp = true;
             gpMods.Add(newMod);
         }
 

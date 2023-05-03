@@ -45,8 +45,8 @@ public static class PathHelper {
     public const string PETALACE_DATA_PATH                = @"\natives\STM\data\System\ContentsIdSystem\LvBuffCage\Normal\NormalLvBuffCageBaseData.user.2";
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public static IEnumerable<string> GetAllWeaponFilePaths(WeaponDataType type) {
-        return Global.WEAPON_TYPES.Select(s => @$"\natives\STM\data\Define\Player\Weapon\{s}\{s}{type}Data.user.2");
+    public static IEnumerable<string> GetAllWeaponFilePaths(WeaponDataType type, string platform = "STM") {
+        return Global.WEAPON_TYPES.Select(s => @$"\natives\{platform}\data\Define\Player\Weapon\{s}\{s}{type}Data.user.2");
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]

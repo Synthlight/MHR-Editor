@@ -74,7 +74,7 @@ public class RSZ {
 
     [SuppressMessage("ReSharper", "ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator")]
     [SuppressMessage("ReSharper", "ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator")]
-    public void Write(BinaryWriter writer, ulong rszOffsetStart, bool testWritePosition) {
+    public void Write(BinaryWriter writer, ulong rszOffsetStart, bool testWritePosition, bool forGp) {
         // We need to pre-calculate the instance info array before we write it.
         // This will also give us the entry object, but we're just not supporting adding/removing instances for now.
         instanceInfo.Clear();
@@ -95,7 +95,7 @@ public class RSZ {
             rootObject.WriteObjectList(objectChain);
             objectData.AddRange(objectChain);
             // And build the instance info chain.
-            rootObject.SetupInstanceInfo(instanceInfo);
+            rootObject.SetupInstanceInfo(instanceInfo, forGp);
         }
         // Finally, rebuild the `objectInfo` list with the new entries from where our `rootObjects` now live.
         objectEntryPoints.Clear();

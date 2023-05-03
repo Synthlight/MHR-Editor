@@ -20,7 +20,8 @@ public static class DataInit {
         Assembly.Load(nameof(Generated));
         InitStructTypeInfo();
 
-        DataHelper.STRUCT_INFO = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
+        DataHelper.STRUCT_INFO          = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
+        DataHelper.GP_CRC_OVERRIDE_INFO = LoadDict<uint, uint>(Assets.GP_CRC_OVERRIDE_INFO);
 
         DataHelper.ARMOR_NAME_LOOKUP              = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ARMOR_NAME_LOOKUP);
         DataHelper.ARMOR_DESC_LOOKUP              = LoadDict<Global.LangIndex, Dictionary<uint, string>>(Assets.ARMOR_DESC_LOOKUP);

@@ -99,9 +99,10 @@ public class GenerateFiles {
 
     private static readonly List<uint> GREYLIST = new(); // Hashes used in a given location.
 
-    public readonly  Dictionary<string, EnumType>   enumTypes   = new();
-    public readonly  Dictionary<string, StructType> structTypes = new();
-    private readonly Dictionary<string, StructJson> structJson  = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(PathHelper.STRUCT_JSON_PATH))!;
+    public readonly  Dictionary<string, EnumType>   enumTypes      = new();
+    public readonly  Dictionary<string, StructType> structTypes    = new();
+    private readonly Dictionary<string, StructJson> structJson     = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(PathHelper.STRUCT_JSON_PATH))!;
+    public readonly  Dictionary<uint, uint>         gpCrcOverrides = new(); // Because the GP version uses the same hashes, but different CRCs.
 
     public void Go(string[] args) {
         var useWhitelist = args.Length > 0 && args.Contains("useWhitelist");
@@ -128,6 +129,7 @@ public class GenerateFiles {
         if (useGreylist) {
             FindAllHashesBeingUsed();
             FilterGreylisted();
+            FindCrcOverrides();
         }
         if (useWhitelist || useGreylist) {
             UpdateUsingCounts();
@@ -151,6 +153,7 @@ public class GenerateFiles {
         }
         if (!dryRun) {
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\STRUCT_INFO.json", JsonConvert.SerializeObject(structInfo, Formatting.Indented));
+            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\GP_CRC_OVERRIDE_INFO.json", JsonConvert.SerializeObject(gpCrcOverrides, Formatting.Indented));
         }
     }
 
@@ -433,6 +436,48 @@ public class GenerateFiles {
 
         // Because this one doesn't appear in the fields but we still use it.
         enumTypes["Snow_data_ContentsIdSystem_SubCategoryType"].useCount++;
+    }
+
+    private void FindCrcOverrides() {
+        foreach (var path in PathHelper.TEST_PATHS) {
+            Console.WriteLine($"Finding all GP files in: {(PathHelper.CHUNK_PATH + path).Replace("STM", "MSG")}");
+        }
+
+        var allGpUserFiles = (from basePath in PathHelper.TEST_PATHS
+                              let path = (PathHelper.CHUNK_PATH + basePath).Replace("STM", "MSG")
+                              where Directory.Exists(path)
+                              from file in Directory.EnumerateFiles(path, "*.user.2", SearchOption.AllDirectories)
+                              where File.Exists(file)
+                              select file).ToList();
+
+        var count = allGpUserFiles.Count;
+        Console.WriteLine($"Found {count} files.");
+
+        var now = DateTime.Now;
+        Console.WriteLine("");
+
+        for (var i = 0; i < allGpUserFiles.Count; i++) {
+            var newNow = DateTime.Now;
+            if (newNow > now.AddSeconds(1)) {
+                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                Console.WriteLine($"Parsed {i}/{count}.");
+                now = newNow;
+            }
+
+            var file = allGpUserFiles[i];
+            var rsz  = ReDataFile.Read(file, justReadHashes: true);
+            var instanceInfos = from instanceInfo in rsz.rsz.instanceInfo
+                                select instanceInfo;
+            instanceInfos = instanceInfos.Distinct();
+            foreach (var (hash, crc) in instanceInfos) {
+                if (gpCrcOverrides.ContainsKey(hash)) continue;
+                gpCrcOverrides[hash] = crc;
+            }
+        }
+
+        Console.SetCursorPosition(0, Console.CursorTop - 1);
+        Console.WriteLine($"Parsed {count}/{count}.");
+        Console.WriteLine($"Created {gpCrcOverrides.Count} CRC overrides.");
     }
 
     private void GenerateEnums(bool dryRun) {

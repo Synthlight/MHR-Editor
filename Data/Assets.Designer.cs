@@ -63,6 +63,16 @@ namespace RE_Editor.Data {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] GP_CRC_OVERRIDE_INFO {
+            get {
+                object obj = ResourceManager.GetObject("GP_CRC_OVERRIDE_INFO", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] ARMOR_DESC_LOOKUP {
             get {
                 object obj = ResourceManager.GetObject("ARMOR_DESC_LOOKUP", resourceCulture);

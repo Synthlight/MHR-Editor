@@ -37,12 +37,12 @@ public class ReDataFile {
         return file;
     }
 
-    public void Write(string targetFile, bool testWritePosition = false) {
+    public void Write(string targetFile, bool testWritePosition = false, bool forGp = true) {
         using var writer = new BinaryWriter(File.OpenWrite(targetFile), Encoding.Unicode);
-        Write(writer, testWritePosition);
+        Write(writer, testWritePosition, forGp);
     }
 
-    public void Write(BinaryWriter writer, bool testWritePosition = false) {
+    public void Write(BinaryWriter writer, bool testWritePosition = false, bool forGp = true) {
         writer.Write((uint) magic);
         writer.Write(resourceCount);
         writer.Write(userDataInfo.Count);
@@ -66,7 +66,7 @@ public class ReDataFile {
 
         var dataOffset = (ulong) writer.BaseStream.Position;
         writer.WriteValueAtOffset(dataOffset, dataOffsetPos);
-        rsz.Write(writer, dataOffset, testWritePosition);
+        rsz.Write(writer, dataOffset, testWritePosition, forGp);
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]

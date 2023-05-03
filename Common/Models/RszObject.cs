@@ -172,7 +172,7 @@ public class RszObject : OnPropertyChangedBase {
      * Run before writing to setup all the instance info / indexes so we know exactly where an object is being written.
      * This is how we know what to point an 'object' field to.
      */
-    public void SetupInstanceInfo(List<InstanceInfo> instanceInfo) {
+    public void SetupInstanceInfo(List<InstanceInfo> instanceInfo, bool forGp) {
         for (var i = 0; i < structInfo.fields!.Count; i++) {
             var field          = structInfo.fields[i];
             var fieldName      = field.name?.ToConvertedFieldName()!;
@@ -184,18 +184,22 @@ public class RszObject : OnPropertyChangedBase {
                 if (field.array) { // Array of pointers.
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;
                     foreach (RszObject obj in list) {
-                        obj.SetupInstanceInfo(instanceInfo);
+                        obj.SetupInstanceInfo(instanceInfo, forGp);
                     }
                 } else { // Pointer to object.
                     // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract from a list.
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;
-                    ((RszObject) list[0]!).SetupInstanceInfo(instanceInfo);
+                    ((RszObject) list[0]!).SetupInstanceInfo(instanceInfo, forGp);
                 }
             }
         }
 
         var hash = (uint) GetType().GetField("HASH")!.GetValue(null)!;
         var crc  = uint.Parse(structInfo.crc!, NumberStyles.HexNumber);
+
+        if (forGp && DataHelper.GP_CRC_OVERRIDE_INFO.TryGetValue(hash, out var value)) {
+            crc = value;
+        }
 
         instanceInfo.Add(new() {
             hash = hash,

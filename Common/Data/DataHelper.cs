@@ -9,4 +9,5 @@ namespace RE_Editor.Common.Data;
 public static class DataHelper {
     public static readonly Dictionary<uint, Type>       RE_STRUCTS = new();
     public static          Dictionary<uint, StructJson> STRUCT_INFO;
+    public static          Dictionary<uint, uint>       GP_CRC_OVERRIDE_INFO;
 }

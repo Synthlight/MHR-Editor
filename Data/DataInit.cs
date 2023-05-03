@@ -17,7 +17,8 @@ public static class DataInit {
         Assembly.Load(nameof(Generated));
         InitStructTypeInfo();
 
-        DataHelper.STRUCT_INFO = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
+        DataHelper.STRUCT_INFO          = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
+        DataHelper.GP_CRC_OVERRIDE_INFO = LoadDict<uint, uint>(Assets.GP_CRC_OVERRIDE_INFO);
 
         foreach (var lang in Enum.GetValues<Global.LangIndex>()) {
             if (!Global.TRANSLATION_MAP.ContainsKey(lang)) Global.TRANSLATION_MAP[lang] = new();

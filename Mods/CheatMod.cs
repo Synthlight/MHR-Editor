@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
@@ -88,6 +89,18 @@ public class CheatMod : IMod {
         };
 
         ModMaker.WriteMods(bundleMods, PathHelper.CHUNK_PATH, outPath, variantBundleName, true);
+
+        var gpMods = new List<NexusModVariant>();
+        foreach (var mod in bundleMods) {
+            var newMod = mod;
+            newMod.NameAsBundle += " (GamePass)";
+            newMod.Files = from file in newMod.Files
+                           select file.Replace(@"\STM\", @"\MSG\");
+            newMod.ForGp = true;
+            gpMods.Add(newMod);
+        }
+
+        ModMaker.WriteMods(gpMods, PathHelper.CHUNK_PATH, outPath, variantBundleName + " (GamePass)", true);
     }
 
     public static void MaxSharpness(List<RszObject> rszObjectData) {

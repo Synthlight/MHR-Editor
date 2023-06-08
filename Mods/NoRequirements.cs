@@ -44,15 +44,15 @@ public class NoRequirements : IMod {
                 .SetName("Weapons (Layered Only)")
                 .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Change)
                                     .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.OverwearProduct)))
-                .SetAction(list => {
-                    CheatMod.NoCost(list);
-                    CheatMod.NoUnlockFlag(list);
-                }),
+                .SetAction(CheatMod.NoCost),
             baseMod
                 .SetName("Weapons (Layered Only, Ignore Unlock Flags)")
                 .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Change)
                                     .Append(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.OverwearProduct)))
-                .SetAction(CheatMod.NoCost),
+                .SetAction(list => {
+                    CheatMod.NoCost(list);
+                    CheatMod.NoUnlockFlag(list);
+                }),
             baseMod
                 .SetName("Rampage Skills")
                 .SetFiles(new[] {PathHelper.RAMPAGE_SKILL_RECIPE_PATH})

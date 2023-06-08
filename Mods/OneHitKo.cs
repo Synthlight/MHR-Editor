@@ -5,6 +5,7 @@ using RE_Editor.Common.Models;
 using RE_Editor.Constants;
 using RE_Editor.Generated.Models;
 using RE_Editor.Models;
+using RE_Editor.Models.Enums;
 using RE_Editor.Util;
 
 namespace RE_Editor.Mods;
@@ -39,9 +40,7 @@ public class OneHitKo : IMod {
         ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, copyToFluffy: true);
     }
 
-    private static void ChangeDamage(IList<RszObject> rszObjectData) {
-        SortedTitles.SortTitles(rszObjectData, Global.LangIndex.eng);
-
+    public static void ChangeDamage(IList<RszObject> rszObjectData) {
         foreach (var obj in rszObjectData) {
             switch (obj) {
                 case IWeapon weapon:
@@ -59,7 +58,23 @@ public class OneHitKo : IMod {
                         case LongSwordConstants.DEFENDER_LONG_SWORD_I:
                         case ShortSwordConstants.DEFENDER_SWORD_I:
                         case SlashAxeConstants.DEFENDER_SWITCH_AXE_I:
-                            weapon.Atk = 50000;
+                        case LanceConstants.DEFENDER_LANCE_I:
+                            weapon.Atk          = 50000;
+                            weapon.CriticalRate = 200;
+                            if (weapon is IMeleeWeapon meleeWeapon) {
+                                meleeWeapon.MainElementType           = Snow_equip_PlWeaponElementTypes.Bomb;
+                                meleeWeapon.MainElementVal            = 50000;
+                                meleeWeapon.SharpnessValList[0].Value = 10;
+                                meleeWeapon.SharpnessValList[1].Value = 10;
+                                meleeWeapon.SharpnessValList[2].Value = 10;
+                                meleeWeapon.SharpnessValList[3].Value = 10;
+                                meleeWeapon.SharpnessValList[4].Value = 10;
+                                meleeWeapon.SharpnessValList[5].Value = 10;
+                                meleeWeapon.SharpnessValList[6].Value = 340;
+                                foreach (var handicraft in meleeWeapon.HandicraftValList) {
+                                    handicraft.Value = 0;
+                                }
+                            }
                             break;
                     }
                     break;

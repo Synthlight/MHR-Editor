@@ -16,7 +16,7 @@ public class OneHitKo : IMod {
     public static void Make() {
         const string bundleName  = "OHKO";
         const string description = "Changes Defender I weapons to have 50k base damage.";
-        const string version     = "1.1";
+        const string version     = "1.1.1";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var mods = new List<NexusMod> {

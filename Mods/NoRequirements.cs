@@ -17,7 +17,7 @@ public class NoRequirements : IMod {
         const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
-            Version      = "1.14",
+            Version      = "1.14.1",
             NameAsBundle = bundleName,
             Desc         = "Removes the item requirements when crafting."
         };

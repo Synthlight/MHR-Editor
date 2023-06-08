@@ -15,7 +15,7 @@ namespace RE_Editor.Mods;
 public class SortedGems : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string version           = "1.7";
+        const string version           = "1.7.1";
         const string outPath           = $@"{PathHelper.MODS_PATH}\Sorted Gems";
         const string bundleByNameName  = "Gems Sorted by Gem Name";
         const string bundleBySkillName = "Gems Sorted by Skill Name";

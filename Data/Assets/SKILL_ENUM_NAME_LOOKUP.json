@@ -143,8 +143,10 @@
     "Pl_EquipSkill_229": "龍気変換",
     "Pl_EquipSkill_230": "天衣無崩",
     "Pl_EquipSkill_231": "狂竜症【翔】",
+    "Pl_EquipSkill_232": "血氣覚醒",
     "Pl_EquipSkill_233": "奮闘",
-    "Pl_EquipSkill_234": "緩衝"
+    "Pl_EquipSkill_234": "緩衝",
+    "Pl_EquipSkill_235": "激励"
   },
   "eng": {
     "Pl_EquipSkill_000": "Attack Boost",
@@ -290,8 +292,10 @@
     "Pl_EquipSkill_229": "Dragon Conversion",
     "Pl_EquipSkill_230": "Heaven-Sent",
     "Pl_EquipSkill_231": "Frenzied Bloodlust",
+    "Pl_EquipSkill_232": "Blood Awakening",
     "Pl_EquipSkill_233": "Strife",
-    "Pl_EquipSkill_234": "Shock Absorber"
+    "Pl_EquipSkill_234": "Shock Absorber",
+    "Pl_EquipSkill_235": "Inspiration"
   },
   "fre": {
     "Pl_EquipSkill_000": "Machine de guerre",
@@ -437,8 +441,10 @@
     "Pl_EquipSkill_229": "Conversion de dragon",
     "Pl_EquipSkill_230": "Envoyé des cieux",
     "Pl_EquipSkill_231": "Soif de sang frénét",
+    "Pl_EquipSkill_232": "Éveil de sang",
     "Pl_EquipSkill_233": "Lutte",
-    "Pl_EquipSkill_234": "Anti-chocs"
+    "Pl_EquipSkill_234": "Anti-chocs",
+    "Pl_EquipSkill_235": "Inspiration"
   },
   "ita": {
     "Pl_EquipSkill_000": "Bonus attacco",
@@ -584,8 +590,10 @@
     "Pl_EquipSkill_229": "Conversione drago",
     "Pl_EquipSkill_230": "Dono dal cielo",
     "Pl_EquipSkill_231": "Sete di sangue frenesia",
+    "Pl_EquipSkill_232": "Risveglio di sangue",
     "Pl_EquipSkill_233": "Lotta",
-    "Pl_EquipSkill_234": "Assorbimento danni"
+    "Pl_EquipSkill_234": "Assorbimento danni",
+    "Pl_EquipSkill_235": "Ispirazione"
   },
   "ger": {
     "Pl_EquipSkill_000": "Angriffsbonus",
@@ -731,8 +739,10 @@
     "Pl_EquipSkill_229": "Drachenumwandlung",
     "Pl_EquipSkill_230": "Wie gerufen",
     "Pl_EquipSkill_231": "Raserei-Blutdurst",
+    "Pl_EquipSkill_232": "Bluterwachen",
     "Pl_EquipSkill_233": "Kampf",
-    "Pl_EquipSkill_234": "Schockabsorber"
+    "Pl_EquipSkill_234": "Schockabsorber",
+    "Pl_EquipSkill_235": "Inspiration"
   },
   "spa": {
     "Pl_EquipSkill_000": "Ataque",
@@ -878,8 +888,10 @@
     "Pl_EquipSkill_229": "Conversión de draco",
     "Pl_EquipSkill_230": "Enviado del cielo",
     "Pl_EquipSkill_231": "Sed sangre colérica",
+    "Pl_EquipSkill_232": "Despertar sangriento",
     "Pl_EquipSkill_233": "Pugna",
-    "Pl_EquipSkill_234": "Absorbedescargas"
+    "Pl_EquipSkill_234": "Absorbedescargas",
+    "Pl_EquipSkill_235": "Inspiración"
   },
   "rus": {
     "Pl_EquipSkill_000": "Усиление атаки",
@@ -1025,8 +1037,10 @@
     "Pl_EquipSkill_229": "Преобраз-е дракона",
     "Pl_EquipSkill_230": "Божий посланник",
     "Pl_EquipSkill_231": "Буйная кровожадность",
+    "Pl_EquipSkill_232": "Пробуждение крови",
     "Pl_EquipSkill_233": "Борьба",
-    "Pl_EquipSkill_234": "Поглощение ударов"
+    "Pl_EquipSkill_234": "Поглощение ударов",
+    "Pl_EquipSkill_235": "Вдохновение"
   },
   "pol": {
     "Pl_EquipSkill_000": "Wzmocnienie ataku",
@@ -1172,8 +1186,10 @@
     "Pl_EquipSkill_229": "Smocza skuteczność",
     "Pl_EquipSkill_230": "Dar niebios",
     "Pl_EquipSkill_231": "Wściekła żądza krwi",
+    "Pl_EquipSkill_232": "Krwawe przebudzenie",
     "Pl_EquipSkill_233": "Bój",
-    "Pl_EquipSkill_234": "Pochłaniacz uderzeń"
+    "Pl_EquipSkill_234": "Pochłaniacz uderzeń",
+    "Pl_EquipSkill_235": "Inspiracja"
   },
   "ptB": {
     "Pl_EquipSkill_000": "Reforço de Ataque",
@@ -1319,8 +1335,10 @@
     "Pl_EquipSkill_229": "Conversão Dracônica",
     "Pl_EquipSkill_230": "Celestial",
     "Pl_EquipSkill_231": "Sede de Sangue Colérica",
+    "Pl_EquipSkill_232": "Despertar de Sangue",
     "Pl_EquipSkill_233": "Luta",
-    "Pl_EquipSkill_234": "Amortecedor"
+    "Pl_EquipSkill_234": "Amortecedor",
+    "Pl_EquipSkill_235": "Inspiração"
   },
   "kor": {
     "Pl_EquipSkill_000": "공격",
@@ -1466,8 +1484,10 @@
     "Pl_EquipSkill_229": "용기 변환",
     "Pl_EquipSkill_230": "천의무붕",
     "Pl_EquipSkill_231": "광룡증【상】",
+    "Pl_EquipSkill_232": "혈기각성",
     "Pl_EquipSkill_233": "분투",
-    "Pl_EquipSkill_234": "완충"
+    "Pl_EquipSkill_234": "완충",
+    "Pl_EquipSkill_235": "격려"
   },
   "chT": {
     "Pl_EquipSkill_000": "攻擊",
@@ -1613,8 +1633,10 @@
     "Pl_EquipSkill_229": "龍氣轉換",
     "Pl_EquipSkill_230": "天衣無縫",
     "Pl_EquipSkill_231": "狂龍症【翔】",
+    "Pl_EquipSkill_232": "血氣覺醒",
     "Pl_EquipSkill_233": "奮鬥",
-    "Pl_EquipSkill_234": "緩衝"
+    "Pl_EquipSkill_234": "緩衝",
+    "Pl_EquipSkill_235": "激勵"
   },
   "chS": {
     "Pl_EquipSkill_000": "攻击",
@@ -1760,8 +1782,10 @@
     "Pl_EquipSkill_229": "龙气转换",
     "Pl_EquipSkill_230": "天衣无缝",
     "Pl_EquipSkill_231": "狂龙症【翔】",
+    "Pl_EquipSkill_232": "气血觉醒",
     "Pl_EquipSkill_233": "奋斗",
-    "Pl_EquipSkill_234": "缓冲"
+    "Pl_EquipSkill_234": "缓冲",
+    "Pl_EquipSkill_235": "激励"
   },
   "ara": {
     "Pl_EquipSkill_000": "تعزيز الهجوم",
@@ -1907,7 +1931,9 @@
     "Pl_EquipSkill_229": "تحول التنين",
     "Pl_EquipSkill_230": "هدية من السماء",
     "Pl_EquipSkill_231": "تعطش جنوني للدماء",
+    "Pl_EquipSkill_232": "يقظة الدماء",
     "Pl_EquipSkill_233": "صراع",
-    "Pl_EquipSkill_234": "ممتص الصدمات"
+    "Pl_EquipSkill_234": "ممتص الصدمات",
+    "Pl_EquipSkill_235": "الإلهام"
   }
 }

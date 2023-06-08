@@ -163,6 +163,7 @@
     "471859471": "冷気を纏いし氷霜の刃は、 幾層にも重なる斬撃を成し、 まこと優雅に、獲物を裂く。",
     "471859472": "天空を制する神より賜った 幻の宝剣。災いにも救済にもな りえる力が中心の龍玉に宿る。",
     "471859473": "#Rejected#",
+    "471859474": "古より伝わる怪物退治の武器。 白銀の騎士を支えた勇敢な ガルクが愛用した細剣。",
     "470810624": "カムラの里に自生する丈夫な 木で造られた模造刀。軽くて 扱いやすく、初心者にも人気。",
     "470810625": "アイルー族の間で広く使われる 伝統的な斬撃武器。先端部には 頑丈な骨が用いられている。",
     "470810626": "アイルー族の間で広く使われる 伝統的な打撃武器。先端部には 頑丈な木が用いられている。",
@@ -353,7 +354,8 @@
     "470810903": "渾沌に呑まれた端材からつくら れた特異なオトモ用武器。灯が 照らして示すのは、鮪か鶏か。",
     "470810904": "冷気を纏いし氷柱の槍は、 オトモの心が砕けぬ限り、 何度でも再生し、獲物を穿つ。",
     "470810905": "天空を司る神が、自身の御遣い と選びし者に授けた幻の凶刀。 御遣いは地を裂く力を授かる。",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "古より伝わる怪物退治の武器。 白銀の騎士を支えた勇気ある アイルーが愛用した小剣。"
   },
   "eng": {
     "471859200": "Good ol' Kamura steel, sharpened to easily cleave hard bone and shells.",
@@ -519,6 +521,7 @@
     "471859471": "This frosty blade consists of several layers, allowing its wielder to slice with elegance.",
     "471859472": "A treasured blade given to the sky-god's chosen. Can bring both salvation and disaster.",
     "471859473": "#Rejected#",
+    "471859474": "An ancient weapon used by a courageous Canyne to vanquish monsters for its master.",
     "470810624": "A dummy sword made from sturdy Kamura timber. Light and easy to swing.",
     "470810625": "A customary slashing weapon favored by Felynes. A solid bone is placed at its edge.",
     "470810626": "A customary blunt weapon favored by Felynes. Sturdy wood is used in the head.",
@@ -709,7 +712,8 @@
     "470810903": "Settle an argument: Does this resemble tuna or chicken? What do you think?",
     "470810904": "This Velkhana icicle spear will continue piercing its prey as long as your Palico's spirit is intact.",
     "470810905": "A rare blade given to the sky-god's chosen. It can sunder the earth itself.",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "An ancient weapon used by a fearless Felyne to vanquish meownsters for its meowster."
   },
   "fre": {
     "471859200": "Acier de Kamura, aiguisé pour pouvoir fendre les os et les coquilles.",
@@ -875,6 +879,7 @@
     "471859471": "Lame givrée multi-couches qui permet au porteur de découper en toute élégance.",
     "471859472": "Lame précieuse remise à l'élu du dieu du ciel. Capable de sauver et de détruire.",
     "471859473": "#Rejected#",
+    "471859474": "Arme ancienne d'un Canyne au courage exemplaire ayant battu des monstres pour son maître.",
     "470810624": "Épée d'entraînement en bois de Kamura robuste. Légère et maniable.",
     "470810625": "Arme tranchante prisée des Felynes. Dotée d'un os sur le bord.",
     "470810626": "Arme contondante prisée des Felynes. La patte est composée de bois solide.",
@@ -1065,7 +1070,8 @@
     "470810903": "Est-ce que ça ressemble à du thon ou du poulet ? Vous en pensez quoi ?",
     "470810904": "Cette lance stalactine Velkhana percera ses proies tant que l'esprit de votre Palico est intact.",
     "470810905": "Lame rare remise à l'élu du dieu du ciel. Capable de fendre la Terre.",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "Arme ancienne d'un Felyne au courage exemplaire ayant battu des miaonstres pour son miaître."
   },
   "ita": {
     "471859200": "In buon acciaio di Kamura, affilato per penetrare ossa e carapaci con facilità.",
@@ -1231,6 +1237,7 @@
     "471859471": "Lama gelata dai numerosi strati che permettono di squarciare con eleganza.",
     "471859472": "Preziosa lama per l'eletto del dio del cielo. Porta salvezza e sciagura.",
     "471859473": "#Rejected#",
+    "471859474": "Antica arma di un Canyne coraggioso che sconfiggeva mostri per il suo padrone.",
     "470810624": "Spada finta ricavata dal robusto legname di Kamura. Leggera e maneggevole.",
     "470810625": "Arma da taglio tradizionale dei Felyne, la cui sommità è ricavata da osso robusto.",
     "470810626": "Arma speciale dei Felyne, la cui sommità è ricavata da legno robusto.",
@@ -1421,7 +1428,8 @@
     "470810903": "La domanda sorge spontanea: assomiglia a un tonno o a un pollo? Tu che ne pensi?",
     "470810904": "Nulla può infrangere questa lancia di ghiaccio di Velkhana, se impugnata da zampe sapienti.",
     "470810905": "Spada rara assegnata al prescelto del dio del cielo. Può fendere la terra.",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "Antica arma di un Felyne coraggioso che sconfiggeva miaostri per il suo padrrrone."
   },
   "ger": {
     "471859200": "Guter alter Kamura-Stahl, der harte Knochen und Panzer mühelos spaltet.",
@@ -1587,6 +1595,7 @@
     "471859471": "Frostige Klinge aus mehreren Schichten, die es ermöglichen, mit Eleganz zu kämpfen.",
     "471859472": "Eine wertvolle Klinge, die dem Auserwählten gegeben wurde. Bringt Erlösung und Unheil.",
     "471859473": "#Rejected#",
+    "471859474": "Uralte Waffe eines mutigen Canyne, um Monster für seinen Meister zu besiegen.",
     "470810624": "Eine Schwertattrappe aus festem Kamura-Holz. Leicht und mühelos schwingbar.",
     "470810625": "Eine übliche, von Felynen bevorzugte Hiebwaffe. Die Schneide ziert ein Knochen.",
     "470810626": "Eine übliche, von Felynen bevorzugte Hiebwaffe. Der Kopf ist aus stabilem Holz.",
@@ -1777,7 +1786,8 @@
     "470810903": "Eins gibt es noch zu klären: Erinnert dies an einen Thun- fisch oder an ein Huhn?",
     "470810904": "Der eisige Velkhana-Speer wird Beute aufspießen, solange dein Palico damit zurechtkommt.",
     "470810905": "Eine seltene Klinge für die Erwählten des Himmelsgottes. Kann die Erde spalten.",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "Uralte Waffe einer furchtlosen Felyne, um Miaunster für ihren Miauster zu besiegen."
   },
   "spa": {
     "471859200": "Buen acero de Kamura, tan afilado que cercenará huesos y caparazones.",
@@ -1943,6 +1953,7 @@
     "471859471": "Este filo helado consta de varias capas con las que poder rebanar con suma elegancia.",
     "471859472": "Preciado filo para los validos del dios cielo. Brinda salvación o calamidad.",
     "471859473": "#Rejected#",
+    "471859474": "Un arma ancestral usada por un valeroso Canyne para derrotar a monstruos para su maestro.",
     "470810624": "Una espada de práctica hecha de madera de Kamura. Ligera y fácil de empuñar.",
     "470810625": "El arma personalizada favorita de los Felyne. El filo es de hueso duro.",
     "470810626": "Arma contundente tradicional preferida por los Felyne. Extremo de madera robusta.",
@@ -2133,7 +2144,8 @@
     "470810903": "¿Esto se parece a un atún o a un pollo? Tú decides, porque no está muy claro.",
     "470810904": "Un arpón hecho con un témpano de Velkhana. Puede seguir perforando si tu camarada sigue luchando.",
     "470810905": "Una rara espada entregada a los elegidos del dios cielo. Puede desgarrar la tierra.",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "Un arma ancestral usada por un valeroso Felyne para derrotar a monstruos para su maestro."
   },
   "rus": {
     "471859200": "Старая добрая сталь Камуры. Заточена так, чтобы колоть кости и панцири.",
@@ -2299,6 +2311,7 @@
     "471859471": "Ледяной многослойный клинок. Позволяет разить врага элегантно.",
     "471859472": "Ценный клинок, даруемый небом. Может принести как избавление, так и страдания.",
     "471859473": "#Rejected#",
+    "471859474": "Древнее оружие отважного Собакка, помогавшего хозяину бить монстров.",
     "470810624": "Тренировочный меч из прочной камурской древесины. Легок в обращении.",
     "470810625": "Рубящее оружие с прочной костью, которое любят Котты. ",
     "470810626": "Ударное оружие с прочной деревяшкой, которое любят Котты.",
@@ -2489,7 +2502,8 @@
     "470810903": "Разрешите наш спор. На что это похоже — на рыбу или на курицу? Что думаете?",
     "470810904": "Это ледяное копье велханы будет пронзать жертву, пока цел дух у Палико.",
     "470810905": "Редкий клинок, даруемый небом. Может расколоть землю.",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "Древнее оружие отважного Котта, сражавшего одного мяунстра за другим."
   },
   "pol": {
     "471859200": "Dobra, ostra stal z Kamury. Z łatwością przecina kości i skorupy.",
@@ -2655,6 +2669,7 @@
     "471859471": "To mroźne ostrze składa się z wielu warstw, dzięki czemu tnie z niezrównaną elegancją.",
     "471859472": "Cenne ostrze dla wybrańców boga niebios. Niesie zbawienie i zniszczenie.",
     "471859473": "#Rejected#",
+    "471859474": "Starożytna broń użyta przez dzielnego kynosa do gromienia potworów dla jego mistrza.",
     "470810624": "Drewniany miecz wykonany z drewna Kamury. Lekki i łatwy w użyciu.",
     "470810625": "Zwykła broń tnąca, lubiana przez feliny. Na ostrzu umieszczono kość.",
     "470810626": "Zwykła broń obuchowa, lubiana przez feliny. W głowni użyto drewna.",
@@ -2845,7 +2860,8 @@
     "470810903": "Rozsądź spór. Czy to wygląda na tuńczyka czy na kurczaka? Jak sądzisz?",
     "470810904": "Ta lodowa włócznia z Velkhana będzie przebijać ofiary, póki koleżkotowi starczy ducha.",
     "470810905": "Rzadkie ostrze dla wybrańców boga niebios. Potrafi rozpłatać ziemię.",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "Prastara broń używana przez dzielnego felina do gromienia miaustrów dla jego miaustrza."
   },
   "ptB": {
     "471859200": "Bom e velho aço de Kamura, afiado para cortar facilmente ossos e conchas.",
@@ -3011,6 +3027,7 @@
     "471859471": "Lâmina gelada de várias camadas, permitindo que o usuário corte com elegância.",
     "471859472": "Lâmina valiosa do escolhido do deus celeste. Traz salvação e desastre.",
     "471859473": "#Rejected#",
+    "471859474": "Arma ancestral que um Canyno corajoso usou para derrotar monstros para o mestre.",
     "470810624": "Espada falsa feita com a madeira de Kamura sólida. Leve e fácil de usar.",
     "470810625": "Arma de corte comum usada por Felynos. Um osso sólido é posto em sua extremidade.",
     "470810626": "Arma de contusão comum usada por Felyno. Usa-se madeira maciça na cabeça.",
@@ -3201,7 +3218,8 @@
     "470810903": "Decida a discussão: Isso parece atum ou frango? O que você acha?",
     "470810904": "Lança de gelo de Velkhana que perfura inimigos enquanto o espírito do Amigato viver.",
     "470810905": "Lâmina rara do escolhido do deus celeste. Capaz de rachar a própria terra.",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "Arma ancestral que um Felyno corajoso usou para derrotar miaunstros para o miaustre."
   },
   "kor": {
     "471859200": "카무라 마을의 철로 만든 검. 잘 연마된 칼날은 사냥감의 뼈와 등딱지를 쉽게 잘라낸다.",
@@ -3367,6 +3385,7 @@
     "471859471": "냉기를 두른 얼음 칼날은 몇 겹이나 되는 참격을 날리며 우아하게 사냥감을 찢는다.",
     "471859472": "하늘을 제압한 신이 하사한 보검. 재앙과 구원이 될 수도 있는 힘이 용옥에 깃든다.",
     "471859473": "#Rejected#",
+    "471859474": "예부터 전해진 괴물 퇴치 무기. 백은의 기사를 도운 용감한 가루크가 애용하던 세검.",
     "470810624": "카무라 마을에 자생하는 질긴 나무로 만든 목도. 가볍고 다루기 쉬워 초보자에게 인기.",
     "470810625": "아이루족 사이에 널리 쓰여온 전통적인 참격 무기. 끝부분은 튼튼한 뼈로 만들어져 있다.",
     "470810626": "아이루족 사이에 널리 쓰여온 전통적인 타격 무기. 끝부분은 튼튼한 나무로 만들어져 있다.",
@@ -3557,7 +3576,8 @@
     "470810903": "혼돈에 잠식된 편린으로 만든 특이한 동반자 무기. 그 빛이 비추는 것은 참치인가 닭인가.",
     "470810904": "냉기를 두른 얼음 기둥의 창은 동반자의 마음이 버티는 한 계속 재생하여 적을 꿰뚫는다.",
     "470810905": "하늘을 관장하는 신이 자신의 사자에게 하사한 흉도. 사자는 땅을 가르는 힘을 갖는다.",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "예부터 전해진 괴물 퇴치 무기. 백은의 기사를 도운 용감한 아이루가 애용했던 작은 검."
   },
   "chT": {
     "471859200": "以神火村鋼鐵打造而成的刀。 經過磨製的刀身能輕易斬斷 獵物堅硬的骨頭或甲殼。",
@@ -3723,6 +3743,7 @@
     "471859471": "散發寒氣的冰霜之刃 能化為重重斬擊， 極其優雅地切開獵物。",
     "471859472": "掌控天空之神所賜之夢幻寶劍。 寶劍中央的龍玉蘊藏著 足以消弭災禍的力量。",
     "471859473": "#Rejected#",
+    "471859474": "輔佐白銀騎士的英勇加爾克 所愛用的細劍。此武器曾用於 擊退自古流傳的怪物。",
     "470810624": "以生長於神火村的結實樹木所 製成的模造刀。由於輕巧且易於 使用，因此也很受初學者喜愛。",
     "470810625": "在艾路族間廣泛使用的 傳統斬擊武器。 前端部分是使用堅硬的骨製成。",
     "470810626": "在艾路族間廣泛使用的 傳統打擊武器。 前端部分是使用堅硬的木頭。",
@@ -3913,7 +3934,8 @@
     "470810903": "以被混沌吞噬的餘料製作出的 特異隨從武器。燈所照出的， 究竟是鮪魚還是雞呢？",
     "470810904": "只要隨從仍有鬥志， 散發寒氣的冰柱之槍 將可不斷再生，貫穿獵物。",
     "470810905": "司掌天空之神賜予獲選為 其使者之人的夢幻凶刀。 使者將獲得劈裂大地之力。",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "輔佐白銀騎士的勇敢艾路 所愛用的小劍。此武器曾用於 擊退自古流傳的怪物。"
   },
   "chS": {
     "471859200": "炎火村出产的铁锻造的刀。 经过磨砺的刀身能够轻易斩断 猎物强韧的骨头与甲壳。",
@@ -4079,6 +4101,7 @@
     "471859471": "散发寒气的冰霜之刃 划出层层重叠的斩击， 优雅地将猎物撕裂。",
     "471859472": "掌控天空之神赐予的梦幻宝剑。 位于中心的龙玉中蕴含着力量， 既能带来灾劫，亦能带来救赎。",
     "471859473": "#Rejected#",
+    "471859474": "自古流传的消灭怪物的武器。 侍奉白银骑士的勇敢牙猎犬 惯用的细剑。",
     "470810624": "使用生长于炎火村的结实树木 制成的模型刀。 轻便易用，在新手中颇有人气。",
     "470810625": "艾露猫一族内广泛使用的 传统斩击武器。 前端部分使用了坚固的骨头。",
     "470810626": "艾露猫一族内广泛使用的 传统打击武器。 前端部分使用了坚固的木头。",
@@ -4269,7 +4292,8 @@
     "470810903": "使用被混沌吞噬的余料制成的 奇特随从用武器。灯光照亮的 是金枪鱼还是鸡肉呢？",
     "470810904": "只要随从心无旁鹜，此散发着 寒气的冰柱之枪便能不断再生， 贯穿猎物。",
     "470810905": "掌管天空之神将这把梦幻凶刃 赐给被他选定的使者。使者将 获得劈裂大地之力。",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "自古流传的消灭怪物的武器。 侍奉白银骑士的英勇艾露猫 惯用的小剑。"
   },
   "ara": {
     "471859200": "فولاذ كامورا الجيد الذي تم شحذه ليشق العظام والصدفات الصلبة بسهولة.",
@@ -4435,6 +4459,7 @@
     "471859471": "يتكون هذا النصل المتجمد من عدة طبقات؛ مما يسمح لمستخدمه بالتقطيع بأناقة.",
     "471859472": "نصل ثمين يُمنح لمختار سيد السماء. يمكنه جلب الخلاص والدمار.",
     "471859473": "#Rejected#",
+    "471859474": "سلاح قديم يستخدمه كناين شجاع للقضاء على الوحوش من أجل سيده.",
     "470810624": "سيف مزيف مصنوع من خشب كامورا القوي. خفيف ويسهل التلويح به.",
     "470810625": "سلاح بتّار مألوف مُفضل لدى قطط الفيلاين. توضع عظمة صلبة على طرفه.",
     "470810626": "سلاح غير حاد مألوف مُفضل لدى قطط الفيلاين. خشب متين يُستخدم في الرأس.",
@@ -4625,6 +4650,7 @@
     "470810903": "ساعدنا في حل الخلاف: هل يشبه هذا التونة أم الدجاج؟ ما رأيك؟",
     "470810904": "سيستمر رمح فيلكانا الجليدي هذا في اختراق فريسته طالما أن روح باليكو سليمة.",
     "470810905": "نصل نادر يُمنح لمختار سيد السماء. يمكنه قطع الأرض نفسها.",
-    "470810906": "#Rejected#"
+    "470810906": "#Rejected#",
+    "470810907": "سلاح أثري يستخدمه فيلاين شجاع للقضاء على الوحوش."
   }
 }

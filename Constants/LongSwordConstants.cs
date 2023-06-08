@@ -305,4 +305,5 @@ public static class LongSwordConstants {
     public const uint STUFFED_NARGACUGA = 0x085001D8;
     public const uint REVERENT_ELUSARCA = 0x085001D9;
     public const uint OMINOUS_SPRING = 0x085001DA;
+    public const uint SILVER_SEVERER = 0x085001DB;
 }

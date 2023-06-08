@@ -144,8 +144,10 @@
     "141": "龍気変換",
     "142": "天衣無崩",
     "143": "狂竜症【翔】",
+    "144": "血氣覚醒",
     "145": "奮闘",
-    "146": "緩衝"
+    "146": "緩衝",
+    "147": "激励"
   },
   "eng": {
     "0": "#Rejected#",
@@ -292,8 +294,10 @@
     "141": "Dragon Conversion",
     "142": "Heaven-Sent",
     "143": "Frenzied Bloodlust",
+    "144": "Blood Awakening",
     "145": "Strife",
-    "146": "Shock Absorber"
+    "146": "Shock Absorber",
+    "147": "Inspiration"
   },
   "fre": {
     "0": "#Rejected#",
@@ -440,8 +444,10 @@
     "141": "Conversion de dragon",
     "142": "Envoyé des cieux",
     "143": "Soif de sang frénét",
+    "144": "Éveil de sang",
     "145": "Lutte",
-    "146": "Anti-chocs"
+    "146": "Anti-chocs",
+    "147": "Inspiration"
   },
   "ita": {
     "0": "#Rejected#",
@@ -588,8 +594,10 @@
     "141": "Conversione drago",
     "142": "Dono dal cielo",
     "143": "Sete di sangue frenesia",
+    "144": "Risveglio di sangue",
     "145": "Lotta",
-    "146": "Assorbimento danni"
+    "146": "Assorbimento danni",
+    "147": "Ispirazione"
   },
   "ger": {
     "0": "#Rejected#",
@@ -736,8 +744,10 @@
     "141": "Drachenumwandlung",
     "142": "Wie gerufen",
     "143": "Raserei-Blutdurst",
+    "144": "Bluterwachen",
     "145": "Kampf",
-    "146": "Schockabsorber"
+    "146": "Schockabsorber",
+    "147": "Inspiration"
   },
   "spa": {
     "0": "#Rejected#",
@@ -884,8 +894,10 @@
     "141": "Conversión de draco",
     "142": "Enviado del cielo",
     "143": "Sed sangre colérica",
+    "144": "Despertar sangriento",
     "145": "Pugna",
-    "146": "Absorbedescargas"
+    "146": "Absorbedescargas",
+    "147": "Inspiración"
   },
   "rus": {
     "0": "#Rejected#",
@@ -1032,8 +1044,10 @@
     "141": "Преобраз-е дракона",
     "142": "Божий посланник",
     "143": "Буйная кровожадность",
+    "144": "Пробуждение крови",
     "145": "Борьба",
-    "146": "Поглощение ударов"
+    "146": "Поглощение ударов",
+    "147": "Вдохновение"
   },
   "pol": {
     "0": "#Rejected#",
@@ -1180,8 +1194,10 @@
     "141": "Smocza skuteczność",
     "142": "Dar niebios",
     "143": "Wściekła żądza krwi",
+    "144": "Krwawe przebudzenie",
     "145": "Bój",
-    "146": "Pochłaniacz uderzeń"
+    "146": "Pochłaniacz uderzeń",
+    "147": "Inspiracja"
   },
   "ptB": {
     "0": "#Rejected#",
@@ -1328,8 +1344,10 @@
     "141": "Conversão Dracônica",
     "142": "Celestial",
     "143": "Sede de Sangue Colérica",
+    "144": "Despertar de Sangue",
     "145": "Luta",
-    "146": "Amortecedor"
+    "146": "Amortecedor",
+    "147": "Inspiração"
   },
   "kor": {
     "0": "#Rejected#",
@@ -1476,8 +1494,10 @@
     "141": "용기 변환",
     "142": "천의무붕",
     "143": "광룡증【상】",
+    "144": "혈기각성",
     "145": "분투",
-    "146": "완충"
+    "146": "완충",
+    "147": "격려"
   },
   "chT": {
     "0": "#Rejected#",
@@ -1624,8 +1644,10 @@
     "141": "龍氣轉換",
     "142": "天衣無縫",
     "143": "狂龍症【翔】",
+    "144": "血氣覺醒",
     "145": "奮鬥",
-    "146": "緩衝"
+    "146": "緩衝",
+    "147": "激勵"
   },
   "chS": {
     "0": "#Rejected#",
@@ -1772,8 +1794,10 @@
     "141": "龙气转换",
     "142": "天衣无缝",
     "143": "狂龙症【翔】",
+    "144": "气血觉醒",
     "145": "奋斗",
-    "146": "缓冲"
+    "146": "缓冲",
+    "147": "激励"
   },
   "ara": {
     "0": "#Rejected#",
@@ -1920,7 +1944,9 @@
     "141": "تحول التنين",
     "142": "هدية من السماء",
     "143": "تعطش جنوني للدماء",
+    "144": "يقظة الدماء",
     "145": "صراع",
-    "146": "ممتص الصدمات"
+    "146": "ممتص الصدمات",
+    "147": "الإلهام"
   }
 }

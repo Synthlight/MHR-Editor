@@ -297,4 +297,5 @@ public static class SlashAxeConstants {
     public const uint STUFFED_LUNAGARON = 0x086001CF;
     public const uint WICKED_NIDDOQ = 0x086001D0;
     public const uint CLOUDBURST_AXE = 0x086001D1;
+    public const uint SILVER_SLASHER = 0x086001D2;
 }

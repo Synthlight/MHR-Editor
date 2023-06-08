@@ -263,4 +263,5 @@ public static class LightBowgunConstants {
     public const uint STUFFED_KHEZU = 0x08C001CE;
     public const uint GRACEFUL_ALMARIA = 0x08C001CF;
     public const uint WICKED_NEEDLE = 0x08C001D0;
+    public const uint SILVER_SHOOTER = 0x08C001D1;
 }

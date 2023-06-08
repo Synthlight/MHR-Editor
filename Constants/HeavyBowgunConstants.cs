@@ -269,4 +269,5 @@ public static class HeavyBowgunConstants {
     public const uint STUFFED_MIZUTSUNE = 0x08D001CB;
     public const uint RIGHTEOUS_VARKA = 0x08D001CC;
     public const uint ILL_OMEN = 0x08D001CD;
+    public const uint SILVER_SCATTERER = 0x08D001CE;
 }

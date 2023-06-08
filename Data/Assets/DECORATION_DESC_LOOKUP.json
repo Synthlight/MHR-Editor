@@ -184,6 +184,7 @@
     "181": "<PLSKILL Pl_EquipSkill_075>スキルが アップする装飾品。",
     "182": "<PLSKILL Pl_EquipSkill_090>スキルが アップする装飾品。",
     "183": "<PLSKILL Pl_EquipSkill_022>スキルが アップする装飾品。",
+    "184": "<PLSKILL Pl_EquipSkill_023>スキルが アップする装飾品。",
     "185": "<PLSKILL Pl_EquipSkill_025>スキルが アップする装飾品。",
     "186": "<PLSKILL Pl_EquipSkill_106>スキルが アップする装飾品。",
     "187": "<PLSKILL Pl_EquipSkill_044>スキルが アップする装飾品。",
@@ -252,7 +253,15 @@
     "250": "<PLSKILL Pl_EquipSkill_208>スキルが アップする装飾品。",
     "251": "<PLSKILL Pl_EquipSkill_207>スキルが アップする装飾品。",
     "252": "<PLSKILL Pl_EquipSkill_213>スキルが アップする装飾品。",
-    "253": "<PLSKILL Pl_EquipSkill_219>スキルが アップする装飾品。"
+    "253": "<PLSKILL Pl_EquipSkill_219>スキルが アップする装飾品。",
+    "254": "<PLSKILL Pl_EquipSkill_205>スキルが アップする装飾品。",
+    "255": "<PLSKILL Pl_EquipSkill_209>スキルが アップする装飾品。",
+    "256": "<PLSKILL Pl_EquipSkill_223>スキルが アップする装飾品。",
+    "257": "<PLSKILL Pl_EquipSkill_222>スキルが アップする装飾品。",
+    "258": "<PLSKILL Pl_EquipSkill_200>スキルが アップする装飾品。",
+    "259": "<PLSKILL Pl_EquipSkill_234>スキルが アップする装飾品。",
+    "260": "<PLSKILL Pl_EquipSkill_235>スキルが アップする装飾品。",
+    "261": "<PLSKILL Pl_EquipSkill_216>スキルが アップする装飾品。"
   },
   "eng": {
     "0": "#Rejected#",
@@ -433,6 +442,7 @@
     "181": "A decoration that enhances the <PLSKILL Pl_EquipSkill_075> skill.",
     "182": "A decoration that enhances the Heroics skill.",
     "183": "A decoration that enhances the <PLSKILL Pl_EquipSkill_022> skill.",
+    "184": "A decoration that enhances the <PLSKILL Pl_EquipSkill_023> skill.",
     "185": "A decoration that enhances the <PLSKILL Pl_EquipSkill_025> skill.",
     "186": "A decoration that enhances the <PLSKILL Pl_EquipSkill_106> skill.",
     "187": "A decoration that enhances the <PLSKILL Pl_EquipSkill_044> skill.",
@@ -501,7 +511,15 @@
     "250": "A decoration that enhances the Adrenaline Rush skill.",
     "251": "A decoration that enhances the Sneak Attack skill.",
     "252": "A decoration that enhances the Foray skill.",
-    "253": "A decoration that enhances the Burst skill."
+    "253": "A decoration that enhances the Burst skill.",
+    "254": "A decoration that enhances the Bloodlust skill.",
+    "255": "A decoration that enhances the Embolden skill.",
+    "256": "A decoration that enhances the Intrepid Heart skill.",
+    "257": "A decoration that enhances the Status Trigger skill.",
+    "258": "A decoration that enhances the <PLSKILL Pl_EquipSkill_200> skill.",
+    "259": "A decoration that enhances the Shock Absorber skill.",
+    "260": "A decoration that enhances the Inspiration skill.",
+    "261": "A decoration that enhances the Bladescale Hone skill."
   },
   "fre": {
     "0": "#Rejected#",
@@ -682,6 +700,7 @@
     "181": "Augmente le Talent <PLSKILL Pl_EquipSkill_075>.",
     "182": "Augmente le Talent Héroïsme.",
     "183": "Augmente le Talent <PLSKILL Pl_EquipSkill_022>.",
+    "184": "Augmente le Talent <PLSKILL Pl_EquipSkill_023>.",
     "185": "Augmente le Talent <PLSKILL Pl_EquipSkill_025>.",
     "186": "Augmente le Talent <PLSKILL Pl_EquipSkill_106>.",
     "187": "Augmente le Talent <PLSKILL Pl_EquipSkill_044>.",
@@ -750,7 +769,15 @@
     "250": "Augmente le Talent Poussée d'adrénaline.",
     "251": "Augmente le Talent Attaque furtive.",
     "252": "Augmente le Talent Incursion.",
-    "253": "Augmente le Talent Vendetta."
+    "253": "Augmente le Talent Vendetta.",
+    "254": "Augmente le Talent Soif de sang.",
+    "255": "Augmente le Talent Vaillance.",
+    "256": "Augmente le Talent Cœur audacieux.",
+    "257": "Augmente le Talent Catalyseur d'affliction.",
+    "258": "Augmente le Talent <PLSKILL Pl_EquipSkill_200>.",
+    "259": "Augmente le Talent Anti-chocs.",
+    "260": "Augmente le Talent Inspiration.",
+    "261": "Augmente le Talent Lamécaille affûtée."
   },
   "ita": {
     "0": "#Rejected#",
@@ -931,6 +958,7 @@
     "181": "Potenzia l'effetto dell'abilità <PLSKILL Pl_EquipSkill_075>.",
     "182": "Potenzia l'effetto dell'abilità Eroismo.",
     "183": "Potenzia l'effetto dell'abilità <PLSKILL Pl_EquipSkill_022>.",
+    "184": "Potenzia l'effetto dell'abilità <PLSKILL Pl_EquipSkill_023>.",
     "185": "Potenzia l'effetto dell'abilità <PLSKILL Pl_EquipSkill_025>.",
     "186": "Potenzia l'effetto dell'abilità <PLSKILL Pl_EquipSkill_106>.",
     "187": "Potenzia l'effetto dell'abilità <PLSKILL Pl_EquipSkill_044>.",
@@ -999,7 +1027,15 @@
     "250": "Potenzia l'effetto dell'abilità Flusso di adrenalina.",
     "251": "Potenzia l'effetto dell'abilità Attacco furtivo.",
     "252": "Potenzia l'effetto dell'abilità Incursione.",
-    "253": "Potenzia l'effetto dell'abilità Ventata."
+    "253": "Potenzia l'effetto dell'abilità Ventata.",
+    "254": "Potenzia l'effetto dell'abilità Sete di sangue.",
+    "255": "Potenzia l'effetto dell'abilità Guardia alata.",
+    "256": "Potenzia l'effetto dell'abilità Cuore intrepido.",
+    "257": "Potenzia l'effetto dell'abilità Attiva stato.",
+    "258": "Potenzia l'effetto dell'abilità <PLSKILL Pl_EquipSkill_200>.",
+    "259": "Potenzia l'effetto dell'abilità Assorbimento danni.",
+    "260": "Potenzia l'effetto dell'abilità Ispirazione.",
+    "261": "Potenzia l'effetto dell'abilità Scaglialama acuta."
   },
   "ger": {
     "0": "#Rejected#",
@@ -1180,6 +1216,7 @@
     "181": "Diese Dekoration verstärkt die <PLSKILL Pl_EquipSkill_075>-Fähigkeit.",
     "182": "Diese Dekoration verstärkt deine Heldentat-Fähigkeit.",
     "183": "Diese Dekoration verstärkt die <PLSKILL Pl_EquipSkill_022>-Fähigkeit.",
+    "184": "Diese Dekoration verstärkt die <PLSKILL Pl_EquipSkill_023>-Fähigkeit.",
     "185": "Diese Dekoration verstärkt die <PLSKILL Pl_EquipSkill_025>-Fähigkeit.",
     "186": "Diese Dekoration verstärkt die <PLSKILL Pl_EquipSkill_106>-Fähigkeit.",
     "187": "Diese Dekoration verstärkt die <PLSKILL Pl_EquipSkill_044>-Fähigkeit.",
@@ -1248,7 +1285,15 @@
     "250": "Diese Dekoration verstärkt die Adrenalinschub-Fähigkeit.",
     "251": "Diese Dekoration verstärkt die Schleichangriff-Fähigkeit.",
     "252": "Diese Dekoration verstärkt die Vorstoß-Fähigkeit.",
-    "253": "Diese Dekoration verstärkt die Salve-Fähigkeit."
+    "253": "Diese Dekoration verstärkt die Salve-Fähigkeit.",
+    "254": "Diese Dekoration verstärkt die Blutdurst-Fähigkeit.",
+    "255": "Diese Dekoration verstärkt die Ermutigen-Fähigkeit.",
+    "256": "Diese Dekoration verstärkt die Furchtloses Herz-Fähigkeit.",
+    "257": "Diese Dekoration verstärkt die Statusauslöser-Fähigkeit.",
+    "258": "Diese Dekoration verstärkt die <PLSKILL Pl_EquipSkill_200>-Fähigkeit.",
+    "259": "Diese Dekoration verstärkt die Schockabsorber-Fähigkeit.",
+    "260": "Diese Dekoration verstärkt die Inspiration-Fähigkeit.",
+    "261": "Diese Dekoration verstärkt die Klingenschuppe- Verbesserungs-Fähigkeit."
   },
   "spa": {
     "0": "#Rejected#",
@@ -1429,6 +1474,7 @@
     "181": "Adorno que potencia la habilidad <PLSKILL Pl_EquipSkill_075>.",
     "182": "Adorno con el que potenciar la habilidad Heroicidad.",
     "183": "Adorno que potencia la habilidad <PLSKILL Pl_EquipSkill_022>.",
+    "184": "Adorno que potencia la habilidad <PLSKILL Pl_EquipSkill_023>.",
     "185": "Adorno que potencia la habilidad <PLSKILL Pl_EquipSkill_025>.",
     "186": "Adorno que potencia la habilidad <PLSKILL Pl_EquipSkill_106>.",
     "187": "Adorno que potencia la habilidad <PLSKILL Pl_EquipSkill_044>.",
@@ -1497,7 +1543,15 @@
     "250": "Adorno con el que potenciar la habilidad Subida adrenalina.",
     "251": "Adorno con el que potenciar la habilidad Ataque sigiloso.",
     "252": "Adorno con el que potenciar la habilidad Irrupción.",
-    "253": "Adorno con el que potenciar la habilidad Ráfaga."
+    "253": "Adorno con el que potenciar la habilidad Ráfaga.",
+    "254": "Adorno con el que potenciar la habilidad Afán de sangre.",
+    "255": "Adorno con el que potenciar la habilidad Enardecer.",
+    "256": "Adorno con el que potenciar la habilidad Corazón intrépido.",
+    "257": "Adorno con el que potenciar la habilidad Activa estados.",
+    "258": "Adorno con el que potenciar la habilidad <PLSKILL Pl_EquipSkill_200>.",
+    "259": "Adorno con el que potenciar la habilidad Absorbedescargas.",
+    "260": "Adorno con el que potenciar la habilidad Inspiración.",
+    "261": "Adorno con el que potenciar la habilidad Filoescama afilada."
   },
   "rus": {
     "0": "#Rejected#",
@@ -1678,6 +1732,7 @@
     "181": "Украшение. Усиливает навык <PLSKILL Pl_EquipSkill_075>.",
     "182": "Украшение. Усиливает навык \"Героизм\".",
     "183": "Украшение. Усиливает навык <PLSKILL Pl_EquipSkill_022>.",
+    "184": "Украшение. Усиливает навык <PLSKILL Pl_EquipSkill_023>.",
     "185": "Украшение. Усиливает навык <PLSKILL Pl_EquipSkill_025>.",
     "186": "Украшение. Усиливает навык <PLSKILL Pl_EquipSkill_106>.",
     "187": "Украшение. Усиливает навык <PLSKILL Pl_EquipSkill_044>.",
@@ -1746,7 +1801,15 @@
     "250": "Украшение. Усиливает навык \"Прилив адреналина\".",
     "251": "Украшение. Усиливает навык \"Тайная атака\".",
     "252": "Украшение. Усиливает навык \"Налет\".",
-    "253": "Украшение. Усиливает навык \"Выброс\"."
+    "253": "Украшение. Усиливает навык \"Выброс\".",
+    "254": "Украшение. Усиливает навык \"Жажда крови\".",
+    "255": "Украшение. Усиливает навык \"Воодушевление\".",
+    "256": "Украшение. Усиливает навык \"Бесстрашное сердце\".",
+    "257": "Украшение. Усиливает навык \"Смена статуса\".",
+    "258": "Украшение. Усиливает навык <PLSKILL Pl_EquipSkill_200>.",
+    "259": "Украшение. Усиливает навык \"Поглощение ударов\".",
+    "260": "Украшение. Усиливает навык \"Вдохновение\".",
+    "261": "Украшение. Усиливает навык \"Острая чешуя\"."
   },
   "pol": {
     "0": "#Rejected#",
@@ -1927,6 +1990,7 @@
     "181": "Ozdoba wzmacniająca umiejętność <PLSKILL Pl_EquipSkill_075>.",
     "182": "Ozdoba wzmacniająca umiejętność Wyczyny.",
     "183": "Ozdoba wzmacniająca umiejętność <PLSKILL Pl_EquipSkill_022>.",
+    "184": "Ozdoba wzmacniająca umiejętność <PLSKILL Pl_EquipSkill_023>.",
     "185": "Ozdoba wzmacniająca umiejętność <PLSKILL Pl_EquipSkill_025>.",
     "186": "Ozdoba wzmacniająca umiejętność <PLSKILL Pl_EquipSkill_106>.",
     "187": "Ozdoba wzmacniająca umiejętność <PLSKILL Pl_EquipSkill_044>.",
@@ -1995,7 +2059,15 @@
     "250": "Ozdoba wzmacniająca umiejętność Napływ adrenaliny.",
     "251": "Ozdoba wzmacniająca umiejętność Atak z zaskoczenia.",
     "252": "Ozdoba wzmacniająca umiejętność Najazd.",
-    "253": "Ozdoba wzmacniająca umiejętność Wybuch."
+    "253": "Ozdoba wzmacniająca umiejętność Wybuch.",
+    "254": "Ozdoba wzmacniająca umiejętność Żądza krwi.",
+    "255": "Ozdoba wzmacniająca umiejętność Ośmielony.",
+    "256": "Ozdoba wzmacniająca umiejętność Nieustraszone serce.",
+    "257": "Ozdoba wzmacniająca umiejętność Wywołanie efektu.",
+    "258": "Ozdoba wzmacniająca umiejętność <PLSKILL Pl_EquipSkill_200>.",
+    "259": "Ozdoba wzmacniająca umiejętność Pochłaniacz uderzeń.",
+    "260": "Ozdoba wzmacniająca umiejętność Inspiracja.",
+    "261": "Ozdoba wzmacniająca umiejętność Osełka ostrołuski."
   },
   "ptB": {
     "0": "#Rejected#",
@@ -2176,6 +2248,7 @@
     "181": "Um adorno que melhora a habilidade <PLSKILL Pl_EquipSkill_075>.",
     "182": "Um adorno que melhora a habilidade Heroísmo.",
     "183": "Um adorno que melhora a habilidade <PLSKILL Pl_EquipSkill_022>.",
+    "184": "Um adorno que melhora a habilidade <PLSKILL Pl_EquipSkill_023>.",
     "185": "Um adorno que melhora a habilidade <PLSKILL Pl_EquipSkill_025>.",
     "186": "Um adorno que melhora a habilidade <PLSKILL Pl_EquipSkill_106>.",
     "187": "Um adorno que melhora a habilidade <PLSKILL Pl_EquipSkill_044>.",
@@ -2244,7 +2317,15 @@
     "250": "Um adorno que melhora a habilidade Onda de Adrenalina.",
     "251": "Um adorno que melhora a habilidade Ataque Sorrateiro.",
     "252": "Um adorno que melhora a habilidade Investida.",
-    "253": "Um adorno que melhora a habilidade Rajada."
+    "253": "Um adorno que melhora a habilidade Rajada.",
+    "254": "Um adorno que melhora a habilidade Sede de Sangue.",
+    "255": "Um adorno que melhora a habilidade Bloqueio de Asa.",
+    "256": "Um adorno que melhora a habilidade Coração Intrépido.",
+    "257": "Um adorno que melhora a habilidade Ativação de Status.",
+    "258": "Um adorno que melhora a habilidade <PLSKILL Pl_EquipSkill_200>.",
+    "259": "Um adorno que melhora a habilidade Absorção de Choque.",
+    "260": "Um adorno que melhora a habilidade Inspiração.",
+    "261": "Um adorno que melhora a habilidade Amolação de Lâmina."
   },
   "kor": {
     "0": "#Rejected#",
@@ -2425,6 +2506,7 @@
     "181": "기절 내성 스킬이 향상되는 장식품.",
     "182": "재난대처능력 스킬이 향상되는 장식품.",
     "183": "명검 스킬이 향상되는 장식품.",
+    "184": "탄환 절약 스킬이 향상되는 장식품.",
     "185": "심안 스킬이 향상되는 장식품.",
     "186": "고속 변형 스킬이 향상되는 장식품.",
     "187": "포술 스킬이 향상되는 장식품.",
@@ -2493,7 +2575,15 @@
     "250": "교격 스킬이 향상되는 장식품.",
     "251": "기습 스킬이 향상되는 장식품.",
     "252": "공세 스킬이 향상되는 장식품.",
-    "253": "연격 스킬이 향상되는 장식품."
+    "253": "연격 스킬이 향상되는 장식품.",
+    "254": "광룡증【식】 스킬이 향상되는 장식품.",
+    "255": "선위 스킬이 향상되는 장식품.",
+    "256": "강심 스킬이 향상되는 장식품.",
+    "257": "상태 이상 확정 축적 스킬이 향상되는 장식품.",
+    "258": "혈기 스킬이 향상되는 장식품.",
+    "259": "완충 스킬이 향상되는 장식품.",
+    "260": "격려 스킬이 향상되는 장식품.",
+    "261": "칼날비늘 연마 스킬이 향상되는 장식품."
   },
   "chT": {
     "0": "#Rejected#",
@@ -2674,6 +2764,7 @@
     "181": "能夠提升 昏厥耐性技能的裝飾品。",
     "182": "能夠提升 火場怪力技能的裝飾品。",
     "183": "能夠提升 利刃技能的裝飾品。",
+    "184": "能夠提升 彈藥節約技能的裝飾品。",
     "185": "能夠提升 心眼技能的裝飾品。",
     "186": "能夠提升 高速變形技能的裝飾品。",
     "187": "能夠提升 砲術技能的裝飾品。",
@@ -2742,7 +2833,15 @@
     "250": "能夠提升 巧擊技能的裝飾品。",
     "251": "能夠提升 奇襲技能的裝飾品。",
     "252": "能夠提升 攻勢技能的裝飾品。",
-    "253": "能夠提升 連擊技能的裝飾品。"
+    "253": "能夠提升 連擊技能的裝飾品。",
+    "254": "能夠提升 狂龍症【蝕】技能的裝飾品。",
+    "255": "能夠提升 煽動技能的裝飾品。",
+    "256": "能夠提升 剛心技能的裝飾品。",
+    "257": "能夠提升必定累積狀態異常值 技能的裝飾品。",
+    "258": "能夠提升 血氣技能的裝飾品。",
+    "259": "能夠提升 緩衝技能的裝飾品。",
+    "260": "能夠提升 激勵技能的裝飾品。",
+    "261": "能夠提升 刃鱗研磨技能的裝飾品。"
   },
   "chS": {
     "0": "#Rejected#",
@@ -2923,6 +3022,7 @@
     "181": "能够提升<PLSKILL Pl_EquipSkill_075>技能 的装饰品。",
     "182": "能够提升<PLSKILL Pl_EquipSkill_090>技能 的装饰品。",
     "183": "能够提升<PLSKILL Pl_EquipSkill_022>技能 的装饰品。",
+    "184": "能够提升<PLSKILL Pl_EquipSkill_023>技能 的装饰品。",
     "185": "能够提升<PLSKILL Pl_EquipSkill_025>技能 的装饰品。",
     "186": "能够提升<PLSKILL Pl_EquipSkill_106>技能 的装饰品。",
     "187": "能够提升<PLSKILL Pl_EquipSkill_044>技能 的装饰品。",
@@ -2991,7 +3091,15 @@
     "250": "能够提升<PLSKILL Pl_EquipSkill_208>技能 的装饰品。",
     "251": "能够提升<PLSKILL Pl_EquipSkill_207>技能 的装饰品。",
     "252": "能够提升<PLSKILL Pl_EquipSkill_213>技能 的装饰品。",
-    "253": "能够提升<PLSKILL Pl_EquipSkill_219>技能 的装饰品。"
+    "253": "能够提升<PLSKILL Pl_EquipSkill_219>技能 的装饰品。",
+    "254": "能够提升<PLSKILL Pl_EquipSkill_205>技能 的装饰品。",
+    "255": "能够提升<PLSKILL Pl_EquipSkill_209>技能 的装饰品。",
+    "256": "能够提升<PLSKILL Pl_EquipSkill_223>技能 的装饰品。",
+    "257": "能够提升<PLSKILL Pl_EquipSkill_222>技能 的装饰品。",
+    "258": "能够提升<PLSKILL Pl_EquipSkill_200>技能 的装饰品。",
+    "259": "能够提升<PLSKILL Pl_EquipSkill_234>技能 的装饰品。",
+    "260": "能够提升<PLSKILL Pl_EquipSkill_235>技能 的装饰品。",
+    "261": "能够提升<PLSKILL Pl_EquipSkill_216>技能 的装饰品。"
   },
   "ara": {
     "0": "#Rejected#",
@@ -3172,6 +3280,7 @@
     "181": "إضافة تُحسن من مهارة <PLSKILL Pl_EquipSkill_075>.",
     "182": "إضافة تُحسن من مهارة الأعمال البطولية.",
     "183": "إضافة تُحسن من مهارة <PLSKILL Pl_EquipSkill_022>.",
+    "184": "إضافة تُحسن من مهارة <PLSKILL Pl_EquipSkill_023>.",
     "185": "إضافة تُحسن من مهارة <PLSKILL Pl_EquipSkill_025>.",
     "186": "إضافة تُحسن من مهارة <PLSKILL Pl_EquipSkill_106>.",
     "187": "إضافة تُحسن من مهارة <PLSKILL Pl_EquipSkill_044>.",
@@ -3240,6 +3349,14 @@
     "250": "إضافة تُحسن من مهارة تسارع الأدرينالين.",
     "251": "إضافة تُحسن من مهارة الهجوم المتسلل.",
     "252": "إضافة تُحسن من مهارة الغارة.",
-    "253": "إضافة تُحسن من مهارة الانفجار."
+    "253": "إضافة تُحسن من مهارة الانفجار.",
+    "254": "إضافة تُحسن من مهارة التعطش للدماء.",
+    "255": "إضافة تُحسن من مهارة حارس الجناح.",
+    "256": "إضافة تُحسن من مهارة جسور القلب.",
+    "257": "إضافة تُحسن من مهارة محفز الحالة.",
+    "258": "إضافة تُحسن من مهارة <PLSKILL Pl_EquipSkill_200>.",
+    "259": "إضافة تُحسن من مهارة ممتص الصدمة.",
+    "260": "إضافة تُحسن من مهارة جمجمة الإلهام.",
+    "261": "إضافة تُحسن من مهارة شحذ حرشفة النصل."
   }
 }

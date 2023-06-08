@@ -299,4 +299,5 @@ public static class HammerConstants {
     public const uint STUFFED_DIABLOS = 0x083001C9;
     public const uint VICTORIOUS_NORTHLEIN = 0x083001CA;
     public const uint INCUBUS_HAMMER = 0x083001CB;
+    public const uint SILVER_SPLATTERER = 0x083001CC;
 }

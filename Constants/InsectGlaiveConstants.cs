@@ -277,4 +277,5 @@ public static class InsectGlaiveConstants {
     public const uint STUFFED_RAKNA_KADAKI = 0x08A001C8;
     public const uint WISE_FYLOS = 0x08A001C9;
     public const uint STRATUS_ARC = 0x08A001CA;
+    public const uint SILVER_SPEAR = 0x08A001CB;
 }

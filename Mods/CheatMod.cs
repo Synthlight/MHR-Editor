@@ -20,7 +20,7 @@ public class CheatMod : IMod {
         const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
-            Version      = "1.7",
+            Version      = "1.8",
             NameAsBundle = bundleName,
             Desc         = "A cheat mod."
         };

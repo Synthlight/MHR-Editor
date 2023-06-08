@@ -318,4 +318,5 @@ public static class BowConstants {
     public const uint STUFFED_RAJANG = 0x08E001F1;
     public const uint ALLURING_EVELIA = 0x08E001F2;
     public const uint TEMPEST_NIGHTBOW = 0x08E001F3;
+    public const uint SILVER_STRIKER = 0x08E001F4;
 }

@@ -284,4 +284,5 @@ public static class LanceConstants {
     public const uint STUFFED_MALZENO = 0x084001CE;
     public const uint KNIGHTLY_ECTIS = 0x084001CF;
     public const uint OMINOUS_CLOUD = 0x084001D0;
+    public const uint SILVER_STABBER = 0x084001D1;
 }

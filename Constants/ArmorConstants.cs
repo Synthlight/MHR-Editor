@@ -321,6 +321,7 @@ public static class ArmorConstants {
     public const uint REFLET = 436;
     public const uint MARINE = 437;
     public const uint DUSK = 438;
+    public const uint CIELO = 439;
     public const uint ALICE = 440;
     public const uint HEAVY_KNIGHT = 441;
     public const uint KNIGHT_SQUIRE = 442;
@@ -356,6 +357,8 @@ public static class ArmorConstants {
     public const uint BLACK_WING_EARRINGS = 486;
     public const uint PALAMASK = 487;
     public const uint SNOWY_COHOOT_EARMUFFS = 488;
+    public const uint BLOOD_EARRING = 489;
+    public const uint DARKENED_SIGHT = 490;
     public const uint RISEN_MIZUHA = 491;
     public const uint RISEN_KUSHALA = 492;
     public const uint RISEN_KAISER = 493;
@@ -367,7 +370,9 @@ public static class ArmorConstants {
     public const uint CRIMSON_VALSTRAX___EPOCH = 499;
     public const uint TEMPEST = 500;
     public const uint VIRTUE = 501;
+    public const uint PRIMORDIAL = 502;
     public const uint LAGOMBI_EARS = 503;
     public const uint BUFF_BODY = 504;
+    public const uint EXTREMELY_BUFF_BODY = 505;
     public const uint PRUDENCE = 506;
 }

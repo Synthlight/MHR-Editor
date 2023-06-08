@@ -178,6 +178,7 @@
     "181": "耐絶珠Ⅲ【４】",
     "182": "底力珠Ⅱ【４】",
     "183": "斬鉄珠Ⅱ【４】",
+    "184": "節弾珠Ⅱ【４】",
     "185": "心眼珠Ⅱ【４】",
     "186": "速変珠Ⅱ【４】",
     "187": "砲術珠Ⅱ【４】",
@@ -246,7 +247,15 @@
     "250": "反攻珠Ⅱ【４】",
     "251": "背撃珠Ⅱ【４】",
     "252": "攻勢珠Ⅱ【４】",
-    "253": "連撃珠Ⅱ【４】"
+    "253": "連撃珠Ⅱ【４】",
+    "254": "狂蝕珠【４】",
+    "255": "煽衛珠Ⅱ【４】",
+    "256": "剛心珠Ⅱ【３】",
+    "257": "翻異珠Ⅱ【４】",
+    "258": "血氣珠Ⅱ【４】",
+    "259": "緩衝珠【１】",
+    "260": "激励珠【１】",
+    "261": "刃鱗珠Ⅱ【４】"
   },
   "eng": {
     "0": "#Rejected#",
@@ -427,6 +436,7 @@
     "181": "Hard Steadfast Jewel 4",
     "182": "Potential Jewel+ 4",
     "183": "Razor Jewel+ 4",
+    "184": "Thrift Jewel+ 4",
     "185": "Mind's Eye Jewel+ 4",
     "186": "Quickswitch Jewel+ 4",
     "187": "Artillery Jewel+ 4",
@@ -495,7 +505,15 @@
     "250": "Counterattack Jewel+ 4",
     "251": "Backstab Jewel+ 4",
     "252": "Foray Jewel+ 4",
-    "253": "Chain Jewel+ 4"
+    "253": "Chain Jewel+ 4",
+    "254": "Bloodlust Jewel 4",
+    "255": "Embolden Jewel+ 4",
+    "256": "Intrepid Jewel+ 3",
+    "257": "Trigger Jewel+ 4",
+    "258": "Bloodening Jewel+ 4",
+    "259": "Shockproof Jewel 1",
+    "260": "Inspiration Jewel 1",
+    "261": "Bladescale Jewel+ 4"
   },
   "fre": {
     "0": "#Rejected#",
@@ -676,6 +694,7 @@
     "181": "Super joyau volonté 4",
     "182": "Joyau du héros+ 4",
     "183": "Joyau dextérité+ 4",
+    "184": "Joyau économie+ 4",
     "185": "Joyau spirituel+ 4",
     "186": "Joyau morphose+ 4",
     "187": "Joyau dynamite+ 4",
@@ -744,7 +763,15 @@
     "250": "Joy contre-attaque+ 4",
     "251": "Joyau sournois+ 4",
     "252": "Joyau incursion+ 4",
-    "253": "Joyau chaîne+ 4"
+    "253": "Joyau chaîne+ 4",
+    "254": "Joyau Soif de sang 4",
+    "255": "Joyau vaillance+ 4",
+    "256": "Joyau audacieux+ 3",
+    "257": "Joyau catalyseur+ 4",
+    "258": "Joyau sanguinaire+ 4",
+    "259": "Joyau Antichoc 1",
+    "260": "Joyau Inspiration 1",
+    "261": "Joyau Lamécaille+ 4"
   },
   "ita": {
     "0": "#Rejected#",
@@ -925,6 +952,7 @@
     "181": "G res. stord. III 4",
     "182": "G eroismo II 4",
     "183": "G acutezza II 4",
+    "184": "G risparmio II 4",
     "185": "G preveggenza II 4",
     "186": "G scambio II 4",
     "187": "G artigliere II 4",
@@ -993,7 +1021,15 @@
     "250": "G controffensiva II 4",
     "251": "G tradimento II 4",
     "252": "G incursione II 4",
-    "253": "G serie II 4"
+    "253": "G serie II 4",
+    "254": "G sete di sangue 4",
+    "255": "G guardia alata II 4",
+    "256": "G intrepido II 3",
+    "257": "G attivazione II 4",
+    "258": "G sanguinario II 4",
+    "259": "G antiurto 1",
+    "260": "G ispirazione 1",
+    "261": "G scaglialama II 4"
   },
   "ger": {
     "0": "#Rejected#",
@@ -1174,6 +1210,7 @@
     "181": "HartesFelsenfst-Jwl4",
     "182": "Potenzial-Juwel+ 4",
     "183": "Klingen-Juwel+ 4",
+    "184": "Spar-Juwel+ 4",
     "185": "GeistigesAugeJuwl+4",
     "186": "Blitzmorph-Juwel+ 4",
     "187": "Artillerie-Juwel+ 4",
@@ -1242,7 +1279,15 @@
     "250": "Ggnangriff-Juwel+ 4",
     "251": "Meuchel-Juwel+ 4",
     "252": "Vorstoß-Juwel+ 4",
-    "253": "Ketten-Juwel+ 4"
+    "253": "Ketten-Juwel+ 4",
+    "254": "Blutdurst-Juwel 4",
+    "255": "Ermutigen-Juwel+ 4",
+    "256": "Furchtlos-Juwel+ 3",
+    "257": "Auslöser-Juwel+ 4",
+    "258": "Bluttaufe-Juwel+ 4",
+    "259": "Schocksicherjuwel1",
+    "260": "Inspiration-Juwel 1",
+    "261": "Klngnschppnjwl+ 4"
   },
   "spa": {
     "0": "#Rejected#",
@@ -1423,6 +1468,7 @@
     "181": "J. dura voluntad 4",
     "182": "Joya de potencia+ 4",
     "183": "Joya cuchilla+ 4",
+    "184": "Joya frugal+ 4",
     "185": "Joya ojo mental+ 4",
     "186": "Joya de mutación+ 4",
     "187": "Joya artillería+ 4",
@@ -1491,7 +1537,15 @@
     "250": "Joya de contraat.+ 4",
     "251": "Joya trapera+ 4",
     "252": "Joya incursión+ 4",
-    "253": "Joya de serie+ 4"
+    "253": "Joya de serie+ 4",
+    "254": "Joya ávida sangre 4",
+    "255": "Joya enardeced.+ 4",
+    "256": "Joya intrépida+ 3",
+    "257": "Joya activación+ 4",
+    "258": "J. sanguinolenta+ 4",
+    "259": "Joya absorción 1",
+    "260": "Joya inspiración 1",
+    "261": "Joya filoescama+ 4"
   },
   "rus": {
     "0": "#Rejected#",
@@ -1672,6 +1726,7 @@
     "181": "Твердый самоцвет твердости 4",
     "182": "Самоцвет потенциала+ 4",
     "183": "Самоцвет-лезвие+ 4",
+    "184": "Самоцвет бережливости+ 4",
     "185": "Самоцвет мысленного взгляда+ 4",
     "186": "Самоцвет переключения+ 4",
     "187": "Самоцвет артиллерии+ 4",
@@ -1740,7 +1795,15 @@
     "250": "Самоцвет блока+ 4",
     "251": "Коварный сам.+ 4",
     "252": "Самоцвет налета+ 4",
-    "253": "Самоцвет цепи+ 4"
+    "253": "Самоцвет цепи+ 4",
+    "254": "Самоц. жажды крови 4",
+    "255": "Самоцв. воодуш.+ 4",
+    "256": "Самоцвет бесстр.+ 3",
+    "257": "Самоцвет смены+ 4",
+    "258": "Самоцвет крови+ 4",
+    "259": "Самоцвет шока 1",
+    "260": "Самоцвет вдохн. 1",
+    "261": "Сам.острой чеш.+ 4"
   },
   "pol": {
     "0": "#Rejected#",
@@ -1921,6 +1984,7 @@
     "181": "Tw. klejn. niezłom. 4",
     "182": "Klejnot potencjału+ 4",
     "183": "Klejnot brzytwy+ 4",
+    "184": "Klejnot oszczędn.+ 4",
     "185": "Klejnot oka umysłu+ 4",
     "186": "Klej. szybkoprzeł.+ 4",
     "187": "Klejnot artylerii+ 4",
@@ -1989,7 +2053,15 @@
     "250": "Klejnot kontrataku+ 4",
     "251": "Klejnot zdrady+ 4",
     "252": "Klejnot najazdu+ 4",
-    "253": "Klejnot łańcuch.+ 4"
+    "253": "Klejnot łańcuch.+ 4",
+    "254": "Klejn. żądzy krwi 4",
+    "255": "Klejnot ośmiel.+ 4",
+    "256": "Nieustrasz. klejnot+ 3",
+    "257": "Wywołuj. klejnot+ 4",
+    "258": "Krwawiący klejnot+ 4",
+    "259": "Klejn. wstrząsoodp. 1",
+    "260": "Klejnot inspir. 1",
+    "261": "Klejnot ostrołuski+ 4"
   },
   "ptB": {
     "0": "#Rejected#",
@@ -2170,6 +2242,7 @@
     "181": "Joia Dura Resoluta+ 4",
     "182": "Joia Potencial+ 4",
     "183": "Joia Navalha+ 4",
+    "184": "Joia Frugal+ 4",
     "185": "Joia Olho Mental+ 4",
     "186": "Joia Troca Rápida+ 4",
     "187": "Joia Artilharia+ 4",
@@ -2238,7 +2311,15 @@
     "250": "Joia do Contra-ataque+ 4",
     "251": "Joia Golpe nas Costas+ 4",
     "252": "Joia Investida+ 4",
-    "253": "Joia de Cadeia+ 4"
+    "253": "Joia de Cadeia+ 4",
+    "254": "Joia Sede de Sangue 4",
+    "255": "Joia Bloqueio+ 4",
+    "256": "Joia Intrépida+ 3",
+    "257": "Joia Ativação+ 4",
+    "258": "Joia Sanguinante+ 4",
+    "259": "Joia Antichoque 1",
+    "260": "Joia Inspiração 1",
+    "261": "Joia Lamescama+ 4"
   },
   "kor": {
     "0": "#Rejected#",
@@ -2419,6 +2500,7 @@
     "181": "내절주Ⅲ【4】",
     "182": "저력주Ⅱ【4】",
     "183": "참철주Ⅱ【4】",
+    "184": "절탄주Ⅱ【4】",
     "185": "심안주Ⅱ【4】",
     "186": "속변주Ⅱ【4】",
     "187": "포술주Ⅱ【4】",
@@ -2487,7 +2569,15 @@
     "250": "반공주Ⅱ【4】",
     "251": "배격주Ⅱ【4】",
     "252": "공세주Ⅱ【4】",
-    "253": "연격주Ⅱ【4】"
+    "253": "연격주Ⅱ【4】",
+    "254": "광식주【4】",
+    "255": "선위주Ⅱ【4】",
+    "256": "강심주Ⅱ【3】",
+    "257": "번이주Ⅱ【4】",
+    "258": "혈기주Ⅱ【4】",
+    "259": "완충주【１】",
+    "260": "격려주【１】",
+    "261": "인린주Ⅱ【4】"
   },
   "chT": {
     "0": "#Rejected#",
@@ -2668,6 +2758,7 @@
     "181": "耐絕珠Ⅲ【4】",
     "182": "潛力珠Ⅱ【4】",
     "183": "斬鐵珠Ⅱ【4】",
+    "184": "省彈珠Ⅱ【4】",
     "185": "心眼珠Ⅱ【4】",
     "186": "速變珠Ⅱ【4】",
     "187": "砲術珠Ⅱ【4】",
@@ -2736,7 +2827,15 @@
     "250": "反攻珠Ⅱ【4】",
     "251": "背擊珠Ⅱ【4】",
     "252": "攻勢珠Ⅱ【4】",
-    "253": "連擊珠Ⅱ【4】"
+    "253": "連擊珠Ⅱ【4】",
+    "254": "狂蝕珠【4】",
+    "255": "煽動珠Ⅱ【４】",
+    "256": "剛心珠Ⅱ【3】",
+    "257": "翻異珠Ⅱ【４】",
+    "258": "血氣珠Ⅱ【4】",
+    "259": "緩衝珠【1】",
+    "260": "激勵珠【1】",
+    "261": "刃鱗珠Ⅱ【4】"
   },
   "chS": {
     "0": "#Rejected#",
@@ -2917,6 +3016,7 @@
     "181": "耐绝珠Ⅲ【4】",
     "182": "底力珠Ⅱ【4】",
     "183": "斩铁珠Ⅱ【4】",
+    "184": "省弹珠Ⅱ【4】",
     "185": "心眼珠Ⅱ【4】",
     "186": "速变珠Ⅱ【4】",
     "187": "炮术珠Ⅱ【4】",
@@ -2985,7 +3085,15 @@
     "250": "反攻珠Ⅱ【4】",
     "251": "背击珠Ⅱ【4】",
     "252": "攻势珠Ⅱ【4】",
-    "253": "连击珠Ⅱ【4】"
+    "253": "连击珠Ⅱ【4】",
+    "254": "狂蚀珠【4】",
+    "255": "讽御珠Ⅱ【4】",
+    "256": "刚心珠Ⅱ【3】",
+    "257": "翻异珠Ⅱ【4】",
+    "258": "气血珠Ⅱ【4】",
+    "259": "缓冲珠【1】",
+    "260": "激励珠【1】",
+    "261": "刃鳞珠Ⅱ【4】"
   },
   "ara": {
     "0": "#Rejected#",
@@ -3166,6 +3274,7 @@
     "181": "حلية الثبات الصلبة 4",
     "182": "حلية الإمكانيات+ 4",
     "183": "حلية الشفرة+ 4",
+    "184": "حلية التوفير+ 4",
     "185": "حلية عين العقل+ 4",
     "186": "حلية التبديل السريع+ 4",
     "187": "حلية المدفعية+ 4",
@@ -3234,6 +3343,14 @@
     "250": "حلية هجوم مضاد+ 4",
     "251": "حلية ضربة خلفية+ 4",
     "252": "حلية الغارة+ 4",
-    "253": "حلية سلسلة+ 4"
+    "253": "حلية سلسلة+ 4",
+    "254": "حلية التعطش للدماء 4",
+    "255": "حلية حارس جناح+ 4",
+    "256": "حلية الجسور+ 3",
+    "257": "حلية المحفز+ 4",
+    "258": "حلية بلون الدم+ 4",
+    "259": "حلية مقاومة للصدمات 1",
+    "260": "حلية الإلهام 1",
+    "261": "حلية حرشفة النصل+ 4"
   }
 }

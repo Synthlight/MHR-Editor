@@ -291,4 +291,5 @@ public static class DualBladesConstants {
     public const uint STUFFED_GOSS_HARAG = 0x088001DE;
     public const uint UNTOUCHED_HEL = 0x088001DF;
     public const uint STORMWIND_FANS = 0x088001E0;
+    public const uint SILVER_SLICERS = 0x088001E1;
 }

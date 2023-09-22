@@ -32,6 +32,7 @@ public class GenerateFiles {
         "Chainsaw_InGameShopItemSettingUserdata",
         "Chainsaw_BombShellInfoUserData",
         "Chainsaw_GrenadeShellInfoUserData",
+        "Chainsaw_RandomDrop_CommonDropTableUserdata",
 
         // Needs `share.PrefabController`.
         //"Chainsaw_BombShellGeneratorUserData",

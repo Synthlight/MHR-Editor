@@ -17,7 +17,7 @@ public class MaxStackSize : IMod {
     public static void Make() {
         const string bundleName  = "Stack Size Changes";
         const string description = "Modifies the stack size of stackable items.";
-        const string version     = "1.5";
+        const string version     = "1.7.1";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
@@ -26,6 +26,8 @@ public class MaxStackSize : IMod {
             Desc         = description,
             Files = new[] {
                 PathHelper.ITEM_DATA_PATH,
+                PathHelper.ITEM_DATA_PATH_AO,
+                PathHelper.ITEM_DATA_PATH_AO_OVR,
                 PathHelper.ITEM_DATA_PATH_MC,
                 PathHelper.ITEM_DATA_PATH_MC_OVR,
             }

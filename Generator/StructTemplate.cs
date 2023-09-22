@@ -269,6 +269,13 @@ public class StructTemplate {
             "Chainsaw_ItemUseResult_IncreaseHitPoint" => "Chainsaw_ItemUseResultInfoBase",
             "Chainsaw_WeaponItem" => "Chainsaw_Item",
             "Chainsaw_UniqueItem" => "Chainsaw_Item",
+            "Chainsaw_RuleStratum_ParticleChapter" => "Chainsaw_RuleStratum_Particle",
+            "Chainsaw_RuleStratum_ParticleFlag" => "Chainsaw_RuleStratum_Particle",
+            "Chainsaw_RuleStratum_ParticleGmFlag" => "Chainsaw_RuleStratum_Particle",
+            "Chainsaw_RuleStratum_ParticleItemInventory" => "Chainsaw_RuleStratum_Particle",
+            "Chainsaw_RuleStratum_ParticleResourcePoint" => "Chainsaw_RuleStratum_Particle",
+            "Chainsaw_RuleStratum_ParticleStatusEffect" => "Chainsaw_RuleStratum_Particle",
+            "Chainsaw_RuleStratum_ParticleTrue" => "Chainsaw_RuleStratum_Particle",
             _ => null
         };
     }

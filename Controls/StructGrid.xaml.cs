@@ -71,7 +71,7 @@ public class StructGridGeneric<T> : StructGrid, IStructGrid<T> {
 
         foreach (var propertyInfo in properties) {
             var propertyName = propertyInfo.Name;
-            if (properties.Any(prop => prop.Name == $"{propertyName}_button")) continue;
+            if (properties.Any(prop => prop.Name == $"{propertyName}_button")) continue; // Skip the fields that have buttons so we only show the button fields.
             if (propertyName == "Index") continue;
 
             var displayName    = ((DisplayNameAttribute) propertyInfo.GetCustomAttribute(typeof(DisplayNameAttribute), true))?.DisplayName;
@@ -92,8 +92,6 @@ public class StructGridGeneric<T> : StructGrid, IStructGrid<T> {
 
             header.SetBinding(TextBlock.TextProperty, new Binding(nameof(HeaderInfo.OriginalText)) {Source = headerInfo});
             row.name = header;
-
-            // TODO: Handle DataSourceWrapper types.
 
             if (propertyInfo.PropertyType.IsEnum) {
                 var comboBox = new ComboBox();
@@ -120,9 +118,13 @@ public class StructGridGeneric<T> : StructGrid, IStructGrid<T> {
                 } else if (showAsHex) {
                     binding.StringFormat = "0x{0:X}";
                 }
-                if (!propertyInfo.CanWrite) {
+                if (!propertyInfo.CanWrite || propertyName.EndsWith("_button")) {
                     binding.Mode       = BindingMode.OneWay;
                     textBox.IsReadOnly = true;
+                }
+
+                if (propertyName.EndsWith("_button")) {
+                    textBox.PreviewMouseUp += (_, _) => EditSelectedItemId(propertyName);
                 }
 
                 textBox.SetBinding(TextBox.TextProperty, binding);
@@ -156,6 +158,36 @@ public class StructGridGeneric<T> : StructGrid, IStructGrid<T> {
             shadeThisRow = !shadeThisRow;
 
             rowIndex++;
+        }
+    }
+
+    private void EditSelectedItemId(string propertyName) {
+        var property            = typeof(T).GetProperty(propertyName.Replace("_button", ""), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)!;
+        var propertyType        = property.PropertyType;
+        var value               = property.GetValue(Item);
+        var dataSourceType      = ((DataSourceAttribute) property.GetCustomAttribute(typeof(DataSourceAttribute), true))?.dataType;
+        var showAsHex           = (ButtonIdAsHexAttribute) property.GetCustomAttribute(typeof(ButtonIdAsHexAttribute), true) != null;
+        var negativeOneForEmpty = (NegativeOneForEmptyAttribute) property.GetCustomAttribute(typeof(NegativeOneForEmptyAttribute), true) != null;
+
+        dynamic dataSource = dataSourceType switch {
+            //DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
+            _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
+        };
+
+        if (negativeOneForEmpty) {
+            var newData = new Dictionary<int, string> {[-1] = "<None>"};
+            //foreach (var (id, name) in DataHelper.ITEM_NAME_LOOKUP[Global.locale]) {
+            //    newData[(int) id] = name;
+            //}
+            dataSource = newData;
+        }
+
+        var getNewItemId = new GetNewItemId(value, dataSource, showAsHex);
+        getNewItemId.ShowDialog();
+
+        if (!getNewItemId.Cancelled) {
+            property.SetValue(Item, Convert.ChangeType(getNewItemId.CurrentItem, propertyType));
+            //Item.OnPropertyChanged(propertyName);
         }
     }
 

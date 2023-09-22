@@ -73,6 +73,8 @@ public class StructTemplate {
         file.WriteLine("[SuppressMessage(\"ReSharper\", \"InconsistentNaming\")]");
         file.WriteLine("[SuppressMessage(\"ReSharper\", \"UnusedMember.Global\")]");
         file.WriteLine("[SuppressMessage(\"ReSharper\", \"ClassNeverInstantiated.Global\")]");
+        file.WriteLine("[SuppressMessage(\"ReSharper\", \"IdentifierTypo\")]");
+        file.WriteLine("[SuppressMessage(\"CodeQuality\", \"IDE0079:Remove unnecessary suppression\")]");
         file.WriteLine("[MhrStruct]");
         file.WriteLine($"public partial class {className} : {parentClass ?? "RszObject"} {{");
         file.WriteLine($"    public {(parentClass == null ? "const" : "new const")} uint HASH = 0x{hash};");
@@ -82,15 +84,16 @@ public class StructTemplate {
         if (GenerateFiles.UNSUPPORTED_DATA_TYPES.Contains(field.type!)) return;
         if (GenerateFiles.UNSUPPORTED_OBJECT_TYPES.Any(s => field.originalType!.Contains(s))) return;
 
-        var newName        = field.name?.ToConvertedFieldName()!;
-        var primitiveName  = field.GetCSharpType();
-        var typeName       = field.originalType!.ToConvertedTypeName();
-        var isPrimitive    = primitiveName != null;
-        var isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
-        var buttonType     = GetButtonType(field);
-        var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
-        var isObjectType   = field.type is "Object" or "UserData";
-        var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType);
+        var newName             = field.name?.ToConvertedFieldName()!;
+        var primitiveName       = field.GetCSharpType();
+        var typeName            = field.originalType!.ToConvertedTypeName();
+        var isPrimitive         = primitiveName != null;
+        var isEnumType          = typeName != null && generator.enumTypes.ContainsKey(typeName);
+        var buttonType          = GetButtonType(field);
+        var isNonPrimitive      = !isPrimitive && !isEnumType; // via.thing
+        var isObjectType        = field.type is "Object" or "UserData";
+        var viaType             = GetViaType(field, isNonPrimitive, typeName, ref isObjectType);
+        var negativeOneForEmpty = GetNegativeForEmptyAllowed(field);
 
         if (usedNames.ContainsKey(newName)) {
             usedNames[newName]++;
@@ -138,11 +141,13 @@ public class StructTemplate {
                 var lookupName = GetLookupForDataSourceType(buttonType);
                 file.WriteLine($"    [SortOrder({sortOrder + 10})]");
                 file.WriteLine($"    [DataSource(DataSourceType.{buttonType})]");
+                if (negativeOneForEmpty) file.WriteLine("    [NegativeOneForEmpty]");
                 file.WriteLine($"    public {primitiveName} {newName} {{ get; set; }}");
                 file.WriteLine("");
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    [DisplayName(\"{newName}\")]");
-                file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
+                file.WriteLine($"    public string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
+                               $"DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName});");
             } else if (isObjectType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
@@ -182,7 +187,7 @@ public class StructTemplate {
         var modifier = parentClass == null ? "" : "new ";
 
         file.WriteLine("");
-        file.WriteLine($"    public static {modifier}{className} Create(RSZ rsz) {{");
+        file.WriteLine($"    public {modifier}static {className} Create(RSZ rsz) {{");
         file.WriteLine($"        var obj = Create<{className}>(rsz, HASH);");
 
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
@@ -293,6 +298,12 @@ public class StructTemplate {
             DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
             DataSourceType.WEAPONS => nameof(DataHelper.WEAPON_NAME_LOOKUP),
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
+        };
+    }
+
+    private static bool GetNegativeForEmptyAllowed(StructJson.Field field) {
+        return field.name?.ToConvertedFieldName() switch {
+            _ => false
         };
     }
 }

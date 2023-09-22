@@ -20,6 +20,7 @@ public class GenerateFiles {
     public const string ENUM_REGEX            = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
     private static readonly List<string> WHITELIST = new() {
         "Chainsaw_ItemDefinitionUserData",
         "Chainsaw_InventoryCatalogUserData",
@@ -65,6 +66,7 @@ public class GenerateFiles {
     };
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
     public static readonly List<string> UNSUPPORTED_DATA_TYPES = new() { // TODO: Implement support for these.
         "AABB",
         "Area",
@@ -83,10 +85,14 @@ public class GenerateFiles {
     };
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
     public static readonly List<string> UNSUPPORTED_OBJECT_TYPES = new() { // TODO: Implement support for these.
         "System.Collections.Generic.Dictionary`",
         "System.Collections.Generic.Queue`1<System.Tuple`", // Nested generics.
         "System.Collections.Generic.Queue`1<via.vec3>", // Because this breaks generation and I need a better way of handling generics.
+        "soundlib.",
+        "app.",
+        "via.gui.Panel", // Too long, skip it for now.
         "chainsaw.AIMapNodeScore.Param`1<",
         "chainsaw.NetworkRankingSettingUserdata.BoardNameTable`1<",
         "chainsaw.CameraCurveUserDataParam.CurveParamTable`1<",
@@ -211,6 +217,7 @@ public class GenerateFiles {
         var enumHpp = File.ReadAllText(PathHelper.ENUM_HEADER_PATH);
         var regex   = new Regex(ENUM_REGEX, RegexOptions.Singleline);
         var matches = regex.Matches(enumHpp);
+#pragma warning disable IDE0220 // Add explicit cast
         foreach (Match match in matches) {
             var hppName = $"{match.Groups[1].Value}::{match.Groups[2].Value}";
             if (hppName.Contains('<') || hppName.Contains('`')) continue;
@@ -229,6 +236,7 @@ public class GenerateFiles {
                 enumType.Contents = contents;
             }
         }
+#pragma warning restore IDE0220 // Add explicit cast
     }
 
     /**

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using RE_Editor.Common;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Controls.Models;
+using RE_Editor.Common.Data;
 using RE_Editor.Windows;
 
 namespace RE_Editor.Controls;
@@ -170,15 +171,16 @@ public class StructGridGeneric<T> : StructGrid, IStructGrid<T> {
         var negativeOneForEmpty = (NegativeOneForEmptyAttribute) property.GetCustomAttribute(typeof(NegativeOneForEmptyAttribute), true) != null;
 
         dynamic dataSource = dataSourceType switch {
-            //DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
+            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
+            DataSourceType.WEAPONS => DataHelper.WEAPON_NAME_LOOKUP[Global.locale],
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
 
         if (negativeOneForEmpty) {
             var newData = new Dictionary<int, string> {[-1] = "<None>"};
-            //foreach (var (id, name) in DataHelper.ITEM_NAME_LOOKUP[Global.locale]) {
-            //    newData[(int) id] = name;
-            //}
+            foreach (var (id, name) in DataHelper.ITEM_NAME_LOOKUP[Global.locale]) {
+                newData[(int) id] = name;
+            }
             dataSource = newData;
         }
 

@@ -147,7 +147,7 @@ public class StructTemplate {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    [DisplayName(\"{newName}\")]");
                 file.WriteLine($"    public string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
-                               $"DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName});");
+                               $"DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
             } else if (isObjectType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
@@ -303,6 +303,7 @@ public class StructTemplate {
 
     private static bool GetNegativeForEmptyAllowed(StructJson.Field field) {
         return field.name?.ToConvertedFieldName() switch {
+            "CurrentAmmo" => true,
             _ => false
         };
     }

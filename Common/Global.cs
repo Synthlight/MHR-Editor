@@ -55,4 +55,8 @@ public static class Global {
             }
         }
     };
+
+    public static readonly List<string> VARIANTS = new() {"CH", "MC", "AO"};
+    public static readonly List<string> FOLDERS  = new() {"_Chainsaw", "_Mercenaries", "_AnotherOrder"};
+    public static          string       variant  = "";
 }

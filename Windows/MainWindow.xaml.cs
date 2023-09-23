@@ -132,6 +132,14 @@ public partial class MainWindow {
 
             GC.Collect();
 
+            if (targetFile.Contains("_Mercenaries")) {
+                Global.variant = "MC";
+            } else if (targetFile.Contains("_AnotherOrder")) {
+                Global.variant = "AO";
+            } else {
+                Global.variant = "CH";
+            }
+
             file = ReDataFile.Read(target);
 
             var rszObjectData = file?.rsz.objectData;

@@ -5,7 +5,7 @@ namespace RE_Editor.Constants;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("ReSharper", "IdentifierTypo")]
-public static class ItemConstants {
+public static class ItemConstants_CH {
     public const uint HANDGUN_AMMO = 112800000;
     public const uint MAGNUM_AMMO = 112801600;
     public const uint SHOTGUN_SHELLS = 112803200;
@@ -220,11 +220,4 @@ public static class ItemConstants {
     public const uint CHICKEN_EGG = 277080256;
     public const uint BROWN_CHICKEN_EGG = 277081856;
     public const uint GOLD_CHICKEN_EGG = 277083456;
-    public const uint EXPLOSIVE_ARROWS = 112320000;
-    public const uint BLAST_ARROWS = 112480000;
-    public const uint SAWED_OFF_W_870 = 278195456;
-    public const uint XM96E1 = 278515456;
-    public const uint EJF_338_COMPOUND_BOW = 278521856;
-    public const uint BLAST_CROSSBOW = 278198656;
-    public const uint TACTICAL_KNIFE = 278206656;
 }

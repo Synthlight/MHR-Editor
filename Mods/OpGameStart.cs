@@ -57,7 +57,7 @@ public class OpGameStart : IMod {
                     break;
                 case Target.JUST_SMALL_KEYS:
                     // Needs to be in the key inventory.
-                    inventoryData.Datas[0].KeyInventorySaveData[0].Items.Add(Re4WeaponInstancer.NewKeyItem(obj.rsz, ItemConstants.SMALL_KEY, 0, 0, 20));
+                    inventoryData.Datas[0].KeyInventorySaveData[0].Items.Add(Re4WeaponInstancer.NewKeyItem(obj.rsz, ItemConstants_CH.SMALL_KEY, 0, 0, 20));
                     break;
                 case Target.WITH_BONUS_WEAPONS:
                 case Target.WITHOUT_BONUS_WEAPONS:
@@ -80,49 +80,49 @@ public class OpGameStart : IMod {
         knife.STRUCT_SlotIndex_Column = 10;
 
         // Row 1-2
-        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.STINGRAY, ItemConstants.RIFLE_AMMO, 0, 3, ammoCount: 10));
-        items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.MIXED_HERB_G_PLUSR_PLUSY, 0, 10, count));
-        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.GOLD_CHICKEN_EGG, ItemConstants.GOLD_CHICKEN_EGG, 0, 12, itemCount: count)); // Row 1
-        items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.HIGH_POWER_SCOPE, 1, 10, count)); // Row 2
+        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.STINGRAY, ItemConstants_CH.RIFLE_AMMO, 0, 3, ammoCount: 10));
+        items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.MIXED_HERB_G_PLUSR_PLUSY, 0, 10, count));
+        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.GOLD_CHICKEN_EGG, ItemConstants_CH.GOLD_CHICKEN_EGG, 0, 12, itemCount: count)); // Row 1
+        items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.HIGH_POWER_SCOPE, 1, 10, count)); // Row 2
         // Row 3-4
-        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.RED9, ItemConstants.HANDGUN_AMMO, 2, 8, ammoCount: 8));
-        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.HEAVY_GRENADE, ItemConstants.HEAVY_GRENADE, 2, 11, itemCount: count));
-        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.FLASH_GRENADE, ItemConstants.FLASH_GRENADE, 2, 12, itemCount: count));
+        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.RED9, ItemConstants_CH.HANDGUN_AMMO, 2, 8, ammoCount: 8));
+        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.HEAVY_GRENADE, ItemConstants_CH.HEAVY_GRENADE, 2, 11, itemCount: count));
+        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.FLASH_GRENADE, ItemConstants_CH.FLASH_GRENADE, 2, 12, itemCount: count));
         // Row 5-6
-        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.KILLER7, ItemConstants.MAGNUM_AMMO, 4, 8, ammoCount: 7));
-        items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.BIOSENSOR_SCOPE, 4, 11, 1));
+        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.KILLER7, ItemConstants_CH.MAGNUM_AMMO, 4, 8, ammoCount: 7));
+        items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.BIOSENSOR_SCOPE, 4, 11, 1));
         // Row 7-8
-        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.PUNISHER, ItemConstants.HANDGUN_AMMO, 6, 8, ammoCount: 12));
-        items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.HANDGUN_AMMO, 6, 11, count));
-        items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.RIFLE_AMMO, 7, 11, count));
+        items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.PUNISHER, ItemConstants_CH.HANDGUN_AMMO, 6, 8, ammoCount: 12));
+        items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.HANDGUN_AMMO, 6, 11, count));
+        items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.RIFLE_AMMO, 7, 11, count));
         // Row 9
-        items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.RED9_STOCK, 8, 6, 1));
+        items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.RED9_STOCK, 8, 6, 1));
 
         switch (target) {
             case Target.WITH_BONUS_WEAPONS:
                 // Row 3-5
-                items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.CHICAGO_SWEEPER, ItemConstants.SUBMACHINE_GUN_AMMO, 2, 0, ammoCount: 50));
-                //items.Add(NewWeapon(obj.rsz, ItemConstants.PRIMAL_KNIFE, 0xFFFFFFFF, 2, 7, ammoCount: 0, rotation: Chainsaw_ItemDirection.Rot_090));
-                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.LASER_SIGHT, 2, 7, 1));
+                items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.CHICAGO_SWEEPER, ItemConstants_CH.SUBMACHINE_GUN_AMMO, 2, 0, ammoCount: 50));
+                //items.Add(NewWeapon(obj.rsz, ItemConstants_CH.PRIMAL_KNIFE, 0xFFFFFFFF, 2, 7, ammoCount: 0, rotation: Chainsaw_ItemDirection.Rot_090));
+                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.LASER_SIGHT, 2, 7, 1));
                 // Row 6-7
-                items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.INFINITE_ROCKET_LAUNCHER, ItemConstants.INFINITE_ROCKET_LAUNCHER, 5, 0));
+                items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.INFINITE_ROCKET_LAUNCHER, ItemConstants_CH.INFINITE_ROCKET_LAUNCHER, 5, 0));
                 // Row 8-9
-                items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.HANDCANNON, ItemConstants.MAGNUM_AMMO, 7, 0, ammoCount: 5));
-                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.SHOTGUN_SHELLS, 7, 4, count));
-                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.SUBMACHINE_GUN_AMMO, 7, 6, count));
-                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.MAGNUM_AMMO, 8, 4, count));
+                items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.HANDCANNON, ItemConstants_CH.MAGNUM_AMMO, 7, 0, ammoCount: 5));
+                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.SHOTGUN_SHELLS, 7, 4, count));
+                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.SUBMACHINE_GUN_AMMO, 7, 6, count));
+                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.MAGNUM_AMMO, 8, 4, count));
                 break;
             case Target.WITHOUT_BONUS_WEAPONS:
                 // Row 3-4
-                items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.ROCKET_LAUNCHER, ItemConstants.ROCKET_LAUNCHER, 2, 0));
+                items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.ROCKET_LAUNCHER, ItemConstants_CH.ROCKET_LAUNCHER, 2, 0));
                 // Row 5-6
-                items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.ROCKET_LAUNCHER, ItemConstants.ROCKET_LAUNCHER, 4, 0));
+                items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.ROCKET_LAUNCHER, ItemConstants_CH.ROCKET_LAUNCHER, 4, 0));
                 // Row 7-8
-                items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants.ROCKET_LAUNCHER, ItemConstants.ROCKET_LAUNCHER, 6, 0));
+                items.Add(Re4WeaponInstancer.NewWeapon(obj.rsz, ItemConstants_CH.ROCKET_LAUNCHER, ItemConstants_CH.ROCKET_LAUNCHER, 6, 0));
                 // Row 9
-                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.SHOTGUN_SHELLS, 8, 0, count));
-                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.SUBMACHINE_GUN_AMMO, 8, 2, count));
-                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants.MAGNUM_AMMO, 8, 4, count));
+                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.SHOTGUN_SHELLS, 8, 0, count));
+                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.SUBMACHINE_GUN_AMMO, 8, 2, count));
+                items.Add(Re4WeaponInstancer.NewItem(obj.rsz, ItemConstants_CH.MAGNUM_AMMO, 8, 4, count));
                 break;
             default: throw new ArgumentOutOfRangeException(nameof(target), target, null);
         }

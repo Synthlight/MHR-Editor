@@ -35,15 +35,7 @@
     "5401": "強化手榴弾",
     "5403": "卵（白）",
     "5404": "卵（茶）",
-    "5405": "卵（金）",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6300": "XM96E1",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6304": "EJF-338 コンパウンドボウ",
-    "6305": "#Rejected#"
+    "5405": "卵（金）"
   },
   "eng": {
     "4000": "SG-09 R",
@@ -81,15 +73,7 @@
     "5401": "Heavy Grenade",
     "5403": "Chicken Egg",
     "5404": "Brown Chicken Egg",
-    "5405": "Gold Chicken Egg",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6300": "XM96E1",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6304": "EJF-338 Compound Bow",
-    "6305": "#Rejected#"
+    "5405": "Gold Chicken Egg"
   },
   "fre": {
     "4000": "SG-09 R",
@@ -127,15 +111,7 @@
     "5401": "Grenade lourde",
     "5403": "Œuf de poule",
     "5404": "Œuf de poule brun",
-    "5405": "Œuf de poule doré",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6300": "XM96E1",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6304": "Arc à poulies EJF-338",
-    "6305": "#Rejected#"
+    "5405": "Œuf de poule doré"
   },
   "ita": {
     "4000": "SG-09 R",
@@ -173,15 +149,7 @@
     "5401": "Granata potente",
     "5403": "Uovo di gallina",
     "5404": "Uovo di gallina marrone",
-    "5405": "Uovo di gallina dorato",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6300": "XM96E1",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6304": "Arco compound EJF-338",
-    "6305": "#Rejected#"
+    "5405": "Uovo di gallina dorato"
   },
   "ger": {
     "4000": "SG-09 R",
@@ -219,15 +187,7 @@
     "5401": "Schwere Granate",
     "5403": "Hühnerei",
     "5404": "Braunes Hühnerei",
-    "5405": "Goldenes Hühnerei",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6300": "XM96E1",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6304": "EJF-338 Compoundbogen",
-    "6305": "#Rejected#"
+    "5405": "Goldenes Hühnerei"
   },
   "spa": {
     "4000": "SG-09 R",
@@ -265,15 +225,7 @@
     "5401": "Granada de gran potencia",
     "5403": "Huevo de gallina",
     "5404": "Huevo marrón de gallina",
-    "5405": "Huevo dorado de gallina",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6300": "XM96E1",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6304": "Arco compuesto EJF-338",
-    "6305": "#Rejected#"
+    "5405": "Huevo dorado de gallina"
   },
   "rus": {
     "4000": "SG-09 R",
@@ -311,26 +263,12 @@
     "5401": "Тяжёлая граната",
     "5403": "Куриное яйцо",
     "5404": "Коричневое куриное яйцо",
-    "5405": "Золотое куриное яйцо",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6300": "XM96E1",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6304": "Композитный лук EJF-338",
-    "6305": "#Rejected#"
+    "5405": "Золотое куриное яйцо"
   },
   "pol": {
     "4701": "#Rejected#",
     "4702": "#Rejected#",
-    "4800": "#Rejected#",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6305": "#Rejected#"
+    "4800": "#Rejected#"
   },
   "ptB": {
     "4000": "SG-09 R",
@@ -368,15 +306,7 @@
     "5401": "Granada Pesada",
     "5403": "Ovo de Galinha",
     "5404": "Ovo de Galinha Marrom",
-    "5405": "Ovo de Galinha Dourado",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6300": "XM96E1",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6304": "Arco Composto EJF-338",
-    "6305": "#Rejected#"
+    "5405": "Ovo de Galinha Dourado"
   },
   "kor": {
     "4000": "SG-09 R",
@@ -414,15 +344,7 @@
     "5401": "강화 수류탄",
     "5403": "흰색 달걀",
     "5404": "갈색 달걀",
-    "5405": "금색 달걀",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6300": "XM96E1",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6304": "EJF-338 컴파운드 보",
-    "6305": "#Rejected#"
+    "5405": "금색 달걀"
   },
   "chT": {
     "4000": "SG-09 R",
@@ -460,15 +382,7 @@
     "5401": "重型手榴彈",
     "5403": "白色雞蛋",
     "5404": "棕色雞蛋",
-    "5405": "金色雞蛋",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6300": "XM96E1",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6304": "EJF-338 複合弓",
-    "6305": "#Rejected#"
+    "5405": "金色雞蛋"
   },
   "chS": {
     "4000": "SG-09 R",
@@ -506,15 +420,7 @@
     "5401": "高爆手榴弹",
     "5403": "白壳鸡蛋",
     "5404": "红壳鸡蛋",
-    "5405": "金壳鸡蛋",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6300": "XM96E1",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6304": "EJF-338 复合弓",
-    "6305": "#Rejected#"
+    "5405": "金壳鸡蛋"
   },
   "ara": {
     "4000": "SG-09 R",
@@ -552,14 +458,6 @@
     "5401": "قنبلة ثقيلة",
     "5403": "بيضة دجاجة",
     "5404": "بيضة دجاجة بنية",
-    "5405": "بيضة دجاجة ذهبية",
-    "6100": "#Rejected#",
-    "6101": "#Rejected#",
-    "6300": "XM96E1",
-    "6301": "#Rejected#",
-    "6302": "#Rejected#",
-    "6303": "#Rejected#",
-    "6304": "قوس مركّب EJF-338",
-    "6305": "#Rejected#"
+    "5405": "بيضة دجاجة ذهبية"
   }
 }

@@ -5,7 +5,7 @@ namespace RE_Editor.Constants;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("ReSharper", "IdentifierTypo")]
-public static class WeaponConstants {
+public static class WeaponConstants_CH {
     public const uint SG_09_R = 4000;
     public const uint PUNISHER = 4001;
     public const uint RED9 = 4002;
@@ -39,6 +39,4 @@ public static class WeaponConstants {
     public const uint CHICKEN_EGG = 5403;
     public const uint BROWN_CHICKEN_EGG = 5404;
     public const uint GOLD_CHICKEN_EGG = 5405;
-    public const uint XM96E1 = 6300;
-    public const uint EJF_338_COMPOUND_BOW = 6304;
 }

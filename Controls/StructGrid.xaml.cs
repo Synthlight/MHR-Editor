@@ -171,14 +171,14 @@ public class StructGridGeneric<T> : StructGrid, IStructGrid<T> {
         var negativeOneForEmpty = (NegativeOneForEmptyAttribute) property.GetCustomAttribute(typeof(NegativeOneForEmptyAttribute), true) != null;
 
         dynamic dataSource = dataSourceType switch {
-            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
-            DataSourceType.WEAPONS => DataHelper.WEAPON_NAME_LOOKUP[Global.locale],
+            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.variant][Global.locale],
+            DataSourceType.WEAPONS => DataHelper.WEAPON_NAME_LOOKUP[Global.variant][Global.locale],
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
 
         if (negativeOneForEmpty) {
             var newData = new Dictionary<int, string> {[-1] = "<None>"};
-            foreach (var (id, name) in DataHelper.ITEM_NAME_LOOKUP[Global.locale]) {
+            foreach (var (id, name) in DataHelper.ITEM_NAME_LOOKUP[Global.variant][Global.locale]) {
                 newData[(int) id] = name;
             }
             dataSource = newData;

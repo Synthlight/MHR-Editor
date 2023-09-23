@@ -63,9 +63,59 @@ namespace RE_Editor.Data {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] ITEM_NAME_LOOKUP {
+        internal static byte[] AO_ITEM_NAME_LOOKUP {
             get {
-                object obj = ResourceManager.GetObject("ITEM_NAME_LOOKUP", resourceCulture);
+                object obj = ResourceManager.GetObject("AO_ITEM_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] AO_WEAPON_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("AO_WEAPON_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] CH_ITEM_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("CH_ITEM_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] CH_WEAPON_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("CH_WEAPON_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] MC_ITEM_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("MC_ITEM_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] MC_WEAPON_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("MC_WEAPON_NAME_LOOKUP", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -76,16 +126,6 @@ namespace RE_Editor.Data {
         internal static byte[] STRUCT_INFO {
             get {
                 object obj = ResourceManager.GetObject("STRUCT_INFO", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] WEAPON_NAME_LOOKUP {
-            get {
-                object obj = ResourceManager.GetObject("WEAPON_NAME_LOOKUP", resourceCulture);
                 return ((byte[])(obj));
             }
         }

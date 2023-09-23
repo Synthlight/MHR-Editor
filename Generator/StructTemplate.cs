@@ -147,7 +147,7 @@ public class StructTemplate {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    [DisplayName(\"{newName}\")]");
                 file.WriteLine($"    public string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
-                               $"DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
+                               $"DataHelper.{lookupName}[Global.variant][Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
             } else if (isObjectType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");

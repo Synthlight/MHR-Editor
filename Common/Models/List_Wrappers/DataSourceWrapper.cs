@@ -37,7 +37,7 @@ public sealed class DataSourceWrapper<T> : ListWrapper<T> where T : struct {
 
     private Dictionary<Global.LangIndex, Dictionary<uint, string>> GetDataLookupSource() {
         return field.originalType?.Replace("[]", "") switch {
-            "chainsaw.ItemID" => DataHelper.ITEM_NAME_LOOKUP,
+            "chainsaw.ItemID" => DataHelper.ITEM_NAME_LOOKUP[Global.variant],
             _ => throw new InvalidOperationException($"No data source lookup known for: {field.originalType}")
         };
     }

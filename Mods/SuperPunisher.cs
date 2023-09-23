@@ -33,7 +33,7 @@ public class SuperPunisher : IMod {
         foreach (var obj in rszObjectData) {
             switch (obj) {
                 case Chainsaw_WeaponDetailCustomUserdata_WeaponDetailStage data:
-                    if (data.WeaponID != WeaponConstants.PUNISHER) continue;
+                    if (data.WeaponID != WeaponConstants_CH.PUNISHER || data.WeaponID != WeaponConstants_AO.BLACKTAIL_AC) continue;
                     data.WeaponDetailCustom[0].CommonCustoms[0].AttackUp[0].DamageRates[^1].BaseValue = 10000;
                     break;
             }

@@ -18,6 +18,7 @@ public static class PathHelper {
         @"\natives\STM\",
     };
 
+    public const string ITEM_DRAG_CRAFT_DATA_PATH       = @"\natives\STM\_Chainsaw\AppSystem\UI\UserData\ItemCombineDefinitionUserData.user.2";
     public const string ITEM_DATA_PATH                  = @"\natives\STM\_Chainsaw\AppSystem\UI\UserData\ItemDefinitionUserData.user.2";
     public const string ITEM_DATA_PATH_AO               = @"\natives\STM\_AnotherOrder\AppSystem\UI\Userdata\ItemDefinitionUserData_AO.user.2";
     public const string ITEM_DATA_PATH_AO_OVR           = @"\natives\STM\_AnotherOrder\AppSystem\UI\Userdata\ItemDefinitionUserData_OVR_AO.user.2";

@@ -17,20 +17,26 @@ public class MaxStackSize : IMod {
     public static void Make() {
         const string bundleName  = "Stack Size Changes";
         const string description = "Modifies the stack size of stackable items.";
-        const string version     = "1.7.1";
+        const string version     = "1.8";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
+
+        var itemDataFiles = new List<string> {
+            PathHelper.ITEM_DATA_PATH,
+            PathHelper.ITEM_DATA_PATH_AO,
+            PathHelper.ITEM_DATA_PATH_AO_OVR,
+            PathHelper.ITEM_DATA_PATH_MC,
+            PathHelper.ITEM_DATA_PATH_MC_OVR,
+        };
+
+        var itemFilesWithDragCraft = new List<string>(itemDataFiles) {
+            PathHelper.ITEM_DRAG_CRAFT_DATA_PATH
+        };
 
         var baseMod = new NexusModVariant {
             Version      = version,
             NameAsBundle = bundleName,
             Desc         = description,
-            Files = new[] {
-                PathHelper.ITEM_DATA_PATH,
-                PathHelper.ITEM_DATA_PATH_AO,
-                PathHelper.ITEM_DATA_PATH_AO_OVR,
-                PathHelper.ITEM_DATA_PATH_MC,
-                PathHelper.ITEM_DATA_PATH_MC_OVR,
-            }
+            Files        = itemDataFiles
         };
 
         var mods = new[] {
@@ -55,6 +61,34 @@ public class MaxStackSize : IMod {
             baseMod
                 .SetName("Stack Size (All): x10")
                 .SetAction(list => MaxStacks(list, Target.X10, Type.FULL)),
+            baseMod
+                .SetName("Stack Size (All + Herbs): 0999")
+                .SetAction(list => MaxStacks(list, Target._999, Type.FULL_WITH_HERBS))
+                .SetFiles(itemFilesWithDragCraft),
+            baseMod
+                .SetName("Stack Size (All + Herbs): 9999")
+                .SetAction(list => MaxStacks(list, Target._9999, Type.FULL_WITH_HERBS))
+                .SetFiles(itemFilesWithDragCraft),
+            baseMod
+                .SetName("Stack Size (All + Herbs): x02")
+                .SetAction(list => MaxStacks(list, Target.X2, Type.FULL_WITH_HERBS))
+                .SetFiles(itemFilesWithDragCraft),
+            baseMod
+                .SetName("Stack Size (All + Herbs): x03")
+                .SetAction(list => MaxStacks(list, Target.X3, Type.FULL_WITH_HERBS))
+                .SetFiles(itemFilesWithDragCraft),
+            baseMod
+                .SetName("Stack Size (All + Herbs): x04")
+                .SetAction(list => MaxStacks(list, Target.X4, Type.FULL_WITH_HERBS))
+                .SetFiles(itemFilesWithDragCraft),
+            baseMod
+                .SetName("Stack Size (All + Herbs): x05")
+                .SetAction(list => MaxStacks(list, Target.X5, Type.FULL_WITH_HERBS))
+                .SetFiles(itemFilesWithDragCraft),
+            baseMod
+                .SetName("Stack Size (All + Herbs): x10")
+                .SetAction(list => MaxStacks(list, Target.X10, Type.FULL_WITH_HERBS))
+                .SetFiles(itemFilesWithDragCraft),
             baseMod
                 .SetName("Stack Size (Ammo Only): 0999")
                 .SetAction(list => MaxStacks(list, Target._999, Type.AMMO_ONLY)),
@@ -122,6 +156,13 @@ public class MaxStackSize : IMod {
                          || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSG_PLUSY
                          || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSR_PLUSY
                          || itemData.ItemId == ItemConstants_CH.RHINOCEROS_BEETLE
+                         // Below works if we disable drag-craft herbs.
+                         || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSG
+                         || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSR
+                         || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSY
+                         || itemData.ItemId == ItemConstants_CH.GREEN_HERB
+                         || itemData.ItemId == ItemConstants_CH.RED_HERB
+                         || itemData.ItemId == ItemConstants_CH.YELLOW_HERB
                         )
                         && itemData.ItemId != ItemConstants_CH.PESETAS
                        ) {
@@ -139,6 +180,9 @@ public class MaxStackSize : IMod {
                             itemData.WeaponDefineData[0].StackMax = item.StackMax;
                         }
                     }
+                    break;
+                case Chainsaw_ItemCombineDefinitionUserData craftData:
+                    craftData.Datas.Clear();
                     break;
             }
         }
@@ -170,6 +214,7 @@ public class MaxStackSize : IMod {
 
     public enum Type {
         FULL,
+        FULL_WITH_HERBS,
         AMMO_ONLY,
     }
 }

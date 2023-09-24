@@ -19,6 +19,10 @@
       "commandName": "Project",
       "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\Inventory\\InventoryCatalog\\InventoryCatalog_Main.user.2\""
     },
+    "ItemCombineDefinitionUserData.user.2": {
+      "commandName": "Project",
+      "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\UI\\UserData\\ItemCombineDefinitionUserData.user.2\""
+    },
     "ItemCraftSettingUserData.user.2": {
       "commandName": "Project",
       "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\UI\\UserData\\ItemCraftSettingUserData.user.2\""

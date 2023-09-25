@@ -28,6 +28,8 @@ public static class PathHelper {
     public const string NEW_GAME_INVENTORY_AO_DATA_PATH = @"\natives\STM\_AnotherOrder\AppSystem\Inventory\InventoryCatalog\InventoryCatalog_AO.user.2";
     public const string HARPOON_DATA_PATH               = @"\natives\STM\_Chainsaw\AppSystem\Character\ch1f1z0\UserData\Harpoon\ch1f1z0ShellHarpoonShellInfo.user.2";
     public const string WEAPON_UPGRADE_DATA_PATH        = @"\natives\STM\_Chainsaw\AppSystem\WeaponCustom\WeaponDetailCustomUserdata.user.2";
+    public const string WEAPON_UPGRADE_AO_DATA_PATH     = @"\natives\STM\_AnotherOrder\AppSystem\WeaponCustom\WeaponDetailCustomUserdata_AO.user.2";
+    public const string WEAPON_UPGRADE_MC_DATA_PATH     = @"\natives\STM\_Mercenaries\AppSystem\WeaponCustom\WeaponDetailCustomUserdata_MC.user.2";
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly List<string> NEW_GAME_INVENTORY_MC_DATA_PATHS = new() {

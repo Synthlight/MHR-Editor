@@ -25,8 +25,11 @@ public class StartWithSmallKeys : IMod {
             Version = version,
             Desc    = description,
             Image   = imgPath,
-            Files   = new[] {PathHelper.NEW_GAME_INVENTORY_DATA_PATH},
-            Action  = AddSmallKeys
+            Files = new[] {
+                PathHelper.NEW_GAME_INVENTORY_DATA_PATH,
+                PathHelper.NEW_GAME_INVENTORY_AO_DATA_PATH
+            },
+            Action = AddSmallKeys
         };
 
         ModMaker.WriteMods(new List<NexusMod> {mods}, PathHelper.CHUNK_PATH, outPath, copyToFluffy: true);

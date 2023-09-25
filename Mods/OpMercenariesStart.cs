@@ -33,12 +33,14 @@ public class OpMercenariesStart : IMod {
         foreach (var obj in new List<RszObject>(rszObjectData)) {
             if (obj is not Chainsaw_InventoryCatalogUserData inventoryData) continue;
 
-            inventoryData.Datas[0].InventoryData[0].InventorySize[0].CurrInventorySize = Chainsaw_AttacheCaseSize.XXL;
+            foreach (var data in inventoryData.Datas) {
+                data.InventoryData[0].InventorySize[0].CurrInventorySize = Chainsaw_AttacheCaseSize.XXL;
 
-            foreach (var item in inventoryData.Datas[0].InventoryData[0].InventoryItems) {
-                item.Item[0].CurrentItemCount = 9999;
-                if (item.Item[0] is Chainsaw_WeaponItem weapon) {
-                    weapon.CurrentItemCount = 9999;
+                foreach (var item in data.InventoryData[0].InventoryItems) {
+                    item.Item[0].CurrentItemCount = 8999;
+                    if (item.Item[0] is Chainsaw_WeaponItem weapon) {
+                        weapon.CurrentItemCount = 8999;
+                    }
                 }
             }
         }

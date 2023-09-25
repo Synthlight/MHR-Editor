@@ -55,6 +55,10 @@
       "commandName": "Project",
       "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\WeaponCustom\\WeaponDetailCustomUserdata.user.2\""
     },
+    "WeaponDetailCustomUserdata_AO.user.2": {
+      "commandName": "Project",
+      "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_AnotherOrder\\AppSystem\\WeaponCustom\\WeaponDetailCustomUserdata_AO.user.2\""
+    },
     "WeaponEquipParamCatalogUserData.user.2": {
       "commandName": "Project",
       "commandLineArgs": "\"V:\\RE4\\re_chunk_000\\natives\\STM\\_Chainsaw\\AppSystem\\Weapon\\WeaponEquipParamCatalogUserData.user.2\""

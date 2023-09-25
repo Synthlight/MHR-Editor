@@ -2,6 +2,8 @@
 using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
+using RE_Editor.Constants;
+using RE_Editor.Generated;
 using RE_Editor.Models;
 using RE_Editor.Models.Enums;
 using RE_Editor.Models.Structs;
@@ -35,11 +37,12 @@ public class OpSeparateWaysStart : IMod {
 
             foreach (var data in inventoryData.Datas) {
                 data.InventoryData[0].InventorySize[0].CurrInventorySize = Chainsaw_AttacheCaseSize.XXL;
+                data.KeyInventorySaveData[0].Items.Add(Re4WeaponInstancer.NewKeyItem(obj.rsz, ItemConstants_CH.SMALL_KEY, 0, 0, 20));
 
                 foreach (var item in data.InventoryData[0].InventoryItems) {
-                    item.Item[0].CurrentItemCount = 9999;
+                    item.Item[0].CurrentItemCount = 8999;
                     if (item.Item[0] is Chainsaw_WeaponItem weapon) {
-                        weapon.CurrentItemCount = 9999;
+                        weapon.CurrentItemCount = 8999;
                     }
                 }
             }

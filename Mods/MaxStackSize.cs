@@ -152,6 +152,7 @@ public class MaxStackSize : IMod {
                          || itemData.ItemId == ItemConstants_CH.BLACK_BASS
                          || itemData.ItemId == ItemConstants_CH.BLACK_BASS_L
                          || itemData.ItemId == ItemConstants_CH.LUNKER_BASS
+                         || itemData.ItemId == ItemConstants_AO.LORD_OF_THE_WATERWAY
                          || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSG_PLUSG
                          || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSG_PLUSY
                          || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSR_PLUSY

@@ -26,7 +26,7 @@ public class Prefab : RszObject, IViaType {
     public Prefab Copy() {
         return new() {
             Enabled = Enabled,
-            Name = Name
+            Name    = Name
         };
     }
 }

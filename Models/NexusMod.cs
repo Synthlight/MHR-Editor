@@ -16,6 +16,7 @@ public interface INexusMod {
     [CanBeNull] public string Image    { get; set; }
     IEnumerable<string>       Files    { get; set; }
     Action<List<RszObject>>   Action   { get; set; }
+    public bool               ForGp    { get; set; }
 }
 
 public interface INexusModVariant : INexusMod {
@@ -30,6 +31,7 @@ public struct NexusMod : INexusMod {
     public string                  Image    { get; set; }
     public IEnumerable<string>     Files    { get; set; }
     public Action<List<RszObject>> Action   { get; set; }
+    public bool                    ForGp    { get; set; }
 
     public static NexusMod FromVariant(NexusModVariant variant) {
         return new() {
@@ -51,6 +53,7 @@ public struct NexusModVariant : INexusModVariant {
     public string                  Image        { get; set; }
     public IEnumerable<string>     Files        { get; set; }
     public Action<List<RszObject>> Action       { get; set; }
+    public bool                    ForGp        { get; set; }
     public string                  NameAsBundle { get; set; }
 }
 
@@ -87,6 +90,11 @@ public static class NexusModExtensions {
 
     public static T SetAction<T>(this T nexusMod, Action<List<RszObject>> action) where T : INexusMod {
         nexusMod.Action = action;
+        return nexusMod;
+    }
+
+    public static T SetForGp<T>(this T nexusMod, bool forGp) where T : INexusMod {
+        nexusMod.ForGp = forGp;
         return nexusMod;
     }
 

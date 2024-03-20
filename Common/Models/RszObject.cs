@@ -16,6 +16,7 @@ using RE_Editor.Common.Models.List_Wrappers;
 namespace RE_Editor.Common.Models;
 
 [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
+[SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
 public class RszObject : OnPropertyChangedBase {
     public                   StructJson structInfo;
     [DisplayName("")] public RSZ        rsz { get; private set; }
@@ -40,7 +41,7 @@ public class RszObject : OnPropertyChangedBase {
     [SuppressMessage("ReSharper", "ParameterHidesMember")]
     public static T Create<T>(RSZ rsz, uint hash) where T : RszObject {
         var structInfo = DataHelper.STRUCT_INFO[hash];
-        var rszObject  = CreateRszObjectInstance(hash);
+        var rszObject  = CreateRszObjectInstance(hash, structInfo);
         rszObject.structInfo = structInfo;
         rszObject.rsz        = rsz;
         return (T) rszObject;
@@ -60,7 +61,7 @@ public class RszObject : OnPropertyChangedBase {
         }
 
         var structInfo = DataHelper.STRUCT_INFO[hash];
-        var rszObject  = CreateRszObjectInstance(hash);
+        var rszObject  = CreateRszObjectInstance(hash, structInfo);
         rszObject.structInfo = structInfo;
         rszObject.rsz        = rsz;
         rszObject.pos        = reader.BaseStream.Position;
@@ -162,9 +163,10 @@ public class RszObject : OnPropertyChangedBase {
     /**
      * If the hash isn't found it'll just return the base `RszObject`.
      */
-    private static RszObject CreateRszObjectInstance(uint hash) {
-        var rszType   = DataHelper.RE_STRUCTS.TryGet(hash, typeof(RszObject));
-        var rszObject = (RszObject) Activator.CreateInstance(rszType) ?? new RszObject();
+    private static RszObject CreateRszObjectInstance(uint hash, StructJson structInfo) {
+        var viaType   = structInfo.name?.GetViaType();
+        var rszType   = viaType == null ? DataHelper.RE_STRUCTS.TryGet(hash, typeof(RszObject)) : Type.GetType($"RE_Editor.Common.Structs.{viaType}");
+        var rszObject = (RszObject) Activator.CreateInstance(rszType!) ?? new RszObject();
         return rszObject;
     }
 
@@ -172,7 +174,7 @@ public class RszObject : OnPropertyChangedBase {
      * Run before writing to setup all the instance info / indexes so we know exactly where an object is being written.
      * This is how we know what to point an 'object' field to.
      */
-    public void SetupInstanceInfo(List<InstanceInfo> instanceInfo) {
+    public void SetupInstanceInfo(List<InstanceInfo> instanceInfo, bool forGp) {
         for (var i = 0; i < structInfo.fields!.Count; i++) {
             var field          = structInfo.fields[i];
             var fieldName      = field.name?.ToConvertedFieldName()!;
@@ -184,12 +186,12 @@ public class RszObject : OnPropertyChangedBase {
                 if (field.array) { // Array of pointers.
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;
                     foreach (RszObject obj in list) {
-                        obj.SetupInstanceInfo(instanceInfo);
+                        obj.SetupInstanceInfo(instanceInfo, forGp);
                     }
                 } else { // Pointer to object.
                     // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract from a list.
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;
-                    ((RszObject) list[0]!).SetupInstanceInfo(instanceInfo);
+                    ((RszObject) list[0]!).SetupInstanceInfo(instanceInfo, forGp);
                 }
             }
         }

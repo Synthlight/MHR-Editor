@@ -50,7 +50,7 @@ public static class ModMaker {
                 var dataFile = ReDataFile.Read(sourceFile);
                 var data     = dataFile.rsz.objectData;
                 mod.Action.Invoke(data);
-                dataFile.Write(outFile);
+                dataFile.Write(outFile, forGp: mod.ForGp);
             }
         }
         CompressTheMod(outPath.Replace('/', '-'));

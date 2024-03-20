@@ -40,7 +40,9 @@ public class StartWithSmallKeys : IMod {
             if (obj is not Chainsaw_InventoryCatalogUserData inventoryData) continue;
 
             // Needs to be in the key inventory.
-            inventoryData.Datas[0].KeyInventorySaveData[0].Items.Add(Re4WeaponInstancer.NewKeyItem(obj.rsz, ItemConstants_CH.SMALL_KEY, 0, 0, 20));
+            foreach (var data in inventoryData.Datas) {
+                data.KeyInventorySaveData[0].Items.Add(Re4WeaponInstancer.NewKeyItem(obj.rsz, ItemConstants_CH.SMALL_KEY, 0, 0, 20));
+            }
         }
     }
 }

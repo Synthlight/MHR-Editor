@@ -14,7 +14,7 @@ public class SuperPunisher : IMod {
     [UsedImplicitly]
     public static void Make() {
         const string bundleName  = "Super Blacktail & Punisher";
-        const string description = "So a minimalist run is easy.";
+        const string description = "So a minimalist run is easy. Blacktail is included for SW/Ada.";
         const string version     = "1.0";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
@@ -25,7 +25,9 @@ public class SuperPunisher : IMod {
             Files = new[] {
                 PathHelper.WEAPON_UPGRADE_DATA_PATH,
                 PathHelper.WEAPON_UPGRADE_MC_DATA_PATH,
-                PathHelper.WEAPON_UPGRADE_AO_DATA_PATH
+                PathHelper.WEAPON_UPGRADE_AO_DATA_PATH,
+                @"\natives\STM\_Chainsaw\AppSystem\Shell\Bullet\wp4001\WP4001ShellInfo.user.2", // Punisher
+                @"\natives\STM\_Chainsaw\AppSystem\Shell\Bullet\wp4003\WP4003ShellInfo.user.2", // Blacktail
             },
             Action = FixDamage
         };
@@ -37,12 +39,16 @@ public class SuperPunisher : IMod {
         foreach (var obj in rszObjectData) {
             switch (obj) {
                 case Chainsaw_WeaponDetailCustomUserdata_WeaponDetailStage data:
-                    if (data.WeaponID != WeaponConstants_CH.PUNISHER
-                        && data.WeaponID != WeaponConstants_AO.BLACKTAIL_AC
-                        && data.WeaponID != WeaponConstants_AO.PUNISHER_MC) continue;
-                    foreach (var damageRate in data.WeaponDetailCustom[0].CommonCustoms[0].AttackUp[0].DamageRates) {
-                        damageRate.BaseValue = 10000;
+                    if (data.WeaponID == WeaponConstants_CH.PUNISHER
+                        || data.WeaponID == WeaponConstants_AO.BLACKTAIL_AC
+                        || data.WeaponID == 6112 /* Punisher MC (AO). Dunno why it has a separate ID like this. */) {
+                        foreach (var damageRate in data.WeaponDetailCustom[0].CommonCustoms[0].AttackUp[0].DamageRates) {
+                            damageRate.BaseValue = 10000;
+                        }
                     }
+                    break;
+                case Chainsaw_BulletShellInfoUserData shellData:
+                    shellData.AttackInfo[0].DamageRate[0].BaseValue = 10000;
                     break;
             }
         }

@@ -12,11 +12,12 @@ using RE_Editor.Generator.Models;
 namespace RE_Editor.Generator;
 
 public partial class GenerateFiles {
-    public const string BASE_GEN_PATH   = @"..\..\..\Generated"; // @"C:\Temp\Gen"
-    public const string BASE_PROJ_PATH  = @"..\..\..";
-    public const string ENUM_GEN_PATH   = $@"{BASE_GEN_PATH}\Enums";
-    public const string STRUCT_GEN_PATH = $@"{BASE_GEN_PATH}\Structs";
-    public const string ENUM_REGEX      = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
+    public const  string BASE_GEN_PATH   = @"..\..\..\Generated"; // @"C:\Temp\Gen"
+    public const  string BASE_PROJ_PATH  = @"..\..\..";
+    public const  string ENUM_GEN_PATH   = $@"{BASE_GEN_PATH}\Enums\{CONFIG_NAME}";
+    public const  string STRUCT_GEN_PATH = $@"{BASE_GEN_PATH}\Structs\{CONFIG_NAME}";
+    private const string ASSETS_DIR      = $@"{BASE_PROJ_PATH}\Data\{CONFIG_NAME}\Assets";
+    public const  string ENUM_REGEX      = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
@@ -80,6 +81,11 @@ public partial class GenerateFiles {
         FindAllEnumUnderlyingTypes();
 
         if (!dryRun) {
+            Log("Creating directories.");
+            Directory.CreateDirectory(ENUM_GEN_PATH);
+            Directory.CreateDirectory(STRUCT_GEN_PATH);
+            Directory.CreateDirectory(ASSETS_DIR);
+
             Log("Removing existing generated files.");
             CleanupGeneratedFiles(ENUM_GEN_PATH);
             CleanupGeneratedFiles(STRUCT_GEN_PATH);

@@ -24,7 +24,7 @@ public class OpSeparateWaysStart : IMod {
             Name    = bundleName,
             Version = version,
             Desc    = description,
-            Files   = new[] {PathHelper.NEW_GAME_INVENTORY_AO_DATA_PATH},
+            Files   = [PathHelper.NEW_GAME_INVENTORY_AO_DATA_PATH],
             Action  = MakeNewInventory
         };
 

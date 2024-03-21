@@ -193,7 +193,11 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
         }
 
         if (showAsHex) {
-            ((DataGridTextColumn) e.Column).Binding.StringFormat = "0x{0:X}";
+            try {
+                ((DataGridTextColumn) e.Column).Binding.StringFormat = "0x{0:X}";
+            } catch (Exception err) {
+                Debug.WriteLine($"Error marking column `{e.Column.Header}` as hex: {err}");
+            }
         }
 
         var headerInfo = new HeaderInfo((string) e.Column.Header!, e.PropertyName);

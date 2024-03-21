@@ -147,4 +147,12 @@ public class RSZ {
             rootObject.Write(writer, testWritePosition);
         }
     }
+
+    public RszObject GetEntryObject() {
+        return GetEntryObject<RszObject>();
+    }
+
+    public T GetEntryObject<T>() where T : RszObject {
+        return (T) objectData[(int) objectEntryPoints[0] - 1];
+    }
 }

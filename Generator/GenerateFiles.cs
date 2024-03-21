@@ -44,7 +44,6 @@ public partial class GenerateFiles {
         "System.Collections.Generic.Queue`1<System.Tuple`", // Nested generics.
         "System.Collections.Generic.Queue`1<via.vec3>", // Because this breaks generation and I need a better way of handling generics.
         "soundlib.",
-        "app.",
         "via.gui.Panel", // Too long, skip it for now.
 #if MHR
         "snow.camera.CameraUtility.BufferingParam`",
@@ -58,6 +57,10 @@ public partial class GenerateFiles {
         "snow.StmGuiKeyconfigData.EnumItemSystemMessage`",
         "snow.StmGuiKeyconfigData.EnumMessage`",
         "System.Collections.Generic.List`1<snow.enemy.em134.Em", // Nested generics.
+#elif DD2
+        "soundlib.SoundStateApp`1<",
+        "soundlib.SoundSwitchApp`1<",
+        "app.GUICharaEditData.PatternParam`",
 #endif
     };
 

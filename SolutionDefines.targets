@@ -1,4 +1,9 @@
 <Project>
+	<!-- DD2 -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('DD2'))">
+		<DefineConstants>$(DefineConstants);DD2</DefineConstants>
+	</PropertyGroup>
+	<!-- MHR -->
 	<PropertyGroup Condition="$(Configuration.StartsWith('MHR'))">
 		<DefineConstants>$(DefineConstants);MHR</DefineConstants>
 	</PropertyGroup>

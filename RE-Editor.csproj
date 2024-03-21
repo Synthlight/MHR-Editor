@@ -11,7 +11,7 @@
 		<ApplicationManifest>App.manifest</ApplicationManifest>
 		<AssemblyName>RE-Editor</AssemblyName>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
-		<Configurations>MHR - Debug;MHR - Release</Configurations>
+		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0">
@@ -27,6 +27,38 @@
 		<ProjectReference Include="Generated\Generated.csproj"/>
 	</ItemGroup>
 	<Import Project="$(SolutionDir)SolutionDefines.targets"/>
+	<!-- DD2 -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('DD2'))">
+		<AssemblyName>DD2-Editor</AssemblyName>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+	</PropertyGroup>
+	<ItemGroup Condition="$(Configuration.StartsWith('DD2'))">
+		<Compile Update="Data\DD2\Assets.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Assets.resx</DependentUpon>
+		</Compile>
+		<EmbeddedResource Update="Data\DD2\Assets.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Assets.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`DD2`))'">
+		<Compile Remove="Data\DD2\**"/>
+		<EmbeddedResource Remove="Data\DD2\**"/>
+		<Page Remove="Data\DD2\**"/>
+		<None Remove="Data\DD2\**"/>
+		<Compile Remove="Data\DataInit.DD2.cs"/>
+		<Compile Remove="Mods\DD2\**"/>
+	</ItemGroup>
+	<!-- DD2 (Launch Settings) -->
+	<ItemGroup Condition="$(Configuration.StartsWith('DD2'))">
+		<UpToDateCheckInput Include="Properties/launchSettings.DD2.json"/>
+	</ItemGroup>
+	<Target Condition="$(Configuration.StartsWith('DD2'))" Name="CopyLaunchSettings" AfterTargets="Build" Inputs="Properties/launchSettings.DD2.json" Outputs="Properties/launchSettings.json">
+		<Message Importance="high" Text="Copying launchSettings.DD2.json..."/>
+		<Copy SourceFiles="Properties/launchSettings.DD2.json" DestinationFiles="Properties/launchSettings.json"/>
+	</Target>
 	<!-- MHR -->
 	<PropertyGroup Condition="$(Configuration.StartsWith('MHR'))">
 		<AssemblyName>MHR-Editor</AssemblyName>
@@ -48,6 +80,10 @@
 	</ItemGroup>
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHR`))'">
 		<Compile Remove="Constants\MHR\**"/>
+		<Compile Remove="Data\MHR\**"/>
+		<EmbeddedResource Remove="Data\MHR\**"/>
+		<Page Remove="Data\MHR\**"/>
+		<None Remove="Data\MHR\**"/>
 		<Compile Remove="Data\DataInit.MHR.cs"/>
 		<Compile Remove="Mods\MHR\**"/>
 		<Compile Remove="Windows\MainWindow.xaml.buttons.MHR.cs"/>
@@ -57,10 +93,6 @@
 	<ItemGroup Condition="$(Configuration.StartsWith('MHR'))">
 		<UpToDateCheckInput Include="Properties/launchSettings.MHR.json"/>
 	</ItemGroup>
-	<Target Name="CleanLaunchSettings" AfterTargets="Clean">
-		<Message Importance="high" Text="Deleting launchSettings.json..."/>
-		<Delete Files="Properties/launchSettings.json"/>
-	</Target>
 	<Target Condition="$(Configuration.StartsWith('MHR'))" Name="CopyLaunchSettings" AfterTargets="Build" Inputs="Properties/launchSettings.MHR.json" Outputs="Properties/launchSettings.json">
 		<Message Importance="high" Text="Copying launchSettings.MHR.json..."/>
 		<Copy SourceFiles="Properties/launchSettings.MHR.json" DestinationFiles="Properties/launchSettings.json"/>

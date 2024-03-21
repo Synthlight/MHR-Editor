@@ -8,7 +8,13 @@ using RE_Editor.Common;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Data;
 using RE_Editor.Common.Models;
+
+#if DD2
+using RE_Editor.Data.DD2;
+
+#elif MHR
 using RE_Editor.Data.MHR;
+#endif
 
 namespace RE_Editor.Data;
 

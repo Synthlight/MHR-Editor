@@ -8,7 +8,7 @@
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Configurations>MHR - Debug;MHR - Release</Configurations>
+		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="JetBrains.Annotations" Version="2022.3.1"/>
@@ -16,6 +16,16 @@
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All"/>
 	</ItemGroup>
 	<Import Project="$(SolutionDir)SolutionDefines.targets"/>
+	<!-- DD2 -->
+	<ItemGroup Condition="'$(Configuration.StartsWith(`DD2`))'">
+		<Compile Remove="Attributes\DataSourceType.cs"/>
+		<Compile Remove="PathHelper.cs"/>
+	</ItemGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`DD2`))'">
+		<Compile Remove="Attributes\DataSourceType.DD2.cs"/>
+		<Compile Remove="Data\DataHelper.DD2.cs"/>
+		<Compile Remove="PathHelper.DD2.cs"/>
+	</ItemGroup>
 	<!-- MHR -->
 	<ItemGroup Condition="'$(Configuration.StartsWith(`MHR`))'">
 		<Compile Remove="Attributes\DataSourceType.cs"/>

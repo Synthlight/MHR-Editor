@@ -7,7 +7,7 @@
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
-		<Configurations>MHR - Debug;MHR - Release</Configurations>
+		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All"/>

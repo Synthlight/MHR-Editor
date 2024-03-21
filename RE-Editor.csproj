@@ -55,7 +55,7 @@
 	<ItemGroup Condition="$(Configuration.StartsWith('DD2'))">
 		<UpToDateCheckInput Include="Properties/launchSettings.DD2.json"/>
 	</ItemGroup>
-	<Target Condition="$(Configuration.StartsWith('DD2'))" Name="CopyLaunchSettings" AfterTargets="Build" Inputs="Properties/launchSettings.DD2.json" Outputs="Properties/launchSettings.json">
+	<Target Condition="$(Configuration.StartsWith('DD2'))" Name="CopyLaunchSettingsDD2" AfterTargets="Build" Inputs="Properties/launchSettings.DD2.json" Outputs="Properties/launchSettings.json">
 		<Message Importance="high" Text="Copying launchSettings.DD2.json..."/>
 		<Copy SourceFiles="Properties/launchSettings.DD2.json" DestinationFiles="Properties/launchSettings.json"/>
 	</Target>
@@ -93,7 +93,7 @@
 	<ItemGroup Condition="$(Configuration.StartsWith('MHR'))">
 		<UpToDateCheckInput Include="Properties/launchSettings.MHR.json"/>
 	</ItemGroup>
-	<Target Condition="$(Configuration.StartsWith('MHR'))" Name="CopyLaunchSettings" AfterTargets="Build" Inputs="Properties/launchSettings.MHR.json" Outputs="Properties/launchSettings.json">
+	<Target Condition="$(Configuration.StartsWith('MHR'))" Name="CopyLaunchSettingsMHR" AfterTargets="Build" Inputs="Properties/launchSettings.MHR.json" Outputs="Properties/launchSettings.json">
 		<Message Importance="high" Text="Copying launchSettings.MHR.json..."/>
 		<Copy SourceFiles="Properties/launchSettings.MHR.json" DestinationFiles="Properties/launchSettings.json"/>
 	</Target>

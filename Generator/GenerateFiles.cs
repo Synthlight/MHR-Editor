@@ -348,7 +348,11 @@ public class GenerateFiles {
             }
         }
 
-        Console.SetCursorPosition(0, Console.CursorTop - 1);
+        try {
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+        } catch (Exception) {
+            // Breaks tests so just ignore for those.
+        }
         Console.WriteLine($"Parsed {count}/{count}.");
     }
 
@@ -426,7 +430,11 @@ public class GenerateFiles {
             }
         }
 
-        Console.SetCursorPosition(0, Console.CursorTop - 1);
+        try {
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+        } catch (Exception) {
+            // Breaks tests so just ignore for those.
+        }
         Console.WriteLine($"Parsed {count}/{count}.");
         Console.WriteLine($"Created {gpCrcOverrides.Count} CRC overrides.");
     }

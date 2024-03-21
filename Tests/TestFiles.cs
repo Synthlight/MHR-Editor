@@ -44,7 +44,7 @@ public class TestFiles {
             }
 
             using var writer = new BinaryWriter(new MemoryStream());
-            data.Write(writer, true);
+            data.Write(writer, file.Contains("MSG"));
 
             var sourceLength = new FileInfo(file).Length;
             var destLength   = writer.BaseStream.Length;

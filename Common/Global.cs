@@ -1,4 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows.Markup;
+
+#if MHR
+[assembly: XmlnsDefinition("MHR", "RE_Editor.Common")]
+#endif
 
 namespace RE_Editor.Common;
 
@@ -55,4 +60,8 @@ public static class Global {
             }
         }
     };
+
+#if MHR
+    public static readonly List<string> WEAPON_TYPES = new() {"Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"};
+#endif
 }

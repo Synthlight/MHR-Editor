@@ -11,6 +11,7 @@
 		<ApplicationManifest>App.manifest</ApplicationManifest>
 		<AssemblyName>RE-Editor</AssemblyName>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<Configurations>MHR - Debug;MHR - Release</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0">
@@ -25,19 +26,55 @@
 		<ProjectReference Include="Common\Common.csproj"/>
 		<ProjectReference Include="Generated\Generated.csproj"/>
 	</ItemGroup>
-	<ItemGroup>
-		<Compile Update="Data\Assets.Designer.cs">
+	<Import Project="$(SolutionDir)SolutionDefines.targets"/>
+	<!-- MHR -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('MHR'))">
+		<AssemblyName>MHR-Editor</AssemblyName>
+		<AssemblyVersion>1.4.2.2</AssemblyVersion>
+	</PropertyGroup>
+	<ItemGroup Condition="$(Configuration.StartsWith('MHR'))">
+		<Compile Update="Data\MHR\Assets.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>Assets.resx</DependentUpon>
 		</Compile>
-		<Compile Update="Windows\MainWindow.xaml.buttons.cs">
-			<DependentUpon>MainWindow.xaml</DependentUpon>
-		</Compile>
-		<EmbeddedResource Update="Data\Assets.resx">
+		<EmbeddedResource Update="Data\MHR\Assets.resx">
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>Assets.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+		<Compile Update="Windows\MainWindow.xaml.buttons.MHR.cs">
+			<DependentUpon>MainWindow.xaml</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHR`))'">
+		<Compile Remove="Constants\MHR\**"/>
+		<Compile Remove="Data\DataInit.MHR.cs"/>
+		<Compile Remove="Mods\MHR\**"/>
+		<Compile Remove="Windows\MainWindow.xaml.buttons.MHR.cs"/>
+		<Compile Remove="WikiDump.cs"/>
+	</ItemGroup>
+	<!-- MHR (Launch Settings) -->
+	<ItemGroup Condition="$(Configuration.StartsWith('MHR'))">
+		<UpToDateCheckInput Include="Properties/launchSettings.MHR.json"/>
+	</ItemGroup>
+	<Target Name="CleanLaunchSettings" AfterTargets="Clean">
+		<Message Importance="high" Text="Deleting launchSettings.json..."/>
+		<Delete Files="Properties/launchSettings.json"/>
+	</Target>
+	<Target Condition="$(Configuration.StartsWith('MHR'))" Name="CopyLaunchSettings" AfterTargets="Build" Inputs="Properties/launchSettings.MHR.json" Outputs="Properties/launchSettings.json">
+		<Message Importance="high" Text="Copying launchSettings.MHR.json..."/>
+		<Copy SourceFiles="Properties/launchSettings.MHR.json" DestinationFiles="Properties/launchSettings.json"/>
+	</Target>
+	<!-- Clean Launch Settings -->
+	<Target Name="CleanLaunchSettings" AfterTargets="Clean">
+		<Message Importance="high" Text="Deleting launchSettings.json..."/>
+		<Delete Files="Properties/launchSettings.json"/>
+	</Target>
+	<!-- The rest. -->
+	<ItemGroup>
+		<Compile Update="Windows\MainWindow.xaml.buttons.cs">
+			<DependentUpon>MainWindow.xaml</DependentUpon>
+		</Compile>
 		<Compile Remove="Common\**"/>
 		<Compile Remove="Data-Helper-Extractor\**"/>
 		<Compile Remove="Generated\**"/>

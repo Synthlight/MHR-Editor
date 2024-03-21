@@ -370,6 +370,13 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
         var showAsHex      = (ButtonIdAsHexAttribute) propToUse.GetCustomAttribute(typeof(ButtonIdAsHexAttribute), true) != null;
 
         dynamic dataSource = dataSourceType switch {
+#if MHR
+            DataSourceType.DANGO_SKILLS => DataHelper.DANGO_SKILL_NAME_LOOKUP[Global.locale],
+            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
+            DataSourceType.RAMPAGE_SKILLS => DataHelper.RAMPAGE_SKILL_NAME_LOOKUP[Global.locale],
+            DataSourceType.SKILLS => DataHelper.SKILL_NAME_LOOKUP[Global.locale],
+            DataSourceType.SWITCH_SKILLS => DataHelper.SWITCH_SKILL_NAME_LOOKUP[Global.locale],
+#endif
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
 

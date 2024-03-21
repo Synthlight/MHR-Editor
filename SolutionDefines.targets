@@ -1,0 +1,5 @@
+<Project>
+	<PropertyGroup Condition="$(Configuration.StartsWith('MHR'))">
+		<DefineConstants>$(DefineConstants);MHR</DefineConstants>
+	</PropertyGroup>
+</Project>

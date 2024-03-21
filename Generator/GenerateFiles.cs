@@ -11,18 +11,12 @@ using RE_Editor.Generator.Models;
 
 namespace RE_Editor.Generator;
 
-public class GenerateFiles {
-    public const string BASE_GEN_PATH         = @"..\..\..\Generated"; // @"C:\Temp\Gen"
-    public const string BASE_PROJ_PATH        = @"..\..\..";
-    public const string ENUM_GEN_PATH         = $@"{BASE_GEN_PATH}\Enums";
-    public const string STRUCT_GEN_PATH       = $@"{BASE_GEN_PATH}\Structs";
-    public const string ROOT_STRUCT_NAMESPACE = "";
-    public const string ENUM_REGEX            = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
-
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
-    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
-    private static readonly List<string> WHITELIST = new() {
-    };
+public partial class GenerateFiles {
+    public const string BASE_GEN_PATH   = @"..\..\..\Generated"; // @"C:\Temp\Gen"
+    public const string BASE_PROJ_PATH  = @"..\..\..";
+    public const string ENUM_GEN_PATH   = $@"{BASE_GEN_PATH}\Enums";
+    public const string STRUCT_GEN_PATH = $@"{BASE_GEN_PATH}\Structs";
+    public const string ENUM_REGEX      = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
@@ -52,6 +46,19 @@ public class GenerateFiles {
         "soundlib.",
         "app.",
         "via.gui.Panel", // Too long, skip it for now.
+#if MHR
+        "snow.camera.CameraUtility.BufferingParam`",
+        "snow.data.StmKeyconfigSystem.ConfigCodeSet`",
+        "snow.shell.Em", // There's one for each monster variant. Exclude the whole shebang for now.
+        "snow.enemy.EnemyCarryChangeTrack`",
+        "snow.enemy.EnemyEditStepActionData`",
+        "snow.envCreature.EnvironmentCreatureActionController`",
+        "snow.eventcut.EventPlayerMediator.FaceMaterialConfig`",
+        "snow.StmDefaultKeyconfigData.EnumSet2`",
+        "snow.StmGuiKeyconfigData.EnumItemSystemMessage`",
+        "snow.StmGuiKeyconfigData.EnumMessage`",
+        "System.Collections.Generic.List`1<snow.enemy.em134.Em", // Nested generics.
+#endif
     };
 
     private static readonly List<uint> GREYLIST = new(); // Hashes used in a given location.
@@ -109,8 +116,9 @@ public class GenerateFiles {
             structInfo[hash] = @struct;
         }
         if (!dryRun) {
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\STRUCT_INFO.json", JsonConvert.SerializeObject(structInfo, Formatting.Indented));
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\GP_CRC_OVERRIDE_INFO.json", JsonConvert.SerializeObject(gpCrcOverrides, Formatting.Indented));
+            Directory.CreateDirectory(ASSETS_DIR);
+            File.WriteAllText($@"{ASSETS_DIR}\STRUCT_INFO.json", JsonConvert.SerializeObject(structInfo, Formatting.Indented));
+            File.WriteAllText($@"{ASSETS_DIR}\GP_CRC_OVERRIDE_INFO.json", JsonConvert.SerializeObject(gpCrcOverrides, Formatting.Indented));
         }
     }
 
@@ -259,7 +267,21 @@ public class GenerateFiles {
     }
 
     private static bool IsWhitelisted(string key) {
+#if MHR
+        return WHITELIST.Contains(key)
+               || key.ContainsIgnoreCase("ContentsIdSystem")
+               || key.ContainsIgnoreCase("Snow_data_DataDef")
+               || key.ContainsIgnoreCase("ProductUserData")
+               || key.ContainsIgnoreCase("ChangeUserData")
+               || key.ContainsIgnoreCase("ProcessUserData")
+               || key.ContainsIgnoreCase("RecipeUserData")
+               || key.ContainsIgnoreCase("PlayerUserData")
+               || key.ContainsIgnoreCase("Snow_equip")
+               || key.ContainsIgnoreCase("Snow_data")
+               || key.ContainsIgnoreCase("Snow_player");
+#else
         return WHITELIST.Contains(key);
+#endif
     }
 
     /**
@@ -327,7 +349,11 @@ public class GenerateFiles {
         for (var i = 0; i < allUserFiles.Count; i++) {
             var newNow = DateTime.Now;
             if (newNow > now.AddSeconds(1)) {
-                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                try {
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                } catch (Exception) {
+                    // Breaks tests so just ignore for those.
+                }
                 Console.WriteLine($"Parsed {i}/{count}.");
                 now = newNow;
             }
@@ -386,6 +412,11 @@ public class GenerateFiles {
                 }
             }
         }
+
+#if MHR
+        // Because this one doesn't appear in the fields but we still use it.
+        enumTypes["Snow_data_ContentsIdSystem_SubCategoryType"].useCount++;
+#endif
     }
 
     private void FindCrcOverrides() {
@@ -409,7 +440,11 @@ public class GenerateFiles {
         for (var i = 0; i < allGpUserFiles.Count; i++) {
             var newNow = DateTime.Now;
             if (newNow > now.AddSeconds(1)) {
-                Console.SetCursorPosition(0, Console.CursorTop - 1);
+                try {
+                    Console.SetCursorPosition(0, Console.CursorTop - 1);
+                } catch (Exception) {
+                    // Breaks tests so just ignore for those.
+                }
                 Console.WriteLine($"Parsed {i}/{count}.");
                 now = newNow;
             }

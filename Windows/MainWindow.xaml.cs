@@ -27,7 +27,12 @@ public partial class MainWindow {
     private const bool ENABLE_CHEAT_BUTTONS = false;
     public const  bool SHOW_RAW_BYTES = false;
 #endif
+
+#if MHR
+    private const string TITLE = "MHR Editor";
+#else
     private const string TITLE = "RE Editor";
+#endif
 
     [CanBeNull] private CancellationTokenSource savedTimer;
     [CanBeNull] private ReDataFile              file;
@@ -104,6 +109,11 @@ public partial class MainWindow {
             panel_mods.Children.Add(button);
         }
 
+#if MHR
+        btn_wiki_dump.Visibility  = visibility;
+        btn_all_cheats.Visibility = visibility;
+#endif
+
         UpdateCheck.Run(this);
 
         TryLoad(args);
@@ -161,6 +171,10 @@ public partial class MainWindow {
                 Debug.WriteLine($"Loading type: {type.Name}");
                 AddStructGrid(structGrid);
             }
+
+#if MHR
+            btn_sort_gems_by_skill_name.Visibility = target.Contains("DecorationsBaseData.user.2") || target.Contains("HyakuryuDecoBaseData.user.2") ? Visibility.Visible : Visibility.Collapsed;
+#endif
         } catch (FileNotSupported) {
             MessageBox.Show("Please check the stickied comments on the nexus page and if it's not listed there, leave a comment about it.", "File not supported.", MessageBoxButton.OK, MessageBoxImage.Error);
         } catch (Exception e) when (!Debugger.IsAttached) {

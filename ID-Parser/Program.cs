@@ -2,12 +2,8 @@
 
 namespace RE_Editor.ID_Parser;
 
-public static class Program {
+public static partial class Program {
     public const string BASE_PROJ_PATH = @"..\..\..";
-    public const string MSG_VERSION    = "";
-
-    public static void Main() {
-    }
 
     public static uint ParseEnum(Type enumType, string value) {
         return (uint) Convert.ChangeType(Enum.Parse(enumType, value), typeof(uint));
@@ -30,7 +26,7 @@ public static class Program {
     }
 
     private static void CreateConstantsFile(Dictionary<uint, string> engDict, string className, bool asHex = false) {
-        using var writer = new StreamWriter(File.Create($@"{BASE_PROJ_PATH}\Constants\{className}.cs"));
+        using var writer = new StreamWriter(File.Create($@"{CONSTANTS_DIR}\{className}.cs"));
         writer.WriteLine("using System.Diagnostics.CodeAnalysis;");
         writer.WriteLine("");
         writer.WriteLine("namespace RE_Editor.Constants;");

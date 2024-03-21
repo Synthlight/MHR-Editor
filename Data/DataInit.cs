@@ -8,10 +8,11 @@ using RE_Editor.Common;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Data;
 using RE_Editor.Common.Models;
+using RE_Editor.Data.MHR;
 
 namespace RE_Editor.Data;
 
-public static class DataInit {
+public static partial class DataInit {
     public static void Init() {
         Assembly.Load(nameof(Common));
         Assembly.Load(nameof(Generated));
@@ -20,9 +21,15 @@ public static class DataInit {
         DataHelper.STRUCT_INFO          = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
         DataHelper.GP_CRC_OVERRIDE_INFO = LoadDict<uint, uint>(Assets.GP_CRC_OVERRIDE_INFO);
 
+        LoadDicts();
+
         foreach (var lang in Enum.GetValues<Global.LangIndex>()) {
             if (!Global.TRANSLATION_MAP.ContainsKey(lang)) Global.TRANSLATION_MAP[lang] = new();
         }
+
+#if MHR
+        CreateTranslationsForSkillEnumNameColumns();
+#endif
     }
 
     public static void InitStructTypeInfo() {

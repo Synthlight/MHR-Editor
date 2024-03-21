@@ -37,12 +37,12 @@ public class ReDataFile {
         return file;
     }
 
-    public void Write(string targetFile, bool testWritePosition = false, bool forGp = true) {
+    public void Write(string targetFile, bool testWritePosition = false, bool forGp = false) {
         using var writer = new BinaryWriter(File.OpenWrite(targetFile), Encoding.Unicode);
-        Write(writer, testWritePosition, forGp);
+        Write(writer, testWritePosition, forGp || targetFile.Contains("MSG"));
     }
 
-    public void Write(BinaryWriter writer, bool testWritePosition = false, bool forGp = true) {
+    public void Write(BinaryWriter writer, bool testWritePosition = false, bool forGp = false) {
         writer.Write((uint) magic);
         writer.Write(resourceCount);
         writer.Write(userDataInfo.Count);

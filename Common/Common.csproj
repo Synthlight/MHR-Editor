@@ -8,10 +8,24 @@
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<Configurations>MHR - Debug;MHR - Release</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="JetBrains.Annotations" Version="2022.3.1"/>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All"/>
+	</ItemGroup>
+	<Import Project="$(SolutionDir)SolutionDefines.targets"/>
+	<!-- MHR -->
+	<ItemGroup Condition="'$(Configuration.StartsWith(`MHR`))'">
+		<Compile Remove="Attributes\DataSourceType.cs"/>
+		<Compile Remove="PathHelper.cs"/>
+	</ItemGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHR`))'">
+		<Compile Remove="Attributes\DataSourceType.MHR.cs"/>
+		<Compile Remove="Data\DataHelper.MHR.cs"/>
+		<Compile Remove="Enums\**"/>
+		<Compile Remove="BitMasks.cs"/>
+		<Compile Remove="PathHelper.MHR.cs"/>
 	</ItemGroup>
 </Project>

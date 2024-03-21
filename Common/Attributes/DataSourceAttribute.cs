@@ -1,12 +1,6 @@
 namespace RE_Editor.Common.Attributes;
 
-public class DataSourceAttribute : Attribute {
-    public readonly DataSourceType dataType;
-
-    public DataSourceAttribute(DataSourceType dataType) {
-        this.dataType = dataType;
-    }
-}
-
-public enum DataSourceType {
+[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+public class DataSourceAttribute(DataSourceType dataType) : Attribute {
+    public readonly DataSourceType dataType = dataType;
 }

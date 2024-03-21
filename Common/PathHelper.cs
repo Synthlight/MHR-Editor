@@ -14,6 +14,5 @@ public static class PathHelper {
     public const string WIKI_URL               = "";
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public static readonly string[] TEST_PATHS = {
-    };
+    public static readonly string[] TEST_PATHS = [];
 }

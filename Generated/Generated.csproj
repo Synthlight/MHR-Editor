@@ -7,11 +7,18 @@
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
+		<Configurations>MHR - Debug;MHR - Release</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All"/>
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Common\Common.csproj"/>
+	</ItemGroup>
+	<Import Project="$(SolutionDir)SolutionDefines.targets"/>
+	<!-- MHR -->
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHR`))'">
+		<Compile Remove="Manual\MHR\Structs\**"/>
+		<Compile Remove="Models\MHR\**"/>
 	</ItemGroup>
 </Project>

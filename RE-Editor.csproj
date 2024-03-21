@@ -9,7 +9,7 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<LangVersion>latest</LangVersion>
 		<ApplicationManifest>App.manifest</ApplicationManifest>
-		<AssemblyName>RE-Editor</AssemblyName>
+		<AssemblyName>DD2-Editor</AssemblyName>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 	</PropertyGroup>
 	<ItemGroup>

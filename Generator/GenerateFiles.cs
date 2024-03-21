@@ -16,12 +16,13 @@ public class GenerateFiles {
     public const string BASE_PROJ_PATH        = @"..\..\..";
     public const string ENUM_GEN_PATH         = $@"{BASE_GEN_PATH}\Enums";
     public const string STRUCT_GEN_PATH       = $@"{BASE_GEN_PATH}\Structs";
-    public const string ROOT_STRUCT_NAMESPACE = "";
+    public const string ROOT_STRUCT_NAMESPACE = "app";
     public const string ENUM_REGEX            = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
     private static readonly List<string> WHITELIST = new() {
+        "App_WeaponCatalogData",
     };
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -50,8 +51,10 @@ public class GenerateFiles {
         "System.Collections.Generic.Queue`1<System.Tuple`", // Nested generics.
         "System.Collections.Generic.Queue`1<via.vec3>", // Because this breaks generation and I need a better way of handling generics.
         "soundlib.",
-        "app.",
         "via.gui.Panel", // Too long, skip it for now.
+        "soundlib.SoundStateApp`1<",
+        "soundlib.SoundSwitchApp`1<",
+        "app.GUICharaEditData.PatternParam`",
     };
 
     private static readonly List<uint> GREYLIST = new(); // Hashes used in a given location.
@@ -109,8 +112,10 @@ public class GenerateFiles {
             structInfo[hash] = @struct;
         }
         if (!dryRun) {
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\STRUCT_INFO.json", JsonConvert.SerializeObject(structInfo, Formatting.Indented));
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\GP_CRC_OVERRIDE_INFO.json", JsonConvert.SerializeObject(gpCrcOverrides, Formatting.Indented));
+            const string assetsDir = $@"{BASE_PROJ_PATH}\Data\Assets";
+            Directory.CreateDirectory(assetsDir);
+            File.WriteAllText($@"{assetsDir}\STRUCT_INFO.json", JsonConvert.SerializeObject(structInfo, Formatting.Indented));
+            File.WriteAllText($@"{assetsDir}\GP_CRC_OVERRIDE_INFO.json", JsonConvert.SerializeObject(gpCrcOverrides, Formatting.Indented));
         }
     }
 

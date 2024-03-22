@@ -13,6 +13,7 @@ public class EnumTemplate {
         var       filename = $@"{GenerateFiles.ENUM_GEN_PATH}\{enumType.name}.cs";
         using var file     = new StreamWriter(dryRun ? new MemoryStream() : File.Open(filename, FileMode.Create, FileAccess.Write));
 
+        file.WriteLine("// ReSharper disable All");
         file.WriteLine("namespace RE_Editor.Models.Enums;");
         file.WriteLine("");
         file.Write($"public enum {enumType.name} : {enumType.type} ");

@@ -37,6 +37,7 @@ public static partial class Program {
     private static void CreateConstantsFile(Dictionary<uint, string> engDict, string className, bool asHex = false) {
         Directory.CreateDirectory(CONSTANTS_DIR);
         using var writer = new StreamWriter(File.Create($@"{CONSTANTS_DIR}\{className}.cs"));
+        writer.WriteLine("// ReSharper disable All");
         writer.WriteLine("using System.Diagnostics.CodeAnalysis;");
         writer.WriteLine("");
         writer.WriteLine("namespace RE_Editor.Constants;");

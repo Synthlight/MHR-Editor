@@ -49,6 +49,7 @@ public class StructTemplate {
     }
 
     private static void WriteUsings(TextWriter file) {
+        file.WriteLine("// ReSharper disable All");
         file.WriteLine("using System.Collections.ObjectModel;");
         file.WriteLine("using System.ComponentModel;");
         file.WriteLine("using System.Diagnostics.CodeAnalysis;");

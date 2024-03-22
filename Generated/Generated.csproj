@@ -19,6 +19,7 @@
 	<!-- DD2 -->
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`DD2`))'">
 		<Compile Remove="Enums\DD2\**"/>
+		<Compile Remove="Manual\DD2\Structs\**"/>
 		<Compile Remove="Structs\DD2\**"/>
 	</ItemGroup>
 	<!-- MHR -->

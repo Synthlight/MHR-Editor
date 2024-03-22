@@ -10,5 +10,6 @@ public partial class GenerateFiles {
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
     private static readonly List<string> WHITELIST = [
         "App_WeaponCatalogData",
+        "App_ItemData",
     ];
 }

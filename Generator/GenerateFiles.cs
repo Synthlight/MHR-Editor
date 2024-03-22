@@ -50,6 +50,9 @@ public partial class GenerateFiles {
         "soundlib.SoundStateApp`1<",
         "soundlib.SoundSwitchApp`1<",
         "app.GUICharaEditData.PatternParam`",
+        "app.ClassSelector",
+        "AISituation",
+        "app.JobUnique",
 #elif MHR
         "snow.camera.CameraUtility.BufferingParam`",
         "snow.data.StmKeyconfigSystem.ConfigCodeSet`",

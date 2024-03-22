@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
 using RE_Editor.Common;
@@ -8,7 +9,7 @@ using RE_Editor.Models;
 namespace RE_Editor.Util;
 
 public static class ModMaker {
-    public static void WriteMods<T>(IEnumerable<T> mods, string inPath, string outPath, string variantBundleName = null, bool copyToFluffy = false) where T : INexusMod {
+    public static void WriteMods<T>(IEnumerable<T> mods, string inPath, string outPath, string variantBundleName = null, bool copyToFluffy = false, bool makeIntoPak = false) where T : INexusMod {
         foreach (var mod in mods) {
             var folderName = mod.Filename ?? mod.Name.Replace('/', '-').Replace(':', '-');
             var variant    = mod as INexusModVariant;
@@ -51,6 +52,16 @@ public static class ModMaker {
                 var data     = dataFile.rsz.objectData;
                 mod.Action.Invoke(data);
                 dataFile.Write(outFile, forGp: mod.ForGp);
+            }
+
+            if (makeIntoPak) {
+                var processStartInfo = new ProcessStartInfo(@"R:\Games\Monster Hunter Rise\REtool\REtool.exe", $"-version 4 1 -c \"{folderName}\"") {
+                    WorkingDirectory = $@"{modPath}\..",
+                    CreateNoWindow   = true
+                };
+                Process.Start(processStartInfo)?.WaitForExit();
+                Directory.Delete($@"{modPath}\natives", true);
+                File.Move($@"{modPath}\..\{folderName}.pak", $@"{modPath}\{folderName}.pak", true);
             }
         }
         CompressTheMod(outPath.Replace('/', '-'));

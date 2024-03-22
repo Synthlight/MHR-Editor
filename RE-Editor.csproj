@@ -114,6 +114,7 @@
 		</EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE4`))'">
+		<Compile Remove="Constants\RE4\**"/>
 		<Compile Remove="Data\RE4\**"/>
 		<EmbeddedResource Remove="Data\RE4\**"/>
 		<Page Remove="Data\RE4\**"/>

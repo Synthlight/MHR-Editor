@@ -183,12 +183,15 @@ public class StructTemplate {
     private static string? GetViaType(StructJson.Field field, bool isNonPrimitive, string? typeName, ref bool isObjectType) {
         string? viaType = null;
 
-        if (isNonPrimitive && !isObjectType) {
-            // This makes sure we've implemented the via type during generation.
-            viaType = field.type!.GetViaType() ?? throw new NotImplementedException($"Hard-coded type '{field.type}' not implemented.");
-        } else if (typeName == "Via_Prefab") {
+        if (typeName == "Via_Prefab") {
             viaType      = nameof(Prefab);
             isObjectType = false;
+        } else if (typeName == "System_Type") {
+            viaType      = nameof(Type);
+            isObjectType = false;
+        } else if (isNonPrimitive && !isObjectType) {
+            // This makes sure we've implemented the via type during generation.
+            viaType = field.type!.GetViaType() ?? throw new NotImplementedException($"Hard-coded type '{field.type}' not implemented.");
         }
         return viaType;
     }
@@ -257,10 +260,14 @@ public class StructTemplate {
             } else if ((field.array || isObjectType || isNonPrimitive) && buttonType == null) {
                 file.WriteLine($"        obj.{newName} ??= new();");
                 file.WriteLine($"        foreach (var x in {newName}) {{");
-                if (isObjectType && viaType == null && isNonPrimitive && typeName?.Contains("GenericWrapper") == false) {
-                    file.WriteLine($"            obj.{newName}.Add({(isEnumType ? "x" : $"x.Copy<{typeName}>()")});");
+                if (typeName == "System_Type" || viaType == "Type") { // `Type` is a built-in type, no copy.
+                    file.WriteLine($"            obj.{newName}.Add(x);");
                 } else {
-                    file.WriteLine($"            obj.{newName}.Add({(isEnumType ? "x" : "x.Copy()")});");
+                    if (isObjectType && viaType == null && isNonPrimitive && typeName?.Contains("GenericWrapper") == false) {
+                        file.WriteLine($"            obj.{newName}.Add({(isEnumType ? "x" : $"x.Copy<{typeName}>()")});");
+                    } else {
+                        file.WriteLine($"            obj.{newName}.Add({(isEnumType ? "x" : "x.Copy()")});");
+                    }
                 }
                 file.WriteLine("        }");
             } else {

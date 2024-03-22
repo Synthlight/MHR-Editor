@@ -3,6 +3,18 @@
         "[None]": {
             "commandName": "Project"
         },
+        "ItemArmorData.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemData/ItemArmorData.user.2\""
+        },
+        "ItemData.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemData/ItemData.user.2\""
+        },
+        "ItemWeaponData.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemData/ItemWeaponData.user.2\""
+        },
         "WeaponCatalogData.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Catalog/MainContents/UserData/WeaponCatalogData.user.2\""

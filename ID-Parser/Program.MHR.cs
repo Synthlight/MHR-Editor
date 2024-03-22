@@ -10,8 +10,8 @@ using RE_Editor.Models.Enums;
 namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
-    public const  string MSG_VERSION   = "539100710";
-    private const string CONSTANTS_DIR = $@"{BASE_PROJ_PATH}\Constants\MHR";
+    public const string CONFIG_NAME = "MHR";
+    public const string MSG_VERSION = "539100710";
 
     private static readonly List<Tuple<string, string>> NAME_DESC = new() {
         new("Name", "NAME"),

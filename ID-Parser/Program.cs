@@ -1,9 +1,13 @@
 ﻿using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using RE_Editor.Common;
 
 namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
-    public const string BASE_PROJ_PATH = @"..\..\..";
+    public const  string BASE_PROJ_PATH = @"..\..\..";
+    private const string CONSTANTS_DIR  = $@"{BASE_PROJ_PATH}\Constants\{CONFIG_NAME}";
+    private const string ASSETS_DIR     = $@"{BASE_PROJ_PATH}\Data\{CONFIG_NAME}\Assets";
 
     public static uint ParseEnum(Type enumType, string value) {
         return (uint) Convert.ChangeType(Enum.Parse(enumType, value), typeof(uint));
@@ -25,7 +29,13 @@ public static partial class Program {
         throw new KeyNotFoundException($"Cannot find `{toFind}` in the enum `{typeof(T)}`.");
     }
 
+    private static void CreateAssetFile(Dictionary<Global.LangIndex, Dictionary<uint, string>> msg, string filename) {
+        Directory.CreateDirectory(ASSETS_DIR);
+        File.WriteAllText($@"{ASSETS_DIR}\{filename}.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+    }
+
     private static void CreateConstantsFile(Dictionary<uint, string> engDict, string className, bool asHex = false) {
+        Directory.CreateDirectory(CONSTANTS_DIR);
         using var writer = new StreamWriter(File.Create($@"{CONSTANTS_DIR}\{className}.cs"));
         writer.WriteLine("using System.Diagnostics.CodeAnalysis;");
         writer.WriteLine("");
@@ -35,6 +45,7 @@ public static partial class Program {
         writer.WriteLine("[SuppressMessage(\"ReSharper\", \"UnusedMember.Global\")]");
         writer.WriteLine("[SuppressMessage(\"ReSharper\", \"IdentifierTypo\")]");
         writer.WriteLine($"public static class {className} {{");
+        var regex     = new Regex(@"^\d");
         var namesUsed = new List<string?>(engDict.Count);
         foreach (var (key, name) in engDict) {
             if (name.ToLower() == "#rejected#") continue;
@@ -50,6 +61,7 @@ public static partial class Program {
                                 .Replace('-', '_')
                                 .Replace(' ', '_')
                                 .Replace(':', '_');
+            if (regex.Match(constName).Success) constName = $"_{constName}";
             if (namesUsed.Contains(constName)) continue;
             namesUsed.Add(constName);
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression

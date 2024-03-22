@@ -8,8 +8,8 @@ using RE_Editor.Models.Enums;
 namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
-    public const  string MSG_VERSION   = "22";
-    private const string CONSTANTS_DIR = $@"{BASE_PROJ_PATH}\Constants\RE4";
+    public const string CONFIG_NAME = "MHR";
+    public const string MSG_VERSION = "22";
 
     public static void Main() {
         ExtractItemInfo();

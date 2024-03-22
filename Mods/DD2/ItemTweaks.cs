@@ -21,7 +21,7 @@ public class ItemTweaks : IMod {
     public static void Make() {
         const string bundleName  = "Item Tweaks";
         const string description = "Item/Equipment weight and cost changes.";
-        const string version     = "1.5";
+        const string version     = "1.6";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var itemDataFiles = new List<string> {
@@ -68,6 +68,10 @@ public class ItemTweaks : IMod {
                     Weight(list, WeightOptions._0);
                     SellPrice(list, SellOptions.X10);
                 }),
+            baseMod
+                .SetName("Weight: 0 (All Items Only)")
+                .SetFiles([PathHelper.ITEM_DATA_PATH])
+                .SetAction(list => Weight(list, WeightOptions._0)),
             baseMod
                 .SetName("Weight: 0 (Materials Only)")
                 .SetAction(list => Weight(list, WeightOptions._0_Materials)),
@@ -194,7 +198,7 @@ public class ItemTweaks : IMod {
     public enum WeightOptions {
         _0,
         _0_Ferry_Only,
-        _0_Materials
+        _0_Materials,
     }
 
     public enum SellOptions {

@@ -17,8 +17,8 @@ public class NoStamina : IMod {
     [UsedImplicitly]
     public static void Make() {
         const string bundleName  = "No Stamina Consumed For Job Skills";
-        const string description = "Changes job skills to use '0' stamina.";
-        const string version     = "1.0";
+        const string description = "Changes job skills' stamina use.";
+        const string version     = "1.1";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var dataFiles = new List<string>();
@@ -26,15 +26,30 @@ public class NoStamina : IMod {
             dataFiles.Add($@"natives\stm\AppSystem\ch\common\human\userdata\parameter\Job{i:00}StaminaParameter.user.2");
         }
 
-        var mod = new NexusMod {
-            Version = version,
-            Name    = bundleName,
-            Desc    = description,
-            Files   = dataFiles,
-            Action  = list => Stamina(list, StaminaOptions._0)
+        var baseMod = new NexusModVariant {
+            Version      = version,
+            NameAsBundle = bundleName,
+            Desc         = description,
+            Files        = dataFiles,
+            Action       = list => Stamina(list, StaminaOptions._0)
         };
 
-        ModMaker.WriteMods([mod], PathHelper.CHUNK_PATH, outPath, bundleName, true, makeIntoPak: true);
+        var mods = new[] {
+            baseMod
+                .SetName("Stamina Use: None")
+                .SetAction(list => Stamina(list, StaminaOptions._0)),
+            baseMod
+                .SetName("Stamina Use: Half")
+                .SetAction(list => Stamina(list, StaminaOptions.HALF)),
+            baseMod
+                .SetName("Stamina Use: x2")
+                .SetAction(list => Stamina(list, StaminaOptions.X2)),
+            baseMod
+                .SetName("Stamina Use: x5")
+                .SetAction(list => Stamina(list, StaminaOptions.X5)),
+        };
+
+        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, bundleName, true, makeIntoPak: true);
     }
 
     public static void Stamina(List<RszObject> rszObjectData, StaminaOptions option) {
@@ -45,6 +60,15 @@ public class NoStamina : IMod {
                         case StaminaOptions._0:
                             itemData.Value = 0f;
                             break;
+                        case StaminaOptions.HALF:
+                            itemData.Value *= 0.5f;
+                            break;
+                        case StaminaOptions.X2:
+                            itemData.Value *= 2f;
+                            break;
+                        case StaminaOptions.X5:
+                            itemData.Value *= 5f;
+                            break;
                     }
                     break;
             }
@@ -53,5 +77,8 @@ public class NoStamina : IMod {
 
     public enum StaminaOptions {
         _0,
+        HALF,
+        X2,
+        X5,
     }
 }

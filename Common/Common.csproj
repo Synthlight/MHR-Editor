@@ -8,7 +8,7 @@
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release</Configurations>
+		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release;RE4 - Debug;RE4 - Release</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="JetBrains.Annotations" Version="2022.3.1"/>
@@ -37,5 +37,15 @@
 		<Compile Remove="Enums\**"/>
 		<Compile Remove="BitMasks.cs"/>
 		<Compile Remove="PathHelper.MHR.cs"/>
+	</ItemGroup>
+	<!-- RE4 -->
+	<ItemGroup Condition="'$(Configuration.StartsWith(`RE4`))'">
+		<Compile Remove="Attributes\DataSourceType.cs"/>
+		<Compile Remove="PathHelper.cs"/>
+	</ItemGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE4`))'">
+		<Compile Remove="Attributes\DataSourceType.RE4.cs"/>
+		<Compile Remove="Data\DataHelper.RE4.cs"/>
+		<Compile Remove="PathHelper.RE4.cs"/>
 	</ItemGroup>
 </Project>

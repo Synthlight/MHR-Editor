@@ -6,6 +6,8 @@ using RE_Editor.Generator.Models;
 
 #if MHR
 using RE_Editor.Common.Data;
+#elif RE4
+using RE_Editor.Common.Data;
 #endif
 
 namespace RE_Editor.Generator;
@@ -151,6 +153,9 @@ public class StructTemplate {
                 file.WriteLine($"    [DisplayName(\"{newName}\")]");
 #if MHR
                 file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
+#elif RE4
+                file.WriteLine($"    public string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
+                               $"DataHelper.{lookupName}[Global.variant][Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
 #else
                 file.WriteLine($"    public string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
                                $"DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName});");
@@ -252,7 +257,7 @@ public class StructTemplate {
             } else if ((field.array || isObjectType || isNonPrimitive) && buttonType == null) {
                 file.WriteLine($"        obj.{newName} ??= new();");
                 file.WriteLine($"        foreach (var x in {newName}) {{");
-                if ((isObjectType || isNonPrimitive) && viaType == null) {
+                if (isObjectType && viaType == null && isNonPrimitive && typeName?.Contains("GenericWrapper") == false) {
                     file.WriteLine($"            obj.{newName}.Add({(isEnumType ? "x" : $"x.Copy<{typeName}>()")});");
                 } else {
                     file.WriteLine($"            obj.{newName}.Add({(isEnumType ? "x" : "x.Copy()")});");
@@ -279,6 +284,9 @@ public class StructTemplate {
             "snow.data.DataDef.PlHyakuryuSkillId" => DataSourceType.RAMPAGE_SKILLS,
             "snow.data.DataDef.PlKitchenSkillId" => DataSourceType.DANGO_SKILLS,
             "snow.data.DataDef.PlWeaponActionId" => DataSourceType.SWITCH_SKILLS,
+#elif RE4
+            "chainsaw.ItemID" => DataSourceType.ITEMS,
+            "chainsaw.WeaponID" => DataSourceType.WEAPONS,
 #endif
             _ => null
         };
@@ -286,6 +294,17 @@ public class StructTemplate {
 
     private string? GetParent() {
         return className switch {
+            "Chainsaw_ItemUseResult_HealHitPoint" => "Chainsaw_ItemUseResultInfoBase",
+            "Chainsaw_ItemUseResult_IncreaseHitPoint" => "Chainsaw_ItemUseResultInfoBase",
+            "Chainsaw_WeaponItem" => "Chainsaw_Item",
+            "Chainsaw_UniqueItem" => "Chainsaw_Item",
+            "Chainsaw_RuleStratum_ParticleChapter" => "Chainsaw_RuleStratum_Particle",
+            "Chainsaw_RuleStratum_ParticleFlag" => "Chainsaw_RuleStratum_Particle",
+            "Chainsaw_RuleStratum_ParticleGmFlag" => "Chainsaw_RuleStratum_Particle",
+            "Chainsaw_RuleStratum_ParticleItemInventory" => "Chainsaw_RuleStratum_Particle",
+            "Chainsaw_RuleStratum_ParticleResourcePoint" => "Chainsaw_RuleStratum_Particle",
+            "Chainsaw_RuleStratum_ParticleStatusEffect" => "Chainsaw_RuleStratum_Particle",
+            "Chainsaw_RuleStratum_ParticleTrue" => "Chainsaw_RuleStratum_Particle",
             _ => null
         };
     }
@@ -294,6 +313,9 @@ public class StructTemplate {
         return dataSourceType switch {
 #if MHR
             DataSourceType.ITEMS => ["[ButtonIdAsHex]"],
+#elif RE4
+            DataSourceType.ITEMS => ["[ButtonIdAsHex]"],
+            DataSourceType.WEAPONS => ["[ButtonIdAsHex]"],
 #endif
             _ => new()
         };
@@ -307,6 +329,9 @@ public class StructTemplate {
             DataSourceType.RAMPAGE_SKILLS => nameof(DataHelper.RAMPAGE_SKILL_NAME_LOOKUP),
             DataSourceType.SKILLS => nameof(DataHelper.SKILL_NAME_LOOKUP),
             DataSourceType.SWITCH_SKILLS => nameof(DataHelper.SWITCH_SKILL_NAME_LOOKUP),
+#elif RE4
+            DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
+            DataSourceType.WEAPONS => nameof(DataHelper.WEAPON_NAME_LOOKUP),
 #endif
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };
@@ -314,6 +339,9 @@ public class StructTemplate {
 
     private static bool GetNegativeForEmptyAllowed(StructJson.Field field) {
         return field.name?.ToConvertedFieldName() switch {
+#if RE4
+            "CurrentAmmo" => true,
+#endif
             _ => false
         };
     }

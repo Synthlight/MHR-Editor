@@ -376,6 +376,9 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
             DataSourceType.RAMPAGE_SKILLS => DataHelper.RAMPAGE_SKILL_NAME_LOOKUP[Global.locale],
             DataSourceType.SKILLS => DataHelper.SKILL_NAME_LOOKUP[Global.locale],
             DataSourceType.SWITCH_SKILLS => DataHelper.SWITCH_SKILL_NAME_LOOKUP[Global.locale],
+#elif RE4
+            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.variant][Global.locale],
+            DataSourceType.WEAPONS => DataHelper.WEAPON_NAME_LOOKUP[Global.variant][Global.locale],
 #endif
             _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
         };

@@ -7,7 +7,7 @@
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
-		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release</Configurations>
+		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release;RE4 - Debug;RE4 - Release</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All"/>
@@ -27,5 +27,11 @@
 		<Compile Remove="Manual\MHR\Structs\**"/>
 		<Compile Remove="Models\MHR\**"/>
 		<Compile Remove="Structs\MHR\**"/>
+	</ItemGroup>
+	<!-- RE4 -->
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE4`))'">
+		<Compile Remove="Enums\RE4\**"/>
+		<Compile Remove="Structs\RE4\**"/>
+		<Compile Remove="Re4WeaponInstanser.cs"/>
 	</ItemGroup>
 </Project>

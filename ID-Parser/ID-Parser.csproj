@@ -8,7 +8,7 @@
 		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release</Configurations>
+		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release;RE4 - Debug;RE4 - Release</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="JetBrains.Annotations" Version="2022.3.1"/>
@@ -26,5 +26,9 @@
 	<!-- MHR -->
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHR`))'">
 		<Compile Remove="Program.MHR.cs"/>
+	</ItemGroup>
+	<!-- RE4 -->
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE4`))'">
+		<Compile Remove="Program.RE4.cs"/>
 	</ItemGroup>
 </Project>

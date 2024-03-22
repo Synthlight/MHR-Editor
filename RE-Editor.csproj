@@ -11,7 +11,7 @@
 		<ApplicationManifest>App.manifest</ApplicationManifest>
 		<AssemblyName>RE-Editor</AssemblyName>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
-		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release</Configurations>
+		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release;RE4 - Debug;RE4 - Release</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0">
@@ -96,6 +96,38 @@
 	<Target Condition="$(Configuration.StartsWith('MHR'))" Name="CopyLaunchSettingsMHR" AfterTargets="Build" Inputs="Properties/launchSettings.MHR.json" Outputs="Properties/launchSettings.json">
 		<Message Importance="high" Text="Copying launchSettings.MHR.json..."/>
 		<Copy SourceFiles="Properties/launchSettings.MHR.json" DestinationFiles="Properties/launchSettings.json"/>
+	</Target>
+	<!-- RE4 -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('RE4'))">
+		<AssemblyName>RE4-Editor</AssemblyName>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+	</PropertyGroup>
+	<ItemGroup Condition="$(Configuration.StartsWith('RE4'))">
+		<Compile Update="Data\RE4\Assets.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Assets.resx</DependentUpon>
+		</Compile>
+		<EmbeddedResource Update="Data\RE4\Assets.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Assets.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE4`))'">
+		<Compile Remove="Data\RE4\**"/>
+		<EmbeddedResource Remove="Data\RE4\**"/>
+		<Page Remove="Data\RE4\**"/>
+		<None Remove="Data\RE4\**"/>
+		<Compile Remove="Data\DataInit.RE4.cs"/>
+		<Compile Remove="Mods\RE4\**"/>
+	</ItemGroup>
+	<!-- RE4 (Launch Settings) -->
+	<ItemGroup Condition="$(Configuration.StartsWith('RE4'))">
+		<UpToDateCheckInput Include="Properties/launchSettings.RE4.json"/>
+	</ItemGroup>
+	<Target Condition="$(Configuration.StartsWith('RE4'))" Name="CopyLaunchSettingsRE4" AfterTargets="Build" Inputs="Properties/launchSettings.RE4.json" Outputs="Properties/launchSettings.json">
+		<Message Importance="high" Text="Copying launchSettings.RE4.json..."/>
+		<Copy SourceFiles="Properties/launchSettings.RE4.json" DestinationFiles="Properties/launchSettings.json"/>
 	</Target>
 	<!-- Clean Launch Settings -->
 	<Target Name="CleanLaunchSettings" AfterTargets="Clean">

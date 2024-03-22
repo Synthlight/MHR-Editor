@@ -5,6 +5,8 @@ using RE_Editor.Common.Controls.Models;
 
 #if MHR
 using RE_Editor.Common.Data;
+#elif RE4
+using RE_Editor.Common.Data;
 #endif
 
 namespace RE_Editor.Common.Models.List_Wrappers;
@@ -46,6 +48,8 @@ public sealed class DataSourceWrapper<T> : ListWrapper<T> where T : struct {
             "snow.data.DataDef.PlHyakuryuSkillId" => DataHelper.RAMPAGE_SKILL_NAME_LOOKUP,
             "snow.data.DataDef.PlKitchenSkillId" => DataHelper.DANGO_NAME_LOOKUP,
             "snow.data.DataDef.PlWeaponActionId" => DataHelper.SWITCH_SKILL_NAME_LOOKUP,
+#elif RE4
+            "chainsaw.ItemID" => DataHelper.ITEM_NAME_LOOKUP[Global.variant],
 #endif
             _ => throw new InvalidOperationException($"No data source lookup known for: {field.originalType}")
         };
@@ -55,6 +59,8 @@ public sealed class DataSourceWrapper<T> : ListWrapper<T> where T : struct {
         return field.originalType?.Replace("[]", "") switch {
 #if MHR
             "snow.data.ContentsIdSystem.ItemId" => true,
+#elif RE4
+            "chainsaw.ItemID" => true,
 #endif
             _ => false
         };

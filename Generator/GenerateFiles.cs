@@ -46,7 +46,11 @@ public partial class GenerateFiles {
         "System.Collections.Generic.Queue`1<via.vec3>", // Because this breaks generation and I need a better way of handling generics.
         "soundlib.",
         "via.gui.Panel", // Too long, skip it for now.
-#if MHR
+#if DD2
+        "soundlib.SoundStateApp`1<",
+        "soundlib.SoundSwitchApp`1<",
+        "app.GUICharaEditData.PatternParam`",
+#elif MHR
         "snow.camera.CameraUtility.BufferingParam`",
         "snow.data.StmKeyconfigSystem.ConfigCodeSet`",
         "snow.shell.Em", // There's one for each monster variant. Exclude the whole shebang for now.
@@ -58,10 +62,13 @@ public partial class GenerateFiles {
         "snow.StmGuiKeyconfigData.EnumItemSystemMessage`",
         "snow.StmGuiKeyconfigData.EnumMessage`",
         "System.Collections.Generic.List`1<snow.enemy.em134.Em", // Nested generics.
-#elif DD2
+#elif RE4
+        "app.",
+        "chainsaw.AIMapNodeScore.Param`1<",
+        "chainsaw.NetworkRankingSettingUserdata.BoardNameTable`1<",
+        "chainsaw.CameraCurveUserDataParam.CurveParamTable`1<",
         "soundlib.SoundStateApp`1<",
         "soundlib.SoundSwitchApp`1<",
-        "app.GUICharaEditData.PatternParam`",
 #endif
     };
 
@@ -252,7 +259,7 @@ public partial class GenerateFiles {
                  || structInfo.name.Contains("List`")
                  || structInfo.name.Contains("Culture=neutral")
                  || structInfo.name.StartsWith("System")
-                 || !structInfo.name.StartsWith(ROOT_STRUCT_NAMESPACE) && !structInfo.name.StartsWith("via"));
+                 || !structInfo.name.StartsWith(ROOT_STRUCT_NAMESPACE) && !structInfo.name.StartsWith("via") && !structInfo.name.StartsWith("share") && !structInfo.name.StartsWith("ace"));
     }
 
     /**
@@ -288,6 +295,11 @@ public partial class GenerateFiles {
                || key.ContainsIgnoreCase("Snow_equip")
                || key.ContainsIgnoreCase("Snow_data")
                || key.ContainsIgnoreCase("Snow_player");
+#elif RE4
+        return WHITELIST.Contains(key)
+               || key.ContainsIgnoreCase("ItemDefinitionUserData")
+               || key.ContainsIgnoreCase("ItemUseResult")
+               || key.ContainsIgnoreCase("ItemID");
 #else
         return WHITELIST.Contains(key);
 #endif

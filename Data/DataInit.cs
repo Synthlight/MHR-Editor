@@ -11,9 +11,10 @@ using RE_Editor.Common.Models;
 
 #if DD2
 using RE_Editor.Data.DD2;
-
 #elif MHR
 using RE_Editor.Data.MHR;
+#elif RE4
+using RE_Editor.Data.RE4;
 #endif
 
 namespace RE_Editor.Data;

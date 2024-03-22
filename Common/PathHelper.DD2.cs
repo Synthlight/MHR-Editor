@@ -20,9 +20,12 @@ public static class PathHelper {
         @"\natives\STM\AppSystem\item\",
         @"\natives\STM\AppSystem\userdata\",
         @"\natives\stm\appsystem\ch\common\userdata\",
+        @"\natives\stm\appsystem\ch\common\human\userdata\",
     ];
 
-    public const string ARMOR_DATA_PATH = "natives/STM/AppSystem/Item/ItemData/ItemArmorData.user.2";
-    public const string ITEM_DATA_PATH = "natives/STM/AppSystem/Item/ItemData/ItemData.user.2";
-    public const string WEAPON_DATA_PATH = "natives/STM/AppSystem/Item/ItemData/ItemWeaponData.user.2";
+    public const string ARMOR_DATA_PATH                     = "natives/STM/AppSystem/Item/ItemData/ItemArmorData.user.2";
+    public const string DIFFICULTY_SETTINGS_PATH            = "natives/stm/appsystem/userdata/gamesystemuserdata.user.2";
+    public const string ITEM_DATA_PATH                      = "natives/STM/AppSystem/Item/ItemData/ItemData.user.2";
+    public const string WEAPON_DATA_PATH                    = "natives/STM/AppSystem/Item/ItemData/ItemWeaponData.user.2";
+    public const string DEFAULT_CHARACTER_STATUS_PARAM_PATH = "natives/stm/appsystem/ch/common/userdata/defaultcharacterstatusparametertable.user.2";
 }

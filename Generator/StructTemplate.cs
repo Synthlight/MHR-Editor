@@ -39,7 +39,24 @@ public class StructTemplate {
         if (structInfo.fields != null) {
             // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var field in structInfo.fields) {
-                if (string.IsNullOrEmpty(field.name) || string.IsNullOrEmpty(field.originalType)) continue;
+                if (string.IsNullOrEmpty(field.originalType) && field.type == "Data") {
+                    switch (field.size) {
+                        case 4:
+                            field.type         = "F32";
+                            field.originalType = "System.Single";
+                            break;
+                        case 8:
+                            field.type         = "Vec2";
+                            field.originalType = nameof(Vec2);
+                            break;
+                        case 16:
+                            field.type         = "Vec4";
+                            field.originalType = nameof(Vec4);
+                            break;
+                        default: throw new ArgumentOutOfRangeException($"Unknown type to use for data type of {field.size} size:");
+                    }
+                }
+                if (string.IsNullOrEmpty(field.name)) continue;
                 WriteProperty(file, field);
             }
         }
@@ -99,8 +116,9 @@ public class StructTemplate {
         var isEnumType          = typeName != null && generator.enumTypes.ContainsKey(typeName);
         var buttonType          = GetButtonTypeOverride(field) ?? GetButtonType(field);
         var isNonPrimitive      = !isPrimitive && !isEnumType; // via.thing
-        var isObjectType        = field.type is "Object" or "UserData";
-        var viaType             = GetViaType(field, isNonPrimitive, typeName, ref isObjectType);
+        var isUserData          = field.type == "UserData";
+        var isObjectType        = field.type == "Object";
+        var viaType             = GetViaType(field, isNonPrimitive, typeName, ref isObjectType, isUserData);
         var negativeOneForEmpty = GetNegativeForEmptyAllowed(field);
 
         if (!usedNames.TryAdd(newName, 1)) {
@@ -127,12 +145,15 @@ public class StructTemplate {
                 }
                 file.WriteLine("    [IsList]");
                 file.WriteLine($"    public ObservableCollection<DataSourceWrapper<{primitiveName}>> {newName} {{ get; set; }}");
+            } else if (isUserData) {
+                file.WriteLine("    [IsList]");
+                file.WriteLine($"    public ObservableCollection<{nameof(UserDataShell)}> {newName} {{ get; set; }}");
+            } else if (isNonPrimitive && viaType != null) {
+                file.WriteLine("    [IsList]");
+                file.WriteLine($"    public ObservableCollection<{viaType}> {newName} {{ get; set; }}");
             } else if (isObjectType) {
                 file.WriteLine("    [IsList]");
                 file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
-            } else if (isNonPrimitive) {
-                file.WriteLine("    [IsList]");
-                file.WriteLine($"    public ObservableCollection<{viaType}> {newName} {{ get; set; }}");
             } else if (isEnumType) {
                 file.WriteLine("    [IsList]");
                 file.WriteLine($"    public ObservableCollection<GenericWrapper<{typeName}>> {newName} {{ get; set; }}");
@@ -161,15 +182,18 @@ public class StructTemplate {
                 file.WriteLine($"    public string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
                                $"DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName});");
 #endif
-            } else if (viaType == nameof(System.Guid)) {
+            } else if (viaType?.Is(typeof(ISimpleViaType)) == true) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    public {viaType} {newName} {{ get; set; }}");
+            } else if (isUserData) {
+                file.WriteLine($"    [SortOrder({sortOrder})]");
+                file.WriteLine($"    public ObservableCollection<{nameof(UserDataShell)}> {newName} {{ get; set; }}");
+            } else if (isNonPrimitive && viaType != null) {
+                file.WriteLine($"    [SortOrder({sortOrder})]");
+                file.WriteLine($"    public ObservableCollection<{viaType}> {newName} {{ get; set; }}");
             } else if (isObjectType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
-            } else if (isNonPrimitive) {
-                file.WriteLine($"    [SortOrder({sortOrder})]");
-                file.WriteLine($"    public ObservableCollection<{viaType}> {newName} {{ get; set; }}");
             } else if (isEnumType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    public {typeName} {newName} {{ get; set; }}");
@@ -184,8 +208,9 @@ public class StructTemplate {
         sortOrder += 100;
     }
 
-    private static string? GetViaType(StructJson.Field field, bool isNonPrimitive, string? typeName, ref bool isObjectType) {
-        string? viaType = null;
+    private static string? GetViaType(StructJson.Field field, bool isNonPrimitive, string? typeName, ref bool isObjectType, bool isUserData) {
+        // We do it here and later since we sometimes overwrite them.
+        var viaType = field.originalType?.GetViaType();
 
         if (typeName == "Via_Prefab") {
             viaType      = nameof(Prefab);
@@ -193,7 +218,7 @@ public class StructTemplate {
         } else if (typeName == "System_Type") {
             viaType      = nameof(Type);
             isObjectType = false;
-        } else if (isNonPrimitive && !isObjectType) {
+        } else if (isNonPrimitive && !isObjectType && !isUserData) {
             // This makes sure we've implemented the via type during generation.
             viaType = field.type!.GetViaType() ?? throw new NotImplementedException($"Hard-coded type '{field.type}' not implemented.");
         }
@@ -221,10 +246,11 @@ public class StructTemplate {
             var isPrimitive    = primitiveName != null;
             var isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
             var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
-            var isObjectType   = field.type is "Object" or "UserData";
-            var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType);
+            var isUserData     = field.type == "UserData";
+            var isObjectType   = field.type == "Object";
+            var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType, isUserData);
 
-            if (viaType == nameof(System.Guid)) {
+            if (viaType?.Is(typeof(ISimpleViaType)) == true) {
                 file.WriteLine($"        obj.{newName} = new();");
             }
         }
@@ -254,12 +280,14 @@ public class StructTemplate {
             var isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
             var buttonType     = GetButtonTypeOverride(field) ?? GetButtonType(field);
             var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
-            var isObjectType   = field.type is "Object" or "UserData";
-            var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType);
+            var isUserData     = field.type == "UserData";
+            var isObjectType   = field.type == "Object";
+            var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType, isUserData);
 
             // TODO: Fix generic/dataSource wrappers.
 
-            if (viaType == nameof(System.Guid)) {
+            // ReSharper disable once ConvertIfStatementToSwitchStatement
+            if (!field.array && viaType?.Is(typeof(ISimpleViaType)) == true) {
                 file.WriteLine($"        obj.{newName} = new();");
             } else if ((field.array || isObjectType || isNonPrimitive) && buttonType == null) {
                 file.WriteLine($"        obj.{newName} ??= new();");
@@ -267,7 +295,9 @@ public class StructTemplate {
                 if (typeName == "System_Type" || viaType == "Type") { // `Type` is a built-in type, no copy.
                     file.WriteLine($"            obj.{newName}.Add(x);");
                 } else {
-                    if (isObjectType && viaType == null && isNonPrimitive && typeName?.Contains("GenericWrapper") == false) {
+                    if (viaType?.Is(typeof(ISimpleViaType)) == true) {
+                        file.WriteLine($"            obj.{newName}.Add(x.Copy());");
+                    } else if (isObjectType && viaType == null && isNonPrimitive && typeName?.Contains("GenericWrapper") == false) {
                         file.WriteLine($"            obj.{newName}.Add({(isEnumType ? "x" : $"x.Copy<{typeName}>()")});");
                     } else {
                         file.WriteLine($"            obj.{newName}.Add({(isEnumType ? "x" : "x.Copy()")});");

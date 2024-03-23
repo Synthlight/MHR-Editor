@@ -87,7 +87,7 @@ public class RSZ {
             var entryPointObject = objectData[(int) entryIndex - 1]; // 1 based.
             rootObjects.Add(entryPointObject);
         }
-        // Then, call each in order so they can rebuild the list in the right order.
+        // Then, call each in order, so they can rebuild the list in the right order.
         objectData.Clear();
         foreach (var rootObject in rootObjects) {
             var objectChain = new List<RszObject>();

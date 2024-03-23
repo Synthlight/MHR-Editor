@@ -7,7 +7,7 @@ using RE_Editor.Common.Models;
 namespace RE_Editor.Common.Structs;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-public class Guid : RszObject, IViaType {
+public class Guid : RszObject, ISimpleViaType {
     public System.Guid Value { get; set; }
 
     [DisplayName("")]
@@ -23,6 +23,12 @@ public class Guid : RszObject, IViaType {
 
     public void Write(BinaryWriter writer) {
         writer.Write(Value.ToByteArray());
+    }
+
+    public Guid Copy() {
+        return new() {
+            Value = Value
+        };
     }
 
     public override string ToString() {

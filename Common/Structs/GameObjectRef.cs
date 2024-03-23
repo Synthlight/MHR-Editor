@@ -5,7 +5,7 @@ using RE_Editor.Common.Models;
 namespace RE_Editor.Common.Structs;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-public class GameObjectRef : RszObject, IViaType {
+public class GameObjectRef : RszObject, ISimpleViaType {
     public System.Guid Value { get; set; }
 
     public void Read(BinaryReader reader) {
@@ -20,5 +20,9 @@ public class GameObjectRef : RszObject, IViaType {
         return new() {
             Value = Value
         };
+    }
+
+    public override string ToString() {
+        return Value.ToString();
     }
 }

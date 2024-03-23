@@ -11,7 +11,8 @@ using RE_Editor.Common.Structs;
 namespace RE_Editor.Common;
 
 public static class Extensions {
-    private static readonly Dictionary<string, string> VIA_TYPE_NAME_LOOKUPS = new();
+    private static readonly Dictionary<string, string> VIA_TYPE_NAME_LOOKUPS = [];
+    private static readonly Dictionary<string, Type>   FOUND_TYPE_CACHE      = [];
 
     static Extensions() {
         var viaTypes = from assembly in AppDomain.CurrentDomain.GetAssemblies()
@@ -37,6 +38,21 @@ public static class Extensions {
 
     public static bool Is(this Type source, params Type[] types) {
         return types.Any(type => type.IsAssignableFrom(source));
+    }
+
+    public static bool Is(this string source, params Type[] types) {
+        var foundType = FOUND_TYPE_CACHE.GetValueOrDefault(source);
+        foundType ??= (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                       from type in assembly.GetTypes()
+                       where type.Name == source
+                       from searchingType in types
+                       where searchingType.IsAssignableFrom(type)
+                       select type).FirstOrDefault();
+        if (foundType != null) {
+            FOUND_TYPE_CACHE[source] = foundType;
+            return true;
+        }
+        return false;
     }
 
     public static T[] Subsequence<T>(this IEnumerable<T> arr, int startIndex, int length) {
@@ -350,10 +366,8 @@ public static class Extensions {
         var merged = new Dictionary<A, Dictionary<B, C>>();
         foreach (var dict in dictionaries) {
             foreach (var (key, value) in dict) {
-                if (merged.ContainsKey(key)) {
+                if (!merged.TryAdd(key, value)) {
                     merged[key] = new List<Dictionary<B, C>> {merged[key], value}.MergeDictionaries();
-                } else {
-                    merged[key] = value;
                 }
             }
         }
@@ -386,7 +400,7 @@ public static class Extensions {
 
     public static string? GetViaType(this string name) {
         name = name.ToLower();
-        return VIA_TYPE_NAME_LOOKUPS.TryGetValue(name, out var value) ? value : null;
+        return VIA_TYPE_NAME_LOOKUPS.GetValueOrDefault(name);
     }
 
     public static string ToUpperFirstLetter(this string source) {

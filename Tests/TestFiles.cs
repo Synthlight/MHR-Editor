@@ -38,22 +38,29 @@ public class TestFiles {
             ReDataFile data;
             try {
                 data = ReDataFile.Read(file);
-            } catch (Exception) {
-                Assert.Inconclusive();
+            } catch (Exception e) {
+                Assert.Inconclusive($"{e.Message}\n{e.StackTrace}");
                 return;
             }
 
-            using var writer = new BinaryWriter(new MemoryStream());
-            data.Write(writer, file.Contains("MSG"));
+            try {
+                using var writer = new BinaryWriter(new MemoryStream());
+                data.Write(writer, testWritePosition: true, forGp: file.Contains("MSG"));
 
-            var sourceLength = new FileInfo(file).Length;
-            var destLength   = writer.BaseStream.Length;
-            Debug.Assert(sourceLength == destLength, $"Length expected {sourceLength}, found {destLength}.");
+                var sourceLength = new FileInfo(file).Length;
+                var destLength   = writer.BaseStream.Length;
+                Debug.Assert(sourceLength == destLength, $"Length expected {sourceLength}, found {destLength}.");
 
-            // To byte arrays since MD5 unbelievably takes steam **position** into account.
-            var fileHash = MD5.Create().ComputeHash(File.ReadAllBytes(file));
-            var newHash  = MD5.Create().ComputeHash(((MemoryStream) writer.BaseStream).ToArray());
-            Debug.Assert(fileHash.SequenceEqual(newHash), $"MD5 expected {BitConverter.ToString(fileHash)}, found {BitConverter.ToString(newHash)}.");
+                // To byte arrays since MD5 unbelievably takes steam **position** into account.
+                var fileHash = MD5.Create().ComputeHash(File.ReadAllBytes(file));
+                var newHash  = MD5.Create().ComputeHash(((MemoryStream) writer.BaseStream).ToArray());
+                Debug.Assert(fileHash.SequenceEqual(newHash), $"MD5 expected {BitConverter.ToString(fileHash)}, found {BitConverter.ToString(newHash)}.");
+            } catch (Exception) {
+                if (Debugger.IsAttached) {
+                    data.Write(new BinaryWriter(File.OpenWrite($@"O:\Temp\{Path.GetFileName(file)}")), testWritePosition: true, forGp: file.Contains("MSG"));
+                }
+                throw;
+            }
         } catch (FileNotSupported) {
             Assert.Inconclusive();
         }

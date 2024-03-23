@@ -10,7 +10,6 @@ using JetBrains.Annotations;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Data;
 using RE_Editor.Common.Models.List_Wrappers;
-using Guid = RE_Editor.Common.Structs.Guid;
 
 #pragma warning disable CS8600
 #pragma warning disable CS8618
@@ -50,20 +49,20 @@ public class RszObject : OnPropertyChangedBase {
     }
 
     public static RszObject Read(BinaryReader reader, uint hash, RSZ rsz, int userDataRef) {
-        if (userDataRef > -1) {
-            return new UserDataShell {
-                userDataRef = userDataRef,
-                rsz         = rsz
-            };
-        }
-
-        if (!DataHelper.STRUCT_INFO.ContainsKey(hash)) {
+        if (!DataHelper.STRUCT_INFO.TryGetValue(hash, out var structInfo)) {
             Debug.WriteLine($"Unknown hash: {hash:X}");
             throw new FileNotSupported();
         }
 
-        var structInfo = DataHelper.STRUCT_INFO[hash];
-        var rszObject  = CreateRszObjectInstance(hash, structInfo);
+        if (userDataRef > -1) {
+            return new UserDataShell(hash) {
+                userDataRef = userDataRef,
+                rsz         = rsz,
+                structInfo  = structInfo
+            };
+        }
+
+        var rszObject = CreateRszObjectInstance(hash, structInfo);
         rszObject.structInfo = structInfo;
         rszObject.rsz        = rsz;
         rszObject.pos        = reader.BaseStream.Position;
@@ -92,6 +91,8 @@ public class RszObject : OnPropertyChangedBase {
             var fieldGenericType = fieldType.IsGenericType ? fieldType.GenericTypeArguments[0] : null; // GetInnermostGenericType(fieldType);
             var fieldSetMethod   = fieldInfo.SetMethod!;
 
+            if (isUserData) fieldGenericType = typeof(UserDataShell);
+
             // Be careful with lists. The 'align' in them refers to their contents, not their count themselves, which is always a 4-aligned int.
             var align = field.GetAlign();
             reader.BaseStream.Align(align);
@@ -99,7 +100,7 @@ public class RszObject : OnPropertyChangedBase {
             if (field.array) {
                 var arrayCount = reader.ReadInt32();
 
-                if (isObjectType) { // Array of pointers.
+                if (isObjectType || isUserData) { // Array of pointers.
                     var objects = new List<RszObject>();
                     for (var index = 0; index < arrayCount; index++) {
                         objects.Add(rsz.objectData[reader.ReadInt32() - 1]);
@@ -142,11 +143,11 @@ public class RszObject : OnPropertyChangedBase {
                 } else if (isNonPrimitive) { // Embedded object. (A built-in type like via.vec2.)
                     var instance = (IViaType) Activator.CreateInstance(viaType!)!;
                     instance.Read(reader);
-                    if (viaType == typeof(Guid)) {
+                    if (viaType?.Is(typeof(ISimpleViaType)) == true) {
                         SetDirect(instance, fieldSetMethod, rszObject);
                     } else {
                         var items = new List<IViaType> {instance}.GetGenericItemsOfType(fieldGenericType!);
-                        SetList(items, fieldSetMethod, rszObject); // Treated as a list so we have an 'open' button.
+                        SetList(items, fieldSetMethod, rszObject); // Treated as a list, so we have an 'open' button.
                     }
                 } else { // A primitive.
                     var bytes = reader.ReadBytes(field.size);
@@ -182,33 +183,41 @@ public class RszObject : OnPropertyChangedBase {
     }
 
     /**
-     * Run before writing to setup all the instance info / indexes so we know exactly where an object is being written.
+     * Run before writing to set up all the instance info / indexes, so we know exactly where an object is being written.
      * This is how we know what to point an 'object' field to.
      */
     public void SetupInstanceInfo(List<InstanceInfo> instanceInfo, bool forGp) {
-        for (var i = 0; i < structInfo.fields!.Count; i++) {
-            var field          = structInfo.fields[i];
-            var fieldName      = field.name?.ToConvertedFieldName()!;
-            var fieldInfo      = GetType().GetProperty(fieldName)!;
-            var isObjectType   = field.type == "Object";
-            var fieldGetMethod = fieldInfo.GetMethod!;
+        if (this is not UserDataShell) {
+            for (var i = 0; i < structInfo.fields!.Count; i++) {
+                var field          = structInfo.fields[i];
+                var fieldName      = field.name?.ToConvertedFieldName()!;
+                var fieldInfo      = GetType().GetProperty(fieldName)!;
+                var isUserData     = field.type == "UserData";
+                var isObjectType   = field.type == "Object";
+                var fieldGetMethod = fieldInfo.GetMethod!;
 
-            if (isObjectType) {
-                if (field.array) { // Array of pointers.
-                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
-                    foreach (RszObject obj in list) {
-                        obj.SetupInstanceInfo(instanceInfo, forGp);
+                if (isObjectType || isUserData) {
+                    if (field.array) { // Array of pointers.
+                        var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                        foreach (RszObject obj in list) {
+                            obj.SetupInstanceInfo(instanceInfo, forGp);
+                        }
+                    } else { // Pointer to object.
+                        // So it works in the UI, we always put the object in a list. Thus, even if not an array, we need to extract from a list.
+                        var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                        ((RszObject) list[0]!).SetupInstanceInfo(instanceInfo, forGp);
                     }
-                } else { // Pointer to object.
-                    // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract from a list.
-                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
-                    ((RszObject) list[0]!).SetupInstanceInfo(instanceInfo, forGp);
                 }
             }
         }
 
-        var hash = (uint) GetType().GetField("HASH")!.GetValue(null)!;
-        var crc  = uint.Parse(structInfo.crc!, NumberStyles.HexNumber);
+        uint hash;
+        if (this is UserDataShell udc) {
+            hash = udc.hash;
+        } else {
+            hash = (uint) GetType().GetField("HASH")!.GetValue(null)!;
+        }
+        var crc = uint.Parse(structInfo.crc!, NumberStyles.HexNumber);
 
         if (forGp && DataHelper.GP_CRC_OVERRIDE_INFO.TryGetValue(hash, out var value)) {
             crc = value;
@@ -238,7 +247,7 @@ public class RszObject : OnPropertyChangedBase {
                         ((RszObject) obj).Write(writer, testWritePosition);
                     }
                 } else { // Pointer to object.
-                    // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract from a list.
+                    // So it works in the UI, we always put the object in a list. Thus, even if not an array, we need to extract from a list.
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;
                     ((RszObject) list[0]!).Write(writer, testWritePosition);
                 }
@@ -246,7 +255,8 @@ public class RszObject : OnPropertyChangedBase {
         }
 
         if (testWritePosition) {
-            Debug.Assert(pos == writer.BaseStream.Position, $"Expected {pos}, found {writer.BaseStream.Position}.");
+            Debug.Assert(pos == writer.BaseStream.Position, $"Position Mismatch: Expected {pos}, found {writer.BaseStream.Position}.\n" +
+                                                            $"After Writing: {structInfo.name}");
         }
 
         switch (this) {
@@ -264,6 +274,7 @@ public class RszObject : OnPropertyChangedBase {
             var fieldName      = field.name?.ToConvertedFieldName()!;
             var primitiveName  = field.GetCSharpType();
             var viaType        = field.type?.GetViaType().AsType();
+            var isUserData     = field.type == "UserData";
             var isNonPrimitive = primitiveName == null;
             var isObjectType   = field.type == "Object";
             var isStringType   = field.type == "String";
@@ -275,7 +286,7 @@ public class RszObject : OnPropertyChangedBase {
             writer.PadTill(() => writer.BaseStream.Position % align != 0);
 
             if (field.array) {
-                if (isObjectType) { // Array of pointers.
+                if (isObjectType || isUserData) { // Array of pointers.
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;
                     writer.Write(list.Count);
                     foreach (RszObject obj in list) {
@@ -310,18 +321,18 @@ public class RszObject : OnPropertyChangedBase {
                     }
                 }
             } else {
-                if (isObjectType) { // Pointer to object.
+                if (isObjectType || isUserData) { // Pointer to object.
                     var obj = (RszObject) ((dynamic) fieldGetMethod.Invoke(this, null)!)[0];
                     writer.Write(obj.objectInstanceIndex);
                 } else if (isStringType) { // Array of strings.
                     var str = (string) fieldGetMethod.Invoke(this, null)!;
                     writer.WriteWString(str);
                 } else if (isNonPrimitive) { // Embedded object. (A built-in type like via.vec2.)
-                    if (viaType == typeof(Guid)) {
-                        var guid = (Guid) fieldGetMethod.Invoke(this, null)!;
-                        guid.Write(writer);
+                    if (viaType?.Is(typeof(ISimpleViaType)) == true) {
+                        var simpleType = (IViaType) fieldGetMethod.Invoke(this, null)!;
+                        simpleType.Write(writer);
                     } else {
-                        // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract from a list.
+                        // So it works in the UI, we always put the object in a list. Thus, even if not an array, we need to extract from a list.
                         var list = (IList) fieldGetMethod.Invoke(this, null)!;
                         ((IViaType) list[0]!).Write(writer);
                     }
@@ -336,23 +347,26 @@ public class RszObject : OnPropertyChangedBase {
 
     public void WriteObjectList(List<RszObject> objectList) {
         // Add all child objects first.
-        for (var i = 0; i < structInfo.fields!.Count; i++) {
-            var field          = structInfo.fields[i];
-            var fieldName      = field.name?.ToConvertedFieldName()!;
-            var fieldInfo      = GetType().GetProperty(fieldName)!;
-            var isObjectType   = field.type == "Object";
-            var fieldGetMethod = fieldInfo.GetMethod!;
+        if (this is not UserDataShell) {
+            for (var i = 0; i < structInfo.fields!.Count; i++) {
+                var field          = structInfo.fields[i];
+                var fieldName      = field.name?.ToConvertedFieldName()!;
+                var fieldInfo      = GetType().GetProperty(fieldName)!;
+                var isUserData     = field.type == "UserData";
+                var isObjectType   = field.type == "Object";
+                var fieldGetMethod = fieldInfo.GetMethod!;
 
-            if (isObjectType) {
-                if (field.array) { // Array of pointers.
-                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
-                    foreach (var obj in list) {
-                        ((RszObject) obj).WriteObjectList(objectList);
+                if (isObjectType || isUserData) {
+                    if (field.array) { // Array of pointers.
+                        var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                        foreach (var obj in list) {
+                            ((RszObject) obj).WriteObjectList(objectList);
+                        }
+                    } else { // Pointer to object.
+                        // So it works in the UI, we always put the object in a list. Thus, even if not an array, we need to extract from a list.
+                        var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                        ((RszObject) list[0]!).WriteObjectList(objectList);
                     }
-                } else { // Pointer to object.
-                    // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract from a list.
-                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
-                    ((RszObject) list[0]!).WriteObjectList(objectList);
                 }
             }
         }

@@ -53,6 +53,7 @@ public partial class GenerateFiles {
         "app.ClassSelector",
         "AISituation",
         "app.JobUnique",
+        "app.MaterialInterpolation",
 #elif MHR
         "snow.camera.CameraUtility.BufferingParam`",
         "snow.data.StmKeyconfigSystem.ConfigCodeSet`",

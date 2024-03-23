@@ -291,6 +291,7 @@ public class StructTemplate {
         var name = $"{className}.{field.name}";
         return name switch {
 #if DD2
+            "App_ItemDataParam._DecayedItemId" => DataSourceType.ITEMS,
             "App_ItemShopBuyParam._ItemId" => DataSourceType.ITEMS,
             "App_ItemShopSellParam._ItemId" => DataSourceType.ITEMS,
 #endif

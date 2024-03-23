@@ -21,7 +21,7 @@ public class ItemTweaks : IMod {
     public static void Make() {
         const string bundleName  = "Item Tweaks";
         const string description = "Item/Equipment weight and cost changes.";
-        const string version     = "1.6";
+        const string version     = "1.7";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var itemDataFiles = new List<string> {
@@ -38,6 +38,12 @@ public class ItemTweaks : IMod {
         };
 
         var mods = new[] {
+            baseMod
+                .SetName("No Item Decay")
+                .SetAction(list => Decay(list, DecayOptions._0)),
+            baseMod
+                .SetName("Stack Size: 9999")
+                .SetAction(list => Stack(list, StackOptions._9999)),
             baseMod
                 .SetName("Cost: 1 Gold")
                 .SetAction(list => GoldCost(list, GoldOptions._1)),
@@ -84,6 +90,8 @@ public class ItemTweaks : IMod {
                     GoldCost(list, GoldOptions._1);
                     SellPrice(list, SellOptions.X10);
                     Weight(list, WeightOptions._0);
+                    Decay(list, DecayOptions._0);
+                    Stack(list, StackOptions._9999);
                 }),
         };
 
@@ -190,18 +198,64 @@ public class ItemTweaks : IMod {
         }
     }
 
+    public static void Decay(List<RszObject> rszObjectData, DecayOptions option) {
+        foreach (var obj in rszObjectData) {
+            switch (obj) {
+                case App_ItemDataParam itemData:
+                    switch (option) {
+                        case DecayOptions._0:
+                            itemData.Decay         = 0;
+                            itemData.DecayedItemId = 0;
+                            break;
+                    }
+                    break;
+            }
+        }
+    }
+
+    public static void Stack(List<RszObject> rszObjectData, StackOptions option) {
+        foreach (var obj in rszObjectData) {
+            switch (obj) {
+                case App_ItemDataParam itemData:
+                    switch (option) {
+                        case StackOptions.X10:
+                            if (itemData.StackNum > 1) itemData.StackNum *= 10;
+                            break;
+                        case StackOptions._9999:
+                            if (itemData.StackNum > 1) itemData.StackNum = 0;
+                            break;
+                    }
+                    break;
+            }
+        }
+    }
+
     public enum GoldOptions {
+        NORMAL,
         _1,
         _1_Ferry_Only,
     }
 
     public enum WeightOptions {
+        NORMAL,
         _0,
         _0_Ferry_Only,
         _0_Materials,
     }
 
     public enum SellOptions {
+        NORMAL,
         X10,
+    }
+
+    public enum DecayOptions {
+        NORMAL,
+        _0,
+    }
+
+    public enum StackOptions {
+        NORMAL,
+        X10,
+        _9999,
     }
 }

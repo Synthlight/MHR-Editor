@@ -19,7 +19,7 @@ public class JobRequirements : IMod {
     public static void Make() {
         const string bundleName  = "No Job Requirements";
         const string description = "Tweaks weapon & armor data to let you use any armor/weapon with any job.";
-        const string version     = "1.0";
+        const string version     = "1.1";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {
@@ -29,19 +29,6 @@ public class JobRequirements : IMod {
         };
 
         var mods = new[] {
-            baseMod
-                .SetName("No Job Requirements: All (+ Item Tweaks All-in-One)")
-                .SetFiles([
-                    PathHelper.ARMOR_DATA_PATH,
-                    PathHelper.ITEM_DATA_PATH,
-                    PathHelper.WEAPON_DATA_PATH,
-                ])
-                .SetAction(list => {
-                    ItemTweaks.GoldCost(list, ItemTweaks.GoldOptions._1);
-                    ItemTweaks.SellPrice(list, ItemTweaks.SellOptions.X10);
-                    ItemTweaks.Weight(list, ItemTweaks.WeightOptions._0);
-                    Jobs(list, JobOptions.ALL);
-                }),
             baseMod
                 .SetName("No Job Requirements: Armors Only")
                 .SetFiles([PathHelper.ARMOR_DATA_PATH])

@@ -95,17 +95,15 @@ public class StructTemplate {
         var typeName            = field.originalType!.ToConvertedTypeName();
         var isPrimitive         = primitiveName != null;
         var isEnumType          = typeName != null && generator.enumTypes.ContainsKey(typeName);
-        var buttonType          = GetButtonType(field);
+        var buttonType          = GetButtonTypeOverride(field) ?? GetButtonType(field);
         var isNonPrimitive      = !isPrimitive && !isEnumType; // via.thing
         var isObjectType        = field.type is "Object" or "UserData";
         var viaType             = GetViaType(field, isNonPrimitive, typeName, ref isObjectType);
         var negativeOneForEmpty = GetNegativeForEmptyAllowed(field);
 
-        if (usedNames.ContainsKey(newName)) {
+        if (!usedNames.TryAdd(newName, 1)) {
             usedNames[newName]++;
             newName += usedNames[newName].ToString();
-        } else {
-            usedNames[newName] = 1;
         }
 
         file.WriteLine("");
@@ -161,6 +159,9 @@ public class StructTemplate {
                 file.WriteLine($"    public string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
                                $"DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName});");
 #endif
+            } else if (viaType == nameof(System.Guid)) {
+                file.WriteLine($"    [SortOrder({sortOrder})]");
+                file.WriteLine($"    public {viaType} {newName} {{ get; set; }}");
             } else if (isObjectType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
@@ -222,7 +223,7 @@ public class StructTemplate {
             var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType);
 
             if (viaType == nameof(System.Guid)) {
-                file.WriteLine($"        obj.{newName} = RE_Editor.Common.Structs.Guid.NewIdInAList;");
+                file.WriteLine($"        obj.{newName} = new();");
             }
         }
 
@@ -249,7 +250,7 @@ public class StructTemplate {
             var typeName       = field.originalType!.ToConvertedTypeName();
             var isPrimitive    = primitiveName != null;
             var isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
-            var buttonType     = GetButtonType(field);
+            var buttonType     = GetButtonTypeOverride(field) ?? GetButtonType(field);
             var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
             var isObjectType   = field.type is "Object" or "UserData";
             var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType);
@@ -257,7 +258,7 @@ public class StructTemplate {
             // TODO: Fix generic/dataSource wrappers.
 
             if (viaType == nameof(System.Guid)) {
-                file.WriteLine($"        obj.{newName} = RE_Editor.Common.Structs.Guid.NewIdInAList;"); // Because the field name might be `Guid`.
+                file.WriteLine($"        obj.{newName} = new();");
             } else if ((field.array || isObjectType || isNonPrimitive) && buttonType == null) {
                 file.WriteLine($"        obj.{newName} ??= new();");
                 file.WriteLine($"        foreach (var x in {newName}) {{");

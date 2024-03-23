@@ -6,9 +6,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using JetBrains.Annotations;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Data;
 using RE_Editor.Common.Models.List_Wrappers;
+using Guid = RE_Editor.Common.Structs.Guid;
 
 #pragma warning disable CS8600
 #pragma warning disable CS8618
@@ -25,7 +27,7 @@ public class RszObject : OnPropertyChangedBase {
     private                  long       pos; // Used during testing to make sure read/write without altering anything is written in the same spot.
 
     [SortOrder(int.MaxValue - 1000)]
-    public int Index { get; set; }
+    public int Index { [UsedImplicitly] get; set; }
 
     public virtual T Copy<T>() where T : RszObject {
         var obj = (T) Activator.CreateInstance(typeof(T), null)!;
@@ -67,6 +69,7 @@ public class RszObject : OnPropertyChangedBase {
         rszObject.pos        = reader.BaseStream.Position;
 
         switch (rszObject) {
+            // ReSharper disable once SuspiciousTypeConversion.Global
             case ICustomReadWrite customReadWrite:
                 customReadWrite.Read(reader);
                 return rszObject;
@@ -123,7 +126,7 @@ public class RszObject : OnPropertyChangedBase {
                 } else { // Primitive array.
                     var bytes         = reader.ReadBytes(field.size * arrayCount);
                     var genericMethod = typeof(RszObjectExtensions).GetMethod(nameof(RszObjectExtensions.GetDataAsList))!.MakeGenericMethod(fieldGenericType!);
-                    var items         = genericMethod.Invoke(null, new object[] {bytes, field.size, arrayCount, field})!;
+                    var items         = genericMethod.Invoke(null, [bytes, field.size, arrayCount, field])!;
                     SetList(items, fieldSetMethod, rszObject);
                 }
             } else {
@@ -135,25 +138,33 @@ public class RszObject : OnPropertyChangedBase {
                     SetList(items, fieldSetMethod, rszObject);
                 } else if (isStringType) { // A string.
                     var str = reader.ReadWString();
-                    fieldSetMethod.Invoke(rszObject, new object?[] {str});
+                    fieldSetMethod.Invoke(rszObject, [str]);
                 } else if (isNonPrimitive) { // Embedded object. (A built-in type like via.vec2.)
                     var instance = (IViaType) Activator.CreateInstance(viaType!)!;
                     instance.Read(reader);
-                    var items = new List<IViaType> {instance}.GetGenericItemsOfType(fieldGenericType!);
-                    SetList(items, fieldSetMethod, rszObject); // Treated as a list so we have an 'open' button.
+                    if (viaType == typeof(Guid)) {
+                        SetDirect(instance, fieldSetMethod, rszObject);
+                    } else {
+                        var items = new List<IViaType> {instance}.GetGenericItemsOfType(fieldGenericType!);
+                        SetList(items, fieldSetMethod, rszObject); // Treated as a list so we have an 'open' button.
+                    }
                 } else { // A primitive.
                     var bytes = reader.ReadBytes(field.size);
                     var data  = bytes.GetDataAs(fieldType);
-                    fieldSetMethod.Invoke(rszObject, new[] {data});
+                    fieldSetMethod.Invoke(rszObject, [data]);
                 }
             }
         }
         return rszObject;
     }
 
+    private static void SetDirect(object item, MethodBase fieldSetMethod, RszObject rszObject) {
+        fieldSetMethod.Invoke(rszObject, [item]);
+    }
+
     private static void SetList(object items, MethodBase fieldSetMethod, RszObject rszObject) {
         var data = MakeGenericObservableCollection((dynamic) items);
-        fieldSetMethod.Invoke(rszObject, new[] {data});
+        fieldSetMethod.Invoke(rszObject, [data]);
     }
 
     public static ObservableCollection<T> MakeGenericObservableCollection<T>(IEnumerable<T> itemSource) {
@@ -239,6 +250,7 @@ public class RszObject : OnPropertyChangedBase {
         }
 
         switch (this) {
+            // ReSharper disable once SuspiciousTypeConversion.Global
             case ICustomReadWrite customReadWrite:
                 customReadWrite.Write(writer);
                 return;
@@ -251,6 +263,7 @@ public class RszObject : OnPropertyChangedBase {
             var field          = structInfo.fields[i];
             var fieldName      = field.name?.ToConvertedFieldName()!;
             var primitiveName  = field.GetCSharpType();
+            var viaType        = field.type?.GetViaType().AsType();
             var isNonPrimitive = primitiveName == null;
             var isObjectType   = field.type == "Object";
             var isStringType   = field.type == "String";
@@ -304,9 +317,14 @@ public class RszObject : OnPropertyChangedBase {
                     var str = (string) fieldGetMethod.Invoke(this, null)!;
                     writer.WriteWString(str);
                 } else if (isNonPrimitive) { // Embedded object. (A built-in type like via.vec2.)
-                    // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract from a list.
-                    var list = (IList) fieldGetMethod.Invoke(this, null)!;
-                    ((IViaType) list[0]!).Write(writer);
+                    if (viaType == typeof(Guid)) {
+                        var guid = (Guid) fieldGetMethod.Invoke(this, null)!;
+                        guid.Write(writer);
+                    } else {
+                        // So it works in the UI, we always put the object in a list. Thus even if not an array, we need to extract from a list.
+                        var list = (IList) fieldGetMethod.Invoke(this, null)!;
+                        ((IViaType) list[0]!).Write(writer);
+                    }
                 } else { // A primitive.
                     var obj   = fieldGetMethod.Invoke(this, null)!;
                     var bytes = obj.GetBytes();

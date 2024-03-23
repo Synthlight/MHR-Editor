@@ -9,7 +9,12 @@ public partial class GenerateFiles {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
     private static readonly List<string> WHITELIST = [
-        "App_WeaponCatalogData",
+        "App_GameSystemUserData",
+        "App_HumanStaminaParameterAdditionalData",
+        "App_ItemArmorData",
         "App_ItemData",
+        "App_ItemShopData",
+        "App_ItemWeaponData",
+        "App_WeaponCatalogData",
     ];
 }

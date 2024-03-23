@@ -370,7 +370,9 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
         var showAsHex      = (ButtonIdAsHexAttribute) propToUse.GetCustomAttribute(typeof(ButtonIdAsHexAttribute), true) != null;
 
         dynamic dataSource = dataSourceType switch {
-#if MHR
+#if DD2
+            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
+#elif MHR
             DataSourceType.DANGO_SKILLS => DataHelper.DANGO_SKILL_NAME_LOOKUP[Global.locale],
             DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
             DataSourceType.RAMPAGE_SKILLS => DataHelper.RAMPAGE_SKILL_NAME_LOOKUP[Global.locale],

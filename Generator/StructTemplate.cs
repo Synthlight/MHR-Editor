@@ -4,7 +4,9 @@ using RE_Editor.Common.Models;
 using RE_Editor.Common.Structs;
 using RE_Editor.Generator.Models;
 
-#if MHR
+#if DD2
+using RE_Editor.Common.Data;
+#elif MHR
 using RE_Editor.Common.Data;
 #elif RE4
 using RE_Editor.Common.Data;
@@ -285,6 +287,17 @@ public class StructTemplate {
         file.Write("}");
     }
 
+    private DataSourceType? GetButtonTypeOverride(StructJson.Field field) {
+        var name = $"{className}.{field.name}";
+        return name switch {
+#if DD2
+            "App_ItemShopBuyParam._ItemId" => DataSourceType.ITEMS,
+            "App_ItemShopSellParam._ItemId" => DataSourceType.ITEMS,
+#endif
+            _ => null
+        };
+    }
+
     private static DataSourceType? GetButtonType(StructJson.Field field) {
         return field.originalType?.Replace("[]", "") switch {
 #if MHR
@@ -332,7 +345,9 @@ public class StructTemplate {
 
     public static string GetLookupForDataSourceType(DataSourceType? dataSourceType) {
         return dataSourceType switch {
-#if MHR
+#if DD2
+            DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
+#elif MHR
             DataSourceType.DANGO_SKILLS => nameof(DataHelper.DANGO_SKILL_NAME_LOOKUP),
             DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
             DataSourceType.RAMPAGE_SKILLS => nameof(DataHelper.RAMPAGE_SKILL_NAME_LOOKUP),

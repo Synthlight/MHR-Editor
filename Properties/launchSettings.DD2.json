@@ -11,6 +11,10 @@
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemData/ItemData.user.2\""
         },
+        "ItemShopData.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemShopData/ItemShopData.user.2\""
+        },
         "ItemWeaponData.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemData/ItemWeaponData.user.2\""

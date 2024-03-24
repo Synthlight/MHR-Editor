@@ -222,7 +222,7 @@ public class ItemTweaks : IMod {
                             if (itemData.StackNum > 1) itemData.StackNum *= 10;
                             break;
                         case StackOptions._9999:
-                            if (itemData.StackNum > 1) itemData.StackNum = 0;
+                            if (itemData.StackNum > 1) itemData.StackNum = 9999;
                             break;
                     }
                     break;

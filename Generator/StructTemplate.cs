@@ -135,10 +135,12 @@ public class StructTemplate {
 
         file.WriteLine("");
 
+        /*
         if (field.name!.ToLower() == "_id") {
             file.WriteLine("    [ShowAsHex]");
             isEnumType = false;
         }
+        */
 
         if (field.array) {
             file.WriteLine($"    [SortOrder({sortOrder})]");

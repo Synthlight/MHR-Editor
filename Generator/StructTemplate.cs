@@ -254,6 +254,7 @@ public class StructTemplate {
             var typeName       = field.originalType!.ToConvertedTypeName();
             var isPrimitive    = primitiveName != null;
             var isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
+            var buttonType     = GetButtonTypeOverride(field) ?? GetButtonType(field);
             var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
             var isUserData     = field.type == "UserData";
             var isObjectType   = field.type == "Object";
@@ -264,7 +265,7 @@ public class StructTemplate {
                 || (isNonPrimitive && viaType != null)
                 || isObjectType) {
                 file.WriteLine($"        obj.{newName} = new();");
-            } else if (isEnumType && !field.array) {
+            } else if (isEnumType && !field.array && buttonType == null) {
                 file.WriteLine($"        obj.{newName} = Enum.GetValues<{typeName}>()[0];");
             }
         }
@@ -337,6 +338,7 @@ public class StructTemplate {
 #if DD2
             "App_ItemDataParam._DecayedItemId" => DataSourceType.ITEMS,
             "App_ItemDropParam_Table_Item._Id" => DataSourceType.ITEMS,
+            "App_DropPartsUserData_DropPartsItemData._ItemID" => DataSourceType.ITEMS,
             "App_ItemShopBuyParam._ItemId" => DataSourceType.ITEMS,
             "App_ItemShopSellParam._ItemId" => DataSourceType.ITEMS,
 #endif

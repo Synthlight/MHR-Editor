@@ -19,6 +19,10 @@
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemData/ItemWeaponData.user.2\""
         },
+        "StaminaParameter.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/StaminaParameter.user.2\""
+        },
         "WeaponCatalogData.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Catalog/MainContents/UserData/WeaponCatalogData.user.2\""

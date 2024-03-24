@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
@@ -10,75 +11,104 @@ using RE_Editor.Util;
 namespace RE_Editor.Mods;
 
 [UsedImplicitly]
-[SuppressMessage("ReSharper", "SwitchStatementHandlesSomeKnownEnumValuesWithDefault")]
-[SuppressMessage("ReSharper", "ConvertSwitchStatementToSwitchExpression")]
-[SuppressMessage("ReSharper", "SwitchStatementMissingSomeEnumCasesNoDefault")]
 public class NoStamina : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName  = "No Stamina Consumed For Job Skills";
-        const string description = "Changes job skills' stamina use.";
-        const string version     = "1.1";
+        const string bundleName  = "No Stamina Consumed";
+        const string description = "Changes stamina use.";
+        const string version     = "1.2";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
-        var dataFiles = new List<string>();
+        var descriptionOptions = new Dictionary<StaminaOptions, string> {
+            [StaminaOptions.JOB_SKILLS]    = "Changes job skills' stamina use.",
+            [StaminaOptions.OUT_OF_COMBAT] = "Changes common action (dash/climb/jump/carry/etc) stamina use.",
+        };
+
+        var dataFiles = new Dictionary<StaminaOptions, List<string>> {
+            [StaminaOptions.JOB_SKILLS]    = [],
+            [StaminaOptions.OUT_OF_COMBAT] = [PathHelper.STAMINA_PARAM_PATH],
+        };
         for (var i = 1; i <= 10; i++) {
-            dataFiles.Add($@"natives\stm\AppSystem\ch\common\human\userdata\parameter\Job{i:00}StaminaParameter.user.2");
+            dataFiles[StaminaOptions.JOB_SKILLS].Add($@"natives\STM\AppSystem\ch\Common\Human\UserData\Parameter\Job{i:00}StaminaParameter.user.2");
         }
 
         var baseMod = new NexusModVariant {
             Version      = version,
             NameAsBundle = bundleName,
             Desc         = description,
-            Files        = dataFiles,
-            Action       = list => Stamina(list, StaminaOptions._0)
         };
 
-        var mods = new[] {
-            baseMod
-                .SetName("Stamina Use: None")
-                .SetAction(list => Stamina(list, StaminaOptions._0)),
-            baseMod
-                .SetName("Stamina Use: Half")
-                .SetAction(list => Stamina(list, StaminaOptions.HALF)),
-            baseMod
-                .SetName("Stamina Use: x2")
-                .SetAction(list => Stamina(list, StaminaOptions.X2)),
-            baseMod
-                .SetName("Stamina Use: x5")
-                .SetAction(list => Stamina(list, StaminaOptions.X5)),
-        };
+        var mods = (from option in Enum.GetValues<StaminaOptions>()
+                    from value in Enum.GetValues<StaminaValueOptions>()
+                    let optionName = GetOptionName(option)
+                    let valueName = GetValueName(value)
+                    select baseMod.SetName($"Stamina Use ({optionName}): {valueName}")
+                                  .SetDesc(descriptionOptions[option])
+                                  .SetFiles(dataFiles[option])
+                                  .SetAction(list => Stamina(list, option, value))).ToList();
 
         ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, bundleName, true, makeIntoPak: true);
     }
 
-    public static void Stamina(List<RszObject> rszObjectData, StaminaOptions option) {
+    public static void Stamina(List<RszObject> rszObjectData, StaminaOptions option, StaminaValueOptions value) {
         foreach (var obj in rszObjectData) {
             switch (obj) {
-                case App_HumanStaminaParameterAdditional itemData:
-                    switch (option) {
-                        case StaminaOptions._0:
-                            itemData.Value = 0f;
-                            break;
-                        case StaminaOptions.HALF:
-                            itemData.Value *= 0.5f;
-                            break;
-                        case StaminaOptions.X2:
-                            itemData.Value *= 2f;
-                            break;
-                        case StaminaOptions.X5:
-                            itemData.Value *= 5f;
-                            break;
+                case App_HumanStaminaParameterAdditional data:
+                    if (option is StaminaOptions.JOB_SKILLS) {
+                        data.Value = GetNewStaminaValue(data.Value, value);
+                    }
+                    break;
+                case App_HumanStaminaParameter_ConsumeData data:
+                    if (option is StaminaOptions.OUT_OF_COMBAT) {
+                        data.VeryLight = GetNewStaminaValue(data.VeryLight, value);
+                        data.Light     = GetNewStaminaValue(data.Light, value);
+                        data.Middle    = GetNewStaminaValue(data.Middle, value);
+                        data.Heavy     = GetNewStaminaValue(data.Heavy, value);
+                        data.VeryHeavy = GetNewStaminaValue(data.VeryHeavy, value);
+                        data.Over      = GetNewStaminaValue(data.Over, value);
                     }
                     break;
             }
         }
     }
 
+    private static float GetNewStaminaValue(float consumption, StaminaValueOptions value) {
+        return value switch {
+            StaminaValueOptions._0 => consumption * 0f,
+            StaminaValueOptions.HALF => consumption * 0.5f,
+            StaminaValueOptions.X2 => consumption * 2f,
+            StaminaValueOptions.X5 => consumption * 5f,
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, null)
+        };
+    }
+
     public enum StaminaOptions {
+        OUT_OF_COMBAT,
+        JOB_SKILLS,
+    }
+
+    private static object GetOptionName(StaminaOptions option) {
+        return option switch {
+            StaminaOptions.OUT_OF_COMBAT => "Common Actions Only",
+            StaminaOptions.JOB_SKILLS => "Job Skills Only",
+            _ => throw new ArgumentOutOfRangeException(nameof(option), option, null)
+        };
+    }
+
+    public enum StaminaValueOptions {
         _0,
         HALF,
         X2,
         X5,
+    }
+
+    private static object GetValueName(StaminaValueOptions option) {
+        return option switch {
+            StaminaValueOptions._0 => "None",
+            StaminaValueOptions.HALF => "Half",
+            StaminaValueOptions.X2 => "x2",
+            StaminaValueOptions.X5 => "x5",
+            _ => throw new ArgumentOutOfRangeException(nameof(option), option, null)
+        };
     }
 }

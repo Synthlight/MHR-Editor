@@ -16,7 +16,7 @@ public class TestFiles {
 
     private static IEnumerable<object[]> GetTextFilesToTest() {
         return from basePath in PathHelper.TEST_PATHS
-               from file in Directory.EnumerateFiles(PathHelper.CHUNK_PATH + basePath, "*.msg.17", SearchOption.AllDirectories)
+               from file in Directory.EnumerateFiles(PathHelper.CHUNK_PATH + basePath, $"*.msg.{Global.MSG_VERSION}", SearchOption.AllDirectories)
                where File.Exists(file)
                select new object[] {file};
     }

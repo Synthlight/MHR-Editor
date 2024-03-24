@@ -19,8 +19,10 @@ public static class PathHelper {
         @"\natives\STM\AppSystem\catalog\maincontents\userdata\",
         @"\natives\STM\AppSystem\item\",
         @"\natives\STM\AppSystem\userdata\",
-        @"\natives\stm\appsystem\ch\common\userdata\",
-        @"\natives\stm\appsystem\ch\common\human\userdata\",
+        @"\natives\STM\appsystem\ch\common\userdata\",
+        @"\natives\STM\appsystem\ch\common\human\userdata\",
+        // MSG
+        @"\natives\STM\message\",
     ];
 
     public const string ARMOR_DATA_PATH      = "natives/STM/AppSystem/Item/ItemData/ItemArmorData.user.2";

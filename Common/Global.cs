@@ -68,4 +68,12 @@ public static class Global {
     public static readonly List<string> FOLDERS  = new() {"_Chainsaw", "_Mercenaries", "_AnotherOrder"};
     public static          string       variant  = "";
 #endif
+
+#if DD2
+    public const string MSG_VERSION = "22";
+#elif MHR
+    public const string MSG_VERSION = "539100710";
+#elif RE4
+    public const string MSG_VERSION = "22";
+#endif
 }

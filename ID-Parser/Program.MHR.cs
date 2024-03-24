@@ -11,7 +11,6 @@ namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
     public const string CONFIG_NAME = "MHR";
-    public const string MSG_VERSION = "539100710";
 
     private static readonly List<Tuple<string, string>> NAME_DESC = new() {
         new("Name", "NAME"),
@@ -78,7 +77,7 @@ public static partial class Program {
         var regex = new Regex(@"I_(?:(.*)_)?(\d\d\d\d)");
 
         foreach (var (@in, @out) in NAME_DESC) {
-            var result = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\System\ContentsIdSystem\Item\Normal\Item{@in}{MR}.msg.{MSG_VERSION}", name => {
+            var result = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\System\ContentsIdSystem\Item\Normal\Item{@in}{MR}.msg.{Global.MSG_VERSION}", name => {
                 if (name.StartsWith("I_None")) return (uint) Snow_data_ContentsIdSystem_ItemId.I_Unclassified_None;
                 var subType                = regex.Match(name).Groups[1].Value;
                 if (subType == "") subType = "Normal";
@@ -106,7 +105,7 @@ public static partial class Program {
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in types) {
                 var enumType = Enum.Parse<SubCategoryType>($"A_{type}");
-                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\{type}\A_{type}_{@in}{MR}.msg.{MSG_VERSION}", enumType, false, 300));
+                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\{type}\A_{type}_{@in}{MR}.msg.{Global.MSG_VERSION}", enumType, false, 300));
             }
             var result = msgLists.MergeDictionaries();
 
@@ -125,13 +124,13 @@ public static partial class Program {
         var oneBelowMax = GetOneBelowMax<Snow_data_DataDef_PlArmorSeriesTypes>(nameof(Snow_data_DataDef_PlArmorSeriesTypes.PL_A_Series_Max));
 
         // the entry name could be wrong as narwa is 65 but marked as 66. So revert back to the old method.
-        ////var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.{MSG_VERSION}", name => {
+        ////var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.{Global.MSG_VERSION}", name => {
         ////    var value = regex.Match(name).Groups[1].Value;
         ////    if (int.Parse(value) > oneBelowMax) throw new MSG.SkipReadException();
         ////    return ParseEnum(typeof(Snow_data_DataDef_PlArmorSeriesTypes), $"PL_A_Series_{value}");
         ////});
 
-        var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.{MSG_VERSION}", SubCategoryType.C_Unclassified, false, 300);
+        var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.{Global.MSG_VERSION}", SubCategoryType.C_Unclassified, false, 300);
 
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ARMOR_SERIES_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
@@ -140,13 +139,13 @@ public static partial class Program {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractSkillInfo() {
-        var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.{MSG_VERSION}", name =>
+        var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.{Global.MSG_VERSION}", name =>
                                        ParseEnum(typeof(Snow_data_DataDef_PlEquipSkillId), name.Replace("PlayerSkill", "Pl_EquipSkill")));
 
         // Load it again, but get the name this time so we can use it to create the enum lookup file.
         // Not efficient, but works.
         var skillEnumToIdLookup = new Dictionary<Global.LangIndex, Dictionary<Snow_data_DataDef_PlEquipSkillId, string>>();
-        var skillEnumData = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.{MSG_VERSION}", name => {
+        var skillEnumData = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.{Global.MSG_VERSION}", name => {
             var value = name.Replace("PlayerSkill", "Pl_EquipSkill");
             if (value == "Pl_EquipSkill_None") throw new MSG.SkipReadException();
             return value;
@@ -164,11 +163,11 @@ public static partial class Program {
 
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
-        msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name{MR}.msg.{MSG_VERSION}", name =>
+        msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name{MR}.msg.{Global.MSG_VERSION}", name =>
                                    ParseEnum(typeof(Snow_data_DataDef_PlHyakuryuSkillId), name));
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\RAMPAGE_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
-        msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name{MR}.msg.{MSG_VERSION}", name =>
+        msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name{MR}.msg.{Global.MSG_VERSION}", name =>
                                    ParseEnum(typeof(Snow_data_DataDef_PlKitchenSkillId), $"Pl_{name}"));
         File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DANGO_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
@@ -184,7 +183,7 @@ public static partial class Program {
             var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(Global.WEAPON_TYPES.Count);
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in Global.WEAPON_TYPES) {
-                var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}{MR}.msg.{MSG_VERSION}", name =>
+                var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Weapon\{type}\{type}_{@in}{MR}.msg.{Global.MSG_VERSION}", name =>
                                                ParseEnum(typeof(Snow_data_ContentsIdSystem_WeaponId), name.Replace("_MR", "")), ignoreDuplicateKeys: true);
                 msgLists.Add(msg);
                 if (@in == "Name") {
@@ -192,7 +191,7 @@ public static partial class Program {
                 }
             }
             if (@in == "Name") {
-                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Weapon\Insect\IG_Insect_{@in}{MR}.msg.{MSG_VERSION}", name => {
+                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Weapon\Insect\IG_Insect_{@in}{MR}.msg.{Global.MSG_VERSION}", name => {
                     if (name == "IG_Insect_None") throw new MSG.SkipReadException();
                     var value = regex.Match(name).Groups[1].Value;
                     if (int.Parse(value) > oneBelowMax) throw new MSG.SkipReadException();
@@ -215,7 +214,7 @@ public static partial class Program {
         var regex = new Regex(@"Deco_(\d?\d\d\d)");
 
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Equip\Decorations\Decorations_{@in}{MR}.msg.{MSG_VERSION}", name => {
+            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Equip\Decorations\Decorations_{@in}{MR}.msg.{Global.MSG_VERSION}", name => {
                 var value = name.Replace("Decorations", "Deco");
                 if (value == nameof(Snow_equip_DecorationsId.Deco_None)) return (uint) Snow_equip_DecorationsId.Deco_None;
                 var match = uint.Parse(regex.Match(value).Groups[1].Value);
@@ -229,7 +228,7 @@ public static partial class Program {
             });
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
 
-            msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDeco_{@in}_MR.msg.{MSG_VERSION}")
+            msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDeco_{@in}_MR.msg.{Global.MSG_VERSION}")
                      .GetLangIdMap(name => ParseEnum(typeof(Snow_equip_DecorationsId), name));
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\RAMPAGE_DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
@@ -238,7 +237,7 @@ public static partial class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractDangoInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Lobby\Facility\Kitchen\Dango_{@in}{MR}.msg.{MSG_VERSION}", name =>
+            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Lobby\Facility\Kitchen\Dango_{@in}{MR}.msg.{Global.MSG_VERSION}", name =>
                                            ParseEnum(typeof(Snow_data_DataDef_DangoId), name));
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DANGO_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
@@ -262,8 +261,8 @@ public static partial class Program {
         foreach (var (@in, @out) in NAME_DESC) {
             var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(types.Count);
             foreach (var type in types) {
-                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtAirouArmor_{type}_{@in}{MR}.msg.{MSG_VERSION}", Func));
-                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtDogArmor_{type}_{@in}{MR}.msg.{MSG_VERSION}", Func));
+                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtAirouArmor_{type}_{@in}{MR}.msg.{Global.MSG_VERSION}", Func));
+                msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Armor\OtDogArmor_{type}_{@in}{MR}.msg.{Global.MSG_VERSION}", Func));
             }
             var result = msgLists.MergeDictionaries();
 
@@ -286,8 +285,8 @@ public static partial class Program {
         }
 
         foreach (var (@in, @out) in NAME_DESC) {
-            var catMsg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeapon_{@in}{MR}.msg.{MSG_VERSION}", Func, ignoreDuplicateKeys: true);
-            var dogMsg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtAirouWeapon_{@in}{MR}.msg.{MSG_VERSION}", Func, ignoreDuplicateKeys: true);
+            var catMsg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeapon_{@in}{MR}.msg.{Global.MSG_VERSION}", Func, ignoreDuplicateKeys: true);
+            var dogMsg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtAirouWeapon_{@in}{MR}.msg.{Global.MSG_VERSION}", Func, ignoreDuplicateKeys: true);
             var result = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>> {catMsg, dogMsg}.MergeDictionaries();
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\CAT_DOG_WEAPON_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
         }
@@ -296,7 +295,7 @@ public static partial class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractPetalaceInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\data\System\ContentsIdSystem\LvBuffCage\Normal\LvBuffCage_{@in}.msg.{MSG_VERSION}", true)
+            var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\data\System\ContentsIdSystem\LvBuffCage\Normal\LvBuffCage_{@in}.msg.{Global.MSG_VERSION}", true)
                          .GetLangIdMap(name => ParseEnum(typeof(Snow_data_ContentsIdSystem_LvBuffCageId), name));
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\PETALACE_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
             if (@in == "Name") {
@@ -308,7 +307,7 @@ public static partial class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractSwitchSkillInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlSwitchAction\PlayerSwitchAction_{@in}{MR}.msg.{MSG_VERSION}", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
+            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlSwitchAction\PlayerSwitchAction_{@in}{MR}.msg.{Global.MSG_VERSION}", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\SWITCH_SKILL_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }
@@ -316,7 +315,7 @@ public static partial class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractGuildCardInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\Message\GuildCard\GC_Achievement_{@in}{MR}.msg.{MSG_VERSION}", name => name.Replace("GC_Achievement_", ""));
+            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\Message\GuildCard\GC_Achievement_{@in}{MR}.msg.{Global.MSG_VERSION}", name => name.Replace("GC_Achievement_", ""));
             File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\GC_TITLE_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
         }
     }

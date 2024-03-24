@@ -9,7 +9,6 @@ namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
     public const string CONFIG_NAME = "MHR";
-    public const string MSG_VERSION = "22";
 
     public static void Main() {
         ExtractItemInfo();
@@ -23,8 +22,8 @@ public static partial class Program {
             var folder  = Global.FOLDERS[i];
             var regex   = new Regex("(?:CH|MC|AO)_Mes_Main_(WEAPON_NAME|ITEM_NAME)_(.+?)_000");
             var msgs = new List<string> {
-                           $@"{PathHelper.CHUNK_PATH}\natives\STM\{folder}\Message\Mes_Main_Item\{variant}_Mes_Main_Item_Name.msg.{MSG_VERSION}",
-                           $@"{PathHelper.CHUNK_PATH}\natives\STM\{folder}\Message\Mes_Main_Item\{variant}_Mes_Main_Item_Name_Misc.msg.{MSG_VERSION}",
+                           $@"{PathHelper.CHUNK_PATH}\natives\STM\{folder}\Message\Mes_Main_Item\{variant}_Mes_Main_Item_Name.msg.{Global.MSG_VERSION}",
+                           $@"{PathHelper.CHUNK_PATH}\natives\STM\{folder}\Message\Mes_Main_Item\{variant}_Mes_Main_Item_Name_Misc.msg.{Global.MSG_VERSION}",
                        }
                        .Where(File.Exists)
                        .Select(file => MSG.Read(file)
@@ -58,8 +57,8 @@ public static partial class Program {
             var folder  = Global.FOLDERS[i];
             var regex   = new Regex("(?:CH|MC|AO)_Mes_Main_WEAPON_NAME_([a-zA-Z0-9]+?)_");
             var msg = new List<string> {
-                          $@"{PathHelper.CHUNK_PATH}\natives\STM\{folder}\Message\Mes_Main_Item\{variant}_Mes_Main_Item_Name.msg.{MSG_VERSION}",
-                          $@"{PathHelper.CHUNK_PATH}\natives\STM\{folder}\Message\Mes_Main_Item\{variant}_Mes_Main_Item_Name_Misc.msg.{MSG_VERSION}",
+                          $@"{PathHelper.CHUNK_PATH}\natives\STM\{folder}\Message\Mes_Main_Item\{variant}_Mes_Main_Item_Name.msg.{Global.MSG_VERSION}",
+                          $@"{PathHelper.CHUNK_PATH}\natives\STM\{folder}\Message\Mes_Main_Item\{variant}_Mes_Main_Item_Name_Misc.msg.{Global.MSG_VERSION}",
                       }
                       .Where(File.Exists)
                       .Select(file => MSG.Read(file)

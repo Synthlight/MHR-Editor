@@ -56,6 +56,9 @@ public class MSG {
 
         reader.BaseStream.Seek((long) file.data1Offset, SeekOrigin.Begin);
         file.data1 = reader.ReadBytes((int) (reader.BaseStream.Length - (long) file.data1Offset));
+
+        if (file.data1.Length == 0) return file;
+
         Decrypt(file.data1);
         using var decryptedStream = new BinaryReader(new MemoryStream(file.data1));
 

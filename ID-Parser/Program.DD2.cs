@@ -6,7 +6,6 @@ namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
     public const string CONFIG_NAME = "DD2";
-    public const string MSG_VERSION = "22";
 
     public static void Main() {
         ExtractItemInfo();
@@ -14,7 +13,7 @@ public static partial class Program {
 
     private static void ExtractItemInfo() {
         var regex = new Regex(@"item_name_(\d+)");
-        var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\message\ui\ItemName.msg.{MSG_VERSION}", true)
+        var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\message\ui\ItemName.msg.{Global.MSG_VERSION}", true)
                      .GetLangIdMap(name => {
                          var match = regex.Match(name);
                          var value = match.Groups[1].Value;

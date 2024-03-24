@@ -3,19 +3,19 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using RE_Editor.Common;
-using RE_Editor.Common.Models;
 using RE_Editor.Generated.Enums;
 using RE_Editor.Models.Enums;
+using MSG = RE_Editor.Common.Models.MSG;
 
 namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
     public const string CONFIG_NAME = "MHR";
 
-    private static readonly List<Tuple<string, string>> NAME_DESC = new() {
+    private static readonly List<Tuple<string, string>> NAME_DESC = [
         new("Name", "NAME"),
-        new("Explain", "DESC"),
-    };
+        new("Explain", "DESC")
+    ];
 
     private const string MR = "{{{MR}}}"; // To find/replace with either nothing or `_MR` when parsing paired files.
 
@@ -93,7 +93,7 @@ public static partial class Program {
                 Debug.Assert(eurekacorn == "Eurekacorn");
             }
 
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ITEM_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
+            CreateAssetFile(result, $"ITEM_{@out}_LOOKUP");
         }
     }
 
@@ -114,25 +114,15 @@ public static partial class Program {
                 Debug.Assert(kamuraHeadScarf == "Kamura Head Scarf");
             }
 
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ARMOR_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
+            CreateAssetFile(result, $"ARMOR_{@out}_LOOKUP");
         }
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractArmorSeriesInfo() {
-        var regex       = new Regex(@"ArmorSeries_.*?_(\d\d\d)$");
-        var oneBelowMax = GetOneBelowMax<Snow_data_DataDef_PlArmorSeriesTypes>(nameof(Snow_data_DataDef_PlArmorSeriesTypes.PL_A_Series_Max));
-
-        // the entry name could be wrong as narwa is 65 but marked as 66. So revert back to the old method.
-        ////var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.{Global.MSG_VERSION}", name => {
-        ////    var value = regex.Match(name).Groups[1].Value;
-        ////    if (int.Parse(value) > oneBelowMax) throw new MSG.SkipReadException();
-        ////    return ParseEnum(typeof(Snow_data_DataDef_PlArmorSeriesTypes), $"PL_A_Series_{value}");
-        ////});
-
         var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.{Global.MSG_VERSION}", SubCategoryType.C_Unclassified, false, 300);
 
-        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\ARMOR_SERIES_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+        CreateAssetFile(msg, "ARMOR_SERIES_LOOKUP");
 
         CreateConstantsFile(msg[Global.LangIndex.eng], "ArmorConstants");
     }
@@ -142,7 +132,7 @@ public static partial class Program {
         var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.{Global.MSG_VERSION}", name =>
                                        ParseEnum(typeof(Snow_data_DataDef_PlEquipSkillId), name.Replace("PlayerSkill", "Pl_EquipSkill")));
 
-        // Load it again, but get the name this time so we can use it to create the enum lookup file.
+        // Load it again, but get the name this time, so we can use it to create the enum lookup file.
         // Not efficient, but works.
         var skillEnumToIdLookup = new Dictionary<Global.LangIndex, Dictionary<Snow_data_DataDef_PlEquipSkillId, string>>();
         var skillEnumData = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.{Global.MSG_VERSION}", name => {
@@ -156,20 +146,20 @@ public static partial class Program {
                 skillEnumToIdLookup[lang][Enum.Parse<Snow_data_DataDef_PlEquipSkillId>(enumName)] = id;
             }
         }
-        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\SKILL_ENUM_NAME_LOOKUP.json", JsonConvert.SerializeObject(skillEnumToIdLookup, Formatting.Indented));
+        CreateAssetFile(skillEnumToIdLookup, "SKILL_ENUM_NAME_LOOKUP");
 
         var engSkills = msg[Global.LangIndex.eng];
         Debug.Assert(engSkills[1] == "Attack Boost");
 
-        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+        CreateAssetFile(msg, "SKILL_NAME_LOOKUP");
 
         msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name{MR}.msg.{Global.MSG_VERSION}", name =>
                                    ParseEnum(typeof(Snow_data_DataDef_PlHyakuryuSkillId), name));
-        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\RAMPAGE_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+        CreateAssetFile(msg, "RAMPAGE_SKILL_NAME_LOOKUP");
 
         msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name{MR}.msg.{Global.MSG_VERSION}", name =>
                                    ParseEnum(typeof(Snow_data_DataDef_PlKitchenSkillId), $"Pl_{name}"));
-        File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DANGO_SKILL_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+        CreateAssetFile(msg, "DANGO_SKILL_NAME_LOOKUP");
 
         CreateConstantsFile(engSkills, "SkillConstants");
     }
@@ -205,7 +195,7 @@ public static partial class Program {
                 Debug.Assert(busterSword1 == "Buster Sword I");
             }
 
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\WEAPON_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
+            CreateAssetFile(result, $"WEAPON_{@out}_LOOKUP");
         }
     }
 
@@ -226,11 +216,11 @@ public static partial class Program {
                     throw new MSG.SkipReadException();
                 }
             });
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+            CreateAssetFile(msg, $"DECORATION_{@out}_LOOKUP");
 
             msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Equip\HyakuryuDeco\HyakuryuDeco_{@in}_MR.msg.{Global.MSG_VERSION}")
                      .GetLangIdMap(name => ParseEnum(typeof(Snow_equip_DecorationsId), name));
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\RAMPAGE_DECORATION_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+            CreateAssetFile(msg, $"RAMPAGE_DECORATION_{@out}_LOOKUP");
         }
     }
 
@@ -239,7 +229,7 @@ public static partial class Program {
         foreach (var (@in, @out) in NAME_DESC) {
             var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Lobby\Facility\Kitchen\Dango_{@in}{MR}.msg.{Global.MSG_VERSION}", name =>
                                            ParseEnum(typeof(Snow_data_DataDef_DangoId), name));
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\DANGO_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+            CreateAssetFile(msg, $"DANGO_{@out}_LOOKUP");
         }
     }
 
@@ -266,7 +256,7 @@ public static partial class Program {
             }
             var result = msgLists.MergeDictionaries();
 
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\CAT_DOG_ARMOR_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
+            CreateAssetFile(result, $"CAT_DOG_ARMOR_{@out}_LOOKUP");
         }
     }
 
@@ -288,7 +278,7 @@ public static partial class Program {
             var catMsg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtDogWeapon_{@in}{MR}.msg.{Global.MSG_VERSION}", Func, ignoreDuplicateKeys: true);
             var dogMsg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Otomo\Equip\Weapon\OtAirouWeapon_{@in}{MR}.msg.{Global.MSG_VERSION}", Func, ignoreDuplicateKeys: true);
             var result = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>> {catMsg, dogMsg}.MergeDictionaries();
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\CAT_DOG_WEAPON_{@out}_LOOKUP.json", JsonConvert.SerializeObject(result, Formatting.Indented));
+            CreateAssetFile(result, $"CAT_DOG_WEAPON_{@out}_LOOKUP");
         }
     }
 
@@ -297,7 +287,7 @@ public static partial class Program {
         foreach (var (@in, @out) in NAME_DESC) {
             var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\data\System\ContentsIdSystem\LvBuffCage\Normal\LvBuffCage_{@in}.msg.{Global.MSG_VERSION}", true)
                          .GetLangIdMap(name => ParseEnum(typeof(Snow_data_ContentsIdSystem_LvBuffCageId), name));
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\PETALACE_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+            CreateAssetFile(msg, $"PETALACE_{@out}_LOOKUP");
             if (@in == "Name") {
                 CreateConstantsFile(msg[Global.LangIndex.eng], "PetalaceConstants", true);
             }
@@ -308,7 +298,7 @@ public static partial class Program {
     private static void ExtractSwitchSkillInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
             var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlSwitchAction\PlayerSwitchAction_{@in}{MR}.msg.{Global.MSG_VERSION}", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\SWITCH_SKILL_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+            CreateAssetFile(msg, $"SWITCH_SKILL_{@out}_LOOKUP");
         }
     }
 
@@ -316,7 +306,7 @@ public static partial class Program {
     private static void ExtractGuildCardInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
             var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\Message\GuildCard\GC_Achievement_{@in}{MR}.msg.{Global.MSG_VERSION}", name => name.Replace("GC_Achievement_", ""));
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\GC_TITLE_{@out}_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
+            CreateAssetFile(msg, $"GC_TITLE_{@out}_LOOKUP");
         }
     }
 }

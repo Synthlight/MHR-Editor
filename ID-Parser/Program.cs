@@ -29,7 +29,7 @@ public static partial class Program {
         throw new KeyNotFoundException($"Cannot find `{toFind}` in the enum `{typeof(T)}`.");
     }
 
-    private static void CreateAssetFile(Dictionary<Global.LangIndex, Dictionary<uint, string>> msg, string filename) {
+    private static void CreateAssetFile(object msg, string filename) {
         Directory.CreateDirectory(ASSETS_DIR);
         File.WriteAllText($@"{ASSETS_DIR}\{filename}.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
     }

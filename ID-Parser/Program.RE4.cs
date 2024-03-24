@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
 using RE_Editor.Models.Enums;
@@ -8,7 +7,7 @@ using RE_Editor.Models.Enums;
 namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
-    public const string CONFIG_NAME = "MHR";
+    public const string CONFIG_NAME = "RE4";
 
     public static void Main() {
         ExtractItemInfo();
@@ -44,8 +43,7 @@ public static partial class Program {
                                           }))
                        .ToList();
             var msg = msgs.MergeDictionaries();
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\{variant}_ITEM_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
-
+            CreateAssetFile(msg, $@"{variant}_ITEM_NAME_LOOKUP");
             CreateConstantsFile(msg[Global.LangIndex.eng], $"ItemConstants_{variant}");
         }
     }
@@ -74,8 +72,7 @@ public static partial class Program {
                                          }))
                       .ToList()
                       .MergeDictionaries();
-            File.WriteAllText($@"{BASE_PROJ_PATH}\Data\Assets\{variant}_WEAPON_NAME_LOOKUP.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
-
+            CreateAssetFile(msg, $@"{variant}_WEAPON_NAME_LOOKUP");
             CreateConstantsFile(msg[Global.LangIndex.eng], $"WeaponConstants_{variant}");
         }
     }

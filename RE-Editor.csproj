@@ -44,6 +44,7 @@
 		</EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`DD2`))'">
+		<Compile Remove="Constants\DD2\**"/>
 		<Compile Remove="Data\DD2\**"/>
 		<EmbeddedResource Remove="Data\DD2\**"/>
 		<Page Remove="Data\DD2\**"/>

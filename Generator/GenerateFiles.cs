@@ -47,13 +47,16 @@ public partial class GenerateFiles {
         "soundlib.",
         "via.gui.Panel", // Too long, skip it for now.
 #if DD2
-        "soundlib.SoundStateApp`1<",
-        "soundlib.SoundSwitchApp`1<",
-        "app.GUICharaEditData.PatternParam`",
-        "app.ClassSelector",
         "AISituation",
+        "app.Ch221Parameter",
+        "app.ClassSelector",
+        "app.FilterSettingMediator`",
+        "app.GUICharaEditData.PatternParam`",
         "app.JobUnique",
         "app.MaterialInterpolation",
+        "app.SimpleFlightPathTracer`",
+        "soundlib.SoundStateApp`1<",
+        "soundlib.SoundSwitchApp`1<",
 #elif MHR
         "snow.camera.CameraUtility.BufferingParam`",
         "snow.data.StmKeyconfigSystem.ConfigCodeSet`",

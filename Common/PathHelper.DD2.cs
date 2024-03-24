@@ -16,13 +16,13 @@ public static class PathHelper {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly string[] TEST_PATHS = [
         //@"\natives\STM\AppSystem\",
-        @"\natives\STM\AppSystem\catalog\maincontents\userdata\",
-        @"\natives\STM\AppSystem\item\",
-        @"\natives\STM\AppSystem\userdata\",
-        @"\natives\STM\appsystem\ch\common\userdata\",
-        @"\natives\STM\appsystem\ch\common\human\userdata\",
+        @"\natives\STM\AppSystem\Catalog\MainContents\UserData\",
+        @"\natives\STM\AppSystem\Camera\",
+        @"\natives\STM\AppSystem\ch\",
+        @"\natives\STM\AppSystem\Item\",
+        @"\natives\STM\AppSystem\UserData\",
         // MSG
-        @"\natives\STM\message\",
+        @"\natives\STM\Message\",
     ];
 
     public const string ARMOR_DATA_PATH      = "natives/STM/AppSystem/Item/ItemData/ItemArmorData.user.2";

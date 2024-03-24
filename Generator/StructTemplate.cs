@@ -39,21 +39,28 @@ public class StructTemplate {
         if (structInfo.fields != null) {
             // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var field in structInfo.fields) {
-                if (string.IsNullOrEmpty(field.originalType) && field.type == "Data") {
-                    switch (field.size) {
-                        case 4:
-                            field.type         = "F32";
-                            field.originalType = "System.Single";
+                if (string.IsNullOrEmpty(field.originalType)) {
+                    switch (field.type) {
+                        case "Data":
+                            switch (field.size) {
+                                case 4:
+                                    field.type         = "F32";
+                                    field.originalType = "System.Single";
+                                    break;
+                                case 8:
+                                    field.type         = "Vec2";
+                                    field.originalType = nameof(Vec2);
+                                    break;
+                                case 16:
+                                    field.type         = "Vec4";
+                                    field.originalType = nameof(Vec4);
+                                    break;
+                                default: throw new ArgumentOutOfRangeException($"Unknown type to use for data type of {field.size} size:");
+                            }
                             break;
-                        case 8:
-                            field.type         = "Vec2";
-                            field.originalType = nameof(Vec2);
+                        case "String":
+                            field.originalType = "System.String";
                             break;
-                        case 16:
-                            field.type         = "Vec4";
-                            field.originalType = nameof(Vec4);
-                            break;
-                        default: throw new ArgumentOutOfRangeException($"Unknown type to use for data type of {field.size} size:");
                     }
                 }
                 if (string.IsNullOrEmpty(field.name)) continue;
@@ -164,7 +171,7 @@ public class StructTemplate {
                 throw new InvalidDataException("Not a primitive, enum, or object array type.");
             }
         } else {
-            if (buttonType != null && field.name != "_Id") {
+            if (buttonType != null) { //  && field.name != "_Id" -- Not sure which needed this? Breaks for DD2 stuff like item drop params.
                 var lookupName = GetLookupForDataSourceType(buttonType);
                 file.WriteLine($"    [SortOrder({sortOrder + 10})]");
                 file.WriteLine($"    [DataSource(DataSourceType.{buttonType})]");
@@ -322,6 +329,7 @@ public class StructTemplate {
         return name switch {
 #if DD2
             "App_ItemDataParam._DecayedItemId" => DataSourceType.ITEMS,
+            "App_ItemDropParam_Table_Item._Id" => DataSourceType.ITEMS,
             "App_ItemShopBuyParam._ItemId" => DataSourceType.ITEMS,
             "App_ItemShopSellParam._ItemId" => DataSourceType.ITEMS,
 #endif

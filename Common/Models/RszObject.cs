@@ -99,6 +99,13 @@ public class RszObject : OnPropertyChangedBase {
 
             if (field.array) {
                 var arrayCount = reader.ReadInt32();
+#if DEBUG
+                Debug.Assert(arrayCount < 100000, "`arrayCount` over 100k. This is probably reading the count from the wrong spot.");
+#else
+                if (arrayCount > 100000) {
+                    throw new FileNotSupported();
+                }
+#endif
 
                 if (isObjectType || isUserData) { // Array of pointers.
                     var objects = new List<RszObject>();

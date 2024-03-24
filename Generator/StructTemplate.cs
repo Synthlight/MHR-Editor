@@ -257,7 +257,10 @@ public class StructTemplate {
             var isObjectType   = field.type == "Object";
             var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType, isUserData);
 
-            if (viaType?.Is(typeof(ISimpleViaType)) == true) {
+            if (viaType?.Is(typeof(ISimpleViaType)) == true
+                || isUserData
+                || (isNonPrimitive && viaType != null)
+                || isObjectType) {
                 file.WriteLine($"        obj.{newName} = new();");
             }
         }
@@ -378,7 +381,7 @@ public class StructTemplate {
             DataSourceType.ITEMS => ["[ButtonIdAsHex]"],
             DataSourceType.WEAPONS => ["[ButtonIdAsHex]"],
 #endif
-            _ => new()
+            _ => []
         };
     }
 

@@ -262,6 +262,8 @@ public class StructTemplate {
                 || (isNonPrimitive && viaType != null)
                 || isObjectType) {
                 file.WriteLine($"        obj.{newName} = new();");
+            } else if (isEnumType && !field.array) {
+                file.WriteLine($"        obj.{newName} = Enum.GetValues<{typeName}>()[0];");
             }
         }
 

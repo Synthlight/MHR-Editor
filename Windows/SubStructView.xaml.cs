@@ -5,7 +5,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using JetBrains.Annotations;
+using RE_Editor.Common;
 using RE_Editor.Common.Models;
+using RE_Editor.Common.Models.List_Wrappers;
 using RE_Editor.Controls;
 
 namespace RE_Editor.Windows {
@@ -15,7 +17,7 @@ namespace RE_Editor.Windows {
         }
     }
 
-    public sealed class SubStructViewDynamic<T> : SubStructView where T : RszObject {
+    public sealed class SubStructViewDynamic<T> : SubStructView {
         [CanBeNull] private readonly ObservableCollection<T> items;
         [CanBeNull] private readonly AutoDataGridGeneric<T>  dataGrid;
 
@@ -62,11 +64,29 @@ namespace RE_Editor.Windows {
 
         private void HandleAddRow() {
             try {
-                if (items is {Count: > 0}) {
-                    var createMethod = items[0].GetType().GetMethod("Create", BindingFlags.Public | BindingFlags.Static, [typeof(RSZ)])!;
-                    var newItem      = (T) createMethod.Invoke(null, [items[0].rsz])!;
-                    items.Add(newItem);
-                    dataGrid!.ScrollIntoView(newItem);
+                if (items != null) {
+                    if (items.Count > 0 && items[0] is RszObject item) {
+                        var createMethod = item.GetType().GetMethod("Create", BindingFlags.Public | BindingFlags.Static, [typeof(RSZ)])!;
+                        var newItem      = (T) createMethod.Invoke(null, [item.rsz])!;
+                        items.Add(newItem);
+                        dataGrid!.ScrollIntoView(newItem);
+                    } else if (typeof(T).GetNameWithoutGenericArity() == typeof(GenericWrapper<>).GetNameWithoutGenericArity()) {
+                        // Here, `T` is `GenericWrapper<*>`.
+                        var    innerType          = typeof(T).GenericTypeArguments[0];
+                        var    genericWrapperType = typeof(GenericWrapper<>).MakeGenericType(innerType);
+                        object itemValue;
+                        if (innerType.IsValueType) {
+                            itemValue = Convert.ChangeType(0, innerType);
+                        } else if (innerType == typeof(string)) {
+                            itemValue = "";
+                        } else {
+                            // Should never happen.
+                            throw new NotImplementedException($"Unknown value for type, not sure how to instance it: {innerType}");
+                        }
+                        var newItem = (T) Activator.CreateInstance(genericWrapperType, [-1, itemValue])!;
+                        items.Add(newItem);
+                        dataGrid!.ScrollIntoView(newItem);
+                    }
                 }
             } catch (Exception e) {
                 MessageBox.Show($"Error adding a new row: {e}", "Error Adding Rows", MessageBoxButton.OK, MessageBoxImage.Error);

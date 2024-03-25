@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -489,5 +490,12 @@ public static class Extensions {
         while (stream.Position % align != 0) {
             stream.Seek(1, SeekOrigin.Current);
         }
+    }
+
+    [Pure]
+    public static string GetNameWithoutGenericArity(this Type t) {
+        var name  = t.Name;
+        var index = name.IndexOf('`');
+        return index == -1 ? name : name[..index];
     }
 }

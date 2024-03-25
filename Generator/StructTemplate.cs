@@ -121,7 +121,7 @@ public class StructTemplate {
         var typeName            = field.originalType!.ToConvertedTypeName();
         var isPrimitive         = primitiveName != null;
         var isEnumType          = typeName != null && generator.enumTypes.ContainsKey(typeName);
-        var buttonType          = GetButtonTypeOverride(field) ?? GetButtonType(field);
+        var buttonType          = GetButtonType(field);
         var isNonPrimitive      = !isPrimitive && !isEnumType; // via.thing
         var isUserData          = field.type == "UserData";
         var isObjectType        = field.type == "Object";
@@ -254,7 +254,7 @@ public class StructTemplate {
             var typeName       = field.originalType!.ToConvertedTypeName();
             var isPrimitive    = primitiveName != null;
             var isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
-            var buttonType     = GetButtonTypeOverride(field) ?? GetButtonType(field);
+            var buttonType     = GetButtonType(field);
             var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
             var isUserData     = field.type == "UserData";
             var isObjectType   = field.type == "Object";
@@ -293,7 +293,7 @@ public class StructTemplate {
             var typeName       = field.originalType!.ToConvertedTypeName();
             var isPrimitive    = primitiveName != null;
             var isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
-            var buttonType     = GetButtonTypeOverride(field) ?? GetButtonType(field);
+            var buttonType     = GetButtonType(field);
             var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
             var isUserData     = field.type == "UserData";
             var isObjectType   = field.type == "Object";
@@ -332,23 +332,11 @@ public class StructTemplate {
         file.Write("}");
     }
 
-    private DataSourceType? GetButtonTypeOverride(StructJson.Field field) {
-        var name = $"{className}.{field.name}";
-        return name switch {
-#if DD2
-            "App_ItemDataParam._DecayedItemId" => DataSourceType.ITEMS,
-            "App_ItemDropParam_Table_Item._Id" => DataSourceType.ITEMS,
-            "App_DropPartsUserData_DropPartsItemData._ItemID" => DataSourceType.ITEMS,
-            "App_ItemShopBuyParam._ItemId" => DataSourceType.ITEMS,
-            "App_ItemShopSellParam._ItemId" => DataSourceType.ITEMS,
-#endif
-            _ => null
-        };
-    }
-
     private static DataSourceType? GetButtonType(StructJson.Field field) {
         return field.originalType?.Replace("[]", "") switch {
-#if MHR
+#if DD2
+            "app.ItemIDEnum" => DataSourceType.ITEMS,
+#elif MHR
             "snow.data.ContentsIdSystem.ItemId" => DataSourceType.ITEMS,
             "snow.data.DataDef.PlEquipSkillId" => DataSourceType.SKILLS,
             "snow.data.DataDef.PlHyakuryuSkillId" => DataSourceType.RAMPAGE_SKILLS,

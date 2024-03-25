@@ -49,7 +49,11 @@ public static partial class Program {
         var regex     = new Regex(@"^\d");
         var namesUsed = new List<string?>(engDict.Count);
         foreach (var (key, name) in engDict) {
-            if (name.ToLower() == "#rejected#") continue;
+            switch (name.ToLower()) {
+                case "#rejected#":
+                case "?":
+                    continue;
+            }
             var constName = name.ToUpper()
                                 .Replace("'", "")
                                 .Replace("\"", "")

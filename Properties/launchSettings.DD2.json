@@ -3,6 +3,14 @@
         "[None]": {
             "commandName": "Project"
         },
+        "ch221DropPartsUserData.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/ch/ch221/UserData/ch221DropPartsUserData.user.2\""
+        },
+        "EnemyItemDropData.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemDropData/EnemyItemDropData.user.2\""
+        },
         "ItemArmorData.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemData/ItemArmorData.user.2\""
@@ -10,10 +18,6 @@
         "ItemData.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemData/ItemData.user.2\""
-        },
-        "ch221DropPartsUserData.user.2": {
-            "commandName": "Project",
-            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/ch/ch221/UserData/ch221DropPartsUserData.user.2\""
         },
         "ItemShopData.user.2": {
             "commandName": "Project",

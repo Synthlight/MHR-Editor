@@ -31,7 +31,7 @@ public static partial class DataInit {
         LoadDicts();
 
         foreach (var lang in Enum.GetValues<Global.LangIndex>()) {
-            if (!Global.TRANSLATION_MAP.ContainsKey(lang)) Global.TRANSLATION_MAP[lang] = new();
+            if (!Global.TRANSLATION_MAP.ContainsKey(lang)) Global.TRANSLATION_MAP[lang] = [];
         }
 
 #if MHR

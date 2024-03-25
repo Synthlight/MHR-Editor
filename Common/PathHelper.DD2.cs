@@ -25,10 +25,11 @@ public static class PathHelper {
         @"\natives\STM\Message\",
     ];
 
-    public const string ARMOR_DATA_PATH      = "natives/STM/AppSystem/Item/ItemData/ItemArmorData.user.2";
-    public const string ITEM_DATA_PATH       = "natives/STM/AppSystem/Item/ItemData/ItemData.user.2";
-    public const string ITEM_PARAMETERS_PATH = "natives/STM/AppSystem/Item/ItemParameters/ItemParameters.user.2";
-    public const string ITEM_SHOP_DATA_PATH  = "natives/STM/AppSystem/Item/ItemShopData/ItemShopData.user.2";
-    public const string STAMINA_PARAM_PATH   = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/StaminaParameter.user.2";
-    public const string WEAPON_DATA_PATH     = "natives/STM/AppSystem/Item/ItemData/ItemWeaponData.user.2";
+    public const string ARMOR_DATA_PATH          = "natives/STM/AppSystem/Item/ItemData/ItemArmorData.user.2";
+    public const string ITEM_DATA_PATH           = "natives/STM/AppSystem/Item/ItemData/ItemData.user.2";
+    public const string ITEM_PARAMETERS_PATH     = "natives/STM/AppSystem/Item/ItemParameters/ItemParameters.user.2";
+    public const string ITEM_SHOP_DATA_PATH      = "natives/STM/AppSystem/Item/ItemShopData/ItemShopData.user.2";
+    public const string STAMINA_PARAM_PATH       = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/StaminaParameter.user.2";
+    public const string WEAPON_DATA_PATH         = "natives/STM/AppSystem/Item/ItemData/ItemWeaponData.user.2";
+    public const string WEAPON_UPGRADE_DATA_PATH = "natives/STM/AppSystem/Item/ItemData/WeaponEnhanceData.user.2";
 }

@@ -332,7 +332,20 @@ public class StructTemplate {
         file.Write("}");
     }
 
-    private static DataSourceType? GetButtonType(StructJson.Field field) {
+    private DataSourceType? GetButtonType(StructJson.Field field) {
+        // This part check the class + field name.
+        var name = $"{className}.{field.name.ToConvertedFieldName()}";
+#pragma warning disable IDE0066
+        // ReSharper disable once ConvertSwitchStatementToSwitchExpression
+        switch (name) {
+            case "App_WeaponEnhanceParam.ItemId":
+            case "App_WeaponEnhanceParam.NeedItemId0":
+            case "App_WeaponEnhanceParam.NeedItemId1":
+                return DataSourceType.ITEMS;
+        }
+#pragma warning restore IDE0066
+
+        // And this check the original type.
         return field.originalType?.Replace("[]", "") switch {
 #if DD2
             "app.ItemIDEnum" => DataSourceType.ITEMS,

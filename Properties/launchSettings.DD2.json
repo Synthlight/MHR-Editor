@@ -38,6 +38,10 @@
         "WeaponCatalogData.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Catalog/MainContents/UserData/WeaponCatalogData.user.2\""
+        },
+        "WeaponEnhanceData.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemData/WeaponEnhanceData.user.2\""
         }
     }
 }

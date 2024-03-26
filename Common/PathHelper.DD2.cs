@@ -19,6 +19,7 @@ public static class PathHelper {
     ];
 
     public const string ARMOR_DATA_PATH          = "natives/STM/AppSystem/Item/ItemData/ItemArmorData.user.2";
+    public const string ARMOR_UPGRADE_DATA_PATH  = "natives/STM/AppSystem/Item/ItemData/ArmorEnhanceData.user.2";
     public const string ITEM_DATA_PATH           = "natives/STM/AppSystem/Item/ItemData/ItemData.user.2";
     public const string ITEM_PARAMETERS_PATH     = "natives/STM/AppSystem/Item/ItemParameters/ItemParameters.user.2";
     public const string ITEM_SHOP_DATA_PATH      = "natives/STM/AppSystem/Item/ItemShopData/ItemShopData.user.2";

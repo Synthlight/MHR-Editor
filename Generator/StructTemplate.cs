@@ -338,6 +338,9 @@ public class StructTemplate {
         switch (name) {
 #if DD2
             // Many of these don't seem to be the enum type, probably because the enum doesn't allow zero but the fields do.
+            case "App_ArmorEnhanceParam.ItemId":
+            case "App_ArmorEnhanceParam.NeedItemId0":
+            case "App_ArmorEnhanceParam.NeedItemId1":
             case "App_ItemDataParam.ItemDropId":
             case "App_ItemDataParam.DecayedItemId":
             case "App_ItemDropParam_Table_Item.Id":

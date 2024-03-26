@@ -37,6 +37,7 @@ public class ShopTweaks : IMod {
         foreach (var obj in rszObjectData) {
             switch (obj) {
                 case App_ItemShopParam shopData:
+                    if (shopData.ShopId == 59) continue; // The `Seekers Token` shop which isn't really a shop.
                     if (shopData.BuyParams.Count > 0) {
                         shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.ART_OF_METAMORPHOSIS, 255));
                         shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.FERRYSTONE, 255));

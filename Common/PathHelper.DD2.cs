@@ -15,9 +15,7 @@ public static class PathHelper {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly string[] TEST_PATHS = [
-        @"\natives\STM\AppData\",
-        @"\natives\STM\AppSystem\",
-        @"\natives\STM\Message\",
+        @"\natives\STM\",
     ];
 
     public const string ARMOR_DATA_PATH          = "natives/STM/AppSystem/Item/ItemData/ItemArmorData.user.2";

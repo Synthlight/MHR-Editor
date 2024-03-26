@@ -53,6 +53,7 @@ public partial class GenerateFiles {
         "app.FilterSettingMediator`",
         "app.GUICharaEditData.PatternParam`",
         "app.JobUnique",
+        "app.LocalWindSettings`",
         "app.MaterialInterpolation",
         "app.SimpleFlightPathTracer`",
         "soundlib.SoundStateApp`1<",

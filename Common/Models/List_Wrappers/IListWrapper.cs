@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using PropertyChanged;
 
 namespace RE_Editor.Common.Models.List_Wrappers;
 
@@ -10,6 +11,7 @@ public interface IListWrapper<T> : INotifyPropertyChanged {
 
 [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
+[SuppressPropertyChangedWarnings]
 public abstract class ListWrapper<T> : OnPropertyChangedBase, IListWrapper<T> {
     public abstract T Value { get; set; }
 }

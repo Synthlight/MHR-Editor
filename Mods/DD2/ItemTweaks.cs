@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 using RE_Editor.Common;
+using RE_Editor.Common.Data;
 using RE_Editor.Common.Models;
 using RE_Editor.Constants;
 using RE_Editor.Models;
@@ -21,7 +22,7 @@ public class ItemTweaks : IMod {
     public static void Make() {
         const string bundleName  = "Item Tweaks";
         const string description = "Item/Equipment weight and cost changes.";
-        const string version     = "1.7";
+        const string version     = "1.6";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var itemDataFiles = new List<string> {
@@ -38,12 +39,6 @@ public class ItemTweaks : IMod {
         };
 
         var mods = new[] {
-            baseMod
-                .SetName("No Item Decay")
-                .SetAction(list => Decay(list, DecayOptions._0)),
-            baseMod
-                .SetName("Stack Size: 9999")
-                .SetAction(list => Stack(list, StackOptions._9999)),
             baseMod
                 .SetName("Cost: 1 Gold")
                 .SetAction(list => GoldCost(list, GoldOptions._1)),
@@ -90,8 +85,6 @@ public class ItemTweaks : IMod {
                     GoldCost(list, GoldOptions._1);
                     SellPrice(list, SellOptions.X10);
                     Weight(list, WeightOptions._0);
-                    Decay(list, DecayOptions._0);
-                    Stack(list, StackOptions._9999);
                 }),
         };
 
@@ -203,9 +196,12 @@ public class ItemTweaks : IMod {
             switch (obj) {
                 case App_ItemDataParam itemData:
                     switch (option) {
-                        case DecayOptions._0:
-                            itemData.Decay         = 0;
-                            itemData.DecayedItemId = 0;
+                        case DecayOptions.NO_ROTTEN:
+                            var decayItemName = DataHelper.ITEM_NAME_LOOKUP[Global.LangIndex.eng].TryGet((uint) itemData.DecayedItemId, "");
+                            if (decayItemName.StartsWith("Rotten")) {
+                                itemData.Decay         = 0;
+                                itemData.DecayedItemId = 0;
+                            }
                             break;
                     }
                     break;
@@ -217,12 +213,19 @@ public class ItemTweaks : IMod {
         foreach (var obj in rszObjectData) {
             switch (obj) {
                 case App_ItemDataParam itemData:
+                    if (itemData.StackNum <= 1) continue;
                     switch (option) {
                         case StackOptions.X10:
-                            if (itemData.StackNum > 1) itemData.StackNum *= 10;
+                            itemData.StackNum *= 10;
+                            break;
+                        case StackOptions._256:
+                            itemData.StackNum = 256;
+                            break;
+                        case StackOptions._999:
+                            itemData.StackNum = 999;
                             break;
                         case StackOptions._9999:
-                            if (itemData.StackNum > 1) itemData.StackNum = 9999;
+                            itemData.StackNum = 9999;
                             break;
                     }
                     break;
@@ -250,12 +253,14 @@ public class ItemTweaks : IMod {
 
     public enum DecayOptions {
         NORMAL,
-        _0,
+        NO_ROTTEN,
     }
 
     public enum StackOptions {
         NORMAL,
         X10,
+        _256,
+        _999,
         _9999,
     }
 }

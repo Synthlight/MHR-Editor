@@ -473,6 +473,7 @@ public static class Extensions {
 
         name = name.ToConvertedTypeName(true)!;
         if (name == "Index") name = "_Index";
+        if (name == "GetType") name = "Get_Type";
         return name;
     }
 

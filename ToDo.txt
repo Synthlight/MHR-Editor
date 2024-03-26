@@ -1,0 +1,6 @@
+RE4:
+	Add a UI system to handle enum flags for `Chainsaw_RandomDrop_DropGroup`.
+
+DD2:
+	App_ItemShortcutParameter has item arrays which are generic list wrappers and break the item enum button.
+	Via_AnimationCurve is using the new UIntArray container but the UI can't diplay it.

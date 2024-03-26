@@ -47,15 +47,10 @@ public class StructTemplate {
                                     field.type         = "F32";
                                     field.originalType = "System.Single";
                                     break;
-                                case 8:
-                                    field.type         = "Vec2";
-                                    field.originalType = nameof(Vec2);
+                                default:
+                                    field.type         = nameof(UIntArray);
+                                    field.originalType = nameof(UIntArray);
                                     break;
-                                case 16:
-                                    field.type         = "Vec4";
-                                    field.originalType = nameof(Vec4);
-                                    break;
-                                default: throw new ArgumentOutOfRangeException($"Unknown type to use for data type of {field.size} size:");
                             }
                             break;
                         case "String":
@@ -108,7 +103,7 @@ public class StructTemplate {
         file.WriteLine("[SuppressMessage(\"ReSharper\", \"IdentifierTypo\")]");
         file.WriteLine("[SuppressMessage(\"CodeQuality\", \"IDE0079:Remove unnecessary suppression\")]");
         file.WriteLine("[MhrStruct]");
-        file.WriteLine($"public partial class {className} : {parentClass ?? "RszObject"} {{");
+        file.WriteLine($"public partial class {className} : {parentClass ?? nameof(RszObject)} {{");
         file.WriteLine($"    public {(parentClass == null ? "const" : "new const")} uint HASH = 0x{hash};");
     }
 
@@ -124,7 +119,7 @@ public class StructTemplate {
         var buttonType          = GetButtonType(field);
         var isNonPrimitive      = !isPrimitive && !isEnumType; // via.thing
         var isUserData          = field.type == "UserData";
-        var isObjectType        = field.type == "Object";
+        var isObjectType        = field.type == nameof(Object);
         var viaType             = GetViaType(field, isNonPrimitive, typeName, ref isObjectType, isUserData);
         var negativeOneForEmpty = GetNegativeForEmptyAllowed(field);
 
@@ -142,13 +137,16 @@ public class StructTemplate {
         }
         */
 
-        if (field.array) {
+        if (field.type == nameof(UIntArray)) {
+            file.WriteLine("    [IsList]");
+            file.WriteLine($"    public ObservableCollection<{nameof(UIntArray)}> {newName} {{ get; set; }}");
+        } else if (field.array) {
             file.WriteLine($"    [SortOrder({sortOrder})]");
             if (buttonType != null) {
                 if (primitiveName == null) {
                     throw new InvalidDataException("Button type found but primitiveName is null.");
                 }
-                file.WriteLine($"    [DataSource(DataSourceType.{buttonType})]");
+                file.WriteLine($"    [DataSource({nameof(DataSourceType)}.{buttonType})]");
                 foreach (var additionalAttributes in GetAdditionalAttributesForDataSourceType(buttonType)) {
                     file.WriteLine($"    {additionalAttributes}");
                 }
@@ -176,7 +174,7 @@ public class StructTemplate {
             if (buttonType != null) { //  && field.name != "_Id" -- Not sure which needed this? Breaks for DD2 stuff like item drop params.
                 var lookupName = GetLookupForDataSourceType(buttonType);
                 file.WriteLine($"    [SortOrder({sortOrder + 10})]");
-                file.WriteLine($"    [DataSource(DataSourceType.{buttonType})]");
+                file.WriteLine($"    [DataSource({nameof(DataSourceType)}.{buttonType})]");
                 if (negativeOneForEmpty) file.WriteLine("    [NegativeOneForEmpty]");
                 file.WriteLine($"    public {primitiveName} {newName} {{ get; set; }}");
                 file.WriteLine("");
@@ -338,10 +336,18 @@ public class StructTemplate {
 #pragma warning disable IDE0066
         // ReSharper disable once ConvertSwitchStatementToSwitchExpression
         switch (name) {
+#if DD2
+            // Many of these don't seem to be the enum type, probably because the enum doesn't allow zero but the fields do.
+            case "App_ItemDataParam.ItemDropId":
+            case "App_ItemDataParam.DecayedItemId":
+            case "App_ItemDropParam_Table_Item.Id":
+            case "App_ItemShopBuyParam.ItemId":
+            case "App_ItemShopSellParam.ItemId":
             case "App_WeaponEnhanceParam.ItemId":
             case "App_WeaponEnhanceParam.NeedItemId0":
             case "App_WeaponEnhanceParam.NeedItemId1":
                 return DataSourceType.ITEMS;
+#endif
         }
 #pragma warning restore IDE0066
 

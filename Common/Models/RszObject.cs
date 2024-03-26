@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Data;
 using RE_Editor.Common.Models.List_Wrappers;
+using RE_Editor.Common.Structs;
 
 #pragma warning disable CS8600
 #pragma warning disable CS8618
@@ -107,7 +108,19 @@ public class RszObject : OnPropertyChangedBase {
                 }
 #endif
 
-                if (isObjectType || isUserData) { // Array of pointers.
+                if (field.type == nameof(UIntArray)) {
+                    Debug.Assert((float) field.size % 4 == 0, $"Error: `Data` field size is not a multiple of {UIntArray.DATA_WIDTH}.");
+                    var dataWidth = (uint) (field.size / UIntArray.DATA_WIDTH);
+                    var objects   = new ObservableCollection<RszObject>();
+                    for (var s = 0; s < arrayCount; s++) {
+                        reader.BaseStream.Align(field.align);
+                        var data = new UIntArray(dataWidth);
+                        data.Read(reader);
+                        objects.Add(data);
+                    }
+                    var items = objects.GetGenericItemsOfType(fieldGenericType!);
+                    SetList(items, fieldSetMethod, rszObject);
+                } else if (isObjectType || isUserData) { // Array of pointers.
                     var objects = new List<RszObject>();
                     for (var index = 0; index < arrayCount; index++) {
                         objects.Add(rsz.objectData[reader.ReadInt32() - 1]);
@@ -138,7 +151,13 @@ public class RszObject : OnPropertyChangedBase {
                     SetList(items, fieldSetMethod, rszObject);
                 }
             } else {
-                if (isObjectType || isUserData) { // Pointer to object.
+                if (field.type == nameof(UIntArray)) {
+                    Debug.Assert((float) field.size % 4 == 0, $"Error: `Data` field size is not a multiple of {UIntArray.DATA_WIDTH}.");
+                    var data = new UIntArray((uint) (field.size / UIntArray.DATA_WIDTH));
+                    data.Read(reader);
+                    var items = new ObservableCollection<UIntArray> {data};
+                    SetList(items, fieldSetMethod, rszObject);
+                } else if (isObjectType || isUserData) { // Pointer to object.
                     var objectIndex = reader.ReadInt32() - 1; // Will be `0` for some `UserData` entries with no data in them.
                     if (objectIndex == -1) continue; // In which case just move onto the next field.
                     var objects = new List<RszObject> {rsz.objectData[objectIndex]};
@@ -293,7 +312,14 @@ public class RszObject : OnPropertyChangedBase {
             writer.PadTill(() => writer.BaseStream.Position % align != 0);
 
             if (field.array) {
-                if (isObjectType || isUserData) { // Array of pointers.
+                if (field.type == nameof(UIntArray)) {
+                    var list = (ObservableCollection<UIntArray>) fieldGetMethod.Invoke(this, null)!;
+                    writer.Write(list.Count);
+                    writer.BaseStream.Align(field.align);
+                    foreach (var obj in list) {
+                        obj.Write(writer);
+                    }
+                } else if (isObjectType || isUserData) { // Array of pointers.
                     var list = (IList) fieldGetMethod.Invoke(this, null)!;
                     writer.Write(list.Count);
                     foreach (RszObject obj in list) {
@@ -328,7 +354,10 @@ public class RszObject : OnPropertyChangedBase {
                     }
                 }
             } else {
-                if (isObjectType || isUserData) { // Pointer to object.
+                if (field.type == nameof(UIntArray)) {
+                    var list = (ObservableCollection<UIntArray>) fieldGetMethod.Invoke(this, null)!;
+                    list[0].Write(writer);
+                } else if (isObjectType || isUserData) { // Pointer to object.
                     var obj = (RszObject) ((dynamic) fieldGetMethod.Invoke(this, null)!)[0];
                     writer.Write(obj.objectInstanceIndex);
                 } else if (isStringType) { // Array of strings.

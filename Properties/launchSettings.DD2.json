@@ -31,6 +31,10 @@
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/JobRankParameter.user.2\""
         },
+        "Medal.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppData/Generate/ManualSet/Content/twn01_03/Gimmick/Normal/Medal/Medal.user.2\""
+        },
         "StaminaParameter.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/StaminaParameter.user.2\""

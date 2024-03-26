@@ -15,13 +15,8 @@ public static class PathHelper {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly string[] TEST_PATHS = [
-        //@"\natives\STM\AppSystem\",
-        @"\natives\STM\AppSystem\Catalog\MainContents\UserData\",
-        @"\natives\STM\AppSystem\Camera\",
-        @"\natives\STM\AppSystem\ch\",
-        @"\natives\STM\AppSystem\Item\",
-        @"\natives\STM\AppSystem\UserData\",
-        // MSG
+        @"\natives\STM\AppData\",
+        @"\natives\STM\AppSystem\",
         @"\natives\STM\Message\",
     ];
 

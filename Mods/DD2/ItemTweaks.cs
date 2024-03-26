@@ -196,9 +196,9 @@ public class ItemTweaks : IMod {
             switch (obj) {
                 case App_ItemDataParam itemData:
                     switch (option) {
-                        case DecayOptions.NO_ROTTEN:
+                        case DecayOptions.NO_ROTTEN_OR_DRIED:
                             var decayItemName = DataHelper.ITEM_NAME_LOOKUP[Global.LangIndex.eng].TryGet((uint) itemData.DecayedItemId, "");
-                            if (decayItemName.StartsWith("Rotten")) {
+                            if (decayItemName.StartsWith("Rotten") || decayItemName.StartsWith("Dried")) {
                                 itemData.Decay         = 0;
                                 itemData.DecayedItemId = 0;
                             }
@@ -253,7 +253,7 @@ public class ItemTweaks : IMod {
 
     public enum DecayOptions {
         NORMAL,
-        NO_ROTTEN,
+        NO_ROTTEN_OR_DRIED,
     }
 
     public enum StackOptions {

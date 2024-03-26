@@ -12,6 +12,7 @@
 		<AssemblyName>RE-Editor</AssemblyName>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
 		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release;RE4 - Debug;RE4 - Release</Configurations>
+		<NoWarn>$(NoWarn);WFAC010</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0">

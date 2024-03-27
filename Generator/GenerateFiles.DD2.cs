@@ -20,6 +20,7 @@ public partial class GenerateFiles {
         "App_ItemParameters",
         "App_ItemShopData",
         "App_ItemWeaponData",
+        "App_Job03Parameter",
         "App_WeaponCatalogData",
         "App_WeaponEnhanceParam",
     ];

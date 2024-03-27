@@ -21,7 +21,7 @@ public partial class GenerateFiles {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
-    public static readonly List<string> UNSUPPORTED_DATA_TYPES = new() { // TODO: Implement support for these.
+    public static readonly List<string> UNSUPPORTED_DATA_TYPES = [ // TODO: Implement support for these.
         "AABB",
         "Area",
         "Capsule",
@@ -36,11 +36,11 @@ public partial class GenerateFiles {
         "Sphere",
         "Torus",
         "Triangle",
-    };
+    ];
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
-    public static readonly List<string> UNSUPPORTED_OBJECT_TYPES = new() { // TODO: Implement support for these.
+    public static readonly List<string> UNSUPPORTED_OBJECT_TYPES = [ // TODO: Implement support for these.
         "System.Collections.Generic.Dictionary`",
         "System.Collections.Generic.Queue`1<System.Tuple`", // Nested generics.
         "System.Collections.Generic.Queue`1<via.vec3>", // Because this breaks generation and I need a better way of handling generics.
@@ -48,16 +48,18 @@ public partial class GenerateFiles {
         "via.gui.Panel", // Too long, skip it for now.
 #if DD2
         "AISituation",
-        "app.Ch221Parameter",
-        "app.ClassSelector",
+        "app.Ch221Parameter.StateChangeParameter.ElementDataBase`",
+        "app.Ch221Parameter.StateChangeParameter.ElementDataColor`",
+        "app.Ch221Parameter.StateChangeParameter.ElementDataFloat`",
+        "app.ClassSelector`",
         "app.FilterSettingMediator`",
         "app.GUICharaEditData.PatternParam`",
-        "app.JobUnique",
+        "app.JobUniqueParameter.AreaParameterList`",
         "app.LocalWindSettings`",
-        "app.MaterialInterpolation",
+        "app.MaterialInterpolation.Variable`",
         "app.SimpleFlightPathTracer`",
-        "soundlib.SoundStateApp`1<",
-        "soundlib.SoundSwitchApp`1<",
+        "soundlib.SoundStateApp`",
+        "soundlib.SoundSwitchApp`",
 #elif MHR
         "snow.camera.CameraUtility.BufferingParam`",
         "snow.data.StmKeyconfigSystem.ConfigCodeSet`",
@@ -78,14 +80,14 @@ public partial class GenerateFiles {
         "soundlib.SoundStateApp`1<",
         "soundlib.SoundSwitchApp`1<",
 #endif
-    };
+    ];
 
-    private static readonly List<uint> GREYLIST = new(); // Hashes used in a given location.
+    private static readonly List<uint> GREYLIST = []; // Hashes used in a given location.
 
-    public readonly  Dictionary<string, EnumType>   enumTypes      = new();
-    public readonly  Dictionary<string, StructType> structTypes    = new();
+    public readonly  Dictionary<string, EnumType>   enumTypes      = [];
+    public readonly  Dictionary<string, StructType> structTypes    = [];
     private readonly Dictionary<string, StructJson> structJson     = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(PathHelper.STRUCT_JSON_PATH))!;
-    public readonly  Dictionary<uint, uint>         gpCrcOverrides = new(); // Because the GP version uses the same hashes, but different CRCs.
+    public readonly  Dictionary<uint, uint>         gpCrcOverrides = []; // Because the GP version uses the same hashes, but different CRCs.
 
     public void Go(string[] args) {
         var useWhitelist = args.Length > 0 && args.Contains("useWhitelist");
@@ -321,7 +323,7 @@ public partial class GenerateFiles {
         foreach (var structType in structTypes.Values) {
             if (structType.name.GetViaType() != null) continue;
             if (structType.useCount > 0) {
-                structType.UpdateUsingCounts(this, new());
+                structType.UpdateUsingCounts(this, []);
             }
         }
     }
@@ -443,7 +445,7 @@ public partial class GenerateFiles {
         }
 
 #if MHR
-        // Because this one doesn't appear in the fields but we still use it.
+        // Because this one doesn't appear in the fields, but we still use it.
         enumTypes["Snow_data_ContentsIdSystem_SubCategoryType"].useCount++;
 #endif
     }
@@ -484,8 +486,7 @@ public partial class GenerateFiles {
                                 select instanceInfo;
             instanceInfos = instanceInfos.Distinct();
             foreach (var (hash, crc) in instanceInfos) {
-                if (gpCrcOverrides.ContainsKey(hash)) continue;
-                gpCrcOverrides[hash] = crc;
+                gpCrcOverrides.TryAdd(hash, crc);
             }
         }
 

@@ -26,6 +26,7 @@ public class JobRequirements : IMod {
             Version      = version,
             NameAsBundle = bundleName,
             Desc         = description,
+            MakeIntoPak  = true
         };
 
         var mods = new[] {
@@ -53,7 +54,7 @@ public class JobRequirements : IMod {
                 }),
         };
 
-        ModMaker.WriteMods(mods.ToList(), PathHelper.CHUNK_PATH, outPath, bundleName, true, makeIntoPak: true);
+        ModMaker.WriteMods(mods.ToList(), PathHelper.CHUNK_PATH, outPath, bundleName, true);
     }
 
     public static void Jobs(List<RszObject> rszObjectData, JobOptions option) {

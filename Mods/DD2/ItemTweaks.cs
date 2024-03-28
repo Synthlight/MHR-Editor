@@ -35,7 +35,8 @@ public class ItemTweaks : IMod {
             Version      = version,
             NameAsBundle = bundleName,
             Desc         = description,
-            Files        = itemDataFiles
+            Files        = itemDataFiles,
+            MakeIntoPak  = true
         };
 
         var mods = new[] {
@@ -88,7 +89,7 @@ public class ItemTweaks : IMod {
                 }),
         };
 
-        ModMaker.WriteMods(mods.ToList(), PathHelper.CHUNK_PATH, outPath, bundleName, true, makeIntoPak: true);
+        ModMaker.WriteMods(mods.ToList(), PathHelper.CHUNK_PATH, outPath, bundleName, true);
     }
 
     public static void GoldCost(List<RszObject> rszObjectData, GoldOptions option) {

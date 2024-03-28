@@ -36,6 +36,7 @@ public class NoStamina : IMod {
             Version      = version,
             NameAsBundle = bundleName,
             Desc         = description,
+            MakeIntoPak  = true
         };
 
         var mods = (from option in Enum.GetValues<StaminaOptions>()
@@ -47,7 +48,7 @@ public class NoStamina : IMod {
                                   .SetFiles(dataFiles[option])
                                   .SetAction(list => Stamina(list, option, value))).ToList();
 
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, bundleName, true, makeIntoPak: true);
+        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, bundleName, true);
     }
 
     public static void Stamina(List<RszObject> rszObjectData, StaminaOptions option, StaminaValueOptions value) {

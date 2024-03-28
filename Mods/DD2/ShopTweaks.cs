@@ -23,14 +23,15 @@ public class ShopTweaks : IMod {
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var mod = new NexusMod {
-            Version = version,
-            Name    = bundleName,
-            Desc    = description,
-            Files   = [PathHelper.ITEM_SHOP_DATA_PATH],
-            Action  = ShopData
+            Version     = version,
+            Name        = bundleName,
+            Desc        = description,
+            Files       = [PathHelper.ITEM_SHOP_DATA_PATH],
+            Action      = ShopData,
+            MakeIntoPak = true
         };
 
-        ModMaker.WriteMods([mod], PathHelper.CHUNK_PATH, outPath, bundleName, true, makeIntoPak: true);
+        ModMaker.WriteMods([mod], PathHelper.CHUNK_PATH, outPath, bundleName, true);
     }
 
     public static void ShopData(List<RszObject> rszObjectData) {

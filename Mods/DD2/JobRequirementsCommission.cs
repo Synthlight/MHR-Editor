@@ -27,6 +27,7 @@ public class JobRequirementsCommission : IMod {
             Version      = version,
             NameAsBundle = "No Job Requirements",
             Desc         = description,
+            MakeIntoPak  = true
         };
 
         var mods = new[] {
@@ -41,7 +42,7 @@ public class JobRequirementsCommission : IMod {
                 }),
         };
 
-        ModMaker.WriteMods(mods.ToList(), PathHelper.CHUNK_PATH, outPath, variantBundleName: bundleName, copyToFluffy: true, makeIntoPak: true);
+        ModMaker.WriteMods(mods.ToList(), PathHelper.CHUNK_PATH, outPath, variantBundleName: bundleName, copyToFluffy: true);
     }
 
     public static void Mod(List<RszObject> rszObjectData) {

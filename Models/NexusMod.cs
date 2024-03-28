@@ -9,14 +9,15 @@ using RE_Editor.Common.Models;
 namespace RE_Editor.Models;
 
 public interface INexusMod {
-    string                    Name     { get; set; }
-    [CanBeNull] string        Filename { get; set; }
-    string                    Desc     { get; set; }
-    string                    Version  { get; set; }
-    [CanBeNull] public string Image    { get; set; }
-    IEnumerable<string>       Files    { get; set; }
-    Action<List<RszObject>>   Action   { get; set; }
-    public bool               ForGp    { get; set; }
+    string                    Name        { get; set; }
+    [CanBeNull] string        Filename    { get; set; }
+    string                    Desc        { get; set; }
+    string                    Version     { get; set; }
+    [CanBeNull] public string Image       { get; set; }
+    IEnumerable<string>       Files       { get; set; }
+    Action<List<RszObject>>   Action      { get; set; }
+    public bool               ForGp       { get; set; }
+    public bool               MakeIntoPak { get; set; }
 }
 
 public interface INexusModVariant : INexusMod {
@@ -24,14 +25,15 @@ public interface INexusModVariant : INexusMod {
 }
 
 public struct NexusMod : INexusMod {
-    public string                  Name     { get; set; }
-    public string                  Filename { get; set; }
-    public string                  Desc     { get; set; }
-    public string                  Version  { get; set; }
-    public string                  Image    { get; set; }
-    public IEnumerable<string>     Files    { get; set; }
-    public Action<List<RszObject>> Action   { get; set; }
-    public bool                    ForGp    { get; set; }
+    public string                  Name        { get; set; }
+    public string                  Filename    { get; set; }
+    public string                  Desc        { get; set; }
+    public string                  Version     { get; set; }
+    public string                  Image       { get; set; }
+    public IEnumerable<string>     Files       { get; set; }
+    public Action<List<RszObject>> Action      { get; set; }
+    public bool                    ForGp       { get; set; }
+    public bool                    MakeIntoPak { get; set; }
 
     public static NexusMod FromVariant(NexusModVariant variant) {
         return new() {
@@ -54,6 +56,7 @@ public struct NexusModVariant : INexusModVariant {
     public IEnumerable<string>     Files        { get; set; }
     public Action<List<RszObject>> Action       { get; set; }
     public bool                    ForGp        { get; set; }
+    public bool                    MakeIntoPak  { get; set; }
     public string                  NameAsBundle { get; set; }
 }
 
@@ -95,6 +98,11 @@ public static class NexusModExtensions {
 
     public static T SetForGp<T>(this T nexusMod, bool forGp) where T : INexusMod {
         nexusMod.ForGp = forGp;
+        return nexusMod;
+    }
+
+    public static T SetMakeIntoPak<T>(this T nexusMod, bool makeIntoPak) where T : INexusMod {
+        nexusMod.MakeIntoPak = makeIntoPak;
         return nexusMod;
     }
 

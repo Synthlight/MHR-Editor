@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using ICSharpCode.SharpZipLib.Zip;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
@@ -43,15 +44,19 @@ public static class ModMaker {
             }
             File.WriteAllText(@$"{modPath}\modinfo.ini", modInfo.ToString());
 
-            foreach (var modFile in mod.Files) {
-                var sourceFile = @$"{inPath}\{modFile}";
-                var outFile    = @$"{modPath}\{modFile}";
-                Directory.CreateDirectory(Path.GetDirectoryName(outFile)!);
+            if (mod.Files.Any()) {
+                foreach (var modFile in mod.Files) {
+                    var sourceFile = @$"{inPath}\{modFile}";
+                    var outFile    = @$"{modPath}\{modFile}";
+                    Directory.CreateDirectory(Path.GetDirectoryName(outFile)!);
 
-                var dataFile = ReDataFile.Read(sourceFile);
-                var data     = dataFile.rsz.objectData;
-                mod.Action.Invoke(data);
-                dataFile.Write(outFile, forGp: mod.ForGp);
+                    var dataFile = ReDataFile.Read(sourceFile);
+                    var data     = dataFile.rsz.objectData;
+                    mod.Action.Invoke(data);
+                    dataFile.Write(outFile, forGp: mod.ForGp);
+                }
+            } else {
+                mod.Action.Invoke(null);
             }
 
             if (mod.MakeIntoPak) {

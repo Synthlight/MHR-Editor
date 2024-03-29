@@ -9,6 +9,7 @@ public static partial class Program {
 
     public static void Main() {
         ExtractItemInfo();
+        ExtractShopNames();
     }
 
     private static void ExtractItemInfo() {
@@ -25,5 +26,11 @@ public static partial class Program {
                      });
         CreateAssetFile(msg, "ITEM_NAME_LOOKUP");
         CreateConstantsFile(msg[Global.LangIndex.eng], "ItemConstants");
+    }
+
+    private static void ExtractShopNames() {
+        var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\message\ui\AILocalAreaName.msg.{Global.MSG_VERSION}", true).GetLangGuidMap();
+        CreateAssetFile(msg, "SHOP_NAME_LOOKUP");
+        CreateConstantsFile(msg[Global.LangIndex.eng], "ShopConstants");
     }
 }

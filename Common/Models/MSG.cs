@@ -188,6 +188,50 @@ public class MSG {
         return dict;
     }
 
+    public Dictionary<T, string> GetRawMap<T>(Global.LangIndex lang, Func<SubEntry, T> parseName) where T : notnull {
+        var dict = new Dictionary<T, string>(subEntries.Length);
+        foreach (var entry in subEntries) {
+            try {
+                var id   = parseName(entry);
+                var text = entry.refs[(int) lang];
+                if (text == "") continue;
+                SetText(text, dict, id);
+            } catch (SkipReadException) {
+            }
+        }
+        return dict;
+    }
+
+    public Dictionary<Global.LangIndex, Dictionary<T, string>> GetLangRawMap<T>(Func<SubEntry, T> parseName) where T : notnull {
+        var dict = new Dictionary<Global.LangIndex, Dictionary<T, string>>(Global.LANGUAGES.Count);
+        foreach (var lang in Global.LANGUAGES) {
+            dict[lang] = GetRawMap(lang, parseName);
+        }
+        return dict;
+    }
+
+    public Dictionary<Guid, string> GetGuidMap(Global.LangIndex lang) {
+        var dict = new Dictionary<Guid, string>(subEntries.Length);
+        foreach (var entry in subEntries) {
+            try {
+                var id   = entry.id1;
+                var text = entry.refs[(int) lang];
+                if (text == "") continue;
+                SetText(text, dict, id);
+            } catch (SkipReadException) {
+            }
+        }
+        return dict;
+    }
+
+    public Dictionary<Global.LangIndex, Dictionary<Guid, string>> GetLangGuidMap() {
+        var dict = new Dictionary<Global.LangIndex, Dictionary<Guid, string>>(Global.LANGUAGES.Count);
+        foreach (var lang in Global.LANGUAGES) {
+            dict[lang] = GetGuidMap(lang);
+        }
+        return dict;
+    }
+
     private static void SetText<T>(string text, IDictionary<T, string> dict, T id) {
         if (text.Contains("#Rejected#")) text = "#Rejected#";
         text = text.Replace("\r\n", " ");
@@ -199,7 +243,8 @@ public class MSG {
     }
 
     public class SubEntry {
-        public byte[]    id;
+        public Guid      id1;
+        public uint      id2;
         public uint      index;
         public ulong     firstOffset;
         public ulong     typeOffset;
@@ -212,7 +257,8 @@ public class MSG {
             var subEntry = new SubEntry();
             var position = reader.BaseStream.Position;
             reader.BaseStream.Position = (long) subOffset;
-            subEntry.id                = reader.ReadBytes(20);
+            subEntry.id1               = new(reader.ReadBytes(16));
+            subEntry.id2               = reader.ReadUInt32();
             subEntry.index             = reader.ReadUInt32();
             subEntry.firstOffset       = reader.ReadUInt64();
             subEntry.typeOffset        = reader.ReadUInt64();

@@ -116,14 +116,14 @@ public class RszObject : OnPropertyChangedBase {
                         data.Read(reader);
                         objects.Add(data);
                     }
-                    var items = objects.GetGenericItemsOfType(fieldGenericType!);
+                    var items = objects.GetGenericItemsOfType(fieldGenericType!, true);
                     SetList(items, fieldSetMethod, rszObject);
                 } else if (isObjectType || isUserData) { // Array of pointers.
                     var objects = new List<RszObject>();
                     for (var index = 0; index < arrayCount; index++) {
                         objects.Add(rsz.objectData[reader.ReadInt32() - 1]);
                     }
-                    var items = objects.GetGenericItemsOfType(fieldGenericType!);
+                    var items = objects.GetGenericItemsOfType(fieldGenericType!, true);
                     SetList(items, fieldSetMethod, rszObject);
                 } else if (isStringType) { // Array of strings.
                     var strings = new List<GenericWrapper<string>>(arrayCount);
@@ -140,7 +140,7 @@ public class RszObject : OnPropertyChangedBase {
                         instance.Read(reader);
                         objects.Add(instance);
                     }
-                    var items = objects.GetGenericItemsOfType(fieldGenericType!);
+                    var items = objects.GetGenericItemsOfType(fieldGenericType!, true);
                     SetList(items, fieldSetMethod, rszObject);
                 } else { // Primitive array.
                     var bytes         = reader.ReadBytes(field.size * arrayCount);
@@ -159,7 +159,7 @@ public class RszObject : OnPropertyChangedBase {
                     var objectIndex = reader.ReadInt32() - 1; // Will be `0` for some `UserData` entries with no data in them.
                     if (objectIndex == -1) continue; // In which case just move onto the next field.
                     var objects = new List<RszObject> {rsz.objectData[objectIndex]};
-                    var items   = objects.GetGenericItemsOfType(fieldGenericType!);
+                    var items   = objects.GetGenericItemsOfType(fieldGenericType!, true);
                     SetList(items, fieldSetMethod, rszObject);
                 } else if (isStringType) { // A string.
                     var str = reader.ReadWString();
@@ -170,7 +170,7 @@ public class RszObject : OnPropertyChangedBase {
                     if (viaType?.Is(typeof(ISimpleViaType)) == true) {
                         SetDirect(instance, fieldSetMethod, rszObject);
                     } else {
-                        var items = new List<IViaType> {instance}.GetGenericItemsOfType(fieldGenericType!);
+                        var items = new List<IViaType> {instance}.GetGenericItemsOfType(fieldGenericType!, true);
                         SetList(items, fieldSetMethod, rszObject); // Treated as a list, so we have an 'open' button.
                     }
                 } else { // A primitive.

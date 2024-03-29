@@ -506,10 +506,23 @@ public static class Extensions {
      * Returns a list of all the items in the give list matching the given type.
      * Essentially a type-as-a-variable way to call OfType().
      */
-    public static object GetGenericItemsOfType<T>(this IReadOnlyList<T> rszObjectData, Type type) {
-        return typeof(Enumerable).GetMethod(nameof(Enumerable.OfType), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)
-                                 ?.MakeGenericMethod(type)
-                                 .Invoke(null, new object[] {rszObjectData}) ?? throw new("rsz.objectData.OfType failure.");
+    public static object GetGenericItemsOfType<T>(this IReadOnlyList<T> rszObjectData, Type type, bool checkCounts = false) {
+        var genericItemsOfType = typeof(Enumerable).GetMethod(nameof(Enumerable.OfType), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)
+                                                   ?.MakeGenericMethod(type)
+                                                   .Invoke(null, [rszObjectData]) ?? throw new("rsz.objectData.OfType failure.");
+        // We only want to do this when reading an RszObject.
+        // Otherwise, it'll mess with counts where it shouldn't, like for mixing in `UserDataShell`.
+        if (checkCounts) {
+            // Check to make sure the counts match.
+            // Without this, it'll fail silently if the generic types don't match.
+            // We run into this for the types that inherit from other types with the list being the generic base type. (RE4 does this a lot.)
+            var count = ((IEnumerable) genericItemsOfType).Cast<object?>().Count();
+            if (count != rszObjectData.Count) {
+                Debug.Assert(count == rszObjectData.Count, "Generated generic list size doesn't match given data size.");
+                throw new FileNotSupported();
+            }
+        }
+        return genericItemsOfType;
     }
 
     public static void Align(this Stream stream, int align) {

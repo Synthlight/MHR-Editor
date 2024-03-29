@@ -1,4 +1,5 @@
-﻿using RE_Editor.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+using RE_Editor.Common;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Models;
 using RE_Editor.Common.Structs;
@@ -372,8 +373,30 @@ public class StructTemplate {
         };
     }
 
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private string? GetParent() {
         return className switch {
+#if DD2
+            "App_gc_pl_BurningLightBow" => "App_GenericConditionBase",
+            "App_gc_pl_CarryAim" => "App_GenericConditionBase",
+            "App_gc_pl_CarryObjectAim" => "App_GenericConditionBase",
+            "App_gc_pl_DrawBow" => "App_GenericConditionBase",
+            "App_gc_pl_DrawMagicBow" => "App_GenericConditionBase",
+            "App_gc_pl_FireStorm" => "App_GenericConditionBase",
+            "App_gc_pl_ItemCh255HeadAim" => "App_GenericConditionBase",
+            "App_gc_pl_Job02BodyBinder" => "App_GenericConditionBase",
+            "App_gc_pl_Job02FullBend" => "App_GenericConditionBase",
+            "App_gc_pl_Job02FullBlast" => "App_GenericConditionBase",
+            "App_gc_pl_Job02MeteorShot" => "App_GenericConditionBase",
+            "App_gc_pl_Job02RandomShot" => "App_GenericConditionBase",
+            "App_gc_pl_Job07Gungnir" => "App_GenericConditionBase",
+            "App_gc_pl_Job07PsychoLauncher" => "App_GenericConditionBase",
+            "App_gc_pl_Job09DetectFregrance" => "App_GenericConditionBase",
+            "App_gc_pl_PreparingSpell" => "App_GenericConditionBase",
+            "App_gc_pl_PreparingSpellOfAnodyne" => "App_GenericConditionBase",
+            "App_gc_pl_SpiritArrowBow" => "App_GenericConditionBase",
+            "App_gc_pl_ThunderChainBow" => "App_GenericConditionBase",
+#elif RE4
             "Chainsaw_ItemUseResult_HealHitPoint" => "Chainsaw_ItemUseResultInfoBase",
             "Chainsaw_ItemUseResult_IncreaseHitPoint" => "Chainsaw_ItemUseResultInfoBase",
             "Chainsaw_WeaponItem" => "Chainsaw_Item",
@@ -385,6 +408,7 @@ public class StructTemplate {
             "Chainsaw_RuleStratum_ParticleResourcePoint" => "Chainsaw_RuleStratum_Particle",
             "Chainsaw_RuleStratum_ParticleStatusEffect" => "Chainsaw_RuleStratum_Particle",
             "Chainsaw_RuleStratum_ParticleTrue" => "Chainsaw_RuleStratum_Particle",
+#endif
             _ => null
         };
     }

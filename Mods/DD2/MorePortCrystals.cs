@@ -19,7 +19,7 @@ public class MorePortCrystals : IMod {
     public static void Make() {
         const string bundleName  = "Higher Portcrystal Limit";
         const string description = "Changes the limit from 10 to 256.";
-        const string version     = "1.0";
+        const string version     = "1.1";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var baseMod = new NexusModVariant {

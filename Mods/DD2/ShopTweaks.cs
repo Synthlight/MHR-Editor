@@ -19,7 +19,7 @@ public class ShopTweaks : IMod {
     public static void Make() {
         const string bundleName  = "Crazy & Metamorphosis Merged and in Every Shop";
         const string description = "Adds the items they both offer, but in every single shop in the game.";
-        const string version     = "1.1";
+        const string version     = "1.2";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var mod = new NexusMod {
@@ -49,6 +49,10 @@ public class ShopTweaks : IMod {
                         shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.WAKESTONE, 255));
                         shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.GIANT_HUNK_OF_RIFT_CRYSTAL, 255));
                         shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.SEEKERS_TOKEN, 255));
+                        shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.FINDERS_TOKEN, 255));
+                        shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.UNMAKING_ARROW, 255));
+                        shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.GOLDEN_TROVE_BEETLE, 255));
+                        shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.SEALING_PHIAL, 255));
                     }
                     break;
             }

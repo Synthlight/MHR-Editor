@@ -3,9 +3,17 @@
         "[None]": {
             "commandName": "Project"
         },
+        "AimCameraSetting.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Camera/Controller/Aim/AimCameraSetting.user.2\""
+        },
         "ch221DropPartsUserData.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/ch/ch221/UserData/ch221DropPartsUserData.user.2\""
+        },
+        "CinematicActionCameraSetting.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Camera/Controller/CinematicAction/CinematicActionCameraSetting.user.2\""
         },
         "EnemyItemDropData.user.2": {
             "commandName": "Project",

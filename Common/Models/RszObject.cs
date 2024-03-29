@@ -86,9 +86,9 @@ public class RszObject : OnPropertyChangedBase {
             var isUserData       = field.type == "UserData";
             var isNonPrimitive   = primitiveName == null;
             var isObjectType     = field.type == "Object";
-            var isStringType     = field.type == "String";
             var fieldInfo        = rszObject.GetType().GetProperty(fieldName)!;
             var fieldType        = fieldInfo.PropertyType;
+            var isStringType     = field.type == "String" || fieldType == typeof(string) || fieldType == typeof(ObservableCollection<GenericWrapper<string>>);
             var fieldGenericType = fieldType.IsGenericType ? fieldType.GenericTypeArguments[0] : null; // GetInnermostGenericType(fieldType);
             var fieldSetMethod   = fieldInfo.SetMethod!;
 
@@ -301,8 +301,9 @@ public class RszObject : OnPropertyChangedBase {
             var isUserData     = field.type == "UserData";
             var isNonPrimitive = primitiveName == null;
             var isObjectType   = field.type == "Object";
-            var isStringType   = field.type == "String";
             var fieldInfo      = GetType().GetProperty(fieldName)!;
+            var fieldType      = fieldInfo.PropertyType;
+            var isStringType   = field.type == "String" || fieldType == typeof(string) || fieldType == typeof(ObservableCollection<GenericWrapper<string>>);
             var fieldGetMethod = fieldInfo.GetMethod!;
 
             // Be careful with lists. The 'align' in them refers to their contents, not their count themselves, which is always a 4-aligned int.

@@ -48,18 +48,11 @@ public partial class GenerateFiles {
         "via.gui.Panel", // Too long, skip it for now.
 #if DD2
         "AISituation",
-        "app.Ch221Parameter.StateChangeParameter.ElementDataBase`",
-        "app.Ch221Parameter.StateChangeParameter.ElementDataColor`",
-        "app.Ch221Parameter.StateChangeParameter.ElementDataFloat`",
+        "app.anime.EquipAdjustUserData.SizeData`",
         "app.ClassSelector`",
         "app.FilterSettingMediator`",
         "app.GUICharaEditData.PatternParam`",
-        "app.JobUniqueParameter.AreaParameterList`",
-        "app.LocalWindSettings`",
-        "app.MaterialInterpolation.Variable`",
-        "app.SimpleFlightPathTracer`",
-        "soundlib.SoundStateApp`",
-        "soundlib.SoundSwitchApp`",
+        "app.lod.LODProcessDefine.ClassSelector`",
 #elif MHR
         "snow.camera.CameraUtility.BufferingParam`",
         "snow.data.StmKeyconfigSystem.ConfigCodeSet`",
@@ -79,6 +72,31 @@ public partial class GenerateFiles {
         "chainsaw.CameraCurveUserDataParam.CurveParamTable`1<",
         "soundlib.SoundStateApp`1<",
         "soundlib.SoundSwitchApp`1<",
+#endif
+    ];
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
+    public static readonly List<string> ALLOWED_GENERIC_TYPES = [
+#if DD2
+        ".Element<",
+        "app.AppEventCatalogBase`",
+        "app.BodyScaleFormulaBase`",
+        "app.BodyWeightDataBase`",
+        "app.Ch221Parameter.StateChangeParameter.ElementDataBase`",
+        "app.Ch221Parameter.StateChangeParameter.ElementDataColor`",
+        "app.Ch221Parameter.StateChangeParameter.ElementDataFloat`",
+        "app.CharacterVariationDataContainer`",
+        "app.charaedit.ch000.useredit.LimitSpeciesAndGenderData`",
+        "app.charaedit.EditInfluenceMapBase`",
+        "app.CutSceneIKModule.EquipmentOffset`",
+        "app.JobUniqueParameter.AreaParameterList`",
+        "app.LocalWindSettings`",
+        "app.MaterialInterpolation.Variable`",
+        "app.ModuleParametersUserData`",
+        "app.retarget.RetargetLodJointSettingBase`",
+        "app.SimpleFlightPathTracer`",
+        "app.StringUtil.NameHash`",
 #endif
     ];
 
@@ -260,16 +278,19 @@ public partial class GenerateFiles {
     }
 
     private static bool IsStructNameValid(StructJson structInfo) {
-        return !(structInfo.name == null
-                 || structInfo.name.Contains('<')
-                 || structInfo.name.Contains('>')
-                 || structInfo.name.Contains('`')
-                 || structInfo.name.Contains('[')
-                 || structInfo.name.Contains(']')
-                 || structInfo.name.Contains("List`")
-                 || structInfo.name.Contains("Culture=neutral")
-                 || structInfo.name.StartsWith("System")
-                 || !structInfo.name.StartsWith(ROOT_STRUCT_NAMESPACE) && !structInfo.name.StartsWith("via") && !structInfo.name.StartsWith("share") && !structInfo.name.StartsWith("ace"));
+        var structName = structInfo.name;
+        var isBadName = structName == null
+                        || structName.Contains('<')
+                        || structName.Contains('>')
+                        || structName.Contains('`')
+                        || structName.Contains('[')
+                        || structName.Contains(']')
+                        || structName.Contains("List`")
+                        || structName.Contains("Culture=neutral")
+                        || structName.StartsWith("System")
+                        || !structName.StartsWith(ROOT_STRUCT_NAMESPACE) && !structName.StartsWith("via") && !structName.StartsWith("share") && !structName.StartsWith("ace");
+        if (isBadName && structName != null && ALLOWED_GENERIC_TYPES.Any(structName.Contains)) return true;
+        return !isBadName;
     }
 
     /**

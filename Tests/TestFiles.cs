@@ -27,6 +27,7 @@ public class TestFiles {
         try {
             ReDataFile.Read(file);
         } catch (FileNotSupported) {
+            if (Debugger.IsAttached) throw;
             Assert.Inconclusive();
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
@@ -140,7 +141,7 @@ public static class Extensions {
 
     public static List<V> GetOrCreate<K, V>(this Dictionary<K, List<V>> dict, K key) where K : notnull {
         if (dict.ContainsKey(key)) return dict[key];
-        dict[key] = new();
+        dict[key] = [];
         return dict[key];
     }
 
@@ -209,7 +210,7 @@ public static class Extensions {
 
     public static byte[] GetBytes<T>(this T @struct) where T : notnull {
         if (@struct is bool b) {
-            return new[] {(byte) (b ? 1 : 0)};
+            return [(byte) (b ? 1 : 0)];
         }
 
         var type = @struct.GetType();
@@ -217,7 +218,7 @@ public static class Extensions {
             var enumType        = type.GetEnumUnderlyingType();
             var valueAsEnumType = Convert.ChangeType(@struct, enumType);
             var getBytes        = typeof(Extensions).GetMethod(nameof(GetBytes), BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.MakeGenericMethod(enumType);
-            var data            = (byte[]) (getBytes?.Invoke(null, new[] {valueAsEnumType}) ?? throw new("sub.GetDataAs failure."));
+            var data            = (byte[]) (getBytes?.Invoke(null, [valueAsEnumType]) ?? throw new("sub.GetDataAs failure."));
             return data;
         }
 
@@ -298,7 +299,7 @@ public static class Extensions {
     /// Made for reading 16 bytes of "data" for unknown underlying type.
     /// </summary>
     public static ObservableCollection<Vec4> ReadVec4Array(this BinaryReader reader) {
-        ObservableCollection<Vec4> v = new();
+        ObservableCollection<Vec4> v = [];
         reader.BaseStream.Align(4);
         var count = reader.ReadInt32();
         if (count > 0) {
@@ -412,6 +413,7 @@ public static class Extensions {
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    [SuppressMessage("ReSharper", "GrammarMistakeInComment")]
     public static string? ToConvertedTypeName(this string? source, bool fixTypos = false) {
         if (source == null) return null;
         var name = source.ToUpperFirstLetter()
@@ -419,8 +421,16 @@ public static class Extensions {
                          .Replace("::", "_")
                          .Replace("[]", "");
 
+        if (source == "app.JobUniqueParameter.AreaParameterList`1<app.Job04Parameter.StealthParameter.AreaParameter>") {
+        }
+
+        // TODO: Need to transform:
+        // app.JobUniqueParameter.CustomSkillLevelParameter`1.Element[[app.Job04Parameter.CuttingWindParameter.LevelParameter, application, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]][]
+        // into:
+        // app.JobUniqueParameter.CustomSkillLevelParameter`1.Element<app.Job04Parameter.CuttingWindParameter.LevelParameter>
+
         if (int.TryParse(name[0].ToString(), out _)) name = "_" + name; // If it starts with a number.
-        while (name.EndsWith("k__BackingField")) name     = name.Substring(1, name.LastIndexOf('>') - 1); // Remove the k__BackingField.
+        while (name.EndsWith("k__BackingField")) name     = name[1..name.LastIndexOf('>')]; // Remove the k__BackingField.
         while (name.StartsWith("System_Collections_Generic_List`")
                || name.StartsWith("System_Collections_Generic_IReadOnlyCollection`")
                || name.StartsWith("System_Collections_Generic_ICollection`")
@@ -433,6 +443,16 @@ public static class Extensions {
                || name.StartsWith("Snow_enemy_EnemyConvertShellDataList`")
                || name.Contains("[[")) { // The 'array' field already covers this.
             if (name.Contains("[[")) {
+                // Transforms things like this:
+                // app.JobUniqueParameter.CustomSkillLevelParameter`1.Element[[app.Job04Parameter.CuttingWindParameter.LevelParameter, application, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]][]
+                // into this:
+                // app.JobUniqueParameter.CustomSkillLevelParameter`1.Element<app.Job04Parameter.CuttingWindParameter.LevelParameter>
+                // The `[[` entries are empty structs. We need to transform them into their actual type.
+                name = name.Replace("[[", "<")
+                           .SubstringToEnd(0, name.IndexOf(',') - 1)
+                           .ToUpperFirstLetter();
+                name += ">";
+            } else if (name.Contains("[[")) {
                 name = name.SubstringToEnd(name.LastIndexOf("[[", StringComparison.Ordinal) + 2, name.IndexOf(','))
                            .ToUpperFirstLetter();
             } else {
@@ -442,6 +462,11 @@ public static class Extensions {
         }
 
         name = name.Replace('`', '_');
+
+        if (name.Contains("<")) {
+            name = name.Replace('<', '_')
+                       .Replace(">", "");
+        }
 
         Debug.Assert(!name.StartsWith("System_Collections"), source);
         Debug.Assert(!name.Contains('`'), source);
@@ -472,7 +497,7 @@ public static class Extensions {
         while (name.EndsWith('_')) name   = name[..1]; // Remove the trailing '_'.
 
         name = name.ToConvertedTypeName(true)!;
-        if (name == "Index") name = "_Index";
+        if (name == "Index") name   = "_Index";
         if (name == "GetType") name = "Get_Type";
         return name;
     }

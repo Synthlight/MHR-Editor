@@ -100,13 +100,11 @@ public class RszObject : OnPropertyChangedBase {
 
             if (field.array) {
                 var arrayCount = reader.ReadInt32();
-#if DEBUG
-                Debug.Assert(arrayCount < 100000, "`arrayCount` over 100k. This is probably reading the count from the wrong spot.");
-#else
                 if (arrayCount > 100000) {
+                    // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                    Debug.Assert(arrayCount < 100000, "`arrayCount` over 100k. This is probably reading the count from the wrong spot.");
                     throw new FileNotSupported();
                 }
-#endif
 
                 if (field.type == nameof(UIntArray)) {
                     Debug.Assert((float) field.size % 4 == 0, $"Error: `Data` field size is not a multiple of {UIntArray.DATA_WIDTH}.");

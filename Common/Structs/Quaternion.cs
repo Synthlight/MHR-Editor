@@ -1,36 +1,55 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using RE_Editor.Common.Models;
 
 namespace RE_Editor.Common.Structs;
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
+[UsedImplicitly]
 public class Quaternion : RszObject, IViaType {
-    public float X { get; set; }
-    public float Y { get; set; }
-    public float Z { get; set; }
-    public float W { get; set; }
+    private uint x;
+    public float X {
+        get => x;
+        set => x = (uint) value;
+    }
+    private uint y;
+    public float Y {
+        get => y;
+        set => y = (uint) value;
+    }
+    private uint z;
+    public float Z {
+        get => z;
+        set => z = (uint) value;
+    }
+    private uint w;
+    public float W {
+        get => w;
+        set => w = (uint) value;
+    }
 
     public void Read(BinaryReader reader) {
-        X = reader.ReadSingle();
-        Y = reader.ReadSingle();
-        Z = reader.ReadSingle();
-        W = reader.ReadSingle();
+        x = reader.ReadUInt32();
+        y = reader.ReadUInt32();
+        z = reader.ReadUInt32();
+        w = reader.ReadUInt32();
     }
 
     public void Write(BinaryWriter writer) {
-        writer.Write(X);
-        writer.Write(Y);
-        writer.Write(Z);
-        writer.Write(W);
+        writer.Write(x);
+        writer.Write(y);
+        writer.Write(z);
+        writer.Write(w);
     }
 
     public Quaternion Copy() {
         var obj = base.Copy<Quaternion>();
-        obj.X = X;
-        obj.Y = Y;
-        obj.W = W;
-        obj.Z = Z;
+        obj.x = x;
+        obj.y = y;
+        obj.z = z;
+        obj.w = w;
         return obj;
     }
 }

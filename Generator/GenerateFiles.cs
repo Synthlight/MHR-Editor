@@ -265,6 +265,12 @@ public partial class GenerateFiles {
             if (!IsStructNameValid(structInfo)) continue;
             // Also ignore structs that are just enum placeholders.
             if (structInfo.fields is [{name: "value__"}]) continue;
+
+            if (structInfo.name!.ToLower() == "via.prefab") {
+                structInfo.fields![0].name = "Enabled";
+                structInfo.fields![1].name = "Name";
+            }
+
             // Ignore the 'via.thing' placeholders.
             if (structInfo.name!.GetViaType() != null) continue;
             var name       = structInfo.name.ToConvertedTypeName()!;

@@ -7,7 +7,9 @@ namespace RE_Editor.Common.Structs;
 #pragma warning disable CS8618
 
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-public class Prefab : RszObject, IViaType {
+public class Prefab(uint hash) : RszObject, IViaType {
+    public readonly uint hash = hash;
+
     public bool   Enabled { get; set; }
     public string Name    { get; set; }
 
@@ -24,7 +26,7 @@ public class Prefab : RszObject, IViaType {
     }
 
     public Prefab Copy() {
-        return new() {
+        return new(hash) {
             Enabled = Enabled,
             Name    = Name
         };

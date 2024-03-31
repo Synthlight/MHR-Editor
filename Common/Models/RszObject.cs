@@ -200,8 +200,11 @@ public class RszObject : OnPropertyChangedBase {
      * If the hash isn't found it'll just return the base `RszObject`.
      */
     private static RszObject CreateRszObjectInstance(uint hash, StructJson structInfo) {
-        var viaType   = structInfo.name?.GetViaType();
-        var rszType   = viaType == null ? DataHelper.RE_STRUCTS.TryGet(hash, typeof(RszObject)) : Type.GetType($"RE_Editor.Common.Structs.{viaType}");
+        var viaType = structInfo.name?.GetViaType();
+        var rszType = viaType == null ? DataHelper.RE_STRUCTS.TryGet(hash, typeof(RszObject)) : Type.GetType($"RE_Editor.Common.Structs.{viaType}");
+        if (rszType == typeof(Prefab)) {
+            return (RszObject) Activator.CreateInstance(rszType, [hash])!;
+        }
         var rszObject = (RszObject) Activator.CreateInstance(rszType!) ?? new RszObject();
         return rszObject;
     }
@@ -235,12 +238,11 @@ public class RszObject : OnPropertyChangedBase {
             }
         }
 
-        uint hash;
-        if (this is UserDataShell udc) {
-            hash = udc.hash;
-        } else {
-            hash = (uint) GetType().GetField("HASH")!.GetValue(null)!;
-        }
+        var hash = this switch {
+            UserDataShell udc => udc.hash,
+            Prefab prefab => prefab.hash,
+            _ => (uint) GetType().GetField("HASH")!.GetValue(null)!
+        };
         var crc = uint.Parse(structInfo.crc!, NumberStyles.HexNumber);
 
         if (forGp && DataHelper.GP_CRC_OVERRIDE_INFO.TryGetValue(hash, out var value)) {

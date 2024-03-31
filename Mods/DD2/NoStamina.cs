@@ -16,7 +16,7 @@ public class NoStamina : IMod {
     public static void Make() {
         const string bundleName  = "No Stamina Consumed";
         const string description = "Changes stamina use.";
-        const string version     = "1.2";
+        const string version     = "1.3";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var descriptionOptions = new Dictionary<StaminaOptions, string> {
@@ -25,8 +25,11 @@ public class NoStamina : IMod {
         };
 
         var dataFiles = new Dictionary<StaminaOptions, List<string>> {
-            [StaminaOptions.JOB_SKILLS]    = [],
-            [StaminaOptions.OUT_OF_COMBAT] = [PathHelper.STAMINA_PARAM_PATH],
+            [StaminaOptions.JOB_SKILLS] = [],
+            [StaminaOptions.OUT_OF_COMBAT] = [
+                PathHelper.STAMINA_COMMON_ACTION_PARAM_PATH,
+                PathHelper.STAMINA_PARAM_PATH,
+            ],
         };
         for (var i = 1; i <= 10; i++) {
             dataFiles[StaminaOptions.JOB_SKILLS].Add($@"natives\STM\AppSystem\ch\Common\Human\UserData\Parameter\Job{i:00}StaminaParameter.user.2");
@@ -48,14 +51,14 @@ public class NoStamina : IMod {
                                   .SetFiles(dataFiles[option])
                                   .SetAction(list => Stamina(list, option, value))).ToList();
 
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, bundleName, true);
+        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, variantBundleName: bundleName, copyToFluffy: true);
     }
 
     public static void Stamina(List<RszObject> rszObjectData, StaminaOptions option, StaminaValueOptions value) {
         foreach (var obj in rszObjectData) {
             switch (obj) {
                 case App_HumanStaminaParameterAdditional data:
-                    if (option is StaminaOptions.JOB_SKILLS) {
+                    if (option is StaminaOptions.JOB_SKILLS or StaminaOptions.OUT_OF_COMBAT) {
                         data.Value = GetNewStaminaValue(data.Value, value);
                     }
                     break;

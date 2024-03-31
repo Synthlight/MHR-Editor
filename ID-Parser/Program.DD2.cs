@@ -29,7 +29,7 @@ public static partial class Program {
     }
 
     private static void ExtractShopNames() {
-        var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\message\ui\AILocalAreaName.msg.{Global.MSG_VERSION}", true).GetLangGuidMap();
+        var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\message\ui\AILocalAreaName.msg.{Global.MSG_VERSION}").GetLangGuidMap();
         CreateAssetFile(msg, "SHOP_NAME_LOOKUP");
         CreateConstantsFile(msg[Global.LangIndex.eng], "ShopConstants");
     }

@@ -91,7 +91,7 @@ public class NoStamina : IMod {
         JOB_SKILLS,
     }
 
-    private static object GetOptionName(StaminaOptions option) {
+    private static string GetOptionName(StaminaOptions option) {
         return option switch {
             StaminaOptions.OUT_OF_COMBAT => "Common Actions Only",
             StaminaOptions.JOB_SKILLS => "Job Skills Only",
@@ -106,7 +106,7 @@ public class NoStamina : IMod {
         X5,
     }
 
-    private static object GetValueName(StaminaValueOptions option) {
+    private static string GetValueName(StaminaValueOptions option) {
         return option switch {
             StaminaValueOptions._0 => "None",
             StaminaValueOptions.HALF => "Half",

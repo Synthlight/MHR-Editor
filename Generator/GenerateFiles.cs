@@ -395,12 +395,8 @@ public partial class GenerateFiles {
             Console.WriteLine($"Finding all files in: {PathHelper.CHUNK_PATH + path}");
         }
 
-        var allUserFiles = (from basePath in PathHelper.TEST_PATHS
-                            from file in Directory.EnumerateFiles(PathHelper.CHUNK_PATH + basePath, "*.user.2", SearchOption.AllDirectories)
-                            where File.Exists(file)
-                            select file).ToList();
-
-        var count = allUserFiles.Count;
+        var allUserFiles = PathHelper.GetCachedFileList(FileListCacheType.USER);
+        var count        = allUserFiles.Count;
         Console.WriteLine($"Found {count} files.");
 
         var now = DateTime.Now;

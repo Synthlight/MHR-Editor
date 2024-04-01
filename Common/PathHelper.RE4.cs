@@ -2,7 +2,7 @@
 
 namespace RE_Editor.Common;
 
-public static class PathHelper {
+public static partial class PathHelper {
     public const string CHUNK_PATH       = @"V:\RE4\re_chunk_000";
     public const string ENUM_HEADER_PATH = @"O:\SteamLibrary\steamapps\common\RESIDENT EVIL 4  BIOHAZARD RE4\Enums_Internal.hpp";
     public const string STRUCT_JSON_PATH = @"R:\Games\Monster Hunter Rise\RE_RSZ\rszre4.json";

@@ -2,7 +2,7 @@
 
 namespace RE_Editor.Common;
 
-public static class PathHelper {
+public static partial class PathHelper {
     public const string CHUNK_PATH       = @"V:\MHR\re_chunk_000";
     public const string ENUM_HEADER_PATH = @"C:\SteamLibrary\common\MonsterHunterRise\Enums_Internal.hpp";
     public const string STRUCT_JSON_PATH = @"R:\Games\Monster Hunter Rise\RE_RSZ\rszmhrise.json";

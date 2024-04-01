@@ -8,17 +8,11 @@ namespace RE_Editor.Tests;
 [TestClass]
 public class TestFiles {
     private static IEnumerable<object[]> GetUserFilesToTest() {
-        return from basePath in PathHelper.TEST_PATHS
-               from file in Directory.EnumerateFiles(PathHelper.CHUNK_PATH + basePath, "*.user.2", SearchOption.AllDirectories)
-               where File.Exists(file)
-               select new object[] {file};
+        return PathHelper.GetCachedFileList(FileListCacheType.USER).Select(s => new object[] {s});
     }
 
     private static IEnumerable<object[]> GetTextFilesToTest() {
-        return from basePath in PathHelper.TEST_PATHS
-               from file in Directory.EnumerateFiles(PathHelper.CHUNK_PATH + basePath, $"*.msg.{Global.MSG_VERSION}", SearchOption.AllDirectories)
-               where File.Exists(file)
-               select new object[] {file};
+        return PathHelper.GetCachedFileList(FileListCacheType.MSG).Select(s => new object[] {s});
     }
 
     [DynamicData(nameof(GetUserFilesToTest), DynamicDataSourceType.Method)]

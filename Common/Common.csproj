@@ -19,7 +19,6 @@
 	<!-- DD2 -->
 	<ItemGroup Condition="'$(Configuration.StartsWith(`DD2`))'">
 		<Compile Remove="Attributes\DataSourceType.cs"/>
-		<Compile Remove="PathHelper.cs"/>
 	</ItemGroup>
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`DD2`))'">
 		<Compile Remove="Attributes\DataSourceType.DD2.cs"/>
@@ -29,7 +28,6 @@
 	<!-- MHR -->
 	<ItemGroup Condition="'$(Configuration.StartsWith(`MHR`))'">
 		<Compile Remove="Attributes\DataSourceType.cs"/>
-		<Compile Remove="PathHelper.cs"/>
 	</ItemGroup>
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHR`))'">
 		<Compile Remove="Attributes\DataSourceType.MHR.cs"/>
@@ -41,7 +39,6 @@
 	<!-- RE4 -->
 	<ItemGroup Condition="'$(Configuration.StartsWith(`RE4`))'">
 		<Compile Remove="Attributes\DataSourceType.cs"/>
-		<Compile Remove="PathHelper.cs"/>
 	</ItemGroup>
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE4`))'">
 		<Compile Remove="Attributes\DataSourceType.RE4.cs"/>

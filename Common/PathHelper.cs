@@ -1,18 +1,29 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.IO;
+using Newtonsoft.Json;
+using RE_Editor.Common.Models;
 
 namespace RE_Editor.Common;
 
-public static class PathHelper {
-    public const string CHUNK_PATH       = @"";
-    public const string ENUM_HEADER_PATH = @"";
-    public const string STRUCT_JSON_PATH = @"";
-    public const string MODS_PATH        = @"";
-    public const string FLUFFY_MODS_PATH = @"";
-
-    public const string NEXUS_URL              = "";
-    public const string JSON_VERSION_CHECK_URL = "";
-    public const string WIKI_URL               = "";
-
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
-    public static readonly string[] TEST_PATHS = [];
+public static partial class PathHelper {
+    public static List<string> GetCachedFileList(FileListCacheType cacheType) {
+        var fileType = cacheType switch {
+            FileListCacheType.MSG => $"msg.{Global.MSG_VERSION}",
+            FileListCacheType.USER => "user.2",
+            _ => throw new ArgumentOutOfRangeException(nameof(cacheType), cacheType, null)
+        };
+        var          userFileCache = $@"{CHUNK_PATH}\{cacheType}_FILE_LIST_CACHE.json";
+        List<string> allUserFiles;
+        if (File.Exists(userFileCache)) {
+            var userFileCacheJson = File.ReadAllText(userFileCache);
+            allUserFiles = JsonConvert.DeserializeObject<List<string>>(userFileCacheJson)!;
+        } else {
+            allUserFiles = (from basePath in TEST_PATHS
+                            from file in Directory.EnumerateFiles(CHUNK_PATH + basePath, $"*.{fileType}", SearchOption.AllDirectories)
+                            where File.Exists(file)
+                            select file).ToList();
+            var userFileCacheJson = JsonConvert.SerializeObject(allUserFiles);
+            File.WriteAllText(userFileCache, userFileCacheJson);
+        }
+        return allUserFiles;
+    }
 }

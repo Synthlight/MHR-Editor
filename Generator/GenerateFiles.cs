@@ -17,7 +17,7 @@ public partial class GenerateFiles {
     public const  string ENUM_GEN_PATH   = $@"{BASE_GEN_PATH}\Enums\{CONFIG_NAME}";
     public const  string STRUCT_GEN_PATH = $@"{BASE_GEN_PATH}\Structs\{CONFIG_NAME}";
     private const string ASSETS_DIR      = $@"{BASE_PROJ_PATH}\Data\{CONFIG_NAME}\Assets";
-    public const  string ENUM_REGEX      = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
+    public const  string ENUM_REGEX      = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+(?:\/\/ (\[Flags\])\s+)?enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
@@ -228,10 +228,11 @@ public partial class GenerateFiles {
         var matches = regex.Matches(enumHpp);
 #pragma warning disable IDE0220 // Add explicit cast
         foreach (Match match in matches) {
-            var hppName = $"{match.Groups[1].Value}::{match.Groups[2].Value}";
+            var hppName = $"{match.Groups[1].Value}::{match.Groups[3].Value}";
             if (hppName.Contains('<') || hppName.Contains('`')) continue;
             var name     = hppName.ToConvertedTypeName();
-            var contents = match.Groups[3].Value;
+            var contents = match.Groups[4].Value;
+            var isFlags  = match.Groups[2].Success;
             if (name != null && enumTypes.TryGetValue(name, out var enumType)) {
                 if (contents.Contains("= -")) {
                     enumType.type = enumType.type switch {
@@ -243,6 +244,7 @@ public partial class GenerateFiles {
                     };
                 }
                 enumType.Contents = contents;
+                enumType.isFlags  = isFlags;
             }
         }
 #pragma warning restore IDE0220 // Add explicit cast

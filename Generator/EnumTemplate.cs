@@ -2,12 +2,8 @@
 
 namespace RE_Editor.Generator;
 
-public class EnumTemplate {
-    public readonly EnumType enumType;
-
-    public EnumTemplate(EnumType enumType) {
-        this.enumType = enumType;
-    }
+public class EnumTemplate(EnumType enumType) {
+    public readonly EnumType enumType = enumType;
 
     public void Generate(bool dryRun) {
         var       filename = $@"{GenerateFiles.ENUM_GEN_PATH}\{enumType.name}.cs";
@@ -16,6 +12,9 @@ public class EnumTemplate {
         file.WriteLine("// ReSharper disable All");
         file.WriteLine("namespace RE_Editor.Models.Enums;");
         file.WriteLine("");
+        if (enumType.isFlags) {
+            file.Write("[Flags]");
+        }
         file.Write($"public enum {enumType.name} : {enumType.type} ");
         file.Write(enumType.Contents);
         file.Close();

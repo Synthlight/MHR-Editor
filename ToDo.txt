@@ -1,7 +1,12 @@
 RE4:
 	Add a UI system to handle enum flags for `Chainsaw_RandomDrop_DropGroup`.
+	    (Flags are now supported in generation.)
 	Some structs inherit from others and right now there's no good way of doing that except some hard-coded hack.
 
 DD2:
 	App_ItemShortcutParameter has item arrays which are generic list wrappers and break the item enum button.
 	Via_AnimationCurve is using the new UIntArray container but the UI can't diplay it.
+
+Show column primitive type below the header text.
+    Show the full type name on header hover.
+    Add some truncated version of the full name with ellipses so it's at least obvious there's hover text.

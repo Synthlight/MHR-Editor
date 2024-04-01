@@ -3,6 +3,7 @@
         public readonly string  name;
         public          string  type;
         public          int     useCount;
+        public          bool    isFlags;
         private         string? contents;
         public string? Contents {
             get => contents;

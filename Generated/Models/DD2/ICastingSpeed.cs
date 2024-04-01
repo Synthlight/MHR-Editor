@@ -15,4 +15,11 @@ public interface ICastingSpeed {
     public interface ISecPrepare {
         public float SecPrepare { get; set; }
     }
+
+    public interface ISecPrepareAndFocus {
+        public float SecPrepare            { get; set; }
+        public float SecPrepareFocus       { get; set; }
+        public float SecPrepareLv2         { get; set; }
+        public float SecPrepareFocusAndLv2 { get; set; }
+    }
 }

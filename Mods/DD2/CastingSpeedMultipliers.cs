@@ -6,6 +6,7 @@ using RE_Editor.Common;
 using RE_Editor.Common.Models;
 using RE_Editor.Generated.Models;
 using RE_Editor.Models;
+using RE_Editor.Models.Structs;
 using RE_Editor.Util;
 
 namespace RE_Editor.Mods;
@@ -16,7 +17,7 @@ public class CastingSpeedMultipliers : IMod {
     public static void Make() {
         const string bundleName  = "Casting Speed Multipliers";
         const string description = "Casting speed multipliers.";
-        const string version     = "1.0";
+        const string version     = "1.2";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var dataFiles = new Dictionary<TargetOptions, List<string>> {
@@ -59,6 +60,18 @@ public class CastingSpeedMultipliers : IMod {
                     break;
                 case ICastingSpeed.ISecPrepare param:
                     param.SecPrepare *= multiplier;
+                    break;
+                case ICastingSpeed.ISecPrepareAndFocus param:
+                    param.SecPrepare            *= multiplier;
+                    param.SecPrepareFocus       *= multiplier;
+                    param.SecPrepareFocusAndLv2 *= multiplier;
+                    param.SecPrepareLv2         *= multiplier;
+                    break;
+                case App_Job08Parameter_MultiLockOnParameter param:
+                    param.AnotherLockOnExternalFrame *= multiplier;
+                    break;
+                case App_Job08Parameter_MultiLockOnParameter_MultiParam param:
+                    param.MultiLockOnFrame *= multiplier;
                     break;
             }
         }
@@ -110,7 +123,7 @@ public class CastingSpeedMultipliers : IMod {
 
     private static float GetMultiplier(ValueOptions option) {
         return option switch {
-            ValueOptions._0 => 0,
+            ValueOptions._0 => 0.001f,
             ValueOptions._1 => 0.1f,
             ValueOptions._2 => 0.2f,
             ValueOptions._3 => 0.3f,

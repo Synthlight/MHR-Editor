@@ -56,4 +56,4 @@ public partial class App_Job06Parameter_MeteorFallParameter : ICastingSpeed.IPre
 public partial class App_Job06Parameter_VortexRageParameter : ICastingSpeed.IPrepTime;
 
 // Magic Archer
-public partial class App_Job08Parameter_ChargeArrowParameter : ICastingSpeed.ISecPrepare;
+public partial class App_Job08Parameter_ChargeArrowParameter : ICastingSpeed.ISecPrepareAndFocus;

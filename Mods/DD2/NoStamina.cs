@@ -16,7 +16,7 @@ public class NoStamina : IMod {
     public static void Make() {
         const string bundleName  = "No Stamina Consumed";
         const string description = "Changes stamina use.";
-        const string version     = "1.3";
+        const string version     = "1.4.1";
         const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var descriptionOptions = new Dictionary<StaminaOptions, string> {
@@ -60,6 +60,7 @@ public class NoStamina : IMod {
                 case App_HumanStaminaParameterAdditional data:
                     if (option is StaminaOptions.JOB_SKILLS or StaminaOptions.OUT_OF_COMBAT) {
                         data.Value = GetNewStaminaValue(data.Value, value);
+                        data.Rate  = GetNewStaminaValue(data.Rate, value);
                     }
                     break;
                 case App_HumanStaminaParameter_ConsumeData data:

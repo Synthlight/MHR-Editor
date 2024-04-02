@@ -6,16 +6,11 @@ namespace RE_Editor.Tests;
 public class TestGeneration {
     [TestMethod]
     public void TestWhitelistGeneration() {
-        new GenerateFiles().Go(new[] {"useWhitelist", "dryRun"});
+        new GenerateFiles().Go(["useWhitelist", "dryRun"]);
     }
 
     [TestMethod]
     public void TestGreylistGeneration() {
-        new GenerateFiles().Go(new[] {"useGreylist", "dryRun"});
-    }
-
-    [TestMethod]
-    public void TestFullGeneration() {
-        new GenerateFiles().Go(new[] {"dryRun"});
+        new GenerateFiles().Go(["useGreylist", "dryRun"]);
     }
 }

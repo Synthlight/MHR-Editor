@@ -375,6 +375,28 @@ public class StructTemplate {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private string? GetParent() {
+        if (className != "App_ShellAdditionalParameter" && className.StartsWith("App_ShellAdditional")) {
+            return "App_ShellAdditionalParameter";
+        }
+        if (className != "App_ShellActionParameterBase" && className.StartsWith("App_ShellActionParam")) {
+            return "App_ShellActionParameterBase";
+        }
+        if (className.StartsWith("App_") && className.EndsWith("ShellParam")) {
+            return "App_ShellAdditionalParameter";
+        }
+        if ((className.StartsWith("App_Job08Shell")
+             || className.StartsWith("App_KillShell")
+             || className.StartsWith("App_Levin")
+             || className.StartsWith("App_MagicBind")
+             || className.StartsWith("App_Makers")
+             || className.StartsWith("App_ShellEnchant")
+             || className.StartsWith("App_ShellGenerator")
+             || className.StartsWith("App_SpecialStung"))
+            && (className.EndsWith("Param")
+                || className.EndsWith("Parameter"))) {
+            return "App_ShellAdditionalParameter";
+        }
+
         return className switch {
 #if DD2
             "App_gc_pl_BurningLightBow" => "App_GenericConditionBase",

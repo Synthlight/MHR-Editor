@@ -44,7 +44,6 @@ public partial class GenerateFiles {
         "System.Collections.Generic.Dictionary`",
         "System.Collections.Generic.Queue`1<System.Tuple`", // Nested generics.
         "System.Collections.Generic.Queue`1<via.vec3>", // Because this breaks generation and I need a better way of handling generics.
-        "soundlib.",
         "via.gui.Panel", // Too long, skip it for now.
 #if DD2
         "AISituation",
@@ -97,6 +96,7 @@ public partial class GenerateFiles {
         "app.retarget.RetargetLodJointSettingBase`",
         "app.SimpleFlightPathTracer`",
         "app.StringUtil.NameHash`",
+        "soundlib.SoundSwitchApp`",
 #endif
     ];
 
@@ -295,9 +295,16 @@ public partial class GenerateFiles {
                         || structName.Contains(']')
                         || structName.Contains("List`")
                         || structName.Contains("Culture=neutral")
-                        || structName.StartsWith("System")
-                        || !structName.StartsWith(ROOT_STRUCT_NAMESPACE) && !structName.StartsWith("via") && !structName.StartsWith("share") && !structName.StartsWith("ace");
-        if (isBadName && structName != null && ALLOWED_GENERIC_TYPES.Any(structName.Contains)) return true;
+                        || structName.StartsWith("System");
+        if (structName != null) {
+            var isAllowed = structName.StartsWith(ROOT_STRUCT_NAMESPACE)
+                            || structName.StartsWith("via")
+                            || structName.StartsWith("share")
+                            || structName.StartsWith("ace")
+                            || structName.StartsWith("soundlib");
+            isBadName = !(!isBadName && isAllowed);
+            if (isBadName && ALLOWED_GENERIC_TYPES.Any(structName.Contains)) isBadName = false;
+        }
         return !isBadName;
     }
 

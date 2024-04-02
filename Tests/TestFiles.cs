@@ -52,7 +52,8 @@ public class TestFiles {
                 Debug.Assert(fileHash.SequenceEqual(newHash), $"MD5 expected {BitConverter.ToString(fileHash)}, found {BitConverter.ToString(newHash)}.");
             } catch (Exception) {
                 if (Debugger.IsAttached) {
-                    data.Write(new BinaryWriter(File.OpenWrite($@"O:\Temp\{Path.GetFileName(file)}")), testWritePosition: true, forGp: file.Contains("MSG"));
+                    // Re-read before write because write can cause issues if it fails part way through.
+                    ReDataFile.Read(file).Write(new BinaryWriter(File.OpenWrite($@"O:\Temp\{Path.GetFileName(file)}")), testWritePosition: true, forGp: file.Contains("MSG"));
                 }
                 throw;
             }

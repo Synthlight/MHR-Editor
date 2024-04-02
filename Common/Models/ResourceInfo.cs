@@ -6,30 +6,24 @@ using System.IO;
 namespace RE_Editor.Common.Models;
 
 [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
-public class UserDataInfo {
-    public  uint       hash;
-    public  uint       crc;
+public class ResourceInfo {
     public  ReDataFile file;
     public  int        index;
-    public  string     str => file.rsz.userDataInfo[index].str;
+    public  string     str;
     private ulong      tempOffsetPos; // Temp spot to place the position we write this object, so we can update the offset later after we write the string.
 
-    public static UserDataInfo Read(BinaryReader reader, ReDataFile file, int index) {
-        var userDataInfo = new UserDataInfo {
-            hash  = reader.ReadUInt32(),
-            crc   = reader.ReadUInt32(),
+    public static ResourceInfo Read(BinaryReader reader, ReDataFile file, int index) {
+        var userDataInfo = new ResourceInfo {
             file  = file,
             index = index
         };
-        // Ignore the string, just reference the one from `RSZ`.
-        reader.ReadUInt64();
-        //userDataInfo.str = reader.ReadNullTermWString((long) stringOffset);
+        var offset = reader.ReadUInt64();
+        userDataInfo.str = reader.ReadNullTermWString((long) offset);
         return userDataInfo;
     }
 
     public void Write(BinaryWriter writer) {
-        writer.Write(hash);
-        writer.Write(crc);
+        // It's just an offset, but we can't write it here, need to write it later.
         tempOffsetPos = (ulong) writer.BaseStream.Position;
         writer.Write(0ul);
     }

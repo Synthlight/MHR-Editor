@@ -1,11 +1,40 @@
 RE4:
-	Add a UI system to handle enum flags for `Chainsaw_RandomDrop_DropGroup`.
-	    (Flags are now supported in generation.)
-	Some structs inherit from others and right now there's no good way of doing that except some hard-coded hack.
+        Add a UI system to handle enum flags for `Chainsaw_RandomDrop_DropGroup`.
+            (Flags are now supported in generation.)
+        Some structs inherit from others and right now there's no good way of doing that except some hard-coded hack.
 
 DD2:
-	App_ItemShortcutParameter has item arrays which are generic list wrappers and break the item enum button.
-	Via_AnimationCurve is using the new UIntArray container but the UI can't diplay it.
+        App_ItemShortcutParameter has item arrays which are generic list wrappers and break the item enum button.
+        Via_AnimationCurve is using the new UIntArray container but the UI can't diplay it.
+
+        App_AttackUserData (HumanShellParamData_Job08.user.2)
+            This instance (app.AttackUserData[1729]) has a field `v1` which is apparently `via.physics.UserData[1722]`.
+            Except I don't know where/how this happens because the field is just defined as:
+            ```
+                "e7bd8658": {
+                        "crc": "b95444cd",
+                        "fields": [
+                                {
+                                        "align": 4,
+                                        "array": false,
+                                        "name": "v0",
+                                        "native": true,
+                                        "original_type": "",
+                                        "size": 4,
+                                        "type": "String"
+                                },
+                                {
+                                        "align": 4,
+                                        "array": false,
+                                        "name": "v1",
+                                        "native": true,
+                                        "original_type": "",
+                                        "size": 4,
+                                        "type": "Data"
+                                },
+            ``
+            And it's not `UserData` so I don't know why this one, unlike others, has instance data.
+
 
 Show column primitive type below the header text.
     Show the full type name on header hover.

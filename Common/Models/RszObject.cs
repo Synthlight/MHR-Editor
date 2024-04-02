@@ -157,8 +157,9 @@ public class RszObject : OnPropertyChangedBase {
                     SetList(items, fieldSetMethod, rszObject);
                 } else if (isObjectType || isUserData) { // Pointer to object.
                     var objectIndex = reader.ReadInt32() - 1; // Will be `0` for some `UserData` entries with no data in them.
-                    if (objectIndex == -1) continue; // In which case just move onto the next field.
-                    var objects = new List<RszObject> {rsz.objectData[objectIndex]};
+                    // In which case just move onto the next field.
+                    // But this still needs to not be null, so it doesn't break on write.
+                    var objects = objectIndex == -1 ? [] : new List<RszObject> {rsz.objectData[objectIndex]};
                     var items   = objects.GetGenericItemsOfType(fieldGenericType!, true);
                     SetList(items, fieldSetMethod, rszObject);
                 } else if (isStringType) { // A string.
@@ -213,7 +214,7 @@ public class RszObject : OnPropertyChangedBase {
      * Run before writing to set up all the instance info / indexes, so we know exactly where an object is being written.
      * This is how we know what to point an 'object' field to.
      */
-    public void SetupInstanceInfo(List<InstanceInfo> instanceInfo, bool forGp) {
+    public void SetupInstanceInfo(List<InstanceInfo> instanceInfoList, bool forGp) {
         if (this is not UserDataShell) {
             for (var i = 0; i < structInfo.fields!.Count; i++) {
                 var field          = structInfo.fields[i];
@@ -227,15 +228,22 @@ public class RszObject : OnPropertyChangedBase {
                     if (field.array) { // Array of pointers.
                         var list = (IList) fieldGetMethod.Invoke(this, null)!;
                         foreach (RszObject obj in list) {
-                            obj.SetupInstanceInfo(instanceInfo, forGp);
+                            obj.SetupInstanceInfo(instanceInfoList, forGp);
                         }
                     } else { // Pointer to object.
                         // So it works in the UI, we always put the object in a list. Thus, even if not an array, we need to extract from a list.
                         var list = (IList) fieldGetMethod.Invoke(this, null)!;
-                        ((RszObject) list[0]!).SetupInstanceInfo(instanceInfo, forGp);
+                        if (list.Count > 0) {
+                            ((RszObject) list[0]!).SetupInstanceInfo(instanceInfoList, forGp);
+                        }
                     }
                 }
             }
+        }
+
+        if (TryGetMatchingInstanceInfoEntry(instanceInfoList, out var userDataIndex)) {
+            objectInstanceIndex = userDataIndex;
+            return;
         }
 
         var hash = this switch {
@@ -249,12 +257,31 @@ public class RszObject : OnPropertyChangedBase {
             crc = value;
         }
 
-        instanceInfo.Add(new() {
+        var instanceInfo = new InstanceInfo {
             hash = hash,
-            crc  = crc
-        });
+            crc  = crc,
+        };
+        if (this is UserDataShell) {
+            instanceInfo.userDataRef = userDataRef;
+        }
+        instanceInfoList.Add(instanceInfo);
 
-        objectInstanceIndex = instanceInfo.Count - 1;
+        objectInstanceIndex = instanceInfoList.Count - 1;
+    }
+
+    private bool TryGetMatchingInstanceInfoEntry(IList<InstanceInfo> instanceInfoList, out int index) {
+        if (this is not UserDataShell) {
+            index = -1;
+            return false;
+        }
+        for (var i = 0; i < instanceInfoList.Count; i++) {
+            if (instanceInfoList[i].userDataRef == userDataRef) {
+                index = i;
+                return true;
+            }
+        }
+        index = -1;
+        return false;
     }
 
     public void Write(BinaryWriter writer, bool testWritePosition) {
@@ -359,10 +386,15 @@ public class RszObject : OnPropertyChangedBase {
                     var list = (ObservableCollection<UIntArray>) fieldGetMethod.Invoke(this, null)!;
                     list[0].Write(writer);
                 } else if (isObjectType || isUserData) { // Pointer to object.
-                    var obj = (RszObject) ((dynamic) fieldGetMethod.Invoke(this, null)!)[0];
-                    writer.Write(obj.objectInstanceIndex);
+                    var data = fieldGetMethod.Invoke(this, null)!;
+                    if (((IEnumerable) data).Cast<object?>().Any()) {
+                        var obj = (RszObject) ((IList) data)[0]!;
+                        writer.Write(obj.objectInstanceIndex);
+                    } else {
+                        writer.Write(0);
+                    }
                 } else if (isStringType) { // Array of strings.
-                    var str = (string) fieldGetMethod.Invoke(this, null)!;
+                    var str = (string?) fieldGetMethod.Invoke(this, null)!;
                     writer.WriteWString(str);
                 } else if (isNonPrimitive) { // Embedded object. (A built-in type like via.vec2.)
                     if (viaType?.Is(typeof(ISimpleViaType)) == true) {
@@ -402,13 +434,32 @@ public class RszObject : OnPropertyChangedBase {
                     } else { // Pointer to object.
                         // So it works in the UI, we always put the object in a list. Thus, even if not an array, we need to extract from a list.
                         var list = (IList) fieldGetMethod.Invoke(this, null)!;
-                        ((RszObject) list[0]!).WriteObjectList(objectList);
+                        if (list.Count > 0) {
+                            ((RszObject) list[0]!).WriteObjectList(objectList);
+                        }
                     }
                 }
             }
         }
 
+        if (TryGetMatchingUserDataEntry(objectList, out _)) return;
+
         objectList.Add(this);
+    }
+
+    private bool TryGetMatchingUserDataEntry(IList<RszObject> objectList, out int index) {
+        if (this is not UserDataShell) {
+            index = -1;
+            return false;
+        }
+        for (var i = 0; i < objectList.Count; i++) {
+            if (objectList[i].userDataRef == userDataRef) {
+                index = i;
+                return true;
+            }
+        }
+        index = -1;
+        return false;
     }
 
     public override string? ToString() {

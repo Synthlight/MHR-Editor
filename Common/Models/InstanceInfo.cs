@@ -7,6 +7,7 @@ namespace RE_Editor.Common.Models;
 public class InstanceInfo {
     public uint hash;
     public uint crc;
+    public int  userDataRef = -1;
 
     public static InstanceInfo Read(BinaryReader reader) {
         return new() {

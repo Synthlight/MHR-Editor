@@ -31,6 +31,19 @@ public class JobRequirements : IMod {
 
         var mods = new[] {
             baseMod
+                .SetName("No Job Requirements: All (+ Item Tweaks All-in-One)")
+                .SetFiles([
+                    PathHelper.ARMOR_DATA_PATH,
+                    PathHelper.ITEM_DATA_PATH,
+                    PathHelper.WEAPON_DATA_PATH,
+                ])
+                .SetAction(list => {
+                    ItemTweaks.GoldCost(list, ItemTweaks.GoldOptions._1);
+                    ItemTweaks.SellPrice(list, ItemTweaks.SellOptions.X10);
+                    ItemTweaks.Weight(list, ItemTweaks.WeightOptions._0);
+                    Jobs(list, JobOptions.ALL);
+                }),
+            baseMod
                 .SetName("No Job Requirements: Armors Only")
                 .SetFiles([PathHelper.ARMOR_DATA_PATH])
                 .SetAction(list => Jobs(list, JobOptions.ARMOR_ONLY)),

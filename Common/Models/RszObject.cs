@@ -126,7 +126,7 @@ public class RszObject : OnPropertyChangedBase {
                     var items = objects.GetGenericItemsOfType(fieldGenericType!, true);
                     SetList(items, fieldSetMethod, rszObject);
                 } else if (isStringType) { // Array of strings.
-                    var strings = new List<GenericWrapper<string>>(arrayCount);
+                    var strings = new List<GenericWrapper<string?>>(arrayCount);
                     for (var s = 0; s < arrayCount; s++) {
                         reader.BaseStream.Align(field.align);
                         strings.Add(new(s, reader.ReadWString()));

@@ -10,8 +10,8 @@ namespace RE_Editor.Common.Structs;
 public class Prefab(uint hash) : RszObject, IViaType {
     public readonly uint hash = hash;
 
-    public bool   Enabled { get; set; }
-    public string Name    { get; set; }
+    public bool    Enabled { get; set; }
+    public string? Name    { get; set; }
 
     public void Read(BinaryReader reader) {
         Enabled = reader.ReadBoolean();

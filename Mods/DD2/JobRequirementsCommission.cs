@@ -18,16 +18,15 @@ namespace RE_Editor.Mods;
 public class JobRequirementsCommission : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName  = "No Job Requirements (Commission)";
+        const string name        = "No Job Requirements (Commission)";
         const string description = "Tweaks weapon & armor data to let you use any armor/weapon with any job.";
         const string version     = "1.1";
-        const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
-        var baseMod = new NexusModVariant {
+        var baseMod = new NexusMod {
             Version      = version,
             NameAsBundle = "No Job Requirements",
             Desc         = description,
-            MakeIntoPak  = true
+            Image        = @"R:\Games\Dragons Dogma 2\Mods\No Job Requirements\Jobs.png",
         };
 
         var mods = new[] {
@@ -42,7 +41,7 @@ public class JobRequirementsCommission : IMod {
                 }),
         };
 
-        ModMaker.WriteMods(mods.ToList(), PathHelper.CHUNK_PATH, outPath, variantBundleName: bundleName, copyToFluffy: true);
+        ModMaker.WriteMods(mods.ToList(), name, copyLooseToFluffy: true);
     }
 
     public static void Mod(List<RszObject> rszObjectData) {

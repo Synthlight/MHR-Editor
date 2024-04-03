@@ -14,10 +14,9 @@ namespace RE_Editor.Mods;
 public class NoStamina : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName  = "No Stamina Consumed";
+        const string name        = "No Stamina Consumed";
         const string description = "Changes stamina use.";
         const string version     = "1.4.1";
-        const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var descriptionOptions = new Dictionary<StaminaOptions, string> {
             [StaminaOptions.JOB_SKILLS]    = "Changes job skills' stamina use.",
@@ -35,11 +34,10 @@ public class NoStamina : IMod {
             dataFiles[StaminaOptions.JOB_SKILLS].Add($@"natives\STM\AppSystem\ch\Common\Human\UserData\Parameter\Job{i:00}StaminaParameter.user.2");
         }
 
-        var baseMod = new NexusModVariant {
+        var baseMod = new NexusMod {
             Version      = version,
-            NameAsBundle = bundleName,
+            NameAsBundle = name,
             Desc         = description,
-            MakeIntoPak  = true
         };
 
         var mods = (from option in Enum.GetValues<StaminaOptions>()
@@ -51,7 +49,7 @@ public class NoStamina : IMod {
                                   .SetFiles(dataFiles[option])
                                   .SetAction(list => Stamina(list, option, value))).ToList();
 
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, variantBundleName: bundleName, copyToFluffy: true);
+        ModMaker.WriteMods(mods.ToList(), name, copyLooseToFluffy: true);
     }
 
     public static void Stamina(List<RszObject> rszObjectData, StaminaOptions option, StaminaValueOptions value) {

@@ -15,10 +15,9 @@ namespace RE_Editor.Mods;
 public class CastingSpeedMultipliers : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName  = "Casting Speed Multipliers";
+        const string name        = "Casting Speed Multipliers";
         const string description = "Casting speed multipliers.";
         const string version     = "1.2";
-        const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var dataFiles = new Dictionary<TargetOptions, List<string>> {
             [TargetOptions.MAGE]         = [PathHelper.JOB_03_PARAM_PATH],
@@ -26,11 +25,10 @@ public class CastingSpeedMultipliers : IMod {
             [TargetOptions.SORCERER]     = [PathHelper.JOB_06_PARAM_PATH],
         };
 
-        var baseMod = new NexusModVariant {
+        var baseMod = new NexusMod {
             Version      = version,
-            NameAsBundle = bundleName,
+            NameAsBundle = name,
             Desc         = description,
-            MakeIntoPak  = true
         };
 
         var mods = (from option in Enum.GetValues<TargetOptions>()
@@ -41,7 +39,7 @@ public class CastingSpeedMultipliers : IMod {
                                   .SetFiles(dataFiles[option])
                                   .SetAction(list => Mod(list, value))).ToList();
 
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, bundleName, true);
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
     }
 
     public static void Mod(List<RszObject> rszObjectData, ValueOptions option) {

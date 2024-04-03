@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using ICSharpCode.SharpZipLib.Zip;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
@@ -10,22 +12,50 @@ using RE_Editor.Models;
 namespace RE_Editor.Util;
 
 public static class ModMaker {
-    public static void WriteMods<T>(IEnumerable<T> mods, string inPath, string outPath, string variantBundleName = null, bool copyToFluffy = false) where T : INexusMod {
+    /// <summary>
+    /// Creates mod folders and archives.
+    /// </summary>
+    /// <param name="mods">All the mods to make under the root name `<param name="modFolderName"/>`.</param>
+    /// <param name="modFolderName">Name without any path or `\` characters. Illegal characters will be replaced.</param>
+    /// <param name="copyLooseToFluffy">If true, will copy the *loose* zip to FMM.</param>
+    /// <param name="copyPakToFluffy">If true, will copy the *pak* zip to FMM.</param>
+    public static void WriteMods<T>(IEnumerable<T> mods, string modFolderName, bool copyLooseToFluffy = false, bool copyPakToFluffy = false) where T : INexusMod {
+        var bundles = new Dictionary<string, List<T>>();
         foreach (var mod in mods) {
-            var folderName = mod.Filename ?? mod.Name.Replace('/', '-').Replace(':', '-');
-            var variant    = mod as INexusModVariant;
-            var bundleName = variant?.NameAsBundle.Replace('/', '-');
-
-            var modPath = $@"{outPath.Replace('/', '-')}";
-            if (variant != null) {
-                // In a subfolder because it works with my compress script.
-                if (variantBundleName != null) {
-                    modPath += $@"\{variantBundleName}";
-                } else {
-                    modPath += $@"\{bundleName}";
-                }
+            var bundle = mod.NameAsBundle ?? "";
+            if (!bundles.ContainsKey(bundle)) {
+                bundles[bundle] = [];
             }
-            modPath += $@"\{folderName}";
+            bundles[bundle].Add(mod);
+        }
+
+        var threads = new List<Thread>();
+        foreach (var (bundleName, entries) in bundles) {
+            var thread = new Thread(() => { CreateModBundle(modFolderName, copyLooseToFluffy, copyPakToFluffy, bundleName, entries); });
+            threads.Add(thread);
+            thread.Start();
+        }
+        threads.JoinAll();
+    }
+
+    private static void CreateModBundle<T>(string modFolderName, bool copyLooseToFluffy, bool copyPakToFluffy, string? bundleName, List<T> entries) where T : INexusMod {
+        bundleName = bundleName == "" ? null : bundleName;
+        var rootPath       = $@"{PathHelper.MODS_PATH}\{modFolderName}";
+        var safeBundleName = bundleName?.ToSafeName();
+        var modFiles       = new List<string>();
+        var nativesFiles   = new List<string>();
+        var pakFiles       = new List<string>();
+
+        foreach (var mod in entries) {
+            var    safeName = mod.Name.ToSafeName();
+            string modPath;
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+            if (safeBundleName != null) {
+                modPath = $@"{rootPath}\{safeBundleName}\{safeName}";
+            } else {
+                modPath = $@"{rootPath}\{safeName}";
+            }
+
             if (Directory.Exists(modPath)) Directory.Delete(modPath, true);
             Directory.CreateDirectory(modPath);
 
@@ -34,19 +64,26 @@ public static class ModMaker {
             modInfo.WriteLine($"version={mod.Version}");
             modInfo.WriteLine($"description={mod.Desc}");
             modInfo.WriteLine("author=LordGregory");
-            if (variant != null) {
-                modInfo.WriteLine($"NameAsBundle={bundleName}");
-            }
             if (mod.Image != null) {
                 var imageFileName = Path.GetFileName(mod.Image);
+                var imagePath     = @$"{modPath}\{imageFileName}";
                 modInfo.WriteLine($"screenshot={imageFileName}");
-                File.Copy(mod.Image!, @$"{modPath}\{imageFileName}", true);
+                File.Copy(mod.Image, imagePath);
+                modFiles.Add(imagePath);
             }
-            File.WriteAllText(@$"{modPath}\modinfo.ini", modInfo.ToString());
+            if (mod.NameAsBundle != null) {
+                modInfo.WriteLine($"NameAsBundle={bundleName}");
+            }
+            var modInfoPath = @$"{modPath}\modinfo.ini";
+            File.WriteAllText(modInfoPath, modInfo.ToString());
+            modFiles.Add(modInfoPath);
 
             if (mod.Files.Any()) {
+                if (mod.Action == null) {
+                    throw new InvalidDataException("`mod.Action` is null but `mod.Files` is not empty.");
+                }
                 foreach (var modFile in mod.Files) {
-                    var sourceFile = @$"{inPath}\{modFile}";
+                    var sourceFile = @$"{PathHelper.CHUNK_PATH}\{modFile}";
                     var outFile    = @$"{modPath}\{modFile}";
                     Directory.CreateDirectory(Path.GetDirectoryName(outFile)!);
 
@@ -54,56 +91,81 @@ public static class ModMaker {
                     var data     = dataFile.rsz.objectData;
                     mod.Action.Invoke(data);
                     dataFile.Write(outFile, forGp: mod.ForGp);
+                    nativesFiles.Add(outFile);
                 }
-            } else {
-                mod.Action.Invoke(null);
             }
 
-            if (mod.MakeIntoPak) {
-                var processStartInfo = new ProcessStartInfo(@"R:\Games\Monster Hunter Rise\REtool\REtool.exe", $"-version 4 1 -c \"{folderName}\"") {
-                    WorkingDirectory = $@"{modPath}\..",
-                    CreateNoWindow   = true
-                };
-                Process.Start(processStartInfo)?.WaitForExit();
-                Directory.Delete($@"{modPath}\natives", true);
-                File.Move($@"{modPath}\..\{folderName}.pak", $@"{modPath}\{folderName}.pak", true);
+            if (mod.AdditionalFiles?.Any() == true) {
+                foreach (var (sourceFile, dest) in mod.AdditionalFiles) {
+                    var outFile = @$"{modPath}\{dest}";
+                    Directory.CreateDirectory(Path.GetDirectoryName(outFile)!);
+                    File.Copy(sourceFile, outFile);
+                    modFiles.Add(outFile); // Because it's basically anything NOT a pak since we can't mix those two types.
+                }
             }
+
+            if (mod.SkipPak) continue;
+            var processStartInfo = new ProcessStartInfo(@"R:\Games\Monster Hunter Rise\REtool\REtool.exe", $"-version 4 1 -c \"{modPath}\"") {
+                WorkingDirectory = $@"{modPath}\..",
+                CreateNoWindow   = true
+            };
+            Process.Start(processStartInfo)?.WaitForExit();
+            var pakFile = $@"{modPath}\{safeName}.pak";
+            File.Move($@"{modPath}.pak", pakFile);
+            pakFiles.Add(pakFile);
         }
-        CompressTheMod(outPath.Replace('/', '-'));
 
-        foreach (var mod in mods) {
-            if (copyToFluffy && variantBundleName == null && mod is NexusMod) {
-                var folderName = mod.Filename ?? mod.Name.Replace('/', '-');
-                File.Copy($@"{outPath.Replace('/', '-')}\{folderName}.zip", $@"{PathHelper.FLUFFY_MODS_PATH}\{folderName}.zip", true);
-            }
-        }
+        var threads = new List<Thread> {
+            new(() => { CompressTheMod($@"{rootPath}\{modFolderName}.zip", modFiles, nativesFiles, copyLooseToFluffy); }),
+            new(() => { CompressTheMod($@"{rootPath}\{modFolderName} (PAK).zip", modFiles, pakFiles, copyPakToFluffy); }),
+        };
+        threads.StartAll();
+        threads.JoinAll();
+    }
 
-        if (copyToFluffy && variantBundleName != null) {
-            File.Copy($@"{outPath.Replace('/', '-')}\{variantBundleName}.zip", $@"{PathHelper.FLUFFY_MODS_PATH}\{variantBundleName}.zip", true);
+    private static void CompressTheMod(string zipPath, List<string> baseFiles, List<string> gameFiles, bool copyToFluffy) {
+        DoZip(zipPath, baseFiles, gameFiles);
+        if (copyToFluffy) {
+            File.Copy(zipPath, $@"{PathHelper.FLUFFY_MODS_PATH}\{Path.GetFileName(zipPath)}", true);
         }
     }
 
-    private static void CompressTheMod(string outDir) {
-        // Enumerate the directories in the path and make archives for each.
-        foreach (var dir in Directory.EnumerateDirectories(outDir, "*", SearchOption.TopDirectoryOnly)) {
-            DoZip(dir);
-        }
-    }
-
-    private static void DoZip(string dir) {
-        var parentDir = Directory.GetParent(dir);
-        var outFile   = $"{dir}.zip";
-        var zipFile   = new FileInfo(outFile);
+    private static void DoZip(string zipPath, List<string> baseFiles, List<string> gameFiles) {
+        var parentDir = Directory.GetParent(zipPath);
+        var zipFile   = new FileInfo(zipPath);
         if (zipFile.Exists) zipFile.Delete();
 
-        using var zip = ZipFile.Create(outFile);
+        using var zip = ZipFile.Create(zipPath);
         zip.BeginUpdate();
 
-        foreach (var file in Directory.EnumerateFiles(dir, "*", SearchOption.AllDirectories)) {
+        foreach (var file in baseFiles) {
+            var relativePath = file.Replace($@"{parentDir}\", "");
+            zip.Add(file, relativePath);
+        }
+        foreach (var file in gameFiles) {
             var relativePath = file.Replace($@"{parentDir}\", "");
             zip.Add(file, relativePath);
         }
 
         zip.CommitUpdate();
+    }
+
+    public static string ToSafeName(this string s) {
+        return s.Replace('/', '-')
+                .Replace('\\', '-')
+                .Replace(':', '-')
+                .Replace('?', '？');
+    }
+
+    private static void StartAll(this List<Thread> threads) {
+        foreach (var thread in threads) {
+            thread.Start();
+        }
+    }
+
+    private static void JoinAll(this List<Thread> threads) {
+        foreach (var thread in threads) {
+            thread.Join();
+        }
     }
 }

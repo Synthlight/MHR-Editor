@@ -17,21 +17,19 @@ namespace RE_Editor.Mods;
 public class MorePortCrystalsShopTweaks : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName  = "Ferrystones and Portcrystals in Every Shop";
+        const string name        = "Ferrystones and Portcrystals in Every Shop";
         const string description = "Adds both items to every single shop in the game.";
         const string version     = "1.0";
-        const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var mod = new NexusMod {
-            Version     = version,
-            Name        = bundleName,
-            Desc        = description,
-            Files       = [PathHelper.ITEM_SHOP_DATA_PATH],
-            Action      = ShopData,
-            MakeIntoPak = true
+            Version = version,
+            Name    = name,
+            Desc    = description,
+            Files   = [PathHelper.ITEM_SHOP_DATA_PATH],
+            Action  = ShopData,
         };
 
-        ModMaker.WriteMods([mod], PathHelper.CHUNK_PATH, outPath, bundleName, true);
+        ModMaker.WriteMods([mod], name, copyLooseToFluffy: true);
     }
 
     public static void ShopData(List<RszObject> rszObjectData) {

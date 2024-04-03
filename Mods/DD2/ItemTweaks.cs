@@ -20,10 +20,9 @@ namespace RE_Editor.Mods;
 public class ItemTweaks : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName  = "Item Tweaks";
+        const string name        = "Item Tweaks";
         const string description = "Item/Equipment weight and cost changes.";
         const string version     = "1.6";
-        const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var itemDataFiles = new List<string> {
             PathHelper.ARMOR_DATA_PATH,
@@ -31,12 +30,12 @@ public class ItemTweaks : IMod {
             PathHelper.WEAPON_DATA_PATH,
         };
 
-        var baseMod = new NexusModVariant {
+        var baseMod = new NexusMod {
             Version      = version,
-            NameAsBundle = bundleName,
+            NameAsBundle = name,
             Desc         = description,
             Files        = itemDataFiles,
-            MakeIntoPak  = true
+            Image        = @"R:\Games\Dragons Dogma 2\Mods\Item Tweaks\Merchant.png",
         };
 
         var mods = new[] {
@@ -89,7 +88,7 @@ public class ItemTweaks : IMod {
                 }),
         };
 
-        ModMaker.WriteMods(mods.ToList(), PathHelper.CHUNK_PATH, outPath, bundleName, true);
+        ModMaker.WriteMods(mods.ToList(), name, copyLooseToFluffy: true);
     }
 
     public static void GoldCost(List<RszObject> rszObjectData, GoldOptions option) {

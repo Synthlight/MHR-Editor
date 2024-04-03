@@ -14,9 +14,14 @@ namespace RE_Editor.Mods;
 [SuppressMessage("ReSharper", "SwitchStatementHandlesSomeKnownEnumValuesWithDefault")]
 [SuppressMessage("ReSharper", "ConvertSwitchStatementToSwitchExpression")]
 [SuppressMessage("ReSharper", "SwitchStatementMissingSomeEnumCasesNoDefault")]
-public class DumpBadDecays : IMod {
+public class DumpData : IMod {
     [UsedImplicitly]
     public static void Make() {
+        DumpDecayData();
+        DumpGimmickData();
+    }
+
+    private static void DumpDecayData() {
         var dataFile = ReDataFile.Read(@$"{PathHelper.CHUNK_PATH}\{PathHelper.ITEM_DATA_PATH}");
         var data     = dataFile.rsz.GetEntryObject<App_ItemData>();
 
@@ -32,5 +37,30 @@ public class DumpBadDecays : IMod {
         }
         File.WriteAllText($@"{PathHelper.MODS_PATH}\..\decayItemsWhichAreBad.json", JsonConvert.SerializeObject(decayItemsWhichAreBad, Formatting.Indented));
         File.WriteAllText($@"{PathHelper.MODS_PATH}\..\itemsWithBadDecay.json", JsonConvert.SerializeObject(itemsWithBadDecay, Formatting.Indented));
+    }
+
+    private static void DumpGimmickData() {
+        var chestContents = new Dictionary<int, List<string>>();
+        var dataFile      = ReDataFile.Read(@$"{PathHelper.CHUNK_PATH}\natives/STM/AppSystem/Gimmick/UserData/Gm80_001_GmData.user.2");
+        foreach (var obj in dataFile.rsz.objectData) {
+            if (obj is App_Gm80_001Param param) {
+                var items = param.ItemList;
+                if (items.Count == 0) continue;
+
+                var paramId = param.ParamId;
+                if (!chestContents.ContainsKey(paramId)) {
+                    chestContents[paramId] = [];
+                }
+
+                foreach (var item in items) {
+                    var itemId   = item.ItemId;
+                    var itemText = $"{itemId}::{DataHelper.ITEM_NAME_LOOKUP[Global.LangIndex.eng].TryGet((uint) itemId)}";
+                    if (!chestContents[paramId].Contains(itemText)) {
+                        chestContents[paramId].Add(itemText);
+                    }
+                }
+            }
+        }
+        File.WriteAllText($@"{PathHelper.MODS_PATH}\..\Gm80_001_GmData.json", JsonConvert.SerializeObject(chestContents, Formatting.Indented));
     }
 }

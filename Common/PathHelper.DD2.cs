@@ -29,5 +29,6 @@ public static partial class PathHelper {
     public const string STAMINA_COMMON_ACTION_PARAM_PATH = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/CommonActionStaminaParameter.user.2";
     public const string STAMINA_PARAM_PATH               = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/StaminaParameter.user.2";
     public const string WEAPON_DATA_PATH                 = "natives/STM/AppSystem/Item/ItemData/ItemWeaponData.user.2";
+    public const string WEAPON_SETTINGS_PATH             = "natives/STM/AppSystem/Equipment/wp/WeaponSetting.user.2";
     public const string WEAPON_UPGRADE_DATA_PATH         = "natives/STM/AppSystem/Item/ItemData/WeaponEnhanceData.user.2";
 }

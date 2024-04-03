@@ -342,6 +342,7 @@ public class StructTemplate {
             case "App_ArmorEnhanceParam.ItemId":
             case "App_ArmorEnhanceParam.NeedItemId0":
             case "App_ArmorEnhanceParam.NeedItemId1":
+            case "App_Gm80_001Param_ItemParam.ItemId":
             case "App_ItemDataParam.ItemDropId":
             case "App_ItemDataParam.DecayedItemId":
             case "App_ItemDropParam_Table_Item.Id":
@@ -395,6 +396,9 @@ public class StructTemplate {
             && (className.EndsWith("Param")
                 || className.EndsWith("Parameter"))) {
             return "App_ShellAdditionalParameter";
+        }
+        if (className.StartsWith("App_Gm") && className.EndsWith("Param")) {
+            return "App_GimmickParamBase";
         }
 
         return className switch {

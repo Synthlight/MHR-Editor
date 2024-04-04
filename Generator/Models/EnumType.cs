@@ -1,20 +1,15 @@
-﻿namespace RE_Editor.Generator.Models {
-    public class EnumType {
-        public readonly string  name;
-        public          string  type;
-        public          int     useCount;
-        public          bool    isFlags;
-        private         string? contents;
-        public string? Contents {
-            get => contents;
-            set =>
-                contents = value?.Replace("        ", "    ")
-                                .Replace("    }", "}");
-        }
+﻿namespace RE_Editor.Generator.Models;
 
-        public EnumType(string name, string type) {
-            this.name = name;
-            this.type = type;
-        }
+public class EnumType(string name, string type) {
+    public readonly string  name = name;
+    public          string  type = type;
+    public          int     useCount;
+    public          bool    isFlags;
+    private         string? contents;
+    public string? Contents {
+        get => contents;
+        set =>
+            contents = value?.Replace("        ", "    ")
+                            .Replace("    }", "}");
     }
 }

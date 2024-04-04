@@ -10,8 +10,6 @@ using MSG = RE_Editor.Common.Models.MSG;
 namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
-    public const string CONFIG_NAME = "MHR";
-
     private static readonly List<Tuple<string, string>> NAME_DESC = [
         new("Name", "NAME"),
         new("Explain", "DESC")

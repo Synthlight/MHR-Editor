@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using RE_Editor.Common;
+﻿using RE_Editor.Common;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Models;
 using RE_Editor.Common.Structs;
@@ -15,22 +14,13 @@ using RE_Editor.Common.Data;
 
 namespace RE_Editor.Generator;
 
-public class StructTemplate {
-    private readonly GenerateFiles           generator;
-    public readonly  string                  hash;
-    public readonly  StructJson              structInfo;
-    private readonly string                  className;
-    private readonly Dictionary<string, int> usedNames = new();
-    private          int                     sortOrder = 1000;
-    private readonly string?                 parentClass;
-
-    public StructTemplate(GenerateFiles generator, StructType structType) {
-        this.generator = generator;
-        hash           = structType.hash;
-        structInfo     = structType.structInfo;
-        className      = structType.name;
-        parentClass    = GetParent();
-    }
+public class StructTemplate(GenerateFiles generator, StructType structType) {
+    public readonly  string                  hash        = structType.hash;
+    public readonly  StructJson              structInfo  = structType.structInfo;
+    private readonly string                  className   = structType.name;
+    private readonly Dictionary<string, int> usedNames   = [];
+    private          int                     sortOrder   = 1000;
+    private readonly string?                 parentClass = structType.parent;
 
     public void Generate(bool dryRun) {
         var       filename = $@"{GenerateFiles.STRUCT_GEN_PATH}\{className}.cs";
@@ -117,12 +107,16 @@ public class StructTemplate {
         var typeName            = field.originalType!.ToConvertedTypeName();
         var isPrimitive         = primitiveName != null;
         var isEnumType          = typeName != null && generator.enumTypes.ContainsKey(typeName);
-        var buttonType          = GetButtonType(field);
+        var buttonType          = field.buttonType;
         var isNonPrimitive      = !isPrimitive && !isEnumType; // via.thing
         var isUserData          = field.type == "UserData";
         var isObjectType        = field.type == nameof(Object);
         var viaType             = GetViaType(field, isNonPrimitive, typeName, ref isObjectType, isUserData);
         var negativeOneForEmpty = GetNegativeForEmptyAllowed(field);
+        var modifier            = ""; // `override` or `virtual`
+
+        if (field.overrideCount > 0) modifier     = "override ";
+        else if (field.virtualCount > 0) modifier = "virtual ";
 
         if (!usedNames.TryAdd(newName, 1)) {
             usedNames[newName]++;
@@ -140,7 +134,7 @@ public class StructTemplate {
 
         if (field.type == nameof(UIntArray)) {
             file.WriteLine("    [IsList]");
-            file.WriteLine($"    public ObservableCollection<{nameof(UIntArray)}> {newName} {{ get; set; }}");
+            file.WriteLine($"    public {modifier}ObservableCollection<{nameof(UIntArray)}> {newName} {{ get; set; }}");
         } else if (field.array) {
             file.WriteLine($"    [SortOrder({sortOrder})]");
             if (buttonType != null) {
@@ -152,22 +146,22 @@ public class StructTemplate {
                     file.WriteLine($"    {additionalAttributes}");
                 }
                 file.WriteLine("    [IsList]");
-                file.WriteLine($"    public ObservableCollection<DataSourceWrapper<{primitiveName}>> {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}ObservableCollection<DataSourceWrapper<{primitiveName}>> {newName} {{ get; set; }}");
             } else if (isUserData) {
                 file.WriteLine("    [IsList]");
-                file.WriteLine($"    public ObservableCollection<{nameof(UserDataShell)}> {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}ObservableCollection<{nameof(UserDataShell)}> {newName} {{ get; set; }}");
             } else if (isNonPrimitive && viaType != null) {
                 file.WriteLine("    [IsList]");
-                file.WriteLine($"    public ObservableCollection<{viaType}> {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}ObservableCollection<{viaType}> {newName} {{ get; set; }}");
             } else if (isObjectType) {
                 file.WriteLine("    [IsList]");
-                file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}ObservableCollection<{typeName}> {newName} {{ get; set; }}");
             } else if (isEnumType) {
                 file.WriteLine("    [IsList]");
-                file.WriteLine($"    public ObservableCollection<GenericWrapper<{typeName}>> {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}ObservableCollection<GenericWrapper<{typeName}>> {newName} {{ get; set; }}");
             } else if (isPrimitive) {
                 file.WriteLine("    [IsList]");
-                file.WriteLine($"    public ObservableCollection<GenericWrapper<{primitiveName}>> {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}ObservableCollection<GenericWrapper<{primitiveName}>> {newName} {{ get; set; }}");
             } else {
                 throw new InvalidDataException("Not a primitive, enum, or object array type.");
             }
@@ -177,37 +171,37 @@ public class StructTemplate {
                 file.WriteLine($"    [SortOrder({sortOrder + 10})]");
                 file.WriteLine($"    [DataSource({nameof(DataSourceType)}.{buttonType})]");
                 if (negativeOneForEmpty) file.WriteLine("    [NegativeOneForEmpty]");
-                file.WriteLine($"    public {primitiveName} {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}{primitiveName} {newName} {{ get; set; }}");
                 file.WriteLine("");
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    [DisplayName(\"{newName}\")]");
 #if MHR
-                file.WriteLine($"    public string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
+                file.WriteLine($"    public {modifier}string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
 #elif RE4
-                file.WriteLine($"    public string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
+                file.WriteLine($"    public {modifier}string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
                                $"DataHelper.{lookupName}[Global.variant][Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
 #else
-                file.WriteLine($"    public string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
+                file.WriteLine($"    public {modifier}string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
                                $"DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName});");
 #endif
             } else if (viaType?.Is(typeof(ISimpleViaType)) == true) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
-                file.WriteLine($"    public {viaType} {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}{viaType} {newName} {{ get; set; }}");
             } else if (isUserData) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
-                file.WriteLine($"    public ObservableCollection<{nameof(UserDataShell)}> {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}ObservableCollection<{nameof(UserDataShell)}> {newName} {{ get; set; }}");
             } else if (isNonPrimitive && viaType != null) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
-                file.WriteLine($"    public ObservableCollection<{viaType}> {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}ObservableCollection<{viaType}> {newName} {{ get; set; }}");
             } else if (isObjectType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
-                file.WriteLine($"    public ObservableCollection<{typeName}> {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}ObservableCollection<{typeName}> {newName} {{ get; set; }}");
             } else if (isEnumType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
-                file.WriteLine($"    public {typeName} {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}{typeName} {newName} {{ get; set; }}");
             } else if (isPrimitive) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
-                file.WriteLine($"    public {primitiveName} {newName} {{ get; set; }}");
+                file.WriteLine($"    public {modifier}{primitiveName} {newName} {{ get; set; }}");
             } else {
                 throw new InvalidDataException("Not a primitive, enum, or object type.");
             }
@@ -220,15 +214,22 @@ public class StructTemplate {
         // We do it here and later since we sometimes overwrite them.
         var viaType = field.originalType?.GetViaType();
 
-        if (typeName == "Via_Prefab") {
-            viaType      = nameof(Prefab);
-            isObjectType = false;
-        } else if (typeName == "System_Type") {
-            viaType      = nameof(Type);
-            isObjectType = false;
-        } else if (isNonPrimitive && !isObjectType && !isUserData) {
-            // This makes sure we've implemented the via type during generation.
-            viaType = field.type!.GetViaType() ?? throw new NotImplementedException($"Hard-coded type '{field.type}' not implemented.");
+        switch (typeName) {
+            case "Via_Prefab":
+                viaType      = nameof(Prefab);
+                isObjectType = false;
+                break;
+            case "System_Type":
+                viaType      = nameof(Type);
+                isObjectType = false;
+                break;
+            default: {
+                if (isNonPrimitive && !isObjectType && !isUserData) {
+                    // This makes sure we've implemented the via type during generation.
+                    viaType = field.type!.GetViaType() ?? throw new NotImplementedException($"Hard-coded type '{field.type}' not implemented.");
+                }
+                break;
+            }
         }
         return viaType;
     }
@@ -253,7 +254,7 @@ public class StructTemplate {
             var typeName       = field.originalType!.ToConvertedTypeName();
             var isPrimitive    = primitiveName != null;
             var isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
-            var buttonType     = GetButtonType(field);
+            var buttonType     = field.buttonType;
             var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
             var isUserData     = field.type == "UserData";
             var isObjectType   = field.type == "Object";
@@ -269,7 +270,7 @@ public class StructTemplate {
             }
         }
 
-        file.WriteLine($"        return obj;");
+        file.WriteLine("        return obj;");
         file.WriteLine("    }");
     }
 
@@ -292,7 +293,7 @@ public class StructTemplate {
             var typeName       = field.originalType!.ToConvertedTypeName();
             var isPrimitive    = primitiveName != null;
             var isEnumType     = typeName != null && generator.enumTypes.ContainsKey(typeName);
-            var buttonType     = GetButtonType(field);
+            var buttonType     = field.buttonType;
             var isNonPrimitive = !isPrimitive && !isEnumType; // via.thing
             var isUserData     = field.type == "UserData";
             var isObjectType   = field.type == "Object";
@@ -329,114 +330,6 @@ public class StructTemplate {
 
     private static void WriteClassFooter(TextWriter file) {
         file.Write("}");
-    }
-
-    private DataSourceType? GetButtonType(StructJson.Field field) {
-        // This part check the class + field name.
-        var name = $"{className}.{field.name.ToConvertedFieldName()}";
-#pragma warning disable IDE0066
-        // ReSharper disable once ConvertSwitchStatementToSwitchExpression
-        switch (name) {
-#if DD2
-            // Many of these don't seem to be the enum type, probably because the enum doesn't allow zero but the fields do.
-            case "App_ArmorEnhanceParam.ItemId":
-            case "App_ArmorEnhanceParam.NeedItemId0":
-            case "App_ArmorEnhanceParam.NeedItemId1":
-            case "App_Gm80_001Param_ItemParam.ItemId":
-            case "App_ItemDataParam.ItemDropId":
-            case "App_ItemDataParam.DecayedItemId":
-            case "App_ItemDropParam_Table_Item.Id":
-            case "App_ItemShopBuyParam.ItemId":
-            case "App_ItemShopSellParam.ItemId":
-            case "App_WeaponEnhanceParam.ItemId":
-            case "App_WeaponEnhanceParam.NeedItemId0":
-            case "App_WeaponEnhanceParam.NeedItemId1":
-                return DataSourceType.ITEMS;
-#endif
-        }
-#pragma warning restore IDE0066
-
-        // And this check the original type.
-        return field.originalType?.Replace("[]", "") switch {
-#if DD2
-            "app.ItemIDEnum" => DataSourceType.ITEMS,
-#elif MHR
-            "snow.data.ContentsIdSystem.ItemId" => DataSourceType.ITEMS,
-            "snow.data.DataDef.PlEquipSkillId" => DataSourceType.SKILLS,
-            "snow.data.DataDef.PlHyakuryuSkillId" => DataSourceType.RAMPAGE_SKILLS,
-            "snow.data.DataDef.PlKitchenSkillId" => DataSourceType.DANGO_SKILLS,
-            "snow.data.DataDef.PlWeaponActionId" => DataSourceType.SWITCH_SKILLS,
-#elif RE4
-            "chainsaw.ItemID" => DataSourceType.ITEMS,
-            "chainsaw.WeaponID" => DataSourceType.WEAPONS,
-#endif
-            _ => null
-        };
-    }
-
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
-    private string? GetParent() {
-        if (className != "App_ShellAdditionalParameter" && className.StartsWith("App_ShellAdditional")) {
-            return "App_ShellAdditionalParameter";
-        }
-        if (className != "App_ShellActionParameterBase" && className.StartsWith("App_ShellActionParam")) {
-            return "App_ShellActionParameterBase";
-        }
-        if (className.StartsWith("App_") && className.EndsWith("ShellParam")) {
-            return "App_ShellAdditionalParameter";
-        }
-        if ((className.StartsWith("App_Job08Shell")
-             || className.StartsWith("App_KillShell")
-             || className.StartsWith("App_Levin")
-             || className.StartsWith("App_MagicBind")
-             || className.StartsWith("App_Makers")
-             || className.StartsWith("App_ShellEnchant")
-             || className.StartsWith("App_ShellGenerator")
-             || className.StartsWith("App_SpecialStung"))
-            && (className.EndsWith("Param")
-                || className.EndsWith("Parameter"))) {
-            return "App_ShellAdditionalParameter";
-        }
-        if (className.StartsWith("App_Gm") && className.EndsWith("Param")) {
-            return "App_GimmickParamBase";
-        }
-
-        return className switch {
-#if DD2
-            "App_gc_pl_BurningLightBow" => "App_GenericConditionBase",
-            "App_gc_pl_CarryAim" => "App_GenericConditionBase",
-            "App_gc_pl_CarryObjectAim" => "App_GenericConditionBase",
-            "App_gc_pl_DrawBow" => "App_GenericConditionBase",
-            "App_gc_pl_DrawMagicBow" => "App_GenericConditionBase",
-            "App_gc_pl_FireStorm" => "App_GenericConditionBase",
-            "App_gc_pl_ItemCh255HeadAim" => "App_GenericConditionBase",
-            "App_gc_pl_Job02BodyBinder" => "App_GenericConditionBase",
-            "App_gc_pl_Job02FullBend" => "App_GenericConditionBase",
-            "App_gc_pl_Job02FullBlast" => "App_GenericConditionBase",
-            "App_gc_pl_Job02MeteorShot" => "App_GenericConditionBase",
-            "App_gc_pl_Job02RandomShot" => "App_GenericConditionBase",
-            "App_gc_pl_Job07Gungnir" => "App_GenericConditionBase",
-            "App_gc_pl_Job07PsychoLauncher" => "App_GenericConditionBase",
-            "App_gc_pl_Job09DetectFregrance" => "App_GenericConditionBase",
-            "App_gc_pl_PreparingSpell" => "App_GenericConditionBase",
-            "App_gc_pl_PreparingSpellOfAnodyne" => "App_GenericConditionBase",
-            "App_gc_pl_SpiritArrowBow" => "App_GenericConditionBase",
-            "App_gc_pl_ThunderChainBow" => "App_GenericConditionBase",
-#elif RE4
-            "Chainsaw_ItemUseResult_HealHitPoint" => "Chainsaw_ItemUseResultInfoBase",
-            "Chainsaw_ItemUseResult_IncreaseHitPoint" => "Chainsaw_ItemUseResultInfoBase",
-            "Chainsaw_WeaponItem" => "Chainsaw_Item",
-            "Chainsaw_UniqueItem" => "Chainsaw_Item",
-            "Chainsaw_RuleStratum_ParticleChapter" => "Chainsaw_RuleStratum_Particle",
-            "Chainsaw_RuleStratum_ParticleFlag" => "Chainsaw_RuleStratum_Particle",
-            "Chainsaw_RuleStratum_ParticleGmFlag" => "Chainsaw_RuleStratum_Particle",
-            "Chainsaw_RuleStratum_ParticleItemInventory" => "Chainsaw_RuleStratum_Particle",
-            "Chainsaw_RuleStratum_ParticleResourcePoint" => "Chainsaw_RuleStratum_Particle",
-            "Chainsaw_RuleStratum_ParticleStatusEffect" => "Chainsaw_RuleStratum_Particle",
-            "Chainsaw_RuleStratum_ParticleTrue" => "Chainsaw_RuleStratum_Particle",
-#endif
-            _ => null
-        };
     }
 
     private static List<string> GetAdditionalAttributesForDataSourceType(DataSourceType? dataSourceType) {

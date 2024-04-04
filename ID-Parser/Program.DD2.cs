@@ -5,8 +5,6 @@ using RE_Editor.Common.Models;
 namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
-    public const string CONFIG_NAME = "DD2";
-
     public static void Main() {
         ExtractItemInfo();
         ExtractShopNames();

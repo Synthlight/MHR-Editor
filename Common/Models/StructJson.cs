@@ -1,39 +1,53 @@
-﻿using Newtonsoft.Json;
+﻿using System.Runtime.Serialization;
+using JetBrains.Annotations;
+using Newtonsoft.Json;
+using RE_Editor.Common.Attributes;
 
 namespace RE_Editor.Common.Models;
 
+[UsedImplicitly]
 public class StructJson {
-    public string?      crc;
-    public List<Field>? fields;
-    public string?      name;
+    [UsedImplicitly] public string?      crc;
+    [UsedImplicitly] public List<Field>? fields;
+    [UsedImplicitly] public string?      name;
+    [UsedImplicitly] public string?      parent;
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    [JsonIgnore] public Dictionary<string, Field> fieldNameMap;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
+    [OnDeserialized]
+    [UsedImplicitly]
+    public void Init(StreamingContext context) {
+        fieldNameMap = [];
+        if (fields == null) return;
+        foreach (var field in fields) {
+            if (field.name == null) continue;
+            fieldNameMap[field.name] = field;
+        }
+    }
 
     public override string? ToString() {
         return name ?? base.ToString();
     }
 
     public class Field {
-        public int     align;
-        public bool    array;
-        public string? name;
-        public bool    native;
+        [UsedImplicitly] public int     align;
+        [UsedImplicitly] public bool    array;
+        [UsedImplicitly] public string? name;
+        [UsedImplicitly] public bool    native;
         [JsonProperty("original_type")]
-        public string? originalType;
-        public int     size;
-        public string? type;
+        [UsedImplicitly] public string? originalType;
+        [UsedImplicitly] public int     size;
+        [UsedImplicitly] public string? type;
+
+        // The two should be updated together, and are done so in `StructType.UpdateUsingCounts`.
+        [JsonIgnore] public int             overrideCount; // Used by children to mark they need to override a parent field.
+        [JsonIgnore] public int             virtualCount; // Used by children to mark their parent's fields as overwritten.
+        [JsonIgnore] public DataSourceType? buttonType; // Used by children to mark their parent's fields as overwritten.
 
         public override string? ToString() {
             return name ?? base.ToString();
-        }
-
-        public static class Type {
-            public const string S8  = "S8";
-            public const string U8  = "U8";
-            public const string S16 = "S16";
-            public const string U16 = "U16";
-            public const string S32 = "S32";
-            public const string U32 = "U32";
-            public const string S64 = "S64";
-            public const string U64 = "U64";
         }
     }
 }

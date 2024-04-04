@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "All": {
+      "commandName": "Project",
+      "commandLineArgs": "All"
+    },
+    "Part 1": {
+      "commandName": "Project",
+      "commandLineArgs": "Part1"
+    },
+    "Part 2": {
+      "commandName": "Project",
+      "commandLineArgs": "Part2"
+    }
+  }
+}

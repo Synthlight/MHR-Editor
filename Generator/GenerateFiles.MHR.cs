@@ -4,7 +4,6 @@ namespace RE_Editor.Generator;
 
 public partial class GenerateFiles {
     public const string ROOT_STRUCT_NAMESPACE = "snow";
-    public const string CONFIG_NAME           = "MHR";
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]

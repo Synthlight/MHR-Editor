@@ -7,8 +7,6 @@ using RE_Editor.Models.Enums;
 namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
-    public const string CONFIG_NAME = "RE4";
-
     public static void Main() {
         ExtractItemInfo();
         ExtractWeaponInfo();

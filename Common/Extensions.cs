@@ -437,6 +437,7 @@ public static class Extensions {
         if (int.TryParse(name[0].ToString(), out _)) name = "_" + name; // If it starts with a number.
         while (name.EndsWith("k__BackingField")) name     = name[1..name.LastIndexOf('>')]; // Remove the k__BackingField.
         while (name.StartsWith("System_Collections_Generic_List`")
+               || name.StartsWith("System_Collections_Generic_IReadOnlyList`")
                || name.StartsWith("System_Collections_Generic_IReadOnlyCollection`")
                || name.StartsWith("System_Collections_Generic_ICollection`")
                || name.StartsWith("System_Collections_Generic_SortedSet`")

@@ -12,12 +12,13 @@ using RE_Editor.Generator.Models;
 namespace RE_Editor.Generator;
 
 public partial class GenerateFiles {
-    public const  string BASE_GEN_PATH   = @"..\..\..\Generated"; // @"C:\Temp\Gen"
-    public const  string BASE_PROJ_PATH  = @"..\..\..";
-    public const  string ENUM_GEN_PATH   = $@"{BASE_GEN_PATH}\Enums\{CONFIG_NAME}";
-    public const  string STRUCT_GEN_PATH = $@"{BASE_GEN_PATH}\Structs\{CONFIG_NAME}";
-    private const string ASSETS_DIR      = $@"{BASE_PROJ_PATH}\Data\{CONFIG_NAME}\Assets";
-    public const  string ENUM_REGEX      = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+(?:\/\/ (\[Flags\])\s+)?enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
+    public const  string BASE_GEN_PATH    = @"..\..\..\Generated"; // @"C:\Temp\Gen"
+    public const  string BASE_PROJ_PATH   = @"..\..\..";
+    public const  string STRUCT_JSON_PATH = $@"{BASE_PROJ_PATH}\Dump-Parser\Output\{PathHelper.CONFIG_NAME}\rsz{PathHelper.CONFIG_NAME}.json";
+    public const  string ENUM_GEN_PATH    = $@"{BASE_GEN_PATH}\Enums\{PathHelper.CONFIG_NAME}";
+    public const  string STRUCT_GEN_PATH  = $@"{BASE_GEN_PATH}\Structs\{PathHelper.CONFIG_NAME}";
+    private const string ASSETS_DIR       = $@"{BASE_PROJ_PATH}\Data\{PathHelper.CONFIG_NAME}\Assets";
+    public const  string ENUM_REGEX       = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+(?:\/\/ (\[Flags\])\s+)?enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
@@ -90,6 +91,7 @@ public partial class GenerateFiles {
         "app.charaedit.EditInfluenceMapBase`",
         "app.CutSceneIKModule.EquipmentOffset`",
         "app.JobUniqueParameter.AreaParameterList`",
+        "app.JobUniqueParameter.CustomSkillLevelParameter`",
         "app.LocalWindSettings`",
         "app.MaterialInterpolation.Variable`",
         "app.ModuleParametersUserData`",
@@ -104,7 +106,7 @@ public partial class GenerateFiles {
 
     public readonly  Dictionary<string, EnumType>   enumTypes      = [];
     public readonly  Dictionary<string, StructType> structTypes    = [];
-    private readonly Dictionary<string, StructJson> structJson     = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(PathHelper.STRUCT_JSON_PATH))!;
+    private readonly Dictionary<string, StructJson> structJson     = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(STRUCT_JSON_PATH))!;
     public readonly  Dictionary<uint, uint>         gpCrcOverrides = []; // Because the GP version uses the same hashes, but different CRCs.
 
     public void Go(string[] args) {
@@ -142,6 +144,7 @@ public partial class GenerateFiles {
         if (useWhitelist || useGreylist) {
             UpdateUsingCounts();
             RemoveUnusedTypes();
+            UpdateButtons();
         }
 
         Log($"Generating {enumTypes.Count} enums, {structTypes.Count} structs.");
@@ -264,7 +267,10 @@ public partial class GenerateFiles {
         var structTypes = new Dictionary<string, StructType>();
 
         foreach (var (hash, structInfo) in structJson) {
-            if (!IsStructNameValid(structInfo)) continue;
+            if (structInfo.name?.StartsWith("System.Action`") == true) {
+            }
+
+            if (!IsStructNameValid(structInfo.name)) continue;
             // Also ignore structs that are just enum placeholders.
             if (structInfo.fields is [{name: "value__"}]) continue;
 
@@ -275,8 +281,12 @@ public partial class GenerateFiles {
 
             // Ignore the 'via.thing' placeholders.
             if (structInfo.name!.GetViaType() != null) continue;
-            var name       = structInfo.name.ToConvertedTypeName()!;
-            var structType = new StructType(name, hash, structInfo);
+            var     name   = structInfo.name.ToConvertedTypeName()!;
+            string? parent = null;
+            if (IsStructNameValid(structInfo.parent) && structInfo.parent?.StartsWith("via") != true) {
+                parent = structInfo.parent.ToConvertedTypeName();
+            }
+            var structType = new StructType(name, parent, hash, structInfo);
             structTypes[name] = structType;
         }
 
@@ -285,8 +295,7 @@ public partial class GenerateFiles {
         }
     }
 
-    private static bool IsStructNameValid(StructJson structInfo) {
-        var structName = structInfo.name;
+    private static bool IsStructNameValid(string? structName) {
         var isBadName = structName == null
                         || structName.Contains('<')
                         || structName.Contains('>')
@@ -303,7 +312,7 @@ public partial class GenerateFiles {
                             || structName.StartsWith("ace")
                             || structName.StartsWith("soundlib");
             isBadName = !(!isBadName && isAllowed);
-            if (isBadName && ALLOWED_GENERIC_TYPES.Any(structName.Contains)) isBadName = false;
+            if (isBadName && ALLOWED_GENERIC_TYPES.Any(structName.StartsWith)) isBadName = false;
         }
         return !isBadName;
     }
@@ -359,7 +368,21 @@ public partial class GenerateFiles {
         foreach (var structType in structTypes.Values) {
             if (structType.name.GetViaType() != null) continue;
             if (structType.useCount > 0) {
-                structType.UpdateUsingCounts(this, []);
+                structType.UpdateUsingCounts(this, new(structTypes.Count));
+            }
+        }
+    }
+
+    /**
+     * Goes through structs and sets button types. Ideally should be done on parents. Call after types are filtered for best performance.
+     * Definitely call after updating using counts since this ignores structs not being used.
+     */
+    private void UpdateButtons() {
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var structType in structTypes.Values) {
+            if (structType.name.GetViaType() != null) continue;
+            if (structType.useCount > 0) {
+                structType.UpdateButtons(this, new(structTypes.Count));
             }
         }
     }
@@ -378,7 +401,7 @@ public partial class GenerateFiles {
                    .ForEach(key => structTypes.Remove(key));
         // Remove the struct data we're not using from the struct info.
         RemoveStructs(from entry in structJson
-                      where IsStructNameValid(entry.Value)
+                      where IsStructNameValid(entry.Value.name)
                       let name = entry.Value.name
                       where !string.IsNullOrEmpty(name)
                       where name.GetViaType() == null
@@ -387,7 +410,7 @@ public partial class GenerateFiles {
                       select entry.Key);
         // Now again to remove invalid/ignored when parsing structs. (Like those which are empty named as some generic list.)
         RemoveStructs(from entry in structJson
-                      where !IsStructNameValid(entry.Value)
+                      where !IsStructNameValid(entry.Value.name)
                       select entry.Key);
     }
 

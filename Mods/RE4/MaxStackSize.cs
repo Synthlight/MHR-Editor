@@ -15,10 +15,9 @@ namespace RE_Editor.Mods;
 public class MaxStackSize : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName  = "Stack Size Changes";
+        const string name        = "Stack Size Changes";
         const string description = "Modifies the stack size of stackable items.";
         const string version     = "1.8";
-        const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
         var itemDataFiles = new List<string> {
             PathHelper.ITEM_DATA_PATH,
@@ -32,9 +31,9 @@ public class MaxStackSize : IMod {
             PathHelper.ITEM_DRAG_CRAFT_DATA_PATH
         };
 
-        var baseMod = new NexusModVariant {
+        var baseMod = new NexusMod {
             Version      = version,
-            NameAsBundle = bundleName,
+            NameAsBundle = name,
             Desc         = description,
             Files        = itemDataFiles
         };
@@ -112,7 +111,7 @@ public class MaxStackSize : IMod {
                 .SetAction(list => MaxStacks(list, Target.X10, Type.AMMO_ONLY)),
         };
 
-        ModMaker.WriteMods(mods.ToList(), PathHelper.CHUNK_PATH, outPath, bundleName, true);
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
     }
 
     public static void MaxStacks(List<RszObject> rszObjectData, Target target, Type type) {

@@ -67,11 +67,7 @@ public partial class GenerateFiles {
         "System.Collections.Generic.List`1<snow.enemy.em134.Em", // Nested generics.
 #elif RE4
         "app.",
-        "chainsaw.AIMapNodeScore.Param`1<",
-        "chainsaw.NetworkRankingSettingUserdata.BoardNameTable`1<",
-        "chainsaw.CameraCurveUserDataParam.CurveParamTable`1<",
-        "soundlib.SoundStateApp`1<",
-        "soundlib.SoundSwitchApp`1<",
+        "chainsaw.CameraCurveUserDataParam.CurveParamTable`", // Winds up with `ObservableCollection<System_String>` instead of `ObservableCollection<string>`.
 #endif
     ];
 
@@ -98,6 +94,22 @@ public partial class GenerateFiles {
         "app.retarget.RetargetLodJointSettingBase`",
         "app.SimpleFlightPathTracer`",
         "app.StringUtil.NameHash`",
+        "soundlib.SoundSwitchApp`",
+#elif RE4
+        "chainsaw.AIMapNodeScore.Param`",
+        "chainsaw.AppEventCatalogBase`",
+        "chainsaw.Ch1b7z0ParamUserData.NumData`",
+        "chainsaw.Ch1e0z0ParamUserData.NumData`",
+        "chainsaw.Ch1f1z0ParamUserData.NumData`",
+        "chainsaw.Ch1f7z0ParamUserData.NumData`",
+        "chainsaw.Ch1f8z0ParamUserData.NumData`",
+        "chainsaw.Ch1fcz0ParamUserData.NumData`",
+        "chainsaw.Ch1fdz0ParamUserData.NumData`",
+        "chainsaw.Ch4fez0ParamUserData.NumData`",
+        "chainsaw.CustomConditionBase`",
+        "chainsaw.NetworkRankingSettingUserdata.BoardNameTable`",
+        "chainsaw.SwitchFeatureParameter`",
+        "soundlib.SoundStateApp`",
         "soundlib.SoundSwitchApp`",
 #endif
     ];

@@ -33,7 +33,7 @@ public static class Program {
                     $@"{SCRIPTS_DIR}\non-native-dumper.py",
                     $"--out_postfix={PathHelper.CONFIG_NAME}",
                     $"--il2cpp_path={PathHelper.IL2CPP_DUMP_PATH}",
-                    $@"--natives_path={OUTPUT_DIR}\native_layouts_{PathHelper.CONFIG_NAME}.exe.json",
+                    $@"--natives_path={OUTPUT_DIR}\native_layouts_{Path.GetFileName(PathHelper.EXE_PATH)}.json",
                     "--use_typedefs=False",
                     "--use_hashkeys=True",
                     "--include_parents=True",

@@ -15,20 +15,19 @@ namespace RE_Editor.Mods;
 public class OpSeparateWaysStart : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName  = "OP Separate Ways Start";
+        const string name        = "OP Separate Ways Start";
         const string description = "Max <all things stackable>/case size for Separate Ways starter inventories.";
         const string version     = "1.0";
-        const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
-        var mods = new NexusMod {
-            Name    = bundleName,
+        var mod = new NexusMod {
+            Name    = name,
             Version = version,
             Desc    = description,
             Files   = [PathHelper.NEW_GAME_INVENTORY_AO_DATA_PATH],
             Action  = MakeNewInventory
         };
 
-        ModMaker.WriteMods(new List<NexusMod> {mods}, PathHelper.CHUNK_PATH, outPath, copyToFluffy: true);
+        ModMaker.WriteMods([mod], name, copyLooseToFluffy: true);
     }
 
     public static void MakeNewInventory(IEnumerable<RszObject> rszObjectData) {

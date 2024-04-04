@@ -1,4 +1,5 @@
 // ReSharper disable All
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace RE_Editor.Constants;

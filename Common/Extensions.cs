@@ -405,6 +405,26 @@ public static class Extensions {
         };
     }
 
+    public static string? GetOriginalType(this StructJson.Field field) {
+        return field.type switch {
+            "Bool" => "System.Bool",
+            "S8" => "System.SByte",
+            "U8" => "System.Byte",
+            "S16" => "System.Int16",
+            "U16" => "System.UInt16",
+            "S32" => "System.Int32",
+            "U32" => "System.UInt32",
+            "S64" => "System.Int64",
+            "U64" => "System.UInt64",
+            "F32" => "System.Single",
+            "F64" => "System.Double",
+            "String" => "System.String",
+            "Resource" => "System.String",
+            "Size" => "System.UInt32",
+            _ => null
+        };
+    }
+
     public static string? GetViaType(this string name) {
         name = name.ToLower();
         return VIA_TYPE_NAME_LOOKUPS.GetValueOrDefault(name);

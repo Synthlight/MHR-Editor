@@ -13,13 +13,12 @@ namespace RE_Editor.Mods;
 public class SuperPunisher : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName  = "Super Blacktail & Punisher";
+        const string name        = "Super Blacktail & Punisher";
         const string description = "So a minimalist run is easy. Blacktail is included for SW/Ada.";
         const string version     = "1.0";
-        const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
-        var mods = new NexusMod {
-            Name    = bundleName,
+        var mod = new NexusMod {
+            Name    = name,
             Version = version,
             Desc    = description,
             Files = new[] {
@@ -32,7 +31,7 @@ public class SuperPunisher : IMod {
             Action = FixDamage
         };
 
-        ModMaker.WriteMods(new List<NexusMod> {mods}, PathHelper.CHUNK_PATH, outPath, copyToFluffy: true);
+        ModMaker.WriteMods([mod], name, copyLooseToFluffy: true);
     }
 
     public static void FixDamage(List<RszObject> rszObjectData) {

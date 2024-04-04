@@ -12,20 +12,19 @@ namespace RE_Editor.Mods;
 public class SuperHarpoon : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName  = "Super Harpoon";
+        const string name        = "Super Harpoon";
         const string description = "Fuck that damned fish!";
         const string version     = "1.0";
-        const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
-        var mods = new NexusMod {
-            Name    = bundleName,
+        var mod = new NexusMod {
+            Name    = name,
             Version = version,
             Desc    = description,
-            Files   = new[] {PathHelper.HARPOON_DATA_PATH},
+            Files   = [PathHelper.HARPOON_DATA_PATH],
             Action  = FixDamage
         };
 
-        ModMaker.WriteMods(new List<NexusMod> {mods}, PathHelper.CHUNK_PATH, outPath, copyToFluffy: true);
+        ModMaker.WriteMods([mod], name, copyLooseToFluffy: true);
     }
 
     public static void FixDamage(List<RszObject> rszObjectData) {

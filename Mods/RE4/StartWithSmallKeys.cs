@@ -17,22 +17,21 @@ public class StartWithSmallKeys : IMod {
         const string bundleName  = "Start with Small Keys";
         const string description = "Gives you 20 Small Keys at the start of new games.";
         const string version     = "1.0";
-        const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
         const string imgPath     = $@"{PathHelper.MODS_PATH}\{bundleName}\Small Key Start.png";
 
-        var mods = new NexusMod {
+        var mod = new NexusMod {
             Name    = bundleName,
             Version = version,
             Desc    = description,
             Image   = imgPath,
-            Files = new[] {
+            Files = [
                 PathHelper.NEW_GAME_INVENTORY_DATA_PATH,
                 PathHelper.NEW_GAME_INVENTORY_AO_DATA_PATH
-            },
+            ],
             Action = AddSmallKeys
         };
 
-        ModMaker.WriteMods(new List<NexusMod> {mods}, PathHelper.CHUNK_PATH, outPath, copyToFluffy: true);
+        ModMaker.WriteMods([mod], bundleName, copyLooseToFluffy: true);
     }
 
     public static void AddSmallKeys(IEnumerable<RszObject> rszObjectData) {

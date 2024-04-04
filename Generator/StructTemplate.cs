@@ -102,6 +102,14 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
         if (GenerateFiles.UNSUPPORTED_DATA_TYPES.Contains(field.type!)) return;
         if (GenerateFiles.UNSUPPORTED_OBJECT_TYPES.Any(s => field.originalType!.Contains(s))) return;
 
+        // Happened for some RE4 types.
+        if (field.originalType == "") {
+            var convertedTypeName = field.GetCSharpType();
+            if (convertedTypeName != null) {
+                field.originalType = convertedTypeName;
+            }
+        }
+
         var newName             = field.name?.ToConvertedFieldName()!;
         var primitiveName       = field.GetCSharpType();
         var typeName            = field.originalType!.ToConvertedTypeName();

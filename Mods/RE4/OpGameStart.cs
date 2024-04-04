@@ -17,34 +17,33 @@ namespace RE_Editor.Mods;
 public class OpGameStart : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName  = "OP Game Start";
+        const string name        = "OP Game Start";
         const string description = "Gives OP weapon setups on new games.";
         const string version     = "1.1";
-        const string outPath     = $@"{PathHelper.MODS_PATH}\{bundleName}";
 
-        var baseMod = new NexusModVariant {
+        var baseMod = new NexusMod {
             Version      = version,
-            NameAsBundle = bundleName,
+            NameAsBundle = name,
             Desc         = description,
             Files        = [PathHelper.NEW_GAME_INVENTORY_DATA_PATH]
         };
 
         var mods = new[] {
             baseMod
-                .SetName($"{bundleName}: With Bonus Weapons")
+                .SetName($"{name}: With Bonus Weapons")
                 .SetAction(list => MakeNewInventory(list, Target.WITH_BONUS_WEAPONS)),
             baseMod
-                .SetName($"{bundleName}: Without Bonus Weapons")
+                .SetName($"{name}: Without Bonus Weapons")
                 .SetAction(list => MakeNewInventory(list, Target.WITHOUT_BONUS_WEAPONS)),
             baseMod
-                .SetName($"{bundleName}: Just Max Case Size")
+                .SetName($"{name}: Just Max Case Size")
                 .SetAction(list => MakeNewInventory(list, Target.JUST_MAX_CASE_SIZE)),
             baseMod
-                .SetName($"{bundleName}: Just Small Keys")
+                .SetName($"{name}: Just Small Keys")
                 .SetAction(list => MakeNewInventory(list, Target.JUST_SMALL_KEYS)),
         };
 
-        ModMaker.WriteMods(mods.ToList(), PathHelper.CHUNK_PATH, outPath, bundleName, true);
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
     }
 
     public static void MakeNewInventory(IEnumerable<RszObject> rszObjectData, Target target) {

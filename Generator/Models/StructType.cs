@@ -74,6 +74,7 @@ public class StructType(string name, string? parent, string hash, StructJson str
         // This part check the class + field name.
         var fullName = $"{name}.{field.name.ToConvertedFieldName()}";
 #pragma warning disable IDE0066
+#pragma warning disable CS1522
         // ReSharper disable once ConvertSwitchStatementToSwitchExpression
         switch (fullName) {
 #if DD2
@@ -89,6 +90,7 @@ public class StructType(string name, string? parent, string hash, StructJson str
                 return DataSourceType.ITEMS;
 #endif
         }
+#pragma warning restore CS1522
 #pragma warning restore IDE0066
 
         // And this check the original type.

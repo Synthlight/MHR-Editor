@@ -18,7 +18,9 @@ public class RSZ {
     public List<RszObject>       objectData; // Array data. USED ONLY FOR READ.
 
     public static RSZ Read(BinaryReader reader, bool justReadHashes) {
+#pragma warning disable IDE0017
         var rsz = new RSZ();
+#pragma warning restore IDE0017
         rsz.position = reader.BaseStream.Position;
         rsz.magic    = reader.ReadUInt32();
         rsz.version  = reader.ReadUInt32();

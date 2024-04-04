@@ -43,7 +43,7 @@ public class ReDataFile {
     }
 
     public void Write(string targetFile, bool testWritePosition = false, bool forGp = false) {
-        using var writer = new BinaryWriter(File.OpenWrite(targetFile), Encoding.Unicode);
+        using var writer = new BinaryWriter(File.Open(targetFile, FileMode.Create, FileAccess.Write), Encoding.Unicode);
         Write(writer, testWritePosition, forGp || targetFile.Contains("MSG"));
     }
 

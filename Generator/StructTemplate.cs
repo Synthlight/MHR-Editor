@@ -94,6 +94,7 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
         file.WriteLine("[SuppressMessage(\"ReSharper\", \"IdentifierTypo\")]");
         file.WriteLine("[SuppressMessage(\"CodeQuality\", \"IDE0079:Remove unnecessary suppression\")]");
         file.WriteLine("[MhrStruct]");
+        file.WriteLine($"// {structInfo.name}");
         file.WriteLine($"public partial class {className} : {parentClass ?? nameof(RszObject)} {{");
         file.WriteLine($"    public {(parentClass == null ? "const" : "new const")} uint HASH = 0x{hash};");
     }
@@ -140,6 +141,8 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
         }
         */
 
+        file.WriteLine($"    // {field.name}");
+        file.WriteLine($"    // {field.originalType}");
         if (field.type == nameof(UIntArray)) {
             file.WriteLine("    [IsList]");
             file.WriteLine($"    public {modifier}ObservableCollection<{nameof(UIntArray)}> {newName} {{ get; set; }}");

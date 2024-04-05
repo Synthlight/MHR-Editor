@@ -30,7 +30,9 @@ public static partial class PathHelper {
     public const string ITEM_PARAMETERS_PATH             = "natives/STM/AppSystem/Item/ItemParameters/ItemParameters.user.2";
     public const string ITEM_SHOP_DATA_PATH              = "natives/STM/AppSystem/Item/ItemShopData/ItemShopData.user.2";
     public const string JOB_03_PARAM_PATH                = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/Job03Parameter.user.2";
+    public const string JOB_04_PARAM_PATH                = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/Job04Parameter.user.2";
     public const string JOB_06_PARAM_PATH                = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/Job06Parameter.user.2";
+    public const string JOB_07_PARAM_PATH                = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/Job07Parameter.user.2";
     public const string JOB_08_PARAM_PATH                = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/Job08Parameter.user.2";
     public const string STAMINA_COMMON_ACTION_PARAM_PATH = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/CommonActionStaminaParameter.user.2";
     public const string STAMINA_PARAM_PATH               = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/StaminaParameter.user.2";

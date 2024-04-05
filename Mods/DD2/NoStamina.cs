@@ -4,6 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
+using RE_Editor.Generated.Models;
 using RE_Editor.Models;
 using RE_Editor.Models.Structs;
 using RE_Editor.Util;
@@ -16,7 +17,7 @@ public class NoStamina : IMod {
     public static void Make() {
         const string name        = "No Stamina Consumed";
         const string description = "Changes stamina use.";
-        const string version     = "1.4.1";
+        const string version     = "1.5";
 
         var descriptionOptions = new Dictionary<StaminaOptions, string> {
             [StaminaOptions.JOB_SKILLS]    = "Changes job skills' stamina use.",
@@ -31,7 +32,12 @@ public class NoStamina : IMod {
             ],
         };
         for (var i = 1; i <= 10; i++) {
-            dataFiles[StaminaOptions.JOB_SKILLS].Add($@"natives\STM\AppSystem\ch\Common\Human\UserData\Parameter\Job{i:00}StaminaParameter.user.2");
+            dataFiles[StaminaOptions.JOB_SKILLS]
+                .AddRange([
+                    $@"natives\STM\AppSystem\ch\Common\Human\UserData\Parameter\Job{i:00}StaminaParameter.user.2",
+                    PathHelper.JOB_04_PARAM_PATH,
+                    PathHelper.JOB_07_PARAM_PATH,
+                ]);
         }
 
         var baseMod = new NexusMod {
@@ -70,6 +76,12 @@ public class NoStamina : IMod {
                         data.VeryHeavy = GetNewStaminaValue(data.VeryHeavy, value);
                         data.Over      = GetNewStaminaValue(data.Over, value);
                     }
+                    break;
+                case IConsumeStamina.ILvl1 data:
+                    data.ConsumeStamina = GetNewStaminaValue(data.ConsumeStamina, value);
+                    break;
+                case IConsumeStamina.ILvl2 data:
+                    data.ConsumeStaminaLv2 = GetNewStaminaValue(data.ConsumeStaminaLv2, value);
                     break;
             }
         }

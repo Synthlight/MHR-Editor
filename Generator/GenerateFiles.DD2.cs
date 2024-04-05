@@ -29,6 +29,7 @@ public partial class GenerateFiles {
         "App_Job07Parameter",
         "App_Job08Parameter",
         "App_ShellAdditionalParameter",
+        "App_TopsSwapData",
         "App_WeaponCatalogData",
         "App_WeaponEnhanceParam",
         "App_WeaponSetting",

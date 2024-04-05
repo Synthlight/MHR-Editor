@@ -18,7 +18,8 @@ public static partial class PathHelper {
             allUserFiles = JsonConvert.DeserializeObject<List<string>>(userFileCacheJson)!;
         } else {
             allUserFiles = (from basePath in TEST_PATHS
-                            let path = msg ? CHUNK_PATH + basePath : CHUNK_PATH + basePath.Replace("STM", "MSG")
+                            let path = msg ? CHUNK_PATH + basePath.Replace("STM", "MSG") : CHUNK_PATH + basePath
+                            where Directory.Exists(path)
                             from file in Directory.EnumerateFiles(path, $"*.{fileType}", SearchOption.AllDirectories)
                             where File.Exists(file)
                             select file).ToList();

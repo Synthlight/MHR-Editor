@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using RE_Editor.Common;
@@ -32,6 +33,11 @@ public struct NexusMod : INexusMod {
     public string?                     NameAsBundle    { get; set; }
     public bool                        SkipPak         { get; set; }
     public Dictionary<string, string>? AdditionalFiles { get; set; }
+
+    [Pure]
+    public readonly override string ToString() {
+        return $"{NameAsBundle} :: {Name}";
+    }
 }
 
 public static class NexusModExtensions {

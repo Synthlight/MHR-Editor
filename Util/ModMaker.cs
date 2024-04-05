@@ -40,11 +40,12 @@ public static class ModMaker {
 
     private static void CreateModBundle<T>(string modFolderName, bool copyLooseToFluffy, bool copyPakToFluffy, string? bundleName, List<T> entries) where T : INexusMod {
         bundleName = bundleName == "" ? null : bundleName;
-        var rootPath       = $@"{PathHelper.MODS_PATH}\{modFolderName}";
-        var safeBundleName = bundleName?.ToSafeName();
-        var modFiles       = new List<string>();
-        var nativesFiles   = new List<string>();
-        var pakFiles       = new List<string>();
+        var safeBundleName    = bundleName?.ToSafeName();
+        var safeModFolderName = modFolderName.ToSafeName();
+        var rootPath          = $@"{PathHelper.MODS_PATH}\{safeModFolderName}";
+        var modFiles          = new List<string>();
+        var nativesFiles      = new List<string>();
+        var pakFiles          = new List<string>();
 
         foreach (var mod in entries) {
             var    safeName = mod.Name.ToSafeName();
@@ -116,8 +117,8 @@ public static class ModMaker {
         }
 
         var threads = new List<Thread> {
-            new(() => { CompressTheMod($@"{rootPath}\{modFolderName}.zip", modFiles, nativesFiles, copyLooseToFluffy); }),
-            new(() => { CompressTheMod($@"{rootPath}\{modFolderName} (PAK).zip", modFiles, pakFiles, copyPakToFluffy); }),
+            new(() => { CompressTheMod($@"{rootPath}\{safeBundleName ?? safeModFolderName}.zip", modFiles, nativesFiles, copyLooseToFluffy); }),
+            new(() => { CompressTheMod($@"{rootPath}\{safeBundleName ?? safeModFolderName} (PAK).zip", modFiles, pakFiles, copyPakToFluffy); }),
         };
         threads.StartAll();
         threads.JoinAll();

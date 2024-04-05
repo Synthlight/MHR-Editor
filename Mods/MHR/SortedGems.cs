@@ -15,47 +15,43 @@ namespace RE_Editor.Mods;
 public class SortedGems : IMod {
     [UsedImplicitly]
     public static void Make() {
+        const string name              = "Sorted Gems";
         const string version           = "1.7.1";
-        const string outPath           = $@"{PathHelper.MODS_PATH}\Sorted Gems";
         const string bundleByNameName  = "Gems Sorted by Gem Name";
         const string bundleBySkillName = "Gems Sorted by Skill Name";
         const string bundleBySkillId   = "Gems Sorted by Skill ID";
 
         var langs = Enum.GetValues<Global.LangIndex>();
 
-        var mods = new List<INexusModVariant>();
-        mods.AddRange(langs.Select(lang => new NexusModVariant {
+        var mods = new List<INexusMod>();
+        mods.AddRange(langs.Select(lang => new NexusMod {
                                Name         = $"{bundleByNameName} ({lang})",
                                NameAsBundle = bundleByNameName,
                                Desc         = "Sorts all the gems by their name.",
-                               Files        = new[] {PathHelper.DECORATION_PATH, PathHelper.RAMPAGE_DECORATION_PATH},
+                               Files        = [PathHelper.DECORATION_PATH, PathHelper.RAMPAGE_DECORATION_PATH],
                                Action       = data => SortGems(data, GemSortType.GEM_NAME, lang),
                                Version      = version
                            })
-                           .Cast<INexusModVariant>());
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, $"{bundleByNameName} (Fluffy Selective Install)", true);
-
-        mods.Clear();
-        mods.AddRange(langs.Select(lang => new NexusModVariant {
+                           .Cast<INexusMod>());
+        mods.AddRange(langs.Select(lang => new NexusMod {
                                Name         = $"{bundleBySkillName} ({lang})",
                                NameAsBundle = bundleBySkillName,
                                Desc         = "Sorts all the gems by their skill name.",
-                               Files        = new[] {PathHelper.DECORATION_PATH, PathHelper.RAMPAGE_DECORATION_PATH},
+                               Files        = [PathHelper.DECORATION_PATH, PathHelper.RAMPAGE_DECORATION_PATH],
                                Action       = data => SortGems(data, GemSortType.SKILL_NAME, lang),
                                Version      = version
                            })
-                           .Cast<INexusModVariant>());
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, $"{bundleBySkillName} (Fluffy Selective Install)", true);
+                           .Cast<INexusMod>());
+        mods.Add(new NexusMod {
+            Name         = bundleBySkillId,
+            NameAsBundle = bundleBySkillId,
+            Desc         = "Sorts all the gems by their skill id.",
+            Files        = [PathHelper.DECORATION_PATH, PathHelper.RAMPAGE_DECORATION_PATH],
+            Action       = data => SortGems(data, GemSortType.SKILL_ID, Global.LangIndex.eng), // Lang doesn't matter for this one.
+            Version      = version
+        });
 
-        ModMaker.WriteMods(new List<INexusMod> {
-            new NexusMod {
-                Name    = bundleBySkillId,
-                Desc    = "Sorts all the gems by their skill id.",
-                Files   = new[] {PathHelper.DECORATION_PATH, PathHelper.RAMPAGE_DECORATION_PATH},
-                Action  = data => SortGems(data, GemSortType.SKILL_ID, Global.LangIndex.eng), // Lang doesn't matter for this one.
-                Version = version
-            }
-        }, PathHelper.CHUNK_PATH, outPath, copyToFluffy: true);
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
     }
 
     public static void SortGems(IEnumerable<RszObject> rszObjectData, GemSortType sortType, Global.LangIndex lang) {

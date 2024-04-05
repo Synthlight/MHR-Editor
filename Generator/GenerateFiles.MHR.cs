@@ -22,8 +22,6 @@ public partial class GenerateFiles {
         "Snow_data_OtWeaponBaseUserData",
         "Snow_data_PlEquipSkillBaseUserData",
         "Snow_data_PlHyakuryuSkillBaseUserData",
-        "Snow_enemy_em134_Em134_00UniqueData", // Nested generics.
-        "Snow_envCreature_Ec019Trajectory_TimeEffectSetting", // Nested generics.
         "Snow_equip_BowBaseUserData",
         "Snow_equip_ChargeAxeBaseUserData",
         "Snow_equip_DualBladesBaseUserData",
@@ -42,8 +40,6 @@ public partial class GenerateFiles {
         "Snow_equip_PlOverwearBaseUserData",
         "Snow_equip_ShortSwordBaseUserData",
         "Snow_equip_SlashAxeBaseUserData",
-        "Snow_fallingObject_FallingObjectPlayerHeavyBowgunExtraCartridgeUserData",
-        "Snow_npc_fsm_action_NpcFsmAction_StopNavigation", // Via_vec3? This one skipped the via type checking.
         "Snow_player_PlayerUserDataBow",
         "Snow_player_PlayerUserDataIG_Insect"
     ];

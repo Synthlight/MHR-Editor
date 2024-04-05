@@ -15,28 +15,26 @@ namespace RE_Editor.Mods;
 public class CheatMod : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string bundleName        = "Weapon/Armor/Gem/Slot/Skill Cheats";
-        const string variantBundleName = "All In One (Fluffy Selective Install)";
-        const string outPath           = $@"{PathHelper.MODS_PATH}\{bundleName}";
+        const string name = "Weapon/Armor/Gem/Slot/Skill Cheats";
 
-        var baseMod = new NexusModVariant {
+        var baseMod = new NexusMod {
             Version      = "1.8.1",
-            NameAsBundle = bundleName,
+            NameAsBundle = name,
             Desc         = "A cheat mod."
         };
 
-        var bundleMods = new[] {
+        var mods = new List<INexusMod> {
             baseMod
                 .SetName("Armor With Max Slots Only")
-                .SetFiles(new[] {PathHelper.ARMOR_BASE_PATH})
+                .SetFiles([PathHelper.ARMOR_BASE_PATH])
                 .SetAction(MaxSlots),
             baseMod
                 .SetName("Armor With Max Skills Only")
-                .SetFiles(new[] {PathHelper.ARMOR_BASE_PATH})
+                .SetFiles([PathHelper.ARMOR_BASE_PATH])
                 .SetAction(MaxSkills),
             baseMod
                 .SetName("Armor With Max Slots & Skills")
-                .SetFiles(new[] {PathHelper.ARMOR_BASE_PATH})
+                .SetFiles([PathHelper.ARMOR_BASE_PATH])
                 .SetAction(data => {
                     MaxSlots(data);
                     MaxSkills(data);
@@ -48,7 +46,8 @@ public class CheatMod : IMod {
             baseMod
                 .SetName("Weapons With Max Sharpness Only")
                 .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Base))
-                .SetAction(MaxSharpness),
+                .SetAction(MaxSharpness)
+                .SetImage($@"{PathHelper.MODS_PATH}\{name.ToSafeName()}\Max Sharpness.png"),
             baseMod
                 .SetName("Weapons With Max Slots & Sharpness")
                 .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Base))
@@ -58,29 +57,30 @@ public class CheatMod : IMod {
                 }),
             baseMod
                 .SetName("One Gem to Max Skill")
-                .SetFiles(new[] {PathHelper.DECORATION_PATH})
-                .SetAction(MaxSkills),
+                .SetFiles([PathHelper.DECORATION_PATH])
+                .SetAction(MaxSkills)
+                .SetImage($@"{PathHelper.MODS_PATH}\{name.ToSafeName()}\One Gem to Max.png"),
             baseMod
                 .SetName("GunLance With Lvl 8 Shelling Only")
-                .SetFiles(new[] {PathHelper.GUN_LANCE_BASE_DATA_PATH})
+                .SetFiles([PathHelper.GUN_LANCE_BASE_DATA_PATH])
                 .SetAction(Lvl8Shelling),
             baseMod
                 .SetName("GunLance With Lvl 8 Shelling & Max Slots")
-                .SetFiles(new[] {PathHelper.GUN_LANCE_BASE_DATA_PATH})
+                .SetFiles([PathHelper.GUN_LANCE_BASE_DATA_PATH])
                 .SetAction(data => {
                     Lvl8Shelling(data);
                     MaxSlots(data);
                 }),
             baseMod
                 .SetName("GunLance With Lvl 8 Shelling & Max Sharpness")
-                .SetFiles(new[] {PathHelper.GUN_LANCE_BASE_DATA_PATH})
+                .SetFiles([PathHelper.GUN_LANCE_BASE_DATA_PATH])
                 .SetAction(data => {
                     Lvl8Shelling(data);
                     MaxSharpness(data);
                 }),
             baseMod
                 .SetName("GunLance With Lvl 8 Shelling, Max Slots & Sharpness")
-                .SetFiles(new[] {PathHelper.GUN_LANCE_BASE_DATA_PATH})
+                .SetFiles([PathHelper.GUN_LANCE_BASE_DATA_PATH])
                 .SetAction(data => {
                     Lvl8Shelling(data);
                     MaxSlots(data);
@@ -88,19 +88,17 @@ public class CheatMod : IMod {
                 }),
         };
 
-        ModMaker.WriteMods(bundleMods, PathHelper.CHUNK_PATH, outPath, variantBundleName, true);
-
-        var gpMods = new List<NexusModVariant>();
-        foreach (var mod in bundleMods) {
-            var newMod = mod;
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var mod in new List<INexusMod>(mods)) {
+            var newMod = (NexusMod) mod;
             newMod.NameAsBundle += " (GamePass)";
             newMod.Files = from file in newMod.Files
                            select file.Replace(@"\STM\", @"\MSG\");
             newMod.ForGp = true;
-            gpMods.Add(newMod);
+            mods.Add(newMod);
         }
 
-        ModMaker.WriteMods(gpMods, PathHelper.CHUNK_PATH, outPath, variantBundleName + " (GamePass)", true);
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
     }
 
     public static void MaxSharpness(List<RszObject> rszObjectData) {

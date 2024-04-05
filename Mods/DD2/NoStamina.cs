@@ -49,7 +49,7 @@ public class NoStamina : IMod {
                                   .SetFiles(dataFiles[option])
                                   .SetAction(list => Stamina(list, option, value))).ToList();
 
-        ModMaker.WriteMods(mods.ToList(), name, copyLooseToFluffy: true);
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
     }
 
     public static void Stamina(List<RszObject> rszObjectData, StaminaOptions option, StaminaValueOptions value) {

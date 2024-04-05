@@ -66,7 +66,7 @@ public class JobRequirements : IMod {
                 }),
         };
 
-        ModMaker.WriteMods(mods.ToList(), name, copyLooseToFluffy: true);
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
     }
 
     public static void Jobs(List<RszObject> rszObjectData, JobOptions option) {

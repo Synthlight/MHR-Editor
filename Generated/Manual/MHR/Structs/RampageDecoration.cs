@@ -12,10 +12,10 @@ namespace RE_Editor.Models.Structs;
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 public partial class Snow_data_HyakuryuDecoBaseUserData_Param : IGem {
     [SortOrder(50)]
-    public string Name => DataHelper.RAMPAGE_DECORATION_NAME_LOOKUP[Global.locale].TryGet(Id);
+    public string Name => DataHelper.RAMPAGE_DECORATION_NAME_LOOKUP[Global.locale].TryGet((uint) Id);
 
     [SortOrder(int.MaxValue)]
-    public string Description => DataHelper.RAMPAGE_DECORATION_DESC_LOOKUP[Global.locale].TryGet(Id);
+    public string Description => DataHelper.RAMPAGE_DECORATION_DESC_LOOKUP[Global.locale].TryGet((uint) Id);
 
     public override string ToString() {
         return Name;

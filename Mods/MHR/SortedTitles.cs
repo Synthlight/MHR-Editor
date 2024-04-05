@@ -14,23 +14,28 @@ namespace RE_Editor.Mods;
 public class SortedTitles : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string version      = "1.5.1";
-        const string outPath      = $@"{PathHelper.MODS_PATH}\Sorted Titles";
-        const string bundleByName = "Titles Sorted by Name";
+        const string name    = "Titles Sorted by Name";
+        const string desc    = "Sorts all the guid card titles by their name.";
+        const string version = "1.5.1";
+        var          image   = $@"{PathHelper.MODS_PATH}\{name.ToSafeName()}\Untitled.png";
 
         var langs = Enum.GetValues<Global.LangIndex>();
 
-        var mods = new List<INexusModVariant>();
-        mods.AddRange(langs.Select(lang => new NexusModVariant {
-                               Name         = $"{bundleByName} ({lang})",
-                               NameAsBundle = bundleByName,
-                               Desc         = "Sorts all the guid card titles by their name.",
-                               Files        = new[] {PathHelper.GUILD_CARD_TITLE_DATA},
-                               Action       = data => SortTitles(data, lang),
-                               Version      = version
+        var mods = new List<INexusMod>();
+        mods.AddRange(langs.Select(lang => {
+                               return new NexusMod {
+                                   Name         = $"{name} ({lang})",
+                                   NameAsBundle = name,
+                                   Desc         = desc,
+                                   Image        = image,
+                                   Files        = [PathHelper.GUILD_CARD_TITLE_DATA],
+                                   Action       = data => SortTitles(data, lang),
+                                   Version      = version
+                               };
                            })
-                           .Cast<INexusModVariant>());
-        ModMaker.WriteMods(mods, PathHelper.CHUNK_PATH, outPath, $"{bundleByName} (Fluffy Selective Install)", true);
+                           .Cast<INexusMod>());
+
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
     }
 
     public static void SortTitles(IEnumerable<RszObject> rszObjectData, Global.LangIndex lang) {

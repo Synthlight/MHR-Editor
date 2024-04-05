@@ -54,13 +54,11 @@ public partial class GenerateFiles {
         "app.GUICharaEditData.PatternParam`",
         "app.lod.LODProcessDefine.ClassSelector`",
 #elif MHR
-        "snow.camera.CameraUtility.BufferingParam`",
         "snow.data.StmKeyconfigSystem.ConfigCodeSet`",
-        "snow.shell.Em", // There's one for each monster variant. Exclude the whole shebang for now.
         "snow.enemy.EnemyCarryChangeTrack`",
         "snow.enemy.EnemyEditStepActionData`",
         "snow.envCreature.EnvironmentCreatureActionController`",
-        "snow.eventcut.EventPlayerMediator.FaceMaterialConfig`",
+        "snow.shell.EnemyShellManagerBase`",
         "snow.StmDefaultKeyconfigData.EnumSet2`",
         "snow.StmGuiKeyconfigData.EnumItemSystemMessage`",
         "snow.StmGuiKeyconfigData.EnumMessage`",
@@ -95,6 +93,9 @@ public partial class GenerateFiles {
         "app.SimpleFlightPathTracer`",
         "app.StringUtil.NameHash`",
         "soundlib.SoundSwitchApp`",
+#elif MHR
+        "snow.camera.CameraUtility.BufferingParam`",
+        "snow.eventcut.EventPlayerMediator.FaceMaterialConfig`",
 #elif RE4
         "chainsaw.AIMapNodeScore.Param`",
         "chainsaw.AppEventCatalogBase`",

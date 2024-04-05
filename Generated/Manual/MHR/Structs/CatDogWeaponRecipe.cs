@@ -15,10 +15,10 @@ namespace RE_Editor.Models.Structs;
 [SuppressMessage("ReSharper", "UnusedType.Global")]
 public partial class Snow_data_OtWeaponProductUserData_Param : ICraftingCost {
     [SortOrder(50)]
-    public string Name => DataHelper.CAT_DOG_WEAPON_NAME_LOOKUP[Global.locale].TryGet(Id);
+    public string Name => DataHelper.CAT_DOG_WEAPON_NAME_LOOKUP[Global.locale].TryGet((uint) Id);
 
     [SortOrder(int.MaxValue)]
-    public string Description => DataHelper.CAT_DOG_WEAPON_DESC_LOOKUP[Global.locale].TryGet(Id);
+    public string Description => DataHelper.CAT_DOG_WEAPON_DESC_LOOKUP[Global.locale].TryGet((uint) Id);
 
     public override string ToString() {
         return Name;

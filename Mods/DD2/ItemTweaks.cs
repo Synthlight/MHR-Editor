@@ -88,7 +88,7 @@ public class ItemTweaks : IMod {
                 }),
         };
 
-        ModMaker.WriteMods(mods.ToList(), name, copyLooseToFluffy: true);
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
     }
 
     public static void GoldCost(List<RszObject> rszObjectData, GoldOptions option) {

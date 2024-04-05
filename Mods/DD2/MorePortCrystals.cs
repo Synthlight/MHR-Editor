@@ -42,7 +42,7 @@ public class MorePortCrystals : IMod {
                 .SetAction(Mod),
         };
 
-        ModMaker.WriteMods(mods.ToList(), name, copyLooseToFluffy: true);
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
     }
 
     public static void Mod(List<RszObject> rszObjectData) {

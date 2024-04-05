@@ -26,7 +26,7 @@ public static class WikiDump {
         foreach (var a in armor) {
             if ((Snow_data_ContentsIdSystem_SubCategoryType) a.GetArmorType() == Snow_data_ContentsIdSystem_SubCategoryType.C_Unclassified) continue;
             writer.WriteLine($"| {a.Id:X8}" +
-                             $" | {DataHelper.ARMOR_NAME_LOOKUP[Global.locale].TryGet(a.Id, "")}" +
+                             $" | {DataHelper.ARMOR_NAME_LOOKUP[Global.locale].TryGet((uint) a.Id, "")}" +
                              $" | {a.GetArmorId()}" +
                              $" | {a.GetArmorTypeEnum()}" +
                              $" | {(uint) a.ModelId}" +

@@ -25,7 +25,7 @@ public class JobRequirements : IMod {
             Version      = version,
             NameAsBundle = name,
             Desc         = description,
-            Image        = @"R:\Games\Dragons Dogma 2\Mods\No Job Requirements\Jobs.png",
+            Image        = $@"{PathHelper.MODS_PATH}\{name}\Jobs.png",
         };
 
         var mods = new[] {

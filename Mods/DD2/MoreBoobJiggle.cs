@@ -25,6 +25,7 @@ public class MoreBoobJiggle : IMod {
             Version = version,
             Name    = name,
             Desc    = description,
+            Image   = $@"{PathHelper.MODS_PATH}\{name}\Running.gif",
             Files   = [PathHelper.SWAP_DATA_TOPS_PATH],
             Action  = Mod,
         };

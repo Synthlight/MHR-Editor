@@ -13,7 +13,7 @@ public class EnumTemplate(EnumType enumType) {
         file.WriteLine("namespace RE_Editor.Models.Enums;");
         file.WriteLine("");
         if (enumType.isFlags) {
-            file.Write("[Flags]");
+            file.WriteLine("[Flags]");
         }
         file.Write($"public enum {enumType.name} : {enumType.type} ");
         file.Write(enumType.Contents);

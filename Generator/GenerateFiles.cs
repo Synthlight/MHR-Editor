@@ -283,6 +283,10 @@ public partial class GenerateFiles {
             if (structInfo.name?.StartsWith("System.Action`") == true) {
             }
 
+            // ReSharper disable once GrammarMistakeInComment
+            // The dump has empty array entries like `.Element[[`, but we transform the field type to `.Element<` which bypasses these empty structs.
+            if (structInfo.name?.Contains("[[") == true) continue;
+
             if (!IsStructNameValid(structInfo.name)) continue;
             // Also ignore structs that are just enum placeholders.
             if (structInfo.fields is [{name: "value__"}]) continue;

@@ -522,14 +522,8 @@ public partial class GenerateFiles {
             Console.WriteLine($"Finding all GP files in: {(PathHelper.CHUNK_PATH + path).Replace("STM", "MSG")}");
         }
 
-        var allGpUserFiles = (from basePath in PathHelper.TEST_PATHS
-                              let path = (PathHelper.CHUNK_PATH + basePath).Replace("STM", "MSG")
-                              where Directory.Exists(path)
-                              from file in Directory.EnumerateFiles(path, "*.user.2", SearchOption.AllDirectories)
-                              where File.Exists(file)
-                              select file).ToList();
-
-        var count = allGpUserFiles.Count;
+        var allGpUserFiles = PathHelper.GetCachedFileList(FileListCacheType.USER, msg: true);
+        var count          = allGpUserFiles.Count;
         Console.WriteLine($"Found {count} files.");
 
         var now = DateTime.Now;

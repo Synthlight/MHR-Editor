@@ -258,8 +258,10 @@ public partial class MainWindow {
     }
 
     public static AutoDataGridGeneric<T> MakeDataGrid<T>(IEnumerable<T> itemSource) {
-        var dataGrid = new AutoDataGridGeneric<T>();
-        dataGrid.SetItems(itemSource is ObservableCollection<T> source ? source : new(itemSource));
+        var dataGrid        = new AutoDataGridGeneric<T>();
+        var observableItems = itemSource as ObservableCollection<T> ?? new(itemSource);
+        dataGrid.SetItems(observableItems);
+        RowHelper.AddKeybinds(dataGrid, observableItems, dataGrid);
         return dataGrid;
     }
 

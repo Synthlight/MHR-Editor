@@ -19,7 +19,7 @@ public static class ModMaker {
     /// <param name="modFolderName">Name without any path or `\` characters. Illegal characters will be replaced.</param>
     /// <param name="copyLooseToFluffy">If true, will copy the *loose* zip to FMM.</param>
     /// <param name="copyPakToFluffy">If true, will copy the *pak* zip to FMM.</param>
-    public static void WriteMods<T>(IEnumerable<T> mods, string modFolderName, bool copyLooseToFluffy = false, bool copyPakToFluffy = false) where T : INexusMod {
+    public static void WriteMods<T>(IEnumerable<T> mods, string modFolderName, bool copyLooseToFluffy = false, bool copyPakToFluffy = false, bool noPakZip = false) where T : INexusMod {
         var bundles = new Dictionary<string, List<T>>();
         foreach (var mod in mods) {
             var bundle = mod.NameAsBundle ?? "";
@@ -31,14 +31,14 @@ public static class ModMaker {
 
         var threads = new List<Thread>();
         foreach (var (bundleName, entries) in bundles) {
-            var thread = new Thread(() => { CreateModBundle(modFolderName, copyLooseToFluffy, copyPakToFluffy, bundleName, entries); });
+            var thread = new Thread(() => { CreateModBundle(modFolderName, copyLooseToFluffy, copyPakToFluffy, bundleName, entries, noPakZip); });
             threads.Add(thread);
             thread.Start();
         }
         threads.JoinAll();
     }
 
-    private static void CreateModBundle<T>(string modFolderName, bool copyLooseToFluffy, bool copyPakToFluffy, string? bundleName, List<T> entries) where T : INexusMod {
+    private static void CreateModBundle<T>(string modFolderName, bool copyLooseToFluffy, bool copyPakToFluffy, string? bundleName, List<T> entries, bool noPakZip) where T : INexusMod {
         bundleName = bundleName == "" ? null : bundleName;
         var safeBundleName    = bundleName?.ToSafeName();
         var safeModFolderName = modFolderName.ToSafeName();
@@ -116,10 +116,10 @@ public static class ModMaker {
             pakFiles.Add(pakFile);
         }
 
-        var threads = new List<Thread> {
-            new(() => { CompressTheMod($@"{rootPath}\{safeBundleName ?? safeModFolderName}.zip", modFiles, nativesFiles, copyLooseToFluffy); }),
-            new(() => { CompressTheMod($@"{rootPath}\{safeBundleName ?? safeModFolderName} (PAK).zip", modFiles, pakFiles, copyPakToFluffy); }),
-        };
+        var threads = new List<Thread> {new(() => { CompressTheMod($@"{rootPath}\{safeBundleName ?? safeModFolderName}.zip", modFiles, nativesFiles, copyLooseToFluffy); })};
+        if (!noPakZip) {
+            threads.Add(new(() => { CompressTheMod($@"{rootPath}\{safeBundleName ?? safeModFolderName} (PAK).zip", modFiles, pakFiles, copyPakToFluffy); }));
+        }
         threads.StartAll();
         threads.JoinAll();
     }

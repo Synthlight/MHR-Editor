@@ -32,12 +32,12 @@ public class MorePortCrystals : IMod {
 
         var mods = new[] {
             baseMod
-                .SetName("Higher Portcrystal Limit: REF (MUST INSTALL BOTH)")
+                .SetName($"{name}: REF (MUST INSTALL BOTH)")
                 .SetFiles([])
                 .SetAdditionalFiles(additionalFiles)
                 .SetSkipPak(true),
             baseMod
-                .SetName("Higher Portcrystal Limit: PAK (MUST INSTALL BOTH)") // 'Loose' too since, of the two zips made, one will be a `pak`, the other wont.
+                .SetName($"{name}: PAK (MUST INSTALL BOTH)") // 'Loose' too since, of the two zips made, one will be a `pak`, the other won't.
                 .SetFiles([PathHelper.ITEM_PARAMETERS_PATH])
                 .SetAction(Mod),
         };

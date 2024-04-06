@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
-using RE_Editor.Constants;
 using RE_Editor.Models;
 using RE_Editor.Models.Structs;
 using RE_Editor.Util;
@@ -21,16 +20,30 @@ public class MoreBoobJiggle : IMod {
         const string description = "Because boobs need to jiggle.";
         const string version     = "1.0";
 
-        var mod = new NexusMod {
-            Version = version,
-            Name    = name,
-            Desc    = description,
-            Image   = $@"{PathHelper.MODS_PATH}\{name}\Running.gif",
-            Files   = [PathHelper.SWAP_DATA_TOPS_PATH],
-            Action  = Mod,
+        var baseMod = new NexusMod {
+            Version      = version,
+            Name         = name,
+            Desc         = description,
+            NameAsBundle = name,
+            Image        = $@"{PathHelper.MODS_PATH}\{name}\Running.gif",
+            Action       = Mod,
         };
 
-        ModMaker.WriteMods([mod], name, copyLooseToFluffy: true);
+        var mods = new[] {
+            baseMod
+                .SetName($"{name} (REF)")
+                .SetDesc($"{description} Alternate option done as an LUA script. ONLY ENABLE ONE OPTION.")
+                .SetFiles([])
+                .SetAdditionalFiles(new() {{$@"{PathHelper.MODS_PATH}\{name}\MoreBoobJiggle.lua", @"reframework\autorun\MoreBoobJiggle.lua"}})
+                .SetSkipPak(true),
+            baseMod
+                .SetName($"{name} (PAK)")
+                .SetDesc($"{description} ONLY ENABLE ONE OPTION.")
+                .SetFiles([PathHelper.SWAP_DATA_TOPS_PATH])
+                .SetAction(Mod),
+        };
+
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
     }
 
     public static void Mod(List<RszObject> rszObjectData) {

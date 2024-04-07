@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.CodeDom;
+using System.Text.RegularExpressions;
+using Microsoft.CSharp;
 using Newtonsoft.Json;
 using RE_Editor.Common;
 
@@ -34,12 +36,13 @@ public static partial class Program {
         File.WriteAllText($@"{ASSETS_DIR}\{filename}.json", JsonConvert.SerializeObject(msg, Formatting.Indented));
     }
 
-    private static void CreateConstantsFile<T>(Dictionary<T, string> engDict, string className, bool asHex = false) where T : notnull {
+    private static void CreateConstantsFile<T>(Dictionary<string, T> engDict, string className, bool asHex = false) where T : notnull {
         Directory.CreateDirectory(CONSTANTS_DIR);
         using var writer = new StreamWriter(File.Create($@"{CONSTANTS_DIR}\{className}.cs"));
         writer.WriteLine("// ReSharper disable All");
         writer.WriteLine("using System;");
         writer.WriteLine("using System.Diagnostics.CodeAnalysis;");
+        writer.WriteLine("using RE_Editor.Models.Enums;");
         writer.WriteLine("");
         writer.WriteLine("namespace RE_Editor.Constants;");
         writer.WriteLine("");
@@ -47,13 +50,14 @@ public static partial class Program {
         writer.WriteLine("[SuppressMessage(\"ReSharper\", \"UnusedMember.Global\")]");
         writer.WriteLine("[SuppressMessage(\"ReSharper\", \"IdentifierTypo\")]");
         writer.WriteLine($"public static class {className} {{");
+        var compiler  = new CSharpCodeProvider();
         var regex     = new Regex(@"^\d");
         var namesUsed = new List<string?>(engDict.Count);
-        foreach (var (key, name) in engDict) {
-            switch (name.ToLower()) {
-                case "#rejected#":
-                case "?":
-                    continue;
+        engDict = engDict.Sort(pair => pair.Key);
+        foreach (var (name, value) in engDict) {
+            if (name.ToLower().Contains("#rejected#")
+                || name.ToLower().Contains('?')) {
+                continue;
             }
             var constName = name.ToUpper()
                                 .Replace("'", "")
@@ -71,13 +75,19 @@ public static partial class Program {
             if (namesUsed.Contains(constName)) continue;
             namesUsed.Add(constName);
             if (typeof(T) == typeof(Guid)) {
-                writer.WriteLine($"    public static readonly Guid {constName} = Guid.Parse(\"{key}\");");
+                writer.WriteLine($"    public static readonly Guid {constName} = Guid.Parse(\"{value}\");");
+            } else if (typeof(T) == typeof(string)) {
+                writer.WriteLine($"    public const string {constName} = \"{value}\";");
+            } else if (typeof(T).IsEnum) {
+                writer.WriteLine($"    public const {typeof(T).Name} {constName} = {typeof(T).Name}.{value};");
             } else {
+                var type     = new CodeTypeReference(typeof(T));
+                var typeName = compiler.GetTypeOutput(type);
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
                 if (asHex) {
-                    writer.WriteLine($"    public const uint {constName} = 0x{key:X8};");
+                    writer.WriteLine($"    public const {typeName} {constName} = 0x{value:X8};");
                 } else {
-                    writer.WriteLine($"    public const uint {constName} = {key};");
+                    writer.WriteLine($"    public const {typeName} {constName} = {value};");
                 }
             }
         }

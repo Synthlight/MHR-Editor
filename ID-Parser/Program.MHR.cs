@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
 using RE_Editor.Common;
 using RE_Editor.Generated.Enums;
 using RE_Editor.Models.Enums;
@@ -122,7 +121,7 @@ public static partial class Program {
 
         CreateAssetFile(msg, "ARMOR_SERIES_LOOKUP");
 
-        CreateConstantsFile(msg[Global.LangIndex.eng], "ArmorConstants");
+        CreateConstantsFile(msg[Global.LangIndex.eng].Flip(), "ArmorConstants");
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -159,7 +158,7 @@ public static partial class Program {
                                    ParseEnum(typeof(Snow_data_DataDef_PlKitchenSkillId), $"Pl_{name}"));
         CreateAssetFile(msg, "DANGO_SKILL_NAME_LOOKUP");
 
-        CreateConstantsFile(engSkills, "SkillConstants");
+        CreateConstantsFile(engSkills.Flip(), "SkillConstants");
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -175,7 +174,7 @@ public static partial class Program {
                                                ParseEnum(typeof(Snow_data_ContentsIdSystem_WeaponId), name.Replace("_MR", "")), ignoreDuplicateKeys: true);
                 msgLists.Add(msg);
                 if (@in == "Name") {
-                    CreateConstantsFile(msg[Global.LangIndex.eng], $"{type}Constants", true);
+                    CreateConstantsFile(msg[Global.LangIndex.eng].Flip(), $"{type}Constants", true);
                 }
             }
             if (@in == "Name") {
@@ -287,7 +286,7 @@ public static partial class Program {
                          .GetLangIdMap(name => ParseEnum(typeof(Snow_data_ContentsIdSystem_LvBuffCageId), name));
             CreateAssetFile(msg, $"PETALACE_{@out}_LOOKUP");
             if (@in == "Name") {
-                CreateConstantsFile(msg[Global.LangIndex.eng], "PetalaceConstants", true);
+                CreateConstantsFile(msg[Global.LangIndex.eng].Flip(), "PetalaceConstants", true);
             }
         }
     }

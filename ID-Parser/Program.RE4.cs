@@ -42,7 +42,7 @@ public static partial class Program {
                        .ToList();
             var msg = msgs.MergeDictionaries();
             CreateAssetFile(msg, $@"{variant}_ITEM_NAME_LOOKUP");
-            CreateConstantsFile(msg[Global.LangIndex.eng], $"ItemConstants_{variant}");
+            CreateConstantsFile(msg[Global.LangIndex.eng].Flip(), $"ItemConstants_{variant}");
         }
     }
 
@@ -71,7 +71,7 @@ public static partial class Program {
                       .ToList()
                       .MergeDictionaries();
             CreateAssetFile(msg, $@"{variant}_WEAPON_NAME_LOOKUP");
-            CreateConstantsFile(msg[Global.LangIndex.eng], $"WeaponConstants_{variant}");
+            CreateConstantsFile(msg[Global.LangIndex.eng].Flip(), $"WeaponConstants_{variant}");
         }
     }
 }

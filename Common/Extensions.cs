@@ -563,4 +563,21 @@ public static class Extensions {
         var index = name.IndexOf('`');
         return index == -1 ? name : name[..index];
     }
+
+    [Pure]
+    public static Dictionary<string, K> Flip<K>(this Dictionary<K, string> dict) where K : notnull {
+        var dictionary = new Dictionary<string, K>();
+        foreach (var pair in dict) {
+            if (dictionary.ContainsKey(pair.Value)) {
+                var i = 2;
+                while (dictionary.ContainsKey($"{pair.Value}_{i}")) {
+                    i++;
+                }
+                dictionary.Add($"{pair.Value}_{i}", pair.Key);
+            } else {
+                dictionary.Add(pair.Value, pair.Key);
+            }
+        }
+        return dictionary;
+    }
 }

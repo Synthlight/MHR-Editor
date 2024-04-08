@@ -36,6 +36,8 @@ public static partial class PathHelper {
     public const string JOB_08_PARAM_PATH                = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/Job08Parameter.user.2";
     public const string STAMINA_COMMON_ACTION_PARAM_PATH = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/CommonActionStaminaParameter.user.2";
     public const string STAMINA_PARAM_PATH               = "natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/StaminaParameter.user.2";
+    public const string SWAP_DATA_MANTLE_PATH            = "natives/STM/AppSystem/CharaEdit/ch000/SwapData/MantleSwapData.user.2";
+    public const string SWAP_DATA_PANTS_PATH             = "natives/STM/AppSystem/CharaEdit/ch000/SwapData/PantsSwapData.user.2";
     public const string SWAP_DATA_TOPS_PATH              = "natives/STM/AppSystem/CharaEdit/ch000/SwapData/TopsSwapData.user.2";
     public const string WEAPON_DATA_PATH                 = "natives/STM/AppSystem/Item/ItemData/ItemWeaponData.user.2";
     public const string WEAPON_SETTINGS_PATH             = "natives/STM/AppSystem/Equipment/wp/WeaponSetting.user.2";

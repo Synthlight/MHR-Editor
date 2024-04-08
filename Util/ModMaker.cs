@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Xml.Linq;
 using ICSharpCode.SharpZipLib.Zip;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
 using RE_Editor.Models;
+using RE_Editor.Mods;
 
 namespace RE_Editor.Util;
 
@@ -21,8 +23,11 @@ public static class ModMaker {
     /// <param name="copyPakToFluffy">If true, will copy the *pak* zip to FMM.</param>
     /// <param name="noPakZip">Will skip the second zip containing pak files if true.</param>
     public static void WriteMods<T>(IEnumerable<T> mods, string modFolderName, bool copyLooseToFluffy = false, bool copyPakToFluffy = false, bool noPakZip = false) where T : INexusMod {
+        var nexusMods = mods.ToList();
+        Dd2HidePartsBase.WriteHideParts(nexusMods.OfType<SwapDbTweak>(), modFolderName);
+
         var bundles = new Dictionary<string, List<T>>();
-        foreach (var mod in mods) {
+        foreach (var mod in nexusMods) {
             var bundle = mod.NameAsBundle ?? "";
             if (!bundles.ContainsKey(bundle)) {
                 bundles[bundle] = [];

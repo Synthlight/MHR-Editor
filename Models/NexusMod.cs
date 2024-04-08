@@ -10,16 +10,16 @@ using RE_Editor.Common.Models;
 namespace RE_Editor.Models;
 
 public interface INexusMod {
-    string                      Name            { get; set; }
-    string                      Desc            { get; set; }
-    string                      Version         { get; set; }
-    string?                     Image           { get; set; }
-    IEnumerable<string>         Files           { get; set; }
-    Action<List<RszObject>>?    Action          { get; set; }
-    bool                        ForGp           { get; set; }
-    string?                     NameAsBundle    { get; set; }
-    bool                        SkipPak         { get; set; }
-    Dictionary<string, string>? AdditionalFiles { get; set; }
+    public string                      Name            { get; set; }
+    public string                      Desc            { get; set; }
+    public string                      Version         { get; set; }
+    public string?                     Image           { get; set; }
+    public IEnumerable<string>         Files           { get; set; }
+    public Action<List<RszObject>>?    Action          { get; set; }
+    public bool                        ForGp           { get; set; }
+    public string?                     NameAsBundle    { get; set; }
+    public bool                        SkipPak         { get; set; }
+    public Dictionary<string, string>? AdditionalFiles { get; set; }
 }
 
 public struct NexusMod : INexusMod {
@@ -40,7 +40,7 @@ public struct NexusMod : INexusMod {
     }
 }
 
-public static class NexusModExtensions {
+public static partial class NexusModExtensions {
     public static T SetName<T>(this T nexusMod, string name) where T : INexusMod {
         nexusMod.Name = name;
         return nexusMod;

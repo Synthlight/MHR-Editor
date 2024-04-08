@@ -51,6 +51,7 @@
 		<Page Remove="Data\DD2\**"/>
 		<None Remove="Data\DD2\**"/>
 		<Compile Remove="Data\DataInit.DD2.cs"/>
+		<Compile Remove="Models\DD2\**"/>
 		<Compile Remove="Mods\DD2\**"/>
 	</ItemGroup>
 	<!-- DD2 (Launch Settings) -->
@@ -87,6 +88,7 @@
 		<Page Remove="Data\MHR\**"/>
 		<None Remove="Data\MHR\**"/>
 		<Compile Remove="Data\DataInit.MHR.cs"/>
+		<Compile Remove="Models\MHR\**"/>
 		<Compile Remove="Mods\MHR\**"/>
 		<Compile Remove="Windows\MainWindow.xaml.buttons.MHR.cs"/>
 		<Compile Remove="WikiDump.cs"/>
@@ -122,6 +124,7 @@
 		<Page Remove="Data\RE4\**"/>
 		<None Remove="Data\RE4\**"/>
 		<Compile Remove="Data\DataInit.RE4.cs"/>
+		<Compile Remove="Models\RE4\**"/>
 		<Compile Remove="Mods\RE4\**"/>
 	</ItemGroup>
 	<!-- RE4 (Launch Settings) -->

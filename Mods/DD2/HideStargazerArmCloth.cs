@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
@@ -19,24 +21,35 @@ public class HideStargazerArmCloth : IMod {
     public static void Make() {
         const string name        = "Hide Stargazer's Garb Arm Cloth";
         const string description = "Hides the arm cloth on the Stargazer's Garb.";
-        const string version     = "1.0";
-        const string luaFile     = "HideStargazersGarbArmCloth.lua";
-        const string luaPath     = $@"{PathHelper.MODS_PATH}\{name}\{luaFile}";
+        const string version     = "1.1";
 
-        Dd2HidePartsBase.WriteHideParts(name, version, luaPath, writer => {
-            writer.WriteLine($"    if entry._TopsStyle == {(uint) (dynamic) StyleConstants.STARGAZERS_GARB} then");
+        var action = new Action<StreamWriter>(writer => {
+            writer.WriteLine($"    if entry._{nameof(App_TopsSwapItem.TopsStyle)} == {(uint) (dynamic) StyleConstants.STARGAZERS_GARB} then");
             writer.WriteLine($"        entry._{nameof(App_TopsSwapItem.AmPartsEnable)} = {(long) App_TopsAmPartFlags.NONE}");
             writer.WriteLine("    end");
         });
 
-        var mod = new NexusMod {
-            Version         = version,
+        var mod = new SwapDbTweak {
             Name            = name,
+            Version         = version,
             Desc            = description,
             Image           = $@"{PathHelper.MODS_PATH}\{name}\Title.png",
             Files           = [],
-            AdditionalFiles = new() {{luaPath, $@"reframework\autorun\{luaFile}"}},
+            AdditionalFiles = [],
+            LuaName         = "HideStargazersGarbArmCloth.lua",
             SkipPak         = true,
+            Changes = [
+                new() {
+                    Database = "TopsDB",
+                    Gender   = App_Gender.Female,
+                    Action   = action
+                },
+                new() {
+                    Database = "TopsDB",
+                    Gender   = App_Gender.Male,
+                    Action   = action
+                }
+            ]
         };
 
         ModMaker.WriteMods([mod], name, copyLooseToFluffy: true, noPakZip: true);

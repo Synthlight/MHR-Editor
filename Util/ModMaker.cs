@@ -19,6 +19,7 @@ public static class ModMaker {
     /// <param name="modFolderName">Name without any path or `\` characters. Illegal characters will be replaced.</param>
     /// <param name="copyLooseToFluffy">If true, will copy the *loose* zip to FMM.</param>
     /// <param name="copyPakToFluffy">If true, will copy the *pak* zip to FMM.</param>
+    /// <param name="noPakZip">Will skip the second zip containing pak files if true.</param>
     public static void WriteMods<T>(IEnumerable<T> mods, string modFolderName, bool copyLooseToFluffy = false, bool copyPakToFluffy = false, bool noPakZip = false) where T : INexusMod {
         var bundles = new Dictionary<string, List<T>>();
         foreach (var mod in mods) {

@@ -18,7 +18,7 @@ public class HidePetticoatSkirts : IMod {
     [UsedImplicitly]
     public static void Make() {
         const string nameAsBundle        = "Hide Petticoat Parts";
-        const string version             = "1.2";
+        const string version             = "1.3";
         const string elegantPetticoat    = "Elegant Petticoat";
         const string gauntletedPetticoat = "Gauntleted Petticoat";
 
@@ -50,9 +50,9 @@ public class HidePetticoatSkirts : IMod {
                     }
                 ]),
             baseMod
-                .SetName($"Hide {gauntletedPetticoat} [Elbow Plates]")
+                .SetName($"Hide {gauntletedPetticoat} [Elbow Plate, Left]")
                 .SetDesc($"Hides the elbow plates on the {gauntletedPetticoat}.")
-                .SetLuaName($"Hide{gauntletedPetticoat.Replace(" ", "")}ElbowPlates.lua")
+                .SetLuaName($"Hide{gauntletedPetticoat.Replace(" ", "")}ElbowPlateLeft.lua")
                 .SetAdditionalFiles([])
                 .SetChanges([
                     new() {
@@ -60,7 +60,23 @@ public class HidePetticoatSkirts : IMod {
                         Gender   = App_Gender.Female,
                         Action = writer => {
                             writer.WriteLine($"    if entry._{nameof(App_TopsSwapItem.TopsStyle)} == {(uint) (dynamic) StyleConstants.GAUNTLETED_PETTICOAT} then");
-                            writer.WriteLine($"        entry._{nameof(App_TopsSwapItem.AmPartsEnable)} = {(ulong) App_TopsAmPartFlags.NONE}");
+                            writer.WriteLine($"        entry._{nameof(App_TopsSwapItem.AmPartsEnable)} = entry._{nameof(App_TopsSwapItem.AmPartsEnable)} ~ {(long) App_TopsAmPartFlags.LeftElbow}");
+                            writer.WriteLine("    end");
+                        }
+                    }
+                ]),
+            baseMod
+                .SetName($"Hide {gauntletedPetticoat} [Elbow Plate, Right]")
+                .SetDesc($"Hides the elbow plates on the {gauntletedPetticoat}.")
+                .SetLuaName($"Hide{gauntletedPetticoat.Replace(" ", "")}ElbowPlateRight.lua")
+                .SetAdditionalFiles([])
+                .SetChanges([
+                    new() {
+                        Database = "TopsDB",
+                        Gender   = App_Gender.Female,
+                        Action = writer => {
+                            writer.WriteLine($"    if entry._{nameof(App_TopsSwapItem.TopsStyle)} == {(uint) (dynamic) StyleConstants.GAUNTLETED_PETTICOAT} then");
+                            writer.WriteLine($"        entry._{nameof(App_TopsSwapItem.AmPartsEnable)} = entry._{nameof(App_TopsSwapItem.AmPartsEnable)} ~ {(long) App_TopsAmPartFlags.RightElbow}");
                             writer.WriteLine("    end");
                         }
                     }

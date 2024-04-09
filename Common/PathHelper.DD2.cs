@@ -15,9 +15,9 @@ public static partial class PathHelper {
     public const string FLUFFY_MODS_PATH = @"R:\Games\Dragons Dogma 2\Fluffy Mod Manager\Games\DragonsDogma2\Mods";
     public const string PYTHON38_PATH    = @"C:\Program Files\Python38\python.exe";
 
-    public const string NEXUS_URL              = "";
+    public const string NEXUS_URL              = "https://www.nexusmods.com/dragonsdogma2/mods/522";
     public const string JSON_VERSION_CHECK_URL = $"http://brutsches.com/{CONFIG_NAME}-Editor.version.json";
-    public const string WIKI_URL               = "";
+    public const string WIKI_URL               = "https://www.nexusmods.com/dragonsdogma2/mods/522";
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly string[] TEST_PATHS = [

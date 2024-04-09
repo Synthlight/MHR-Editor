@@ -23,7 +23,7 @@ public static class Program {
                     select name;
 
         using var assetFile  = File.CreateText($@"{ASSETS_DIR}\{PathHelper.SUPPORTED_FILES_NAME}");
-        using var outputFile = File.CreateText(TEST_RESULTS_PATH.Replace(".trx", ".txt"));
+        using var outputFile = File.CreateText(TEST_RESULTS_PATH.Replace("Results.trx", "Supported Files.txt"));
 
         foreach (var path in paths) {
             assetFile.WriteLine(path);

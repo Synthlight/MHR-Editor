@@ -1,10 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net6.0-windows</TargetFramework>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<RootNamespace>RE_Editor.Tests</RootNamespace>
-		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<IsPackable>false</IsPackable>
@@ -22,6 +18,27 @@
 		<ProjectReference Include="..\Common\Common.csproj"/>
 		<ProjectReference Include="..\Generated\Generated.csproj"/>
 		<ProjectReference Include="..\Generator\Generator.csproj"/>
-		<ProjectReference Include="..\RE-Editor.csproj"/>
+		<ProjectReference Include="..\RE-Editor\RE-Editor.csproj"/>
+	</ItemGroup>
+	<!-- DD2 -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('DD2'))">
+		<RunSettingsFilePath>$(MSBuildProjectDirectory)\DD2.runsettings</RunSettingsFilePath>
+	</PropertyGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`DD2`))'">
+		<None Remove="DD2.runsettings"/>
+	</ItemGroup>
+	<!-- MHR -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('MHR'))">
+		<RunSettingsFilePath>$(MSBuildProjectDirectory)\MHR.runsettings</RunSettingsFilePath>
+	</PropertyGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHR`))'">
+		<None Remove="MHR.runsettings"/>
+	</ItemGroup>
+	<!-- RE4 -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('RE4'))">
+		<RunSettingsFilePath>$(MSBuildProjectDirectory)\RE4.runsettings</RunSettingsFilePath>
+	</PropertyGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE4`))'">
+		<None Remove="RE4.runsettings"/>
 	</ItemGroup>
 </Project>

@@ -1,17 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<RootNamespace>RE_Editor</RootNamespace>
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
-		<LangVersion>latest</LangVersion>
 		<ApplicationManifest>App.manifest</ApplicationManifest>
 		<AssemblyName>RE-Editor</AssemblyName>
 		<AssemblyVersion>1.0.0.0</AssemblyVersion>
-		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release;RE4 - Debug;RE4 - Release</Configurations>
 		<NoWarn>$(NoWarn);WFAC010</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
@@ -24,10 +19,9 @@
 		<PackageReference Include="SharpZipLib" Version="1.4.2"/>
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="Common\Common.csproj"/>
-		<ProjectReference Include="Generated\Generated.csproj"/>
+		<ProjectReference Include="..\Common\Common.csproj"/>
+		<ProjectReference Include="..\Generated\Generated.csproj"/>
 	</ItemGroup>
-	<Import Project="$(SolutionDir)SolutionDefines.targets"/>
 	<!-- DD2 -->
 	<PropertyGroup Condition="$(Configuration.StartsWith('DD2'))">
 		<AssemblyName>DD2-Editor</AssemblyName>
@@ -145,41 +139,5 @@
 		<Compile Update="Windows\MainWindow.xaml.buttons.cs">
 			<DependentUpon>MainWindow.xaml</DependentUpon>
 		</Compile>
-		<Compile Remove="Common\**"/>
-		<Compile Remove="Data-Helper-Extractor\**"/>
-		<Compile Remove="Dump-Parser\**"/>
-		<Compile Remove="Generated\**"/>
-		<Compile Remove="Generator\**"/>
-		<Compile Remove="ID-Parser\**"/>
-		<Compile Remove="Test-Result-Parser\**"/>
-		<Compile Remove="TestResults\**"/>
-		<Compile Remove="Tests\**"/>
-		<EmbeddedResource Remove="Common\**"/>
-		<EmbeddedResource Remove="Data-Helper-Extractor\**"/>
-		<EmbeddedResource Remove="Dump-Parser\**"/>
-		<EmbeddedResource Remove="Generated\**"/>
-		<EmbeddedResource Remove="Generator\**"/>
-		<EmbeddedResource Remove="ID-Parser\**"/>
-		<EmbeddedResource Remove="Test-Result-Parser\**"/>
-		<EmbeddedResource Remove="TestResults\**"/>
-		<EmbeddedResource Remove="Tests\**"/>
-		<None Remove="Common\**"/>
-		<None Remove="Data-Helper-Extractor\**"/>
-		<None Remove="Dump-Parser\**"/>
-		<None Remove="Generated\**"/>
-		<None Remove="Generator\**"/>
-		<None Remove="ID-Parser\**"/>
-		<None Remove="Test-Result-Parser\**"/>
-		<None Remove="TestResults\**"/>
-		<None Remove="Tests\**"/>
-		<Page Remove="Common\**"/>
-		<Page Remove="Data-Helper-Extractor\**"/>
-		<Page Remove="Dump-Parser\**"/>
-		<Page Remove="Generated\**"/>
-		<Page Remove="Generator\**"/>
-		<Page Remove="ID-Parser\**"/>
-		<Page Remove="Test-Result-Parser\**"/>
-		<Page Remove="TestResults\**"/>
-		<Page Remove="Tests\**"/>
 	</ItemGroup>
 </Project>

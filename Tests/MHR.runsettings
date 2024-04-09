@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<RunSettings>
+	<RunConfiguration>
+		<Parallelize>
+			<Workers>50</Workers>
+			<Scope>MethodLevel</Scope>
+		</Parallelize>
+		<ResultsDirectory>..\TestResults\MHR\</ResultsDirectory>
+	</RunConfiguration>
+	<LoggerRunSettings>
+		<Loggers>
+			<Logger friendlyName="html" enabled="True">
+				<Configuration>
+					<LogFileName>Result.html</LogFileName>
+				</Configuration>
+			</Logger>
+		</Loggers>
+	</LoggerRunSettings>
+</RunSettings>

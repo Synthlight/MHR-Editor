@@ -1,15 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<RootNamespace>RE_Editor.Generator</RootNamespace>
 		<UseWindowsForms>true</UseWindowsForms>
-		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release;RE4 - Debug;RE4 - Release</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="JetBrains.Annotations" Version="2022.3.1"/>
@@ -18,7 +13,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Common\Common.csproj"/>
 	</ItemGroup>
-	<Import Project="$(SolutionDir)SolutionDefines.targets"/>
 	<!-- DD2 -->
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`DD2`))'">
 		<Compile Remove="GenerateFiles.DD2.cs"/>

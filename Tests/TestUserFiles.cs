@@ -6,16 +6,12 @@ using RE_Editor.Common.Models;
 namespace RE_Editor.Tests;
 
 [TestClass]
-public class TestFiles {
-    private static IEnumerable<object[]> GetUserFilesToTest() {
+public class TestUserFiles {
+    private static IEnumerable<object[]> GetFilesToTest() {
         return PathHelper.GetCachedFileList(FileListCacheType.USER).Select(s => new object[] {s});
     }
 
-    private static IEnumerable<object[]> GetTextFilesToTest() {
-        return PathHelper.GetCachedFileList(FileListCacheType.MSG).Select(s => new object[] {s});
-    }
-
-    [DynamicData(nameof(GetUserFilesToTest), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetFilesToTest), DynamicDataSourceType.Method)]
     [DataTestMethod]
     public void TestReadUserFile(string file) {
         try {
@@ -26,7 +22,7 @@ public class TestFiles {
         }
     }
 
-    [DynamicData(nameof(GetUserFilesToTest), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(GetFilesToTest), DynamicDataSourceType.Method)]
     [DataTestMethod]
     public void TestWriteUserFile(string file) {
         try {
@@ -57,16 +53,6 @@ public class TestFiles {
                 }
                 throw;
             }
-        } catch (FileNotSupported) {
-            Assert.Inconclusive();
-        }
-    }
-
-    [DynamicData(nameof(GetTextFilesToTest), DynamicDataSourceType.Method)]
-    [DataTestMethod]
-    public void TestReadTextFile(string file) {
-        try {
-            MSG.Read(file);
         } catch (FileNotSupported) {
             Assert.Inconclusive();
         }

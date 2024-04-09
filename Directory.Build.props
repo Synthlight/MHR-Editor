@@ -1,0 +1,11 @@
+<Project>
+	<PropertyGroup>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<LangVersion>latest</LangVersion>
+		<Configurations>MHR-Debug;MHR-Release;DD2-Debug;DD2-Release;RE4-Debug;RE4-Release</Configurations>
+		<BaseOutputPath>$(SolutionDir)\bin\$(MSBuildProjectName)\</BaseOutputPath>
+		<BaseIntermediateOutputPath>$(SolutionDir)\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+	</PropertyGroup>
+</Project>

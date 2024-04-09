@@ -17,7 +17,7 @@ public partial class GenerateFiles {
     public const  string STRUCT_JSON_PATH = $@"{BASE_PROJ_PATH}\Dump-Parser\Output\{PathHelper.CONFIG_NAME}\rsz{PathHelper.CONFIG_NAME}.json";
     public const  string ENUM_GEN_PATH    = $@"{BASE_GEN_PATH}\Enums\{PathHelper.CONFIG_NAME}";
     public const  string STRUCT_GEN_PATH  = $@"{BASE_GEN_PATH}\Structs\{PathHelper.CONFIG_NAME}";
-    private const string ASSETS_DIR       = $@"{BASE_PROJ_PATH}\Data\{PathHelper.CONFIG_NAME}\Assets";
+    private const string ASSETS_DIR       = $@"{BASE_PROJ_PATH}\RE-Editor\Data\{PathHelper.CONFIG_NAME}\Assets";
     public const  string ENUM_REGEX       = $@"namespace ((?:{ROOT_STRUCT_NAMESPACE}::[^ ]+|{ROOT_STRUCT_NAMESPACE}|via::[^ ]+|via)) {{\s+(?:\/\/ (\[Flags\])\s+)?enum ([^ ]+) ({{[^}}]+}})"; //language=regexp
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]

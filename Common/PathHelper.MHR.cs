@@ -6,7 +6,7 @@ public static partial class PathHelper {
     public const string CONFIG_NAME      = "MHR";
     public const string CHUNK_PATH       = @"V:\MHR\re_chunk_000";
     public const string GAME_PATH        = @"C:\SteamLibrary\common\MonsterHunterRise";
-    public const string EXE_PATH         = $@"{GAME_PATH}\MonsterHunterRise.exe";
+    public const string EXE_PATH         = $@"{GAME_PATH}\MonsterHunterRise_dump.exe";
     public const string IL2CPP_DUMP_PATH = $@"{GAME_PATH}\il2cpp_dump.json";
     public const string ENUM_HEADER_PATH = $@"{GAME_PATH}\Enums_Internal.hpp";
     public const string REFRAMEWORK_PATH = @"R:\Games\Monster Hunter Rise\REFramework";

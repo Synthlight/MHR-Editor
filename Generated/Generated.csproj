@@ -1,13 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net6.0-windows</TargetFramework>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<RootNamespace>RE_Editor.Generated</RootNamespace>
-		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
-		<Configurations>MHR - Debug;MHR - Release;DD2 - Debug;DD2 - Release;RE4 - Debug;RE4 - Release</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All"/>
@@ -15,7 +10,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Common\Common.csproj"/>
 	</ItemGroup>
-	<Import Project="$(SolutionDir)SolutionDefines.targets"/>
 	<!-- DD2 -->
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`DD2`))'">
 		<Compile Remove="Enums\DD2\**"/>

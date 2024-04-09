@@ -1,11 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<RootNamespace>RE_Editor.Dump_Parser</RootNamespace>
-		<LangVersion>latest</LangVersion>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
@@ -16,7 +12,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Common\Common.csproj"/>
 	</ItemGroup>
-	<Import Project="$(SolutionDir)SolutionDefines.targets"/>
 	<ItemGroup>
 		<Compile Remove="Output\**"/>
 		<EmbeddedResource Remove="Output\**"/>

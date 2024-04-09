@@ -6,7 +6,7 @@ public static partial class PathHelper {
     public const string CONFIG_NAME      = "RE4";
     public const string CHUNK_PATH       = @"V:\RE4\re_chunk_000";
     public const string GAME_PATH        = @"O:\SteamLibrary\steamapps\common\RESIDENT EVIL 4  BIOHAZARD RE4";
-    public const string EXE_PATH         = $@"{GAME_PATH}\re4.exe";
+    public const string EXE_PATH         = $@"{GAME_PATH}\re4_dump.exe";
     public const string IL2CPP_DUMP_PATH = $@"{GAME_PATH}\il2cpp_dump.json";
     public const string ENUM_HEADER_PATH = $@"{GAME_PATH}\Enums_Internal.hpp";
     public const string REFRAMEWORK_PATH = @"R:\Games\Monster Hunter Rise\REFramework";

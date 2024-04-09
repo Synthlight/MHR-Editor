@@ -8,8 +8,8 @@ namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
     public const  string BASE_PROJ_PATH = @"..\..\..";
-    private const string CONSTANTS_DIR  = $@"{BASE_PROJ_PATH}\Constants\{PathHelper.CONFIG_NAME}";
-    private const string ASSETS_DIR     = $@"{BASE_PROJ_PATH}\Data\{PathHelper.CONFIG_NAME}\Assets";
+    private const string CONSTANTS_DIR  = $@"{BASE_PROJ_PATH}\RE-Editor\Constants\{PathHelper.CONFIG_NAME}";
+    private const string ASSETS_DIR     = $@"{BASE_PROJ_PATH}\RE-Editor\Data\{PathHelper.CONFIG_NAME}\Assets";
 
     public static uint ParseEnum(Type enumType, string value) {
         return (uint) Convert.ChangeType(Enum.Parse(enumType, value), typeof(uint));

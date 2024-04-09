@@ -15,7 +15,9 @@ using RE_Editor.Windows;
 namespace RE_Editor.Util;
 
 public static class UpdateCheck {
+#pragma warning disable CA2211 // Non-constant fields should not be visible
     [CanBeNull] public static NotifyIcon notifyIcon;
+#pragma warning restore CA2211 // Non-constant fields should not be visible
 
     public static async void Run(MainWindow mainWindow) {
         await Task.Run(() => {
@@ -26,15 +28,15 @@ public static class UpdateCheck {
 
                 if (currentVersion != newestVersion) {
                     mainWindow.Dispatcher?.InvokeAsync(() => {
-                        notifyIcon = new NotifyIcon {
+                        notifyIcon = new() {
                             Icon    = SystemIcons.Application,
                             Visible = false,
-                            Text = "MHR Editor\r\n" +
+                            Text = $"{PathHelper.CONFIG_NAME} Editor\r\n" +
                                    "Update Available.\r\n" +
                                    "Click to go to the mod page."
                         };
                         //notifyIcon.BalloonTipClosed += (s, e) => notifyIcon.Visible = false;
-                        notifyIcon.MouseClick += (sender, args) => { Process.Start(PathHelper.NEXUS_URL); };
+                        notifyIcon.MouseClick += (_, _) => { Process.Start(PathHelper.NEXUS_URL); };
 
                         notifyIcon.Visible = true;
                         notifyIcon.ShowBalloonTip(10000, "Update Available", "A newer version has been detected.\r\n" +
@@ -50,14 +52,12 @@ public static class UpdateCheck {
 
     private static string GetHttpText(string url) {
 #pragma warning disable SYSLIB0014 // Type or member is obsolete
-#pragma warning disable CS0618
         var request = (HttpWebRequest) WebRequest.Create(url);
-#pragma warning restore CS0618
 #pragma warning restore SYSLIB0014 // Type or member is obsolete
         request.Method = "GET";
 
         using var response = (HttpWebResponse) request.GetResponse();
-        using var reader   = new StreamReader(response.GetResponseStream() ?? throw new InvalidOperationException());
+        using var reader   = new StreamReader(response.GetResponseStream());
         return reader.ReadToEnd();
     }
 }

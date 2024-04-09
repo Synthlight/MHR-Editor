@@ -16,7 +16,7 @@ public static partial class PathHelper {
     public const string PYTHON38_PATH    = @"C:\Program Files\Python38\python.exe";
 
     public const string NEXUS_URL              = "";
-    public const string JSON_VERSION_CHECK_URL = "";
+    public const string JSON_VERSION_CHECK_URL = $"http://brutsches.com/{CONFIG_NAME}-Editor.version.json";
     public const string WIKI_URL               = "";
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]

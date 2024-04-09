@@ -33,7 +33,7 @@ public class HidePetticoatSkirts : IMod {
 
         var mods = new[] {
             baseMod
-                .SetName($"Hide {elegantPetticoat} [Armbands]")
+                .SetName($"Hide {elegantPetticoat} (Armbands)")
                 .SetDesc($"Hides the armbands on the {elegantPetticoat}.")
                 .SetLuaName($"Hide{elegantPetticoat.Replace(" ", "")}Armbands.lua")
                 .SetAdditionalFiles([])
@@ -50,7 +50,7 @@ public class HidePetticoatSkirts : IMod {
                     }
                 ]),
             baseMod
-                .SetName($"Hide {gauntletedPetticoat} [Elbow Plate, Left]")
+                .SetName($"Hide {gauntletedPetticoat} (Elbow Plate, Left)")
                 .SetDesc($"Hides the elbow plates on the {gauntletedPetticoat}.")
                 .SetLuaName($"Hide{gauntletedPetticoat.Replace(" ", "")}ElbowPlateLeft.lua")
                 .SetAdditionalFiles([])
@@ -66,7 +66,7 @@ public class HidePetticoatSkirts : IMod {
                     }
                 ]),
             baseMod
-                .SetName($"Hide {gauntletedPetticoat} [Elbow Plate, Right]")
+                .SetName($"Hide {gauntletedPetticoat} (Elbow Plate, Right)")
                 .SetDesc($"Hides the elbow plates on the {gauntletedPetticoat}.")
                 .SetLuaName($"Hide{gauntletedPetticoat.Replace(" ", "")}ElbowPlateRight.lua")
                 .SetAdditionalFiles([])
@@ -82,7 +82,7 @@ public class HidePetticoatSkirts : IMod {
                     }
                 ]),
             baseMod
-                .SetName($"Hide {elegantPetticoat} [Gauntlets] (Requires Invis Fixer)")
+                .SetName($"Hide {elegantPetticoat} (Gauntlets) (Requires Invis Fixer)")
                 .SetDesc($"Hides the gauntlets on the {elegantPetticoat}.")
                 .SetLuaName($"Hide{elegantPetticoat.Replace(" ", "")}Gauntlets.lua")
                 .SetAdditionalFiles([])
@@ -98,7 +98,7 @@ public class HidePetticoatSkirts : IMod {
                     }
                 ]),
             baseMod
-                .SetName($"Hide {gauntletedPetticoat} [Gauntlets, All] (Requires Invis Fixer)")
+                .SetName($"Hide {gauntletedPetticoat} (Gauntlets, All) (Requires Invis Fixer)")
                 .SetDesc($"Hides the gauntlets on the {gauntletedPetticoat}.")
                 .SetLuaName($"Hide{gauntletedPetticoat.Replace(" ", "")}AllGauntlets.lua")
                 .SetAdditionalFiles([])
@@ -114,7 +114,7 @@ public class HidePetticoatSkirts : IMod {
                     }
                 ]),
             baseMod
-                .SetName($"Hide {gauntletedPetticoat} [Gauntlet, Left] (Requires Invis Fixer)")
+                .SetName($"Hide {gauntletedPetticoat} (Gauntlet, Left) (Requires Invis Fixer)")
                 .SetDesc($"Hides the gauntlets on the {gauntletedPetticoat}.")
                 .SetLuaName($"Hide{gauntletedPetticoat.Replace(" ", "")}LeftGauntlets.lua")
                 .SetAdditionalFiles([])
@@ -134,7 +134,7 @@ public class HidePetticoatSkirts : IMod {
                     }
                 ]),
             baseMod
-                .SetName($"Hide {gauntletedPetticoat} [Gauntlet, Right]")
+                .SetName($"Hide {gauntletedPetticoat} (Gauntlet, Right)")
                 .SetDesc($"Hides the gauntlets on the {gauntletedPetticoat}.")
                 .SetLuaName($"Hide{gauntletedPetticoat.Replace(" ", "")}RightGauntlets.lua")
                 .SetAdditionalFiles([])
@@ -154,7 +154,7 @@ public class HidePetticoatSkirts : IMod {
                     }
                 ]),
             baseMod
-                .SetName($"Hide {elegantPetticoat} [Shoulder Plates]")
+                .SetName($"Hide {elegantPetticoat} (Shoulder Plates)")
                 .SetDesc($"Hides the shoulder plates on the {elegantPetticoat}.")
                 .SetLuaName($"Hide{elegantPetticoat.Replace(" ", "")}ShoulderPlates.lua")
                 .SetAdditionalFiles([])
@@ -170,7 +170,7 @@ public class HidePetticoatSkirts : IMod {
                     }
                 ]),
             baseMod
-                .SetName($"Hide {elegantPetticoat} [Skirt]")
+                .SetName($"Hide {elegantPetticoat} (Skirt)")
                 .SetDesc($"Hides the skirt on the {elegantPetticoat}.")
                 .SetLuaName($"Hide{elegantPetticoat.Replace(" ", "")}Skirt.lua")
                 .SetAdditionalFiles([])
@@ -186,7 +186,7 @@ public class HidePetticoatSkirts : IMod {
                     }
                 ]),
             baseMod
-                .SetName($"Hide {gauntletedPetticoat} [Skirt]")
+                .SetName($"Hide {gauntletedPetticoat} (Skirt)")
                 .SetDesc($"Hides the skirt on the {gauntletedPetticoat}.")
                 .SetLuaName($"Hide{gauntletedPetticoat.Replace(" ", "")}Skirt.lua")
                 .SetAdditionalFiles([])
@@ -202,7 +202,7 @@ public class HidePetticoatSkirts : IMod {
                     }
                 ]),
             baseMod
-                .SetName($"Hide {elegantPetticoat} [Waist]")
+                .SetName($"Hide {elegantPetticoat} (Waist)")
                 .SetDesc($"Hides the waist on the {elegantPetticoat}.")
                 .SetLuaName($"Hide{elegantPetticoat.Replace(" ", "")}Waist.lua")
                 .SetAdditionalFiles([])
@@ -219,7 +219,7 @@ public class HidePetticoatSkirts : IMod {
                     }
                 ]),
             baseMod
-                .SetName($"Hide {gauntletedPetticoat} [Waist]")
+                .SetName($"Hide {gauntletedPetticoat} (Waist)")
                 .SetDesc($"Hides the waist on the {gauntletedPetticoat}.")
                 .SetLuaName($"Hide{gauntletedPetticoat.Replace(" ", "")}Waist.lua")
                 .SetAdditionalFiles([])

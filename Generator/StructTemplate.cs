@@ -271,11 +271,26 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
             var isObjectType   = field.type == "Object";
             var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType, isUserData);
 
-            if (viaType?.Is(typeof(ISimpleViaType)) == true
-                || isUserData
-                || (isNonPrimitive && viaType != null)
-                || isObjectType) {
-                file.WriteLine($"        obj.{newName} = new();");
+            if (!field.array && isObjectType && viaType == null && typeName != null) {
+                // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+                if (typeName.StartsWith("Via")) { // For things like `Via_AnimationCurve` which generate from the json but aren't our manually implemented `via` types.
+                    file.WriteLine($"        obj.{newName} = [new()];");
+                } else {
+                    file.WriteLine($"        obj.{newName} = [{typeName}.Create(rsz)];");
+                }
+            } else if (viaType?.Is(typeof(ISimpleViaType)) == true
+                       || isUserData
+                       || (isNonPrimitive && viaType != null)
+                       || isObjectType) {
+                if (!field.array && viaType != null
+                                 && !viaType.Is(typeof(ISimpleViaType))
+                                 && viaType != nameof(Type)
+                                 && viaType != nameof(Prefab)
+                                 && viaType != nameof(UIntArray)) {
+                    file.WriteLine($"        obj.{newName} = [new()];");
+                } else {
+                    file.WriteLine($"        obj.{newName} = new();");
+                }
             } else if (isEnumType && !field.array && buttonType == null) {
                 file.WriteLine($"        obj.{newName} = Enum.GetValues<{typeName}>()[0];");
             }

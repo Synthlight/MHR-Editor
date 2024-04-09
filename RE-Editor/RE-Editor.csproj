@@ -139,5 +139,9 @@
 		<Compile Update="Windows\MainWindow.xaml.buttons.cs">
 			<DependentUpon>MainWindow.xaml</DependentUpon>
 		</Compile>
+		<None Update="Data\DD2\Assets\SUPPORTED_FILES.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>SUPPORTED_FILES.txt</TargetPath>
+		</None>
 	</ItemGroup>
 </Project>

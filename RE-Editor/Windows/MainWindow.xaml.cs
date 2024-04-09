@@ -13,6 +13,7 @@ using System.Windows.Input;
 using JetBrains.Annotations;
 using Microsoft.Win32;
 using RE_Editor.Common;
+using RE_Editor.Common.Data;
 using RE_Editor.Common.Models;
 using RE_Editor.Controls;
 using RE_Editor.Models;
@@ -134,6 +135,16 @@ public partial class MainWindow {
         try {
             var target = filePath ?? GetOpenTarget();
             if (string.IsNullOrEmpty(target)) return;
+
+            var supportedSearchTarget = target.ToLower().Replace('/', '\\');
+            var nativesIndex          = supportedSearchTarget.IndexOf(@"natives\stm", StringComparison.Ordinal);
+            if (nativesIndex > 0
+                && DataHelper.SUPPORTED_FILES.Length > 0
+                && !DataHelper.SUPPORTED_FILES.Contains(supportedSearchTarget[nativesIndex..])) {
+                var result = MessageBox.Show("This file has not passed write tests. It may or may not even open.\n" +
+                                             "This also means you WILL BE UNABLE TO SAVE ANY CHANGES MADE TO IT.\n\nTry opening the file anyway?", "File not supported.", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result is MessageBoxResult.No or MessageBoxResult.Cancel) return;
+            }
 
             targetFile = target;
             Title      = Path.GetFileName(targetFile);

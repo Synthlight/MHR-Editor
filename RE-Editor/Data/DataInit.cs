@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
@@ -25,6 +26,10 @@ public static partial class DataInit {
 
         DataHelper.STRUCT_INFO          = LoadDict<uint, StructJson>(Assets.STRUCT_INFO);
         DataHelper.GP_CRC_OVERRIDE_INFO = LoadDict<uint, uint>(Assets.GP_CRC_OVERRIDE_INFO);
+
+        if (File.Exists(PathHelper.SUPPORTED_FILES_NAME)) {
+            DataHelper.SUPPORTED_FILES = File.ReadAllLines(PathHelper.SUPPORTED_FILES_NAME);
+        }
 
         LoadDicts();
 

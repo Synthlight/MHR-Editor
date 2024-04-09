@@ -9,9 +9,10 @@ namespace RE_Editor.Common.Data;
 
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public static partial class DataHelper {
-    public static readonly Dictionary<uint, Type>       RE_STRUCTS = new();
+    public static readonly Dictionary<uint, Type>       RE_STRUCTS = [];
     public static          Dictionary<uint, StructJson> STRUCT_INFO;
     public static          Dictionary<uint, uint>       GP_CRC_OVERRIDE_INFO;
+    public static          string[]                     SUPPORTED_FILES = [];
 
     public static void InitStructTypeInfo() {
         var mhrStructs = AppDomain.CurrentDomain.GetAssemblies()

@@ -36,7 +36,12 @@ public static class UpdateCheck {
                                    "Click to go to the mod page."
                         };
                         //notifyIcon.BalloonTipClosed += (s, e) => notifyIcon.Visible = false;
-                        notifyIcon.MouseClick += (_, _) => { Process.Start(PathHelper.NEXUS_URL); };
+                        notifyIcon.MouseClick += (_, _) => {
+                            Process.Start(new ProcessStartInfo {
+                                FileName        = PathHelper.NEXUS_URL,
+                                UseShellExecute = true
+                            });
+                        };
 
                         notifyIcon.Visible = true;
                         notifyIcon.ShowBalloonTip(10000, "Update Available", "A newer version has been detected.\r\n" +

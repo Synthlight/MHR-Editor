@@ -12,6 +12,7 @@ using System.Windows.Media;
 using RE_Editor.Common;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Controls.Models;
+using RE_Editor.Common.Models;
 using RE_Editor.Windows;
 
 #if RE4
@@ -39,7 +40,7 @@ public abstract partial class StructGrid : IStructGrid {
     public abstract void Refresh();
 }
 
-public class StructGridGeneric<T> : StructGrid, IStructGrid<T> {
+public class StructGridGeneric<T>(RSZ rsz) : StructGrid, IStructGrid<T> {
     private T item;
     public T Item {
         get => item;
@@ -205,8 +206,8 @@ public class StructGridGeneric<T> : StructGrid, IStructGrid<T> {
         var listType = list?.GetType().GenericTypeArguments[0];
         var viewType = typeof(SubStructViewDynamic<>).MakeGenericType(listType ?? throw new InvalidOperationException());
         var subStructView = isList switch {
-            true => (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, list, propertyInfo),
-            false => (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, ((dynamic) list)[0])
+            true => (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, list, propertyInfo, rsz),
+            false => (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, ((dynamic) list)[0], rsz)
         };
         subStructView?.ShowDialog();
     }

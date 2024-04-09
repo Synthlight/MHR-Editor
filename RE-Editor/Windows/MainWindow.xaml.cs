@@ -183,12 +183,12 @@ public partial class MainWindow {
             if (structInfo.fields is {Count: 1} && structInfo.fields[0].array && structInfo.fields[0].type == "Object") {
                 var type     = rszObjectData[^2].GetType();
                 var items    = rszObjectData.GetGenericItemsOfType(type);
-                var dataGrid = MakeDataGrid((dynamic) items);
+                var dataGrid = MakeDataGrid((dynamic) items, file.rsz);
                 Debug.WriteLine($"Loading type: {type.Name}");
                 AddMainDataGrid(dataGrid);
             } else {
                 var type       = entryPointRszObject.GetType();
-                var structGrid = MakeStructGrid((dynamic) Convert.ChangeType(entryPointRszObject, type));
+                var structGrid = MakeStructGrid((dynamic) Convert.ChangeType(entryPointRszObject, type), file.rsz);
                 Debug.WriteLine($"Loading type: {type.Name}");
                 AddStructGrid(structGrid);
             }
@@ -271,16 +271,16 @@ public partial class MainWindow {
         }
     }
 
-    public static AutoDataGridGeneric<T> MakeDataGrid<T>(IEnumerable<T> itemSource) {
-        var dataGrid        = new AutoDataGridGeneric<T>();
+    public static AutoDataGridGeneric<T> MakeDataGrid<T>(IEnumerable<T> itemSource, RSZ rsz) {
+        var dataGrid        = new AutoDataGridGeneric<T>(rsz);
         var observableItems = itemSource as ObservableCollection<T> ?? new(itemSource);
         dataGrid.SetItems(observableItems);
-        RowHelper.AddKeybinds(dataGrid, observableItems, dataGrid);
+        RowHelper.AddKeybinds(dataGrid, observableItems, dataGrid, rsz);
         return dataGrid;
     }
 
-    public static StructGridGeneric<T> MakeStructGrid<T>(T item) where T : RszObject {
-        var dataGrid = new StructGridGeneric<T>();
+    public static StructGridGeneric<T> MakeStructGrid<T>(T item, RSZ rsz) where T : RszObject {
+        var dataGrid = new StructGridGeneric<T>(rsz);
         dataGrid.SetItem(item);
         return dataGrid;
     }

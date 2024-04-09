@@ -56,7 +56,7 @@ public abstract partial class AutoDataGrid : IAutoDataGrid {
     protected abstract void On_Cell_MouseClick(object      sender, MouseButtonEventArgs                  e);
 }
 
-public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
+public class AutoDataGridGeneric<T>(RSZ rsz) : AutoDataGrid, IAutoDataGrid<T> {
     private             Dictionary<string, ColumnHolder> columnMap;
     private             GroupFilter                      groupFilter;
     [CanBeNull] private DataGridRow                      coloredRow;
@@ -336,8 +336,8 @@ public class AutoDataGridGeneric<T> : AutoDataGrid, IAutoDataGrid<T> {
             var isList           = (IsListAttribute) propertyInfo.GetCustomAttribute(typeof(IsListAttribute), true) != null;
             var viewType         = typeof(SubStructViewDynamic<>).MakeGenericType(listType ?? throw new InvalidOperationException());
             var subStructView = isList switch {
-                true => (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, list, propertyInfo),
-                false => (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, ((dynamic) list)[0])
+                true => (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, list, propertyInfo, rsz),
+                false => (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, ((dynamic) list)[0], rsz)
             };
 
             ColorCell(frameworkElement);

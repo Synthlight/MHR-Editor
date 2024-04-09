@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using JetBrains.Annotations;
+using RE_Editor.Common.Models;
 using RE_Editor.Controls;
 using RE_Editor.Util;
 
@@ -18,14 +19,14 @@ namespace RE_Editor.Windows {
         [CanBeNull] private readonly AutoDataGridGeneric<T>  dataGrid;
 
         [UsedImplicitly]
-        public SubStructViewDynamic(Window window, string name, ObservableCollection<T> items, PropertyInfo sourceProperty) {
+        public SubStructViewDynamic(Window window, string name, ObservableCollection<T> items, PropertyInfo sourceProperty, RSZ rsz) {
             this.items = items;
             Title      = name;
             Owner      = window;
             Width      = window.Width;
             Height     = window.Height * 0.8d;
 
-            dataGrid = new() {
+            dataGrid = new(rsz) {
                 HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
                 VerticalScrollBarVisibility   = ScrollBarVisibility.Auto,
             };
@@ -33,17 +34,17 @@ namespace RE_Editor.Windows {
 
             AddChild(dataGrid);
 
-            Init();
+            Init(rsz);
         }
 
         [UsedImplicitly]
-        public SubStructViewDynamic(Window window, string name, T item) {
+        public SubStructViewDynamic(Window window, string name, T item, RSZ rsz) {
             Title  = name;
             Owner  = window;
             Width  = window.Width;
             Height = window.Height * 0.8d;
 
-            var structGrid = new StructGridGeneric<T> {
+            var structGrid = new StructGridGeneric<T>(rsz) {
                 HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
                 VerticalScrollBarVisibility   = ScrollBarVisibility.Auto,
             };
@@ -51,11 +52,11 @@ namespace RE_Editor.Windows {
 
             AddChild(structGrid);
 
-            Init();
+            Init(rsz);
         }
 
-        private void Init() {
-            RowHelper.AddKeybinds(this, items, dataGrid);
+        private void Init(RSZ rsz) {
+            RowHelper.AddKeybinds(this, items, dataGrid, rsz);
         }
     }
 }

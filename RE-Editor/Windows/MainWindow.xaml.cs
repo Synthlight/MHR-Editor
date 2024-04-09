@@ -197,7 +197,10 @@ public partial class MainWindow {
             btn_sort_gems_by_skill_name.Visibility = target.Contains("DecorationsBaseData.user.2") || target.Contains("HyakuryuDecoBaseData.user.2") ? Visibility.Visible : Visibility.Collapsed;
 #endif
         } catch (FileNotSupported) {
-            MessageBox.Show("Please check the stickied comments on the nexus page and if it's not listed there, leave a comment about it.", "File not supported.", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("It's using a struct or type the editor doesn't support yet.\n" +
+                            "You can comment on the nexus page (if there is one) or on Discord about the file (and give the full path),\n" +
+                            "but it may take a while.\n" +
+                            "Use RE_RSZ as a good alternative.", "File not supported.", MessageBoxButton.OK, MessageBoxImage.Error);
         } catch (Exception e) when (!Debugger.IsAttached) {
             ShowError(e, "Load Error");
         }

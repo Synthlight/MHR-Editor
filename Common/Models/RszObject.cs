@@ -343,8 +343,8 @@ public class RszObject : OnPropertyChangedBase {
                 if (field.type == nameof(UIntArray)) {
                     var list = (ObservableCollection<UIntArray>) fieldGetMethod.Invoke(this, null)!;
                     writer.Write(list.Count);
-                    writer.BaseStream.Align(field.align);
                     foreach (var obj in list) {
+                        writer.BaseStream.Align(field.align);
                         obj.Write(writer);
                     }
                 } else if (isObjectType || isUserData) { // Array of pointers.

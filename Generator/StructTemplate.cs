@@ -76,6 +76,7 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
         file.WriteLine("using DateTime = RE_Editor.Common.Structs.DateTime;");
         file.WriteLine("using Guid = RE_Editor.Common.Structs.Guid;");
         file.WriteLine("using Range = RE_Editor.Common.Structs.Range;");
+        file.WriteLine("using Size = RE_Editor.Common.Structs.Size;");
     }
 
     private void WriteClassHeader(TextWriter file) {

@@ -400,7 +400,6 @@ public static class Extensions {
             "F64" => "double",
             "String" => "string",
             "Resource" => "string",
-            "Size" => "uint",
             _ => null
         };
     }
@@ -420,7 +419,6 @@ public static class Extensions {
             "F64" => "System.Double",
             "String" => "System.String",
             "Resource" => "System.String",
-            "Size" => "System.UInt32",
             _ => null
         };
     }

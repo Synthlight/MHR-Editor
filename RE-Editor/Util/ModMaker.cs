@@ -95,7 +95,9 @@ public static class ModMaker {
                     Directory.CreateDirectory(Path.GetDirectoryName(outFile)!);
 
                     var dataFile = ReDataFile.Read(sourceFile);
-                    var data     = dataFile.rsz.objectData;
+                    dataFile.Write(new BinaryWriter(new MemoryStream()), testWritePosition: true, forGp: mod.ForGp);
+
+                    var data = dataFile.rsz.objectData;
                     mod.Action.Invoke(data);
                     dataFile.Write(outFile, forGp: mod.ForGp);
                     nativesFiles.Add(outFile);

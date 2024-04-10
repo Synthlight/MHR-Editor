@@ -3,6 +3,7 @@ using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Models;
 using RE_Editor.Common.Structs;
 using RE_Editor.Generator.Models;
+using Guid = RE_Editor.Common.Structs.Guid;
 
 #if DD2
 using RE_Editor.Common.Data;
@@ -290,7 +291,12 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
                                  && viaType != nameof(UIntArray)) {
                     file.WriteLine($"        obj.{newName} = [new()];");
                 } else {
-                    file.WriteLine($"        obj.{newName} = new();");
+                    // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+                    if (!field.array && viaType == nameof(Guid)) {
+                        file.WriteLine($"        obj.{newName} = Guid.New();");
+                    } else {
+                        file.WriteLine($"        obj.{newName} = new();");
+                    }
                 }
             } else if (isEnumType && !field.array && buttonType == null) {
                 file.WriteLine($"        obj.{newName} = Enum.GetValues<{typeName}>()[0];");
@@ -330,7 +336,12 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
 
             // ReSharper disable once ConvertIfStatementToSwitchStatement
             if (!field.array && viaType?.Is(typeof(ISimpleViaType)) == true) {
-                file.WriteLine($"        obj.{newName} = new();");
+                // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+                if (!field.array && viaType == nameof(Guid)) {
+                    file.WriteLine($"        obj.{newName} = {newName}.Copy();");
+                } else {
+                    file.WriteLine($"        obj.{newName} = new();");
+                }
             } else if ((field.array || isObjectType || isNonPrimitive) && buttonType == null) {
                 file.WriteLine($"        obj.{newName} ??= new();");
                 file.WriteLine($"        foreach (var x in {newName}) {{");

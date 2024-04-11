@@ -27,6 +27,8 @@
 	<!-- RE4 -->
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE4`))'">
 		<Compile Remove="Enums\RE4\**"/>
+		<Compile Remove="Manual\RE4\Structs\**"/>
+		<Compile Remove="Models\RE4\**"/>
 		<Compile Remove="Structs\RE4\**"/>
 		<Compile Remove="Re4WeaponInstanser.cs"/>
 	</ItemGroup>

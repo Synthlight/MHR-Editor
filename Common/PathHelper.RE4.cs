@@ -2,6 +2,7 @@
 
 namespace RE_Editor.Common;
 
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public static partial class PathHelper {
     public const string CONFIG_NAME      = "RE4";
     public const string CHUNK_PATH       = @"V:\RE4\re_chunk_000";
@@ -23,6 +24,7 @@ public static partial class PathHelper {
         @"\natives\STM\"
     ];
 
+    public const string BLACKTAIL_SHELL_INFO_PATH       = @"\natives\STM\_Chainsaw\AppSystem\Shell\Bullet\wp4003\WP4003ShellInfo.user.2";
     public const string ITEM_DRAG_CRAFT_DATA_PATH       = @"\natives\STM\_Chainsaw\AppSystem\UI\UserData\ItemCombineDefinitionUserData.user.2";
     public const string ITEM_DATA_PATH                  = @"\natives\STM\_Chainsaw\AppSystem\UI\UserData\ItemDefinitionUserData.user.2";
     public const string ITEM_DATA_PATH_AO               = @"\natives\STM\_AnotherOrder\AppSystem\UI\Userdata\ItemDefinitionUserData_AO.user.2";
@@ -32,6 +34,9 @@ public static partial class PathHelper {
     public const string NEW_GAME_INVENTORY_DATA_PATH    = @"\natives\STM\_Chainsaw\AppSystem\Inventory\InventoryCatalog\InventoryCatalog_Main.user.2";
     public const string NEW_GAME_INVENTORY_AO_DATA_PATH = @"\natives\STM\_AnotherOrder\AppSystem\Inventory\InventoryCatalog\InventoryCatalog_AO.user.2";
     public const string HARPOON_DATA_PATH               = @"\natives\STM\_Chainsaw\AppSystem\Character\ch1f1z0\UserData\Harpoon\ch1f1z0ShellHarpoonShellInfo.user.2";
+    public const string PUNISHER_SHELL_INFO_PATH        = @"\natives\STM\_Chainsaw\AppSystem\Shell\Bullet\wp4001\WP4001ShellInfo.user.2";
+    public const string WEAPON_CUSTOM_USERDATA_PATH     = @"\natives\STM\_Chainsaw\AppSystem\WeaponCustom\WeaponCustomUserdata.user.2";
+    public const string WEAPON_CUSTOM_USERDATA_AO_PATH  = @"\natives\STM\_AnotherOrder\AppSystem\WeaponCustom\WeaponCustomUserdata_AO.user.2";
     public const string WEAPON_UPGRADE_DATA_PATH        = @"\natives\STM\_Chainsaw\AppSystem\WeaponCustom\WeaponDetailCustomUserdata.user.2";
     public const string WEAPON_UPGRADE_AO_DATA_PATH     = @"\natives\STM\_AnotherOrder\AppSystem\WeaponCustom\WeaponDetailCustomUserdata_AO.user.2";
     public const string WEAPON_UPGRADE_MC_DATA_PATH     = @"\natives\STM\_Mercenaries\AppSystem\WeaponCustom\WeaponDetailCustomUserdata_MC.user.2";

@@ -4,9 +4,7 @@ using RE_Editor.Models.Structs;
 
 namespace RE_Editor.Generated;
 
-public class Re4WeaponInstancer(string weaponCustomUserDataPath) {
-    private Chainsaw_WeaponCustomUserdata weaponCustomUserData;
-
+public static class Re4WeaponInstancer {
     public static Chainsaw_KeyItemInventoryItemSaveData NewKeyItem(RSZ rsz, uint type, int row, int col, int count) {
         var keyItem = Chainsaw_KeyItemInventoryItemSaveData.Create(rsz);
         keyItem.STRUCT_SlotIndex_Row      = row;
@@ -32,7 +30,7 @@ public class Re4WeaponInstancer(string weaponCustomUserDataPath) {
         return item;
     }
 
-    public Chainsaw_InventoryItemSaveData NewWeapon(RSZ rsz, uint type, uint weaponId, uint ammoType, int row, int col, int ammoCount = 1, int itemCount = 1, Chainsaw_ItemDirection rotation = Chainsaw_ItemDirection.Default) {
+    public static Chainsaw_InventoryItemSaveData NewWeapon(RSZ rsz, uint itemId, uint weaponId, int ammoId, int row, int col, Chainsaw_WeaponCustomUserdata weaponCustomUserData, int ammoCount = 1, int itemCount = 1, Chainsaw_ItemDirection rotation = Chainsaw_ItemDirection.Default, Action<Chainsaw_WeaponItem> tweaks = null) {
         var weapon = Chainsaw_InventoryItemSaveData.Create(rsz);
         weapon.SlotType                = Chainsaw_InventorySlotType.Default;
         weapon.STRUCT_SlotIndex_Row    = row;
@@ -44,8 +42,8 @@ public class Re4WeaponInstancer(string weaponCustomUserDataPath) {
         weaponItem.CurrentItemCount         = itemCount;
         weaponItem.CurrentDurability        = 1000;
         weaponItem.CurrentCondition         = Chainsaw_ItemConditionFlag.Default;
-        weaponItem.ItemId                   = (int) type;
-        weaponItem.CurrentAmmo              = (int) ammoType;
+        weaponItem.ItemId                   = (int) itemId;
+        weaponItem.CurrentAmmo              = ammoId;
         weaponItem.CurrentAmmoCount         = ammoCount;
         weaponItem.CurrentTacticalAmmoCount = 0;
         weaponItem.CurrentWeaponPartsCustom = [];
@@ -57,16 +55,13 @@ public class Re4WeaponInstancer(string weaponCustomUserDataPath) {
         weaponItem.CustomLevelInWeapon               = [upgradeContainer];
         upgradeContainer.IsReflect                   = true;
 
-        CreateWeaponSpecificUpgrades(rsz, weaponId, upgradeContainer);
+        CreateWeaponSpecificUpgrades(rsz, weaponId, upgradeContainer, weaponCustomUserData);
 
+        tweaks?.Invoke(weaponItem);
         return weapon;
     }
 
-    private void CreateWeaponSpecificUpgrades(RSZ rsz, uint weaponId, Chainsaw_CustomLevelInWeapon upgradeContainer) {
-        weaponCustomUserData ??= ReDataFile.Read(weaponCustomUserDataPath)
-                                           .rsz
-                                           .GetEntryObject<Chainsaw_WeaponCustomUserdata>();
-
+    private static void CreateWeaponSpecificUpgrades(RSZ rsz, uint weaponId, Chainsaw_CustomLevelInWeapon upgradeContainer, Chainsaw_WeaponCustomUserdata weaponCustomUserData) {
         upgradeContainer.CommonLevelInWeapon     = [];
         upgradeContainer.IndividualLevelInWeapon = [];
         upgradeContainer.LimitBreakLevelInWeapon = [];

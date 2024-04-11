@@ -19,6 +19,14 @@
             "commandName": "Project",
             "commandLineArgs": "\"V:/RE4/re_chunk_000/natives/STM/_Chainsaw/AppSystem/Inventory/InventoryCatalog/InventoryCatalog_Main.user.2\""
         },
+        "InventoryCatalog_AO.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/RE4/re_chunk_000/natives/STM/_AnotherOrder/AppSystem/Inventory/InventoryCatalog/InventoryCatalog_AO.user.2\""
+        },
+        "InventoryCatalog_MC_1-5.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/RE4/re_chunk_000/natives/STM/_Mercenaries/AppSystem/Inventory/InventoryCatalog/InventoryCatalog_MC_1-5.user.2\""
+        },
         "ItemCombineDefinitionUserData.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/RE4/re_chunk_000/natives/STM/_Chainsaw/AppSystem/UI/UserData/ItemCombineDefinitionUserData.user.2\""
@@ -50,6 +58,10 @@
         "WeaponCustomUserdata.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/RE4/re_chunk_000/natives/STM/_Chainsaw/AppSystem/WeaponCustom/WeaponCustomUserdata.user.2\""
+        },
+        "WeaponCustomUserdata_AO.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/RE4/re_chunk_000/natives/STM/_AnotherOrder/AppSystem/WeaponCustom/WeaponCustomUserdata_AO.user.2\""
         },
         "WeaponDetailCustomUserdata.user.2": {
             "commandName": "Project",

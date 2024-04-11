@@ -2,6 +2,7 @@
 
 namespace RE_Editor.Common;
 
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public static partial class PathHelper {
     public const string CONFIG_NAME      = "MHR";
     public const string CHUNK_PATH       = @"V:\MHR\re_chunk_000";

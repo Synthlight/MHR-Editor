@@ -11,9 +11,9 @@ public static class Global {
     public static bool      showIdBeforeName = true;
     public static LangIndex locale           = LangIndex.eng;
 
-    public static readonly string[] FILE_TYPES = {
+    public static readonly string[] FILE_TYPES = [
         "*.user.2"
-    };
+    ];
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum LangIndex {
@@ -64,8 +64,8 @@ public static class Global {
 #if MHR
     public static readonly List<string> WEAPON_TYPES = new() {"Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"};
 #elif RE4
-    public static readonly List<string> VARIANTS = new() {"CH", "MC", "AO"};
-    public static readonly List<string> FOLDERS  = new() {"_Chainsaw", "_Mercenaries", "_AnotherOrder"};
+    public static readonly List<string> VARIANTS = ["CH", "MC", "AO"];
+    public static readonly List<string> FOLDERS  = ["_Chainsaw", "_Mercenaries", "_AnotherOrder"];
     public static          string       variant  = "";
 #endif
 

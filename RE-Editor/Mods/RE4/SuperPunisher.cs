@@ -21,13 +21,13 @@ public class SuperPunisher : IMod {
             Name    = name,
             Version = version,
             Desc    = description,
-            Files = new[] {
+            Files = [
                 PathHelper.WEAPON_UPGRADE_DATA_PATH,
                 PathHelper.WEAPON_UPGRADE_MC_DATA_PATH,
                 PathHelper.WEAPON_UPGRADE_AO_DATA_PATH,
-                @"\natives\STM\_Chainsaw\AppSystem\Shell\Bullet\wp4001\WP4001ShellInfo.user.2", // Punisher
-                @"\natives\STM\_Chainsaw\AppSystem\Shell\Bullet\wp4003\WP4003ShellInfo.user.2", // Blacktail
-            },
+                PathHelper.BLACKTAIL_SHELL_INFO_PATH,
+                PathHelper.PUNISHER_SHELL_INFO_PATH,
+            ],
             Action = FixDamage
         };
 
@@ -40,7 +40,7 @@ public class SuperPunisher : IMod {
                 case Chainsaw_WeaponDetailCustomUserdata_WeaponDetailStage data:
                     if (data.WeaponID == WeaponConstants_CH.PUNISHER
                         || data.WeaponID == WeaponConstants_AO.BLACKTAIL_AC
-                        || data.WeaponID == 6112 /* Punisher MC (AO). Dunno why it has a separate ID like this. */) {
+                        || data.WeaponID == WeaponConstants_AO.PUNISHER_MC_AO) {
                         foreach (var damageRate in data.WeaponDetailCustom[0].CommonCustoms[0].AttackUp[0].DamageRates) {
                             damageRate.BaseValue = 10000;
                         }

@@ -15,6 +15,7 @@ public static class WeaponConstants_AO {
     public const uint ELITE_KNIFE = 6108;
     public const uint INFINITE_ROCKET_LAUNCHER = 6111;
     public const uint PUNISHER_MC = 4001;
+    public const uint PUNISHER_MC_AO = 6112;
     public const uint RED9 = 4002;
     public const uint ROCKET_LAUNCHER = 6106;
     public const uint SAWED_OFF_W_870 = 6100;

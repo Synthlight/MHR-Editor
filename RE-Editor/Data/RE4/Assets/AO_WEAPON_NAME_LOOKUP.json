@@ -13,7 +13,8 @@
     "6106": "ロケットランチャー",
     "6107": "タクティカルナイフ",
     "6109": "#Rejected#",
-    "6111": "無限ロケットランチャー"
+    "6111": "無限ロケットランチャー",
+    "6112": "Punisher MC (AO)"
   },
   "eng": {
     "6101": "Chicago Sweeper",
@@ -29,7 +30,8 @@
     "6106": "Rocket Launcher",
     "6107": "Tactical Knife",
     "6109": "#Rejected#",
-    "6111": "Infinite Rocket Launcher"
+    "6111": "Infinite Rocket Launcher",
+    "6112": "Punisher MC (AO)"
   },
   "fre": {
     "6101": "Chicago Sweeper",
@@ -45,7 +47,8 @@
     "6106": "Lance-roquettes",
     "6107": "Couteau tactique",
     "6109": "#Rejected#",
-    "6111": "Lance-roquettes infini"
+    "6111": "Lance-roquettes infini",
+    "6112": "Punisher MC (AO)"
   },
   "ita": {
     "6101": "Chicago Sweeper",
@@ -61,7 +64,8 @@
     "6106": "Lanciarazzi",
     "6107": "Coltello tattico",
     "6109": "#Rejected#",
-    "6111": "Lanciarazzi (∞)"
+    "6111": "Lanciarazzi (∞)",
+    "6112": "Punisher MC (AO)"
   },
   "ger": {
     "6101": "Chicago Sweeper",
@@ -77,7 +81,8 @@
     "6106": "Raketenwerfer",
     "6107": "Taktisches Messer",
     "6109": "#Rejected#",
-    "6111": "Unendlicher Raketenwerfer"
+    "6111": "Unendlicher Raketenwerfer",
+    "6112": "Punisher MC (AO)"
   },
   "spa": {
     "6101": "Chicago Sweeper",
@@ -93,7 +98,8 @@
     "6106": "Lanzacohetes",
     "6107": "Cuchillo de combate",
     "6109": "#Rejected#",
-    "6111": "Lanzacohetes infinito"
+    "6111": "Lanzacohetes infinito",
+    "6112": "Punisher MC (AO)"
   },
   "rus": {
     "6101": "«Чикагская метла»",
@@ -109,10 +115,12 @@
     "6106": "Ракетница",
     "6107": "Тактический нож",
     "6109": "#Rejected#",
-    "6111": "Бесконечная ракетница"
+    "6111": "Бесконечная ракетница",
+    "6112": "Punisher MC (AO)"
   },
   "pol": {
-    "6109": "#Rejected#"
+    "6109": "#Rejected#",
+    "6112": "Punisher MC (AO)"
   },
   "ptB": {
     "6101": "Metralhadora de Gângster",
@@ -128,7 +136,8 @@
     "6106": "Lança-foguetes",
     "6107": "Faca Tática",
     "6109": "#Rejected#",
-    "6111": "Lança-foguetes Infinito"
+    "6111": "Lança-foguetes Infinito",
+    "6112": "Punisher MC (AO)"
   },
   "kor": {
     "6101": "시카고 스위퍼",
@@ -144,7 +153,8 @@
     "6106": "로켓 발사기",
     "6107": "전투용 나이프",
     "6109": "#Rejected#",
-    "6111": "무한 로켓 발사기"
+    "6111": "무한 로켓 발사기",
+    "6112": "Punisher MC (AO)"
   },
   "chT": {
     "6101": "芝加哥清道夫",
@@ -160,7 +170,8 @@
     "6106": "火箭發射器",
     "6107": "戰術小刀",
     "6109": "#Rejected#",
-    "6111": "無限火箭發射器"
+    "6111": "無限火箭發射器",
+    "6112": "Punisher MC (AO)"
   },
   "chS": {
     "6101": "芝加哥清道夫",
@@ -176,7 +187,8 @@
     "6106": "火箭发射器",
     "6107": "战术匕首",
     "6109": "#Rejected#",
-    "6111": "无限火箭发射器"
+    "6111": "无限火箭发射器",
+    "6112": "Punisher MC (AO)"
   },
   "ara": {
     "6101": "كانس شيكاغو",
@@ -192,6 +204,7 @@
     "6106": "قاذفة صواريخ",
     "6107": "سكين تكتيكي",
     "6109": "#Rejected#",
-    "6111": "قاذفة صواريخ غير محدودة"
+    "6111": "قاذفة صواريخ غير محدودة",
+    "6112": "Punisher MC (AO)"
   }
 }

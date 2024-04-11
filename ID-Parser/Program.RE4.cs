@@ -41,7 +41,7 @@ public static partial class Program {
                                           }))
                        .ToList();
             var msg = msgs.MergeDictionaries();
-            CreateAssetFile(msg, $@"{variant}_ITEM_NAME_LOOKUP");
+            CreateAssetFile(msg, $"{variant}_ITEM_NAME_LOOKUP");
             CreateConstantsFile(msg[Global.LangIndex.eng].Flip(), $"ItemConstants_{variant}");
         }
     }
@@ -70,7 +70,16 @@ public static partial class Program {
                                          }))
                       .ToList()
                       .MergeDictionaries();
-            CreateAssetFile(msg, $@"{variant}_WEAPON_NAME_LOOKUP");
+
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var lang in Global.LANGUAGES) {
+                // I don't know why this one is nowhere in the name data, but it's the real ID of Punisher MC in AO.
+                if (variant == "AO") {
+                    msg[lang].TryAdd(6112, "Punisher MC (AO)");
+                }
+            }
+
+            CreateAssetFile(msg, $"{variant}_WEAPON_NAME_LOOKUP");
             CreateConstantsFile(msg[Global.LangIndex.eng].Flip(), $"WeaponConstants_{variant}");
         }
     }

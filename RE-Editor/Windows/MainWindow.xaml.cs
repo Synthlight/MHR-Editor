@@ -154,13 +154,15 @@ public partial class MainWindow {
             GC.Collect();
 
 #if RE4
-            if (targetFile.Contains("_Mercenaries")) {
+                // ReSharper disable StringLiteralTypo
+            if (targetFile.ToLower().Contains("_mercenaries")) {
                 Global.variant = "MC";
-            } else if (targetFile.Contains("_AnotherOrder")) {
+            } else if (targetFile.ToLower().Contains("_anotherorder")) {
                 Global.variant = "AO";
             } else {
                 Global.variant = "CH";
             }
+                // ReSharper restore StringLiteralTypo
 #endif
 
             file = ReDataFile.Read(target);

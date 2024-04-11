@@ -105,11 +105,15 @@ public static class ModMaker {
             }
 
             if (mod.AdditionalFiles?.Any() == true) {
-                foreach (var (sourceFile, dest) in mod.AdditionalFiles) {
+                foreach (var (dest, sourceFile) in mod.AdditionalFiles) {
                     var outFile = @$"{modPath}\{dest}";
                     Directory.CreateDirectory(Path.GetDirectoryName(outFile)!);
                     File.Copy(sourceFile, outFile);
-                    modFiles.Add(outFile); // Because it's basically anything NOT a pak since we can't mix those two types.
+                    if (dest.StartsWith("natives")) {
+                        nativesFiles.Add(outFile);
+                    } else {
+                        modFiles.Add(outFile); // Because it's basically anything NOT a pak since we can't mix those two types.
+                    }
                 }
             }
 

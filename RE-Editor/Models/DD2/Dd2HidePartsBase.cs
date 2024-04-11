@@ -16,7 +16,7 @@ public static class Dd2HidePartsBase {
 
     private static void WriteLuaFile(SwapDbTweak tweak, string modFolderName) {
         var luaPath = $@"{PathHelper.MODS_PATH}\{modFolderName}\{tweak.LuaName}";
-        tweak.AdditionalFiles.Add(luaPath, $@"reframework\autorun\{tweak.LuaName}");
+        tweak.AdditionalFiles!.Add($@"reframework\autorun\{tweak.LuaName}", luaPath);
 
         using var writer = new StreamWriter(File.Create(luaPath));
         writer.WriteLine($"-- {tweak.Name}");

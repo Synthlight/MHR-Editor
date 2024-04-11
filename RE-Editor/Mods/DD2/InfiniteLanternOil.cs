@@ -29,7 +29,7 @@ public class InfiniteLanternOil : IMod {
             Name            = name,
             Desc            = description,
             Files           = [],
-            AdditionalFiles = new() {{luaPath, $@"reframework\autorun\{luaFile}"}},
+            AdditionalFiles = new() {{$@"reframework\autorun\{luaFile}", luaPath}},
             SkipPak         = true,
         };
 

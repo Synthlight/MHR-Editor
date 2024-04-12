@@ -1,20 +1,13 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.IO;
 using RE_Editor.Common;
-using RE_Editor.Models.Enums;
-using static RE_Editor.Models.SwapDbTweak;
 
 namespace RE_Editor.Models;
 
-public static class Dd2HidePartsBase {
-    public static void WriteHideParts(IEnumerable<SwapDbTweak> tweaks, string modFolderName) {
-        foreach (var tweak in tweaks) {
-            WriteLuaFile(tweak, modFolderName);
-        }
-    }
-
-    private static void WriteLuaFile(SwapDbTweak tweak, string modFolderName) {
+public static class ItemDbTweakWriter {
+    public static void WriteTweak(ItemDbTweak tweak, string modFolderName) {
         var luaPath = $@"{PathHelper.MODS_PATH}\{modFolderName}\{tweak.LuaName}";
         tweak.AdditionalFiles!.Add($@"reframework\autorun\{tweak.LuaName}", luaPath);
 
@@ -47,24 +40,33 @@ public static class Dd2HidePartsBase {
         writer.WriteLine("	return output");
         writer.WriteLine("end");
         writer.WriteLine("");
-        writer.WriteLine("local chr_edit_mgr = sdk.get_managed_singleton(\"app.CharacterEditManager\")");
+        writer.WriteLine("local itemManager = sdk.get_managed_singleton(\"app.ItemManager\")");
         writer.WriteLine("");
+        writer.WriteLine("for id, entry in pairs(get_dict(itemManager._ItemDataDict)) do");
 
-        var changesGroupedByDatabaseAndGender = new Dictionary<string, Dictionary<App_Gender, List<Change>>>();
+        var groupedChanges = new Dictionary<ItemDbTweak.Target, List<ItemDbTweak.Change>>();
         foreach (var change in tweak.Changes) {
-            if (!changesGroupedByDatabaseAndGender.ContainsKey(change.Database)) changesGroupedByDatabaseAndGender[change.Database]                               = [];
-            if (!changesGroupedByDatabaseAndGender[change.Database].ContainsKey(change.Gender)) changesGroupedByDatabaseAndGender[change.Database][change.Gender] = [];
-            changesGroupedByDatabaseAndGender[change.Database][change.Gender].Add(change);
+            if (!groupedChanges.ContainsKey(change.Target)) groupedChanges[change.Target] = [];
+            groupedChanges[change.Target].Add(change);
         }
 
-        foreach (var (database, genderGroup) in changesGroupedByDatabaseAndGender) {
-            foreach (var (gender, changes) in genderGroup) {
-                writer.WriteLine($"for enum_id, entry in pairs(get_dict(chr_edit_mgr._{database}[{(uint) gender}])) do");
-                foreach (var change in changes) {
-                    change.Action(writer);
-                }
-                writer.WriteLine("end");
+        foreach (var (target, changes) in groupedChanges) {
+            writer.WriteLine($"    if entry:GetType() == {GetTargetType(target)} then");
+            foreach (var change in changes) {
+                change.Action(writer);
             }
+            writer.WriteLine("    end");
         }
+
+        writer.WriteLine("end");
+    }
+
+    private static string GetTargetType(ItemDbTweak.Target target) {
+        return target switch {
+            ItemDbTweak.Target.ARMOR => "sdk.typeof(\"app.ItemArmorParam\")",
+            ItemDbTweak.Target.ITEM => "sdk.typeof(\"app.ItemDataParam\")",
+            ItemDbTweak.Target.WEAPON => "sdk.typeof(\"app.ItemWeaponParam\")",
+            _ => throw new ArgumentOutOfRangeException(nameof(target), target, null)
+        };
     }
 }

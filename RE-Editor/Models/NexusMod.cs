@@ -40,7 +40,7 @@ public struct NexusMod : INexusMod {
     }
 }
 
-public static partial class NexusModExtensions {
+public static class NexusModExtensions {
     public static T SetName<T>(this T nexusMod, string name) where T : INexusMod {
         nexusMod.Name = name;
         return nexusMod;

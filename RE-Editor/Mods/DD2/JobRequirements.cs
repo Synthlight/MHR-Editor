@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
@@ -19,7 +18,7 @@ public class JobRequirements : IMod {
     public static void Make() {
         const string name        = "No Job Requirements";
         const string description = "Tweaks weapon & armor data to let you use any armor/weapon with any job.";
-        const string version     = "1.1";
+        const string version     = "1.2";
 
         var baseMod = new NexusMod {
             Version      = version,
@@ -28,9 +27,9 @@ public class JobRequirements : IMod {
             Image        = $@"{PathHelper.MODS_PATH}\{name}\Jobs.png",
         };
 
-        var mods = new[] {
+        var mods = new List<INexusMod> {
             baseMod
-                .SetName("No Job Requirements: All (+ Item Tweaks All-in-One)")
+                .SetName($"{name}: All (+ Item Tweaks All-in-One)")
                 .SetFiles([
                     PathHelper.ARMOR_DATA_PATH,
                     PathHelper.ITEM_DATA_PATH,
@@ -43,27 +42,101 @@ public class JobRequirements : IMod {
                     Jobs(list, JobOptions.ALL);
                 }),
             baseMod
-                .SetName("No Job Requirements: Armors Only")
+                .SetName($"{name}: Armors Only")
                 .SetFiles([PathHelper.ARMOR_DATA_PATH])
                 .SetAction(list => Jobs(list, JobOptions.ARMOR_ONLY)),
+            new ItemDbTweak {
+                Name            = $"{name}: Armors Only (REF)",
+                NameAsBundle    = name,
+                Version         = version,
+                Desc            = description,
+                Image           = $@"{PathHelper.MODS_PATH}\{name}\Jobs.png",
+                Files           = [],
+                AdditionalFiles = [],
+                LuaName         = "NoJobRequirementsArmor.lua",
+                SkipPak         = true,
+                Changes = [
+                    new() {
+                        Target = ItemDbTweak.Target.ARMOR,
+                        Action = writer => { writer.WriteLine($"        entry._{nameof(App_ItemEquipParam.Job)} = {ushort.MaxValue}"); }
+                    }
+                ],
+            },
             baseMod
-                .SetName("No Job Requirements: Armors Only (No Weight)")
+                .SetName($"{name}: Armors Only (No Weight)")
                 .SetFiles([PathHelper.ARMOR_DATA_PATH])
                 .SetAction(list => {
                     Jobs(list, JobOptions.ARMOR_ONLY);
                     ItemTweaks.Weight(list, ItemTweaks.WeightOptions._0);
                 }),
+            new ItemDbTweak {
+                Name            = $"{name}: Armors Only (REF, No Weight)",
+                NameAsBundle    = name,
+                Version         = version,
+                Desc            = description,
+                Image           = $@"{PathHelper.MODS_PATH}\{name}\Jobs.png",
+                Files           = [],
+                AdditionalFiles = [],
+                LuaName         = "NoJobRequirementsArmorNoWeight.lua",
+                SkipPak         = true,
+                Changes = [
+                    new() {
+                        Target = ItemDbTweak.Target.ARMOR,
+                        Action = writer => {
+                            writer.WriteLine($"        entry._{nameof(App_ItemEquipParam.Job)} = {ushort.MaxValue}");
+                            writer.WriteLine($"        entry._{nameof(App_ItemCommonParam.Weight)} = 0");
+                        }
+                    }
+                ],
+            },
             baseMod
-                .SetName("No Job Requirements: Weapons Only")
+                .SetName($"{name}: Weapons Only")
                 .SetFiles([PathHelper.WEAPON_DATA_PATH])
                 .SetAction(list => Jobs(list, JobOptions.WEAPONS_ONLY)),
+            new ItemDbTweak {
+                Name            = $"{name}: Weapons Only (REF)",
+                NameAsBundle    = name,
+                Version         = version,
+                Desc            = description,
+                Image           = $@"{PathHelper.MODS_PATH}\{name}\Jobs.png",
+                Files           = [],
+                AdditionalFiles = [],
+                LuaName         = "NoJobRequirementsWeapon.lua",
+                SkipPak         = true,
+                Changes = [
+                    new() {
+                        Target = ItemDbTweak.Target.WEAPON,
+                        Action = writer => { writer.WriteLine($"        entry._{nameof(App_ItemEquipParam.Job)} = {ushort.MaxValue}"); }
+                    }
+                ],
+            },
             baseMod
-                .SetName("No Job Requirements: Weapons Only (No Weight)")
+                .SetName($"{name}: Weapons Only (No Weight)")
                 .SetFiles([PathHelper.WEAPON_DATA_PATH])
                 .SetAction(list => {
                     Jobs(list, JobOptions.WEAPONS_ONLY);
                     ItemTweaks.Weight(list, ItemTweaks.WeightOptions._0);
                 }),
+            new ItemDbTweak {
+                Name            = $"{name}: Weapons Only (REF, No Weight)",
+                NameAsBundle    = name,
+                Version         = version,
+                Desc            = description,
+                Image           = $@"{PathHelper.MODS_PATH}\{name}\Jobs.png",
+                Files           = [],
+                AdditionalFiles = [],
+                LuaName         = "NoJobRequirementsWeaponNoWeight.lua",
+                SkipPak         = true,
+                Changes = [
+                    new() {
+                        Target = ItemDbTweak.Target.WEAPON,
+                        Action = writer => {
+                            writer.WriteLine($"        entry._{nameof(App_ItemEquipParam.Job)} = {ushort.MaxValue}");
+                            writer.WriteLine($"        entry._{nameof(App_ItemCommonParam.Weight)} = 0");
+                        }
+                    }
+                ],
+            },
         };
 
         ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);

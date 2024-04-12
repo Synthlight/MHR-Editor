@@ -1,8 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿namespace RE_Editor.Common;
 
-namespace RE_Editor.Common;
-
-[SuppressMessage("ReSharper", "InconsistentNaming")]
 public static partial class PathHelper {
     public const string CONFIG_NAME      = "RE4";
     public const string CHUNK_PATH       = @"V:\RE4\re_chunk_000";
@@ -19,29 +16,33 @@ public static partial class PathHelper {
     public const string JSON_VERSION_CHECK_URL = "";
     public const string WIKI_URL               = "";
 
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly string[] TEST_PATHS = [
         @"\natives\STM\"
     ];
 
-    public const string BLACKTAIL_SHELL_INFO_PATH       = @"\natives\STM\_Chainsaw\AppSystem\Shell\Bullet\wp4003\WP4003ShellInfo.user.2";
-    public const string ITEM_DRAG_CRAFT_DATA_PATH       = @"\natives\STM\_Chainsaw\AppSystem\UI\UserData\ItemCombineDefinitionUserData.user.2";
-    public const string ITEM_DATA_PATH                  = @"\natives\STM\_Chainsaw\AppSystem\UI\UserData\ItemDefinitionUserData.user.2";
-    public const string ITEM_DATA_PATH_AO               = @"\natives\STM\_AnotherOrder\AppSystem\UI\Userdata\ItemDefinitionUserData_AO.user.2";
-    public const string ITEM_DATA_PATH_AO_OVR           = @"\natives\STM\_AnotherOrder\AppSystem\UI\Userdata\ItemDefinitionUserData_OVR_AO.user.2";
-    public const string ITEM_DATA_PATH_MC               = @"\natives\STM\_Mercenaries\AppSystem\UI\Userdata\ItemDefinitionUserData_MC.user.2";
-    public const string ITEM_DATA_PATH_MC_OVR           = @"\natives\STM\_Mercenaries\AppSystem\UI\Userdata\ItemDefinitionUserData_OVR_MC.user.2";
-    public const string NEW_GAME_INVENTORY_DATA_PATH    = @"\natives\STM\_Chainsaw\AppSystem\Inventory\InventoryCatalog\InventoryCatalog_Main.user.2";
-    public const string NEW_GAME_INVENTORY_AO_DATA_PATH = @"\natives\STM\_AnotherOrder\AppSystem\Inventory\InventoryCatalog\InventoryCatalog_AO.user.2";
-    public const string HARPOON_DATA_PATH               = @"\natives\STM\_Chainsaw\AppSystem\Character\ch1f1z0\UserData\Harpoon\ch1f1z0ShellHarpoonShellInfo.user.2";
-    public const string PUNISHER_SHELL_INFO_PATH        = @"\natives\STM\_Chainsaw\AppSystem\Shell\Bullet\wp4001\WP4001ShellInfo.user.2";
-    public const string WEAPON_CUSTOM_USERDATA_PATH     = @"\natives\STM\_Chainsaw\AppSystem\WeaponCustom\WeaponCustomUserdata.user.2";
-    public const string WEAPON_CUSTOM_USERDATA_AO_PATH  = @"\natives\STM\_AnotherOrder\AppSystem\WeaponCustom\WeaponCustomUserdata_AO.user.2";
-    public const string WEAPON_UPGRADE_DATA_PATH        = @"\natives\STM\_Chainsaw\AppSystem\WeaponCustom\WeaponDetailCustomUserdata.user.2";
-    public const string WEAPON_UPGRADE_AO_DATA_PATH     = @"\natives\STM\_AnotherOrder\AppSystem\WeaponCustom\WeaponDetailCustomUserdata_AO.user.2";
-    public const string WEAPON_UPGRADE_MC_DATA_PATH     = @"\natives\STM\_Mercenaries\AppSystem\WeaponCustom\WeaponDetailCustomUserdata_MC.user.2";
+    public const string ATTACHE_CASE_SKIN_EFFECT_DATA_PATH      = @"\natives\STM\_Chainsaw\AppSystem\UI\UserData\AttacheCaseSkinEffectSettingUserdata.user.2";
+    public const string ATTACHE_CASE_SKIN_EFFECT_DATA_AO_PATH   = @"\natives\STM\_AnotherOrder\AppSystem\UI\UserData\AttacheCaseSkinEffectSettingUserdata_AO.user.2";
+    public const string ATTACHE_CASE_SKIN_EFFECT_DATA_MC_PATH   = @"\natives\STM\_Mercenaries\AppSystem\UI\Userdata\AttacheCaseSkinEffectSettingUserdata_MC.user.2";
+    public const string ATTACHE_CASE_SKIN_EFFECT_DATA_DLC1_PATH = @"\natives\STM\_Chainsaw\AppSystem\Catalog\DLC\DLC_1101\AttacheCaseSkinEffectSettingUserdata_DLC_1101.user.2";
+    public const string ATTACHE_CASE_SKIN_EFFECT_DATA_DLC2_PATH = @"\natives\STM\_Chainsaw\AppSystem\Catalog\DLC\DLC_1102\AttacheCaseSkinEffectSettingUserdata_DLC_1102.user.2";
+    public const string ITEM_DRAG_CRAFT_DATA_PATH               = @"\natives\STM\_Chainsaw\AppSystem\UI\UserData\ItemCombineDefinitionUserData.user.2";
+    public const string ITEM_DATA_PATH                          = @"\natives\STM\_Chainsaw\AppSystem\UI\UserData\ItemDefinitionUserData.user.2";
+    public const string ITEM_DATA_PATH_AO                       = @"\natives\STM\_AnotherOrder\AppSystem\UI\Userdata\ItemDefinitionUserData_AO.user.2";
+    public const string ITEM_DATA_PATH_AO_OVR                   = @"\natives\STM\_AnotherOrder\AppSystem\UI\Userdata\ItemDefinitionUserData_OVR_AO.user.2";
+    public const string ITEM_DATA_PATH_MC                       = @"\natives\STM\_Mercenaries\AppSystem\UI\Userdata\ItemDefinitionUserData_MC.user.2";
+    public const string ITEM_DATA_PATH_MC_OVR                   = @"\natives\STM\_Mercenaries\AppSystem\UI\Userdata\ItemDefinitionUserData_OVR_MC.user.2";
+    public const string NEW_GAME_INVENTORY_DATA_PATH            = @"\natives\STM\_Chainsaw\AppSystem\Inventory\InventoryCatalog\InventoryCatalog_Main.user.2";
+    public const string NEW_GAME_INVENTORY_AO_DATA_PATH         = @"\natives\STM\_AnotherOrder\AppSystem\Inventory\InventoryCatalog\InventoryCatalog_AO.user.2";
+    public const string SHELL_INFO_BLACKTAIL_PATH               = @"\natives\STM\_Chainsaw\AppSystem\Shell\Bullet\wp4003\WP4003ShellInfo.user.2";
+    public const string SHELL_INFO_PUNISHER_PATH                = @"\natives\STM\_Chainsaw\AppSystem\Shell\Bullet\wp4001\WP4001ShellInfo.user.2";
+    public const string SHELL_INFO_HARPOON_PATH                 = @"\natives\STM\_Chainsaw\AppSystem\Character\ch1f1z0\UserData\Harpoon\ch1f1z0ShellHarpoonShellInfo.user.2";
+    public const string WEAPON_CUSTOM_USERDATA_PATH             = @"\natives\STM\_Chainsaw\AppSystem\WeaponCustom\WeaponCustomUserdata.user.2";
+    public const string WEAPON_CUSTOM_USERDATA_AO_PATH          = @"\natives\STM\_AnotherOrder\AppSystem\WeaponCustom\WeaponCustomUserdata_AO.user.2";
+    public const string WEAPON_EQUIP_PARAM_CATALOG_USER_DATA    = @"\natives\STM\_Chainsaw\AppSystem\Weapon\WeaponEquipParamCatalogUserData.user.2";
+    public const string WEAPON_UPGRADE_DATA_PATH                = @"\natives\STM\_Chainsaw\AppSystem\WeaponCustom\WeaponDetailCustomUserdata.user.2";
+    public const string WEAPON_UPGRADE_AO_DATA_PATH             = @"\natives\STM\_AnotherOrder\AppSystem\WeaponCustom\WeaponDetailCustomUserdata_AO.user.2";
+    public const string WEAPON_UPGRADE_MC_DATA_PATH             = @"\natives\STM\_Mercenaries\AppSystem\WeaponCustom\WeaponDetailCustomUserdata_MC.user.2";
 
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly List<string> NEW_GAME_INVENTORY_MC_DATA_PATHS = [
         @"\natives\STM\_Mercenaries\AppSystem\Inventory\InventoryCatalog\InventoryCatalog_MC_1-1.user.2",
         @"\natives\STM\_Mercenaries\AppSystem\Inventory\InventoryCatalog\InventoryCatalog_MC_1-1-2.user.2",

@@ -9,6 +9,7 @@ namespace RE_Editor.ID_Parser;
 public static partial class Program {
     public static void Main() {
         ExtractItemInfo();
+        ExtractStatusEffectInfo();
         ExtractWeaponInfo();
     }
 
@@ -44,6 +45,35 @@ public static partial class Program {
             CreateAssetFile(msg, $"{variant}_ITEM_NAME_LOOKUP");
             CreateConstantsFile(msg[Global.LangIndex.eng].Flip(), $"ItemConstants_{variant}");
         }
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    private static void ExtractStatusEffectInfo() {
+        var regex = new Regex("(?:CH|MC|AO)_Mes_Main_(StatusEffectID_.*)");
+        var msg = new List<string> {$@"{PathHelper.CHUNK_PATH}\natives\STM\_Chainsaw\Message\Mes_Main_Charm\CH_Mes_Main_StatusEffect.msg.{Global.MSG_VERSION}",}
+                  .Where(File.Exists)
+                  .Select(file => MSG.Read(file)
+                                     .GetLangIdMap(name => {
+                                         var match = regex.Match(name);
+                                         if (!match.Success) throw new MSG.SkipReadException();
+                                         var value = match.Groups[1].Value;
+                                         try {
+                                             return (uint) (int) Enum.Parse(typeof(Chainsaw_StatusEffectID), value);
+                                         } catch (Exception) {
+                                             throw new MSG.SkipReadException();
+                                         }
+                                     }))
+                  .ToList()
+                  .MergeDictionaries();
+
+        CreateAssetFile(msg, "STATUS_EFFECT_NAME_LOOKUP");
+
+        var dict = new Dictionary<Chainsaw_StatusEffectID, string>();
+        foreach (var (id, name) in msg[Global.LangIndex.eng]) {
+            dict[(Chainsaw_StatusEffectID) id] = name;
+        }
+
+        CreateConstantsFile(dict.Flip(), "StatusEffectConstants");
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]

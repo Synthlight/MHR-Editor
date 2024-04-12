@@ -3,6 +3,10 @@
         "[None]": {
             "commandName": "Project"
         },
+        "AttacheCaseSkinEffectSettingUserdata.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/RE4/re_chunk_000/natives/STM/_Chainsaw/AppSystem/UI/UserData/AttacheCaseSkinEffectSettingUserdata.user.2\""
+        },
         "ch1f1z0ShellHarpoonShellInfo.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/RE4/re_chunk_000/natives/STM/_Chainsaw/AppSystem/Character/ch1f1z0/UserData/Harpoon/ch1f1z0ShellHarpoonShellInfo.user.2\""

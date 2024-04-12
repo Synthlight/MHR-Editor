@@ -36,7 +36,7 @@ public class MSG {
     public TypeEntry[] types;
 
     public static MSG Read(string targetFile, bool writeNameIds = false) {
-        Debug.WriteLine($"Reading: {targetFile}");
+        Console.WriteLine($"Reading: {targetFile}");
 
         var       file   = new MSG();
         using var reader = new BinaryReader(File.OpenRead(targetFile));
@@ -103,7 +103,7 @@ public class MSG {
 
         if (writeNameIds) {
             foreach (var entry in file.subEntries) {
-                Debug.WriteLine(entry.first);
+                Console.WriteLine(entry.first);
             }
         }
 

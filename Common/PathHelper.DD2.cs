@@ -1,8 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿namespace RE_Editor.Common;
 
-namespace RE_Editor.Common;
-
-[SuppressMessage("ReSharper", "InconsistentNaming")]
 public static partial class PathHelper {
     public const string CONFIG_NAME      = "DD2";
     public const string CHUNK_PATH       = @"V:\DD2\re_chunk_000";
@@ -19,7 +16,6 @@ public static partial class PathHelper {
     public const string JSON_VERSION_CHECK_URL = $"http://brutsches.com/{CONFIG_NAME}-Editor.version.json";
     public const string WIKI_URL               = "https://www.nexusmods.com/dragonsdogma2/mods/522";
 
-    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     public static readonly string[] TEST_PATHS = [
         @"\natives\STM\",
     ];

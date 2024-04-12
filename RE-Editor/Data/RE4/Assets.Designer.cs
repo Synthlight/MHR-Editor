@@ -133,6 +133,16 @@ namespace RE_Editor.Data.RE4 {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] STATUS_EFFECT_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("STATUS_EFFECT_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] STRUCT_INFO {
             get {
                 object obj = ResourceManager.GetObject("STRUCT_INFO", resourceCulture);

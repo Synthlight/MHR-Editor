@@ -7,8 +7,9 @@ namespace RE_Editor.Data;
 public static partial class DataInit {
     // ReSharper disable once IdentifierTypo
     private static void LoadDicts() {
-        DataHelper.ITEM_NAME_LOOKUP   = [];
-        DataHelper.WEAPON_NAME_LOOKUP = [];
+        DataHelper.ITEM_NAME_LOOKUP          = [];
+        DataHelper.WEAPON_NAME_LOOKUP        = [];
+        DataHelper.STATUS_EFFECT_NAME_LOOKUP = LoadDict<Global.LangIndex, Dictionary<uint, string>>(GetAsset("STATUS_EFFECT_NAME_LOOKUP"));
 
         foreach (var variant in Global.VARIANTS) {
             DataHelper.ITEM_NAME_LOOKUP[variant]   = LoadDict<Global.LangIndex, Dictionary<uint, string>>(GetAsset($"{variant}_ITEM_NAME_LOOKUP"));

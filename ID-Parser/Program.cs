@@ -68,9 +68,12 @@ public static partial class Program {
                                 .Replace("/", "_")
                                 .Replace("&", "AND")
                                 .Replace("+", "_PLUS")
+                                .Replace("%", "_PERCENT")
                                 .Replace('-', '_')
                                 .Replace(' ', '_')
-                                .Replace(':', '_');
+                                .Replace(':', '_')
+                                .Replace('{', '_')
+                                .Replace('}', '_');
             if (regex.Match(constName).Success) constName = $"_{constName}";
             if (namesUsed.Contains(constName)) continue;
             namesUsed.Add(constName);

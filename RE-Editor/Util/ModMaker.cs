@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -21,15 +22,22 @@ public static class ModMaker {
     /// <param name="copyPakToFluffy">If true, will copy the *pak* zip to FMM.</param>
     /// <param name="noPakZip">Will skip the second zip containing pak files if true.</param>
     public static void WriteMods<T>(IEnumerable<T> mods, string modFolderName, bool copyLooseToFluffy = false, bool copyPakToFluffy = false, bool noPakZip = false) where T : INexusMod {
+#if DD2
+        var usedLuaFiles = new List<string>();
+#endif
         var bundles = new Dictionary<string, List<T>>();
         foreach (var mod in mods) {
 #if DD2
             switch (mod) {
                 case ItemDbTweak tweak:
+                    if (usedLuaFiles.Contains(tweak.LuaName)) throw new DuplicateNameException($"Lua file `{tweak.LuaName}` already created.");
                     ItemDbTweakWriter.WriteTweak(tweak, modFolderName);
+                    usedLuaFiles.Add(tweak.LuaName);
                     break;
                 case SwapDbTweak tweak:
+                    if (usedLuaFiles.Contains(tweak.LuaName)) throw new DuplicateNameException($"Lua file `{tweak.LuaName}` already created.");
                     SwapDbTweakWriter.WriteTweak(tweak, modFolderName);
+                    usedLuaFiles.Add(tweak.LuaName);
                     break;
             }
 #endif

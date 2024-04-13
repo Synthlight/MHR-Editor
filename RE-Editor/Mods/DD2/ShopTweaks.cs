@@ -17,9 +17,9 @@ namespace RE_Editor.Mods;
 public class ShopTweaks : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string name        = "Crazy & Metamorphosis Merged and in Every Shop";
-        const string description = "Adds the items they both offer, but in every single shop in the game.";
-        const string version     = "1.3";
+        const string name        = "Shop Tweaks";
+        const string description = "Adds a much of things to every shop in the game.";
+        const string version     = "1.4";
 
         var mod = new NexusMod {
             Version = version,
@@ -52,6 +52,11 @@ public class ShopTweaks : IMod {
                         shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.GOLDEN_TROVE_BEETLE, 255));
                         shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.SEALING_PHIAL, 255));
                         shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.WYRMSLIFE_CRYSTAL, 255));
+                        shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.BLIGHTING_ARROW, 255));
+                        shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.DRENCHING_ARROW, 255));
+                        shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.EXPLOSIVE_ARROW, 255));
+                        shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.TARRING_ARROW, 255));
+                        shopData.BuyParams.Add(App_ItemShopBuyParam.MakeNewBuyItem(shopData.rsz, (int) ItemConstants.MEDUSA_HEAD, 255));
                     }
                     break;
             }

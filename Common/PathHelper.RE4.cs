@@ -36,6 +36,7 @@ public static partial class PathHelper {
     public const string SHELL_INFO_BLACKTAIL_PATH               = @"\natives\STM\_Chainsaw\AppSystem\Shell\Bullet\wp4003\WP4003ShellInfo.user.2";
     public const string SHELL_INFO_PUNISHER_PATH                = @"\natives\STM\_Chainsaw\AppSystem\Shell\Bullet\wp4001\WP4001ShellInfo.user.2";
     public const string SHELL_INFO_HARPOON_PATH                 = @"\natives\STM\_Chainsaw\AppSystem\Character\ch1f1z0\UserData\Harpoon\ch1f1z0ShellHarpoonShellInfo.user.2";
+    public const string SHOOTING_GALLERY_SCORE_PATH             = @"\natives\STM\_Chainsaw\LevelDesign\Table\ShootingGallery\Score.user.2";
     public const string WEAPON_CUSTOM_USERDATA_PATH             = @"\natives\STM\_Chainsaw\AppSystem\WeaponCustom\WeaponCustomUserdata.user.2";
     public const string WEAPON_CUSTOM_USERDATA_AO_PATH          = @"\natives\STM\_AnotherOrder\AppSystem\WeaponCustom\WeaponCustomUserdata_AO.user.2";
     public const string WEAPON_EQUIP_PARAM_CATALOG_USER_DATA    = @"\natives\STM\_Chainsaw\AppSystem\Weapon\WeaponEquipParamCatalogUserData.user.2";

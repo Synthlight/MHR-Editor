@@ -20,6 +20,7 @@ public static class WeaponConstants_AO {
     public const uint ROCKET_LAUNCHER = 6106;
     public const uint SAWED_OFF_W_870 = 6100;
     public const uint SR_M1903 = 4400;
+    public const uint SR_M1903_MC_AO = 6114;
     public const uint STINGRAY = 6105;
     public const uint TACTICAL_KNIFE = 6107;
     public const uint TMP = 6104;

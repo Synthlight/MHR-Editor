@@ -106,6 +106,7 @@ public static partial class Program {
                 // I don't know why this one is nowhere in the name data, but it's the real ID of Punisher MC in AO.
                 if (variant == "AO") {
                     msg[lang].TryAdd(6112, "Punisher MC (AO)");
+                    msg[lang].TryAdd(6114, "SR M1903 MC (AO)");
                 }
             }
 

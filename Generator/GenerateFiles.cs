@@ -207,7 +207,7 @@ public partial class GenerateFiles {
             var type       = new CodeTypeReference(boxedType);
             var typeString = compiler.GetTypeOutput(type);
 
-            enumTypes[name] = new(name, typeString);
+            enumTypes[name] = new(name, structInfo.name, typeString);
         }
 
         foreach (var key in enumTypes.Keys.OrderBy(s => s)) {

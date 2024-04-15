@@ -17,6 +17,7 @@ public class EnumTemplate(EnumType enumType) {
         if (enumType.isFlags) {
             file.WriteLine("[Flags]");
         }
+        file.WriteLine($"// {enumType.originalName}");
         file.Write($"public enum {enumType.name} : {enumType.type} ");
         file.Write(enumType.Contents);
         if (enumType.isFlags) {

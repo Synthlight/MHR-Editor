@@ -69,11 +69,11 @@ public class ItemTweaks : IMod {
         };
         var weight0ItemsOnly = new ItemDbTweak.Change {
             Target = ItemDbTweak.Target.ITEM,
-            Action = writer => {
-                writer.WriteLine($"        if entry._{nameof(App_ItemDataParam.Id)} ~= {ItemConstants._1_G} then");
-                writer.WriteLine($"            entry._{nameof(App_ItemDataParam.Weight)} = 0");
-                writer.WriteLine("        end");
-            }
+            Action = writer => { WeightRef(writer, WeightOptions._0); }
+        };
+        var weight0MaterialsOnly = new ItemDbTweak.Change {
+            Target = ItemDbTweak.Target.ITEM,
+            Action = writer => { WeightRef(writer, WeightOptions._0_Materials); }
         };
         var weight0WeaponsOnly = new ItemDbTweak.Change {
             Target = ItemDbTweak.Target.WEAPON,
@@ -81,11 +81,7 @@ public class ItemTweaks : IMod {
         };
         var weight0FerrystoneOnly = new ItemDbTweak.Change {
             Target = ItemDbTweak.Target.ITEM,
-            Action = writer => {
-                writer.WriteLine($"        if entry._{nameof(App_ItemDataParam.Id)} == {ItemConstants.FERRYSTONE} then");
-                writer.WriteLine($"            entry._{nameof(App_ItemDataParam.Weight)} = 0");
-                writer.WriteLine("        end");
-            }
+            Action = writer => { WeightRef(writer, WeightOptions._0_Ferry_Only); }
         };
         var sellPriceX10ArmorsOnly = new ItemDbTweak.Change {
             Target = ItemDbTweak.Target.ARMOR,
@@ -315,6 +311,18 @@ public class ItemTweaks : IMod {
                 LuaName         = "ItemTweaks0WeightWeapons.lua",
                 SkipPak         = true,
                 Changes         = [weight0WeaponsOnly],
+            },
+            new ItemDbTweak {
+                Name            = $"{name} (REF): Weight: 0 (Materials Only)",
+                NameAsBundle    = $"{name} (REF)",
+                Version         = version,
+                Desc            = description,
+                Image           = $@"{PathHelper.MODS_PATH}\{name}\Merchant.png",
+                Files           = [],
+                AdditionalFiles = [],
+                LuaName         = "ItemTweaks0WeightMaterials.lua",
+                SkipPak         = true,
+                Changes         = [weight0MaterialsOnly],
             },
             new ItemDbTweak {
                 Name            = $"{name} (REF): Weight: 0 (Ferrystone Only)",
@@ -604,6 +612,27 @@ public class ItemTweaks : IMod {
                     }
                     break;
             }
+        }
+    }
+
+    public static void WeightRef(StreamWriter writer, WeightOptions option) {
+        switch (option) {
+            case WeightOptions._0:
+                writer.WriteLine($"        if entry._{nameof(App_ItemDataParam.Id)} ~= {ItemConstants._1_G} then");
+                writer.WriteLine($"            entry._{nameof(App_ItemDataParam.Weight)} = 0");
+                writer.WriteLine("        end");
+                return;
+            case WeightOptions._0_Ferry_Only:
+                writer.WriteLine($"        if entry._{nameof(App_ItemDataParam.Id)} == {ItemConstants.FERRYSTONE} then");
+                writer.WriteLine($"            entry._{nameof(App_ItemDataParam.Weight)} = 0");
+                writer.WriteLine("        end");
+                return;
+            case WeightOptions._0_Materials:
+                writer.WriteLine($"        if entry._{nameof(App_ItemDataParam.Category)} == {(uint) App_ItemCategory.Material}");
+                writer.WriteLine($"            or entry._{nameof(App_ItemDataParam.SubCategory)} == {(uint) App_ItemSubCategory.Material} then");
+                writer.WriteLine($"            entry._{nameof(App_ItemDataParam.Weight)} = 0");
+                writer.WriteLine("        end");
+                return;
         }
     }
 

@@ -63,6 +63,9 @@ public partial class GenerateFiles {
         "snow.StmGuiKeyconfigData.EnumItemSystemMessage`",
         "snow.StmGuiKeyconfigData.EnumMessage`",
         "System.Collections.Generic.List`1<snow.enemy.em134.Em", // Nested generics.
+#elif RE3
+        "offline.camera.CameraCurveUserData.CurveParamTable`",
+        "offline.CorrespondGroup`",
 #elif RE4
         "app.",
         "chainsaw.CameraCurveUserDataParam.CurveParamTable`", // Winds up with `ObservableCollection<System_String>` instead of `ObservableCollection<string>`.
@@ -96,6 +99,16 @@ public partial class GenerateFiles {
 #elif MHR
         "snow.camera.CameraUtility.BufferingParam`",
         "snow.eventcut.EventPlayerMediator.FaceMaterialConfig`",
+#elif RE3
+        "offline.DampingSetting`",
+        "offline.enemy.userdata.MotionUserDataBase.MotionInfo`",
+        "offline.enemy.userdata.MotionUserDataBase.MotionTable`",
+        "offline.ParseBitFlag`",
+        "offline.Percentable`",
+        "offline.PercentValueTable`",
+        "offline.weapon.generator.BombGeneratorUserDataBase`",
+        "offline.weapon.shell.RadiateShellUserDataBase`",
+        "offline.weapon.shell.ShellPrefabSetting`",
 #elif RE4
         "chainsaw.AIMapNodeScore.Param`",
         "chainsaw.AppEventCatalogBase`",

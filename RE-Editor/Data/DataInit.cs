@@ -12,6 +12,8 @@ using RE_Editor.Common.Models;
 using RE_Editor.Data.DD2;
 #elif MHR
 using RE_Editor.Data.MHR;
+#elif RE3
+using RE_Editor.Data.RE3;
 #elif RE4
 using RE_Editor.Data.RE4;
 #endif

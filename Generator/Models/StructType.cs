@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows.Media;
 using RE_Editor.Common;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Models;
@@ -70,6 +71,7 @@ public class StructType(string name, string? parent, string hash, StructJson str
         }
     }
 
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private DataSourceType? GetButtonType(StructJson.Field field) {
         // This part check the class + field name.
         var fullName = $"{name}.{field.name.ToConvertedFieldName()}";
@@ -103,6 +105,8 @@ public class StructType(string name, string? parent, string hash, StructJson str
             "snow.data.DataDef.PlHyakuryuSkillId" => DataSourceType.RAMPAGE_SKILLS,
             "snow.data.DataDef.PlKitchenSkillId" => DataSourceType.DANGO_SKILLS,
             "snow.data.DataDef.PlWeaponActionId" => DataSourceType.SWITCH_SKILLS,
+#elif RE3
+            "offline.gamemastering.Item.ID" => DataSourceType.ITEMS,
 #elif RE4
             "chainsaw.ItemID" => DataSourceType.ITEMS,
             "chainsaw.WeaponID" => DataSourceType.WEAPONS,

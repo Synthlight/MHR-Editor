@@ -1,0 +1,15 @@
+{
+    "profiles": {
+        "[None]": {
+            "commandName": "Project"
+        },
+        "EsItemUserData.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/RE3/re_chunk_000/natives/STM/Escape/UserData/Item/EsItemUserData.user.2\""
+        },
+        "ExesItemUserData.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/RE3/re_chunk_000/natives/STM/Escape/UserData/Item/ExesItemUserData.user.2\""
+        }
+    }
+}

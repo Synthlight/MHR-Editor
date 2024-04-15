@@ -30,6 +30,15 @@
 		<Compile Remove="BitMasks.cs"/>
 		<Compile Remove="PathHelper.MHR.cs"/>
 	</ItemGroup>
+	<!-- RE3 -->
+	<ItemGroup Condition="'$(Configuration.StartsWith(`RE3`))'">
+		<Compile Remove="Attributes\DataSourceType.cs"/>
+	</ItemGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE3`))'">
+		<Compile Remove="Attributes\DataSourceType.RE3.cs"/>
+		<Compile Remove="Data\DataHelper.RE3.cs"/>
+		<Compile Remove="PathHelper.RE3.cs"/>
+	</ItemGroup>
 	<!-- RE4 -->
 	<ItemGroup Condition="'$(Configuration.StartsWith(`RE4`))'">
 		<Compile Remove="Attributes\DataSourceType.cs"/>

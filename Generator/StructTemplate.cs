@@ -9,6 +9,8 @@ using Guid = RE_Editor.Common.Structs.Guid;
 using RE_Editor.Common.Data;
 #elif MHR
 using RE_Editor.Common.Data;
+#elif RE3
+using RE_Editor.Common.Data;
 #elif RE4
 using RE_Editor.Common.Data;
 #endif
@@ -374,6 +376,8 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
         return dataSourceType switch {
 #if MHR
             DataSourceType.ITEMS => ["[ButtonIdAsHex]"],
+#elif RE3
+            DataSourceType.ITEMS => ["[ButtonIdAsHex]"],
 #elif RE4
             DataSourceType.ITEMS => ["[ButtonIdAsHex]"],
             DataSourceType.WEAPONS => ["[ButtonIdAsHex]"],
@@ -392,6 +396,8 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
             DataSourceType.RAMPAGE_SKILLS => nameof(DataHelper.RAMPAGE_SKILL_NAME_LOOKUP),
             DataSourceType.SKILLS => nameof(DataHelper.SKILL_NAME_LOOKUP),
             DataSourceType.SWITCH_SKILLS => nameof(DataHelper.SWITCH_SKILL_NAME_LOOKUP),
+#elif RE3
+            DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
 #elif RE4
             DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
             DataSourceType.WEAPONS => nameof(DataHelper.WEAPON_NAME_LOOKUP),

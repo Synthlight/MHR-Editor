@@ -37,6 +37,10 @@
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>Assets.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+		<None Update="Data\DD2\Assets\SUPPORTED_FILES.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>SUPPORTED_FILES.txt</TargetPath>
+		</None>
 	</ItemGroup>
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`DD2`))'">
 		<Compile Remove="Constants\DD2\**"/>
@@ -74,6 +78,10 @@
 		<Compile Update="Windows\MainWindow.xaml.buttons.MHR.cs">
 			<DependentUpon>MainWindow.xaml</DependentUpon>
 		</Compile>
+		<None Update="Data\MHR\Assets\SUPPORTED_FILES.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>SUPPORTED_FILES.txt</TargetPath>
+		</None>
 	</ItemGroup>
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHR`))'">
 		<Compile Remove="Constants\MHR\**"/>
@@ -95,6 +103,44 @@
 		<Message Importance="high" Text="Copying launchSettings.MHR.json..."/>
 		<Copy SourceFiles="Properties/launchSettings.MHR.json" DestinationFiles="Properties/launchSettings.json"/>
 	</Target>
+	<!-- RE3 -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('RE3'))">
+		<AssemblyName>RE3-Editor</AssemblyName>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+	</PropertyGroup>
+	<ItemGroup Condition="$(Configuration.StartsWith('RE3'))">
+		<Compile Update="Data\RE3\Assets.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Assets.resx</DependentUpon>
+		</Compile>
+		<EmbeddedResource Update="Data\RE3\Assets.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Assets.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<None Update="Data\RE3\Assets\SUPPORTED_FILES.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>SUPPORTED_FILES.txt</TargetPath>
+		</None>
+	</ItemGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE3`))'">
+		<Compile Remove="Constants\RE3\**"/>
+		<Compile Remove="Data\RE3\**"/>
+		<EmbeddedResource Remove="Data\RE3\**"/>
+		<Page Remove="Data\RE3\**"/>
+		<None Remove="Data\RE3\**"/>
+		<Compile Remove="Data\DataInit.RE3.cs"/>
+		<Compile Remove="Models\RE3\**"/>
+		<Compile Remove="Mods\RE3\**"/>
+	</ItemGroup>
+	<!-- RE3 (Launch Settings) -->
+	<ItemGroup Condition="$(Configuration.StartsWith('RE3'))">
+		<UpToDateCheckInput Include="Properties/launchSettings.RE3.json"/>
+	</ItemGroup>
+	<Target Condition="$(Configuration.StartsWith('RE3'))" Name="CopyLaunchSettingsRE3" AfterTargets="Build" Inputs="Properties/launchSettings.RE3.json" Outputs="Properties/launchSettings.json">
+		<Message Importance="high" Text="Copying launchSettings.RE3.json..."/>
+		<Copy SourceFiles="Properties/launchSettings.RE3.json" DestinationFiles="Properties/launchSettings.json"/>
+	</Target>
 	<!-- RE4 -->
 	<PropertyGroup Condition="$(Configuration.StartsWith('RE4'))">
 		<AssemblyName>RE4-Editor</AssemblyName>
@@ -110,6 +156,10 @@
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>Assets.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+		<None Update="Data\RE4\Assets\SUPPORTED_FILES.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>SUPPORTED_FILES.txt</TargetPath>
+		</None>
 	</ItemGroup>
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE4`))'">
 		<Compile Remove="Constants\RE4\**"/>
@@ -139,9 +189,5 @@
 		<Compile Update="Windows\MainWindow.xaml.buttons.cs">
 			<DependentUpon>MainWindow.xaml</DependentUpon>
 		</Compile>
-		<None Update="Data\DD2\Assets\SUPPORTED_FILES.txt">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<TargetPath>SUPPORTED_FILES.txt</TargetPath>
-		</None>
 	</ItemGroup>
 </Project>

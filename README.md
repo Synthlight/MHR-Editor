@@ -6,6 +6,7 @@ RE data file editor.
 Supported games:
 - `DD2`
 - `MHR`
+- `RE3`
 - `RE4`
 
 To build for a game, switch to that configuration: `{Game} - Debug/Release`

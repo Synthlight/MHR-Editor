@@ -7,6 +7,10 @@
 	<PropertyGroup Condition="$(Configuration.StartsWith('MHR'))">
 		<DefineConstants>$(DefineConstants);MHR</DefineConstants>
 	</PropertyGroup>
+	<!-- RE3 -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('RE3'))">
+		<DefineConstants>$(DefineConstants);RE3</DefineConstants>
+	</PropertyGroup>
 	<!-- RE4 -->
 	<PropertyGroup Condition="$(Configuration.StartsWith('RE4'))">
 		<DefineConstants>$(DefineConstants);RE4</DefineConstants>

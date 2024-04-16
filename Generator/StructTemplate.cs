@@ -35,24 +35,25 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
         if (structInfo.fields != null) {
             // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var field in structInfo.fields) {
-                if (string.IsNullOrEmpty(field.originalType)) {
+                if (string.IsNullOrEmpty(field.originalType) && structInfo.name!.StartsWith("via")) {
                     switch (field.type) {
                         case "Data":
-                            switch (field.size) {
-                                case 4:
-                                    field.type         = "F32";
-                                    field.originalType = "System.Single";
-                                    break;
-                                default:
-                                    field.type         = nameof(UIntArray);
-                                    field.originalType = nameof(UIntArray);
-                                    break;
+                            if (field.size == 4) {
+                                field.type         = "F32";
+                                field.originalType = "System.Single";
+                            } else {
+                                field.type         = nameof(UIntArray);
+                                field.originalType = nameof(UIntArray);
                             }
                             break;
                         case "String":
                             field.originalType = "System.String";
                             break;
                     }
+                }
+                if (structInfo.name is "app.AttackUserData" or "app.HitBaseUserData" && field.name == "v1") {
+                    field.type         = "Object";
+                    field.originalType = "via.physics.UserData";
                 }
                 if (string.IsNullOrEmpty(field.name)) continue;
                 WriteProperty(file, field);
@@ -114,6 +115,11 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
             var convertedTypeName = field.GetCSharpType();
             if (convertedTypeName != null) {
                 field.originalType = convertedTypeName;
+            }
+
+            if (field.originalType == "") {
+                Console.WriteLine($"Warning: Unknown originalType, skipping: {structInfo.name}::{field.name}");
+                return;
             }
         }
 

@@ -29,10 +29,16 @@ public partial class MainWindow {
     public const  bool SHOW_RAW_BYTES = false;
 #endif
 
-#if MHR
+#if DD2
+    private const string TITLE = "DD2 Editor";
+#elif MHR
     private const string TITLE = "MHR Editor";
-#else
-    private const string TITLE = "RE Editor";
+#elif RE2
+    private const string TITLE = "RE2 Editor";
+#elif RE3
+    private const string TITLE = "RE3 Editor";
+#elif RE4
+    private const string TITLE = "RE4 Editor";
 #endif
 
     [CanBeNull] private CancellationTokenSource savedTimer;

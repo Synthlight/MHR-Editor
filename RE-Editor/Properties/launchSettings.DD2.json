@@ -59,6 +59,10 @@
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppData/Generate/ManualSet/Field/EditField_57/Enemy/Normal/Normal.user.2\""
         },
+        "NpcData.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/ch/ch300/UserData/NpcData.user.2\""
+        },
         "StaminaParameter.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/ch/Common/Human/UserData/Parameter/StaminaParameter.user.2\""

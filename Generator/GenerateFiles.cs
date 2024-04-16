@@ -46,12 +46,9 @@ public partial class GenerateFiles {
         "System.Collections.Generic.Queue`1<via.vec3>", // Because this breaks generation and I need a better way of handling generics.
         "via.gui.Panel", // Too long, skip it for now.
 #if DD2
-        "AISituation",
-        "app.anime.EquipAdjustUserData.SizeData`",
-        "app.ClassSelector`",
-        "app.FilterSettingMediator`",
+        "app.ClassSelector`1[",
         "app.GUICharaEditData.PatternParam`",
-        "app.lod.LODProcessDefine.ClassSelector`",
+        "app.lod.LODProcessDefine.ClassSelector`1[app.lod.opecon.LODProcessOperatingCondition][][]",
 #elif MHR
         "snow.data.StmKeyconfigSystem.ConfigCodeSet`",
         "snow.enemy.EnemyCarryChangeTrack`",
@@ -79,6 +76,7 @@ public partial class GenerateFiles {
     public static readonly List<string> ALLOWED_GENERIC_TYPES = [
 #if DD2
         ".Element<",
+        "app.anime.EquipAdjustUserData.SizeData`",
         "app.AppEventCatalogBase`",
         "app.BodyScaleFormulaBase`",
         "app.BodyWeightDataBase`",
@@ -88,10 +86,13 @@ public partial class GenerateFiles {
         "app.CharacterVariationDataContainer`",
         "app.charaedit.ch000.useredit.LimitSpeciesAndGenderData`",
         "app.charaedit.EditInfluenceMapBase`",
+        "app.ClassSelector`1<",
         "app.CutSceneIKModule.EquipmentOffset`",
+        "app.FilterSettingMediator`",
         "app.JobUniqueParameter.AreaParameterList`",
         "app.JobUniqueParameter.CustomSkillLevelParameter`",
         "app.LocalWindSettings`",
+        "app.lod.LODProcessDefine.ClassSelector`1<",
         "app.MaterialInterpolation.Variable`",
         "app.ModuleParametersUserData`",
         "app.retarget.RetargetLodJointSettingBase`",
@@ -381,10 +382,11 @@ public partial class GenerateFiles {
                         || structName.StartsWith("System");
         if (structName != null) {
             var isAllowed = structName.StartsWith(ROOT_STRUCT_NAMESPACE)
-                            || structName.StartsWith("via")
-                            || structName.StartsWith("share")
                             || structName.StartsWith("ace")
-                            || structName.StartsWith("soundlib");
+                            || structName.StartsWith("AISituation")
+                            || structName.StartsWith("share")
+                            || structName.StartsWith("soundlib")
+                            || structName.StartsWith("via");
             isBadName = !(!isBadName && isAllowed);
             if (isBadName && ALLOWED_GENERIC_TYPES.Any(structName.StartsWith)) isBadName = false;
         }

@@ -275,7 +275,7 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
             var isObjectType   = field.type == "Object";
             var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType, isUserData);
 
-            if (!field.array && isObjectType && viaType == null && typeName != null) {
+            if (!field.array && isObjectType && viaType == null && typeName != null && !isEnumType) {
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
                 if (typeName.StartsWith("Via")) { // For things like `Via_AnimationCurve` which generate from the json but aren't our manually implemented `via` types.
                     file.WriteLine($"        obj.{newName} = [new()];");

@@ -63,6 +63,9 @@ public partial class GenerateFiles {
         "snow.StmGuiKeyconfigData.EnumItemSystemMessage`",
         "snow.StmGuiKeyconfigData.EnumMessage`",
         "System.Collections.Generic.List`1<snow.enemy.em134.Em", // Nested generics.
+#elif RE2
+        "app.ropeway.camera.CameraCurveUserData.CurveParamTable`",
+        "app.ropeway.CorrespondGroup`",
 #elif RE3
         "offline.camera.CameraCurveUserData.CurveParamTable`",
         "offline.CorrespondGroup`",
@@ -99,6 +102,17 @@ public partial class GenerateFiles {
 #elif MHR
         "snow.camera.CameraUtility.BufferingParam`",
         "snow.eventcut.EventPlayerMediator.FaceMaterialConfig`",
+#elif RE2
+        "app.ropeway.enemy.userdata.MotionUserDataBase.MotionInfo`",
+        "app.ropeway.enemy.userdata.MotionUserDataBase.MotionTable`",
+        "app.ropeway.BitFlag`",
+        "app.ropeway.DampingSetting`",
+        "app.ropeway.ParseBitFlag`",
+        "app.ropeway.Percentable`",
+        "app.ropeway.PercentValueTable`",
+        "app.ropeway.weapon.generator.BombGeneratorUserDataBase`",
+        "app.ropeway.weapon.shell.ShellPrefabSetting`",
+        "app.ropeway.weapon.shell.RadiateShellUserDataBase`",
 #elif RE3
         "offline.DampingSetting`",
         "offline.enemy.userdata.MotionUserDataBase.MotionInfo`",

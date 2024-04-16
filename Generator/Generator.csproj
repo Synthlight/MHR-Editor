@@ -21,6 +21,10 @@
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHR`))'">
 		<Compile Remove="GenerateFiles.MHR.cs"/>
 	</ItemGroup>
+	<!-- RE2 -->
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE2`))'">
+		<Compile Remove="GenerateFiles.RE2.cs"/>
+	</ItemGroup>
 	<!-- RE3 -->
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE3`))'">
 		<Compile Remove="GenerateFiles.RE3.cs"/>

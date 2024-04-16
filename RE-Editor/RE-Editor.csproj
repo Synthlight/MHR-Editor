@@ -103,6 +103,44 @@
 		<Message Importance="high" Text="Copying launchSettings.MHR.json..."/>
 		<Copy SourceFiles="Properties/launchSettings.MHR.json" DestinationFiles="Properties/launchSettings.json"/>
 	</Target>
+	<!-- RE2 -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('RE2'))">
+		<AssemblyName>RE2-Editor</AssemblyName>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+	</PropertyGroup>
+	<ItemGroup Condition="$(Configuration.StartsWith('RE2'))">
+		<Compile Update="Data\RE2\Assets.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Assets.resx</DependentUpon>
+		</Compile>
+		<EmbeddedResource Update="Data\RE2\Assets.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Assets.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<None Update="Data\RE2\Assets\SUPPORTED_FILES.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>SUPPORTED_FILES.txt</TargetPath>
+		</None>
+	</ItemGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE2`))'">
+		<Compile Remove="Constants\RE2\**"/>
+		<Compile Remove="Data\RE2\**"/>
+		<EmbeddedResource Remove="Data\RE2\**"/>
+		<Page Remove="Data\RE2\**"/>
+		<None Remove="Data\RE2\**"/>
+		<Compile Remove="Data\DataInit.RE2.cs"/>
+		<Compile Remove="Models\RE2\**"/>
+		<Compile Remove="Mods\RE2\**"/>
+	</ItemGroup>
+	<!-- RE2 (Launch Settings) -->
+	<ItemGroup Condition="$(Configuration.StartsWith('RE2'))">
+		<UpToDateCheckInput Include="Properties/launchSettings.RE2.json"/>
+	</ItemGroup>
+	<Target Condition="$(Configuration.StartsWith('RE2'))" Name="CopyLaunchSettingsRE2" AfterTargets="Build" Inputs="Properties/launchSettings.RE2.json" Outputs="Properties/launchSettings.json">
+		<Message Importance="high" Text="Copying launchSettings.RE2.json..."/>
+		<Copy SourceFiles="Properties/launchSettings.RE2.json" DestinationFiles="Properties/launchSettings.json"/>
+	</Target>
 	<!-- RE3 -->
 	<PropertyGroup Condition="$(Configuration.StartsWith('RE3'))">
 		<AssemblyName>RE3-Editor</AssemblyName>

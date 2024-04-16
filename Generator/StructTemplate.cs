@@ -240,6 +240,10 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
                 viaType      = nameof(Type);
                 isObjectType = false;
                 break;
+            case "Via_OBB":
+                viaType      = nameof(UIntArray);
+                isObjectType = false;
+                break;
             default: {
                 if (isNonPrimitive && !isObjectType && !isUserData) {
                     // This makes sure we've implemented the via type during generation.

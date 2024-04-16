@@ -106,7 +106,7 @@ public class RszObject : OnPropertyChangedBase {
                     throw new FileNotSupported();
                 }
 
-                if (field.type == nameof(UIntArray)) {
+                if (field.type is nameof(UIntArray) or "OBB") {
                     Debug.Assert((float) field.size % 4 == 0, $"Error: `Data` field size is not a multiple of {UIntArray.DATA_WIDTH}.");
                     var dataWidth = (uint) (field.size / UIntArray.DATA_WIDTH);
                     var objects   = new ObservableCollection<RszObject>();
@@ -149,7 +149,7 @@ public class RszObject : OnPropertyChangedBase {
                     SetList(items, fieldSetMethod, rszObject);
                 }
             } else {
-                if (field.type == nameof(UIntArray)) {
+                if (field.type is nameof(UIntArray) or "OBB") {
                     Debug.Assert((float) field.size % 4 == 0, $"Error: `Data` field size is not a multiple of {UIntArray.DATA_WIDTH}.");
                     var data = new UIntArray((uint) (field.size / UIntArray.DATA_WIDTH));
                     data.Read(reader);
@@ -340,7 +340,7 @@ public class RszObject : OnPropertyChangedBase {
             writer.PadTill(() => writer.BaseStream.Position % align != 0);
 
             if (field.array) {
-                if (field.type == nameof(UIntArray)) {
+                if (field.type is nameof(UIntArray) or "OBB") {
                     var list = (ObservableCollection<UIntArray>) fieldGetMethod.Invoke(this, null)!;
                     writer.Write(list.Count);
                     foreach (var obj in list) {
@@ -382,7 +382,7 @@ public class RszObject : OnPropertyChangedBase {
                     }
                 }
             } else {
-                if (field.type == nameof(UIntArray)) {
+                if (field.type is nameof(UIntArray) or "OBB") {
                     var list = (ObservableCollection<UIntArray>) fieldGetMethod.Invoke(this, null)!;
                     list[0].Write(writer);
                 } else if (isObjectType || isUserData) { // Pointer to object.
@@ -504,37 +504,4 @@ public static class RszObjectExtensions {
 
         return list;
     }
-
-    //public static void SetDataFromList<T>(this RszObject.FieldData fieldData, IList<T> list) where T : notnull {
-    //    var size      = fieldData.fieldInfo.size;
-    //    var byteCount = list.Count * size;
-    //    var bytes     = new List<byte>(byteCount);
-
-    //    foreach (var entry in list) {
-    //        byte[] data;
-    //        // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-    //        if (entry.GetType().IsGeneric(typeof(IListWrapper<>))) {
-    //            var  value     = ((dynamic) entry).Value;
-    //            Type valueType = value.GetType();
-    //            var  getBytes  = typeof(Extensions).GetMethod(nameof(Extensions.GetBytes), BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)?.MakeGenericMethod(valueType);
-    //            data = (byte[]) (getBytes?.Invoke(null, new object[] {value}) ?? throw new("sub.GetDataAs failure."));
-    //        } else {
-    //            data = entry.GetBytes();
-    //        }
-    //        bytes.AddRange(data);
-    //    }
-
-    //    if (bytes.Count != byteCount) throw new InvalidOperationException($"Resultant byte data array size is unexpected: found: `{bytes.Count}`, expected: `{byteCount}`.");
-
-    //    fieldData.arrayCount = list.Count;
-    //    fieldData.data       = bytes.ToArray();
-    //}
-
-    //public static RszObject.FieldData? getFieldByName(this Dictionary<int, RszObject.FieldData> fieldData, string name) {
-    //    // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
-    //    foreach (var value in fieldData.Values) {
-    //        if (value.fieldInfo.name == name) return value;
-    //    }
-    //    return null;
-    //}
 }

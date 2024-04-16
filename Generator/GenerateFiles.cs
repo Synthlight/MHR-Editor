@@ -31,7 +31,6 @@ public partial class GenerateFiles {
         "Frustum",
         "KeyFrame",
         "LineSegment",
-        "OBB",
         "Rect",
         "Rect3D",
         "Sphere",

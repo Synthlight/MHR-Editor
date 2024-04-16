@@ -144,10 +144,11 @@ public partial class GenerateFiles {
 
     private static readonly List<uint> GREYLIST = []; // Hashes used in a given location.
 
-    public readonly  Dictionary<string, EnumType>   enumTypes      = [];
-    public readonly  Dictionary<string, StructType> structTypes    = [];
-    private readonly Dictionary<string, StructJson> structJson     = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(STRUCT_JSON_PATH))!;
-    public readonly  Dictionary<uint, uint>         gpCrcOverrides = []; // Because the GP version uses the same hashes, but different CRCs.
+    public readonly  Dictionary<string, EnumType>   enumTypes        = [];
+    public readonly  Dictionary<string, StructType> structTypes      = [];
+    private readonly Dictionary<string, StructJson> structJsonByName = [];
+    private readonly Dictionary<string, StructJson> structJson       = JsonConvert.DeserializeObject<Dictionary<string, StructJson>>(File.ReadAllText(STRUCT_JSON_PATH))!;
+    public readonly  Dictionary<uint, uint>         gpCrcOverrides   = []; // Because the GP version uses the same hashes, but different CRCs.
 
     public void Go(string[] args) {
         var useWhitelist = args.Length > 0 && args.Contains("useWhitelist");
@@ -306,6 +307,11 @@ public partial class GenerateFiles {
     private void ParseStructs() {
         var structTypes = new Dictionary<string, StructType>();
 
+        foreach (var (_, structInfo) in structJson) {
+            if (string.IsNullOrEmpty(structInfo.name)) continue;
+            structJsonByName[structInfo.name] = structInfo;
+        }
+
         foreach (var (hash, structInfo) in structJson) {
             if (structInfo.name?.StartsWith("System.Action`") == true) {
             }
@@ -325,17 +331,42 @@ public partial class GenerateFiles {
 
             // Ignore the 'via.thing' placeholders.
             if (structInfo.name!.GetViaType() != null) continue;
-            var     name   = structInfo.name.ToConvertedTypeName()!;
-            string? parent = null;
-            if (IsStructNameValid(structInfo.parent) && structInfo.parent?.StartsWith("via") != true) {
-                parent = structInfo.parent.ToConvertedTypeName();
-            }
+            var name       = structInfo.name.ToConvertedTypeName()!;
+            var parent     = GetParent(structInfo);
             var structType = new StructType(name, parent, hash, structInfo);
             structTypes[name] = structType;
         }
 
         foreach (var key in structTypes.Keys.OrderBy(s => s)) {
             this.structTypes[key] = structTypes[key];
+        }
+    }
+
+    private string? GetParent(StructJson structInfo) {
+        while (true) {
+            var parent = structInfo.parent;
+            if (string.IsNullOrEmpty(parent)) return null;
+
+            /*
+             * This whole thing is to deal with generics that have intermediary (empty) types that we skip.
+             * Example:
+             * `app.ShellAdditionalSurfaceStickerParameter`
+             *     `app.ShellAdditionalParameter`1<app.ShellAdditionalSurfaceSticker>` <- We want to skip this.
+             *         `app.ShellAdditionalParameter` <---------------------------------- And get this.
+             */
+
+            if (structJsonByName.TryGetValue(parent, out var parentStructInfo)) {
+                if (parent.Contains('`') && parentStructInfo.parent?.Contains('`') == false && parentStructInfo.fields?.Count == 0) {
+                    structInfo = parentStructInfo;
+                    continue;
+                }
+            }
+
+            if (IsStructNameValid(parent) && parent.StartsWith("via") != true) {
+                parent = parent.ToConvertedTypeName();
+                return parent;
+            }
+            return null;
         }
     }
 

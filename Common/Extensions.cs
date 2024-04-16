@@ -444,14 +444,6 @@ public static class Extensions {
                          .Replace("::", "_")
                          .Replace("[]", "");
 
-        if (source == "app.JobUniqueParameter.AreaParameterList`1<app.Job04Parameter.StealthParameter.AreaParameter>") {
-        }
-
-        // TODO: Need to transform:
-        // app.JobUniqueParameter.CustomSkillLevelParameter`1.Element[[app.Job04Parameter.CuttingWindParameter.LevelParameter, application, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]][]
-        // into:
-        // app.JobUniqueParameter.CustomSkillLevelParameter`1.Element<app.Job04Parameter.CuttingWindParameter.LevelParameter>
-
         if (int.TryParse(name[0].ToString(), out _)) name = "_" + name; // If it starts with a number.
         while (name.EndsWith("k__BackingField")) name     = name[1..name.LastIndexOf('>')]; // Remove the k__BackingField.
         while (name.StartsWith("System_Collections_Generic_List`")
@@ -487,7 +479,7 @@ public static class Extensions {
 
         name = name.Replace('`', '_');
 
-        if (name.Contains("<")) {
+        if (name.Contains('<')) {
             name = name.Replace('<', '_')
                        .Replace(">", "");
         }

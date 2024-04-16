@@ -2,6 +2,10 @@
     "profiles": {
         "[None]": {
             "commandName": "Project"
+        },
+        "WeaponBulletUserData.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/RE2/re_chunk_000/natives/STM/SectionRoot/UserData/System/Inventory/WeaponBulletUserData.user.2\""
         }
     }
 }

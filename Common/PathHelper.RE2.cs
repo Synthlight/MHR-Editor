@@ -19,4 +19,6 @@ public static partial class PathHelper {
     public static readonly string[] TEST_PATHS = [
         @"\natives\STM\"
     ];
+
+    public const string WEAPON_BULLET_USER_DATA_PATH = "/natives/STM/SectionRoot/UserData/System/Inventory/WeaponBulletUserData.user.2";
 }

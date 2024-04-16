@@ -105,6 +105,9 @@ public class StructType(string name, string? parent, string hash, StructJson str
             "snow.data.DataDef.PlHyakuryuSkillId" => DataSourceType.RAMPAGE_SKILLS,
             "snow.data.DataDef.PlKitchenSkillId" => DataSourceType.DANGO_SKILLS,
             "snow.data.DataDef.PlWeaponActionId" => DataSourceType.SWITCH_SKILLS,
+#elif RE2
+            "app.ropeway.gamemastering.Item.ID" => DataSourceType.ITEMS,
+            "app.ropeway.EquipmentDefine.WeaponType" => DataSourceType.WEAPONS,
 #elif RE3
             "offline.gamemastering.Item.ID" => DataSourceType.ITEMS,
 #elif RE4

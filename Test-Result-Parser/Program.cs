@@ -12,15 +12,25 @@ public static class Program {
         var          results  = TrxDeserializer.Deserialize(TEST_RESULTS_PATH);
         const string testName = "TestWriteUserFile";
 
-        var paths = from result in results.Results.UnitTestResults
-                    where result.Outcome == "Passed"
-                          && result.TestName.StartsWith(testName)
-                    let name = result.TestName[$"{testName} (".Length..^1]
-                                     .Replace($@"{PathHelper.CHUNK_PATH}\", "")
-                                     .Replace('/', '\\')
-                                     .ToLower()
-                    orderby name
-                    select name;
+        var paths  = new List<string>(results.Results.UnitTestResults.Count);
+        var passed = 0;
+        var failed = 0;
+        var total  = 0;
+        foreach (var result in results.Results.UnitTestResults) {
+            if (!result.TestName.StartsWith(testName)) continue;
+
+            if (result.Outcome == "Passed") {
+                passed++;
+                var name = result.TestName[$"{testName} (".Length..^1]
+                                 .Replace($@"{PathHelper.CHUNK_PATH}\", "")
+                                 .Replace('/', '\\')
+                                 .ToLower();
+                paths.Add(name);
+            } else {
+                failed++;
+            }
+            total++;
+        }
 
         using var assetFile  = File.CreateText($@"{ASSETS_DIR}\{PathHelper.SUPPORTED_FILES_NAME}");
         using var outputFile = File.CreateText(TEST_RESULTS_PATH.Replace("Results.trx", "Supported Files.txt"));
@@ -29,5 +39,14 @@ public static class Program {
             assetFile.WriteLine(path);
             outputFile.WriteLine(path);
         }
+
+        var percent = (int) ((float) passed / total * 100);
+        Console.WriteLine($"Passed: {passed}\n" +
+                          $"Failed: {failed}\n" +
+                          $"Total: {total}\n\n" +
+                          $"Passing: {percent}%\n");
+
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
     }
 }

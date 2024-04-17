@@ -3,4 +3,3 @@ dotnet build -c %1-Debug --nologo
 pushd bin\Generator\%1-Debug\
 Generator.exe useGreylist
 popd
-pause

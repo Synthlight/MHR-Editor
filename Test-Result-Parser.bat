@@ -3,4 +3,3 @@ dotnet build -c %1-Debug --nologo
 pushd bin\Test-Result-Parser\%1-Debug\
 Test-Result-Parser.exe
 popd
-pause

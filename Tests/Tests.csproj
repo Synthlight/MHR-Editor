@@ -55,4 +55,11 @@
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE4`))'">
 		<None Remove="RE4.runsettings"/>
 	</ItemGroup>
+	<!-- RE8 -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('RE8'))">
+		<RunSettingsFilePath>$(MSBuildProjectDirectory)\RE8.runsettings</RunSettingsFilePath>
+	</PropertyGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE8`))'">
+		<None Remove="RE8.runsettings"/>
+	</ItemGroup>
 </Project>

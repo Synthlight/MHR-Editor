@@ -4,36 +4,10 @@ RE4:
 
 DD2:
         App_ItemShortcutParameter has item arrays which are generic list wrappers and break the item enum button.
-        Via_AnimationCurve is using the new UIntArray container but the UI can't diplay it.
+        Via_AnimationCurve is using the new UIntArray container but the UI can't display it.
 
-        App_AttackUserData (HumanShellParamData_Job08.user.2)
-            This instance (app.AttackUserData[1729]) has a field `v1` which is apparently `via.physics.UserData[1722]`.
-            Except I don't know where/how this happens because the field is just defined as:
-            ```
-                "e7bd8658": {
-                        "crc": "b95444cd",
-                        "fields": [
-                                {
-                                        "align": 4,
-                                        "array": false,
-                                        "name": "v0",
-                                        "native": true,
-                                        "original_type": "",
-                                        "size": 4,
-                                        "type": "String"
-                                },
-                                {
-                                        "align": 4,
-                                        "array": false,
-                                        "name": "v1",
-                                        "native": true,
-                                        "original_type": "",
-                                        "size": 4,
-                                        "type": "Data"
-                                },
-            ``
-            And it's not `UserData` so I don't know why this one, unlike others, has instance data.
-
+RE8:
+        `app.TPSCameraConditionSetting`1<via.vec3>` generates with a `ObservableCollection<Via_vec3>` from `System.Collections.Generic.List`1<app.TPSCameraConditionSetting`1.Setting<via.vec3>>`.
 
 Show column primitive type below the header text.
     Show the full type name on header hover.

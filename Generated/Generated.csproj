@@ -46,4 +46,12 @@
 		<Compile Remove="Structs\RE4\**"/>
 		<Compile Remove="Re4WeaponInstanser.cs"/>
 	</ItemGroup>
+	<!-- RE8 -->
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE8`))'">
+		<Compile Remove="Enums\RE8\**"/>
+		<Compile Remove="Manual\RE8\Structs\**"/>
+		<Compile Remove="Models\RE8\**"/>
+		<Compile Remove="Structs\RE8\**"/>
+		<Compile Remove="RE8WeaponInstanser.cs"/>
+	</ItemGroup>
 </Project>

@@ -19,6 +19,10 @@
 	<PropertyGroup Condition="$(Configuration.StartsWith('RE4'))">
 		<DefineConstants>$(DefineConstants);RE4</DefineConstants>
 	</PropertyGroup>
+	<!-- RE8 -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('RE8'))">
+		<DefineConstants>$(DefineConstants);RE8</DefineConstants>
+	</PropertyGroup>
 	<!-- Debug -->
 	<PropertyGroup Condition="$(Configuration.Contains('Debug'))">
 		<DefineConstants>$(DefineConstants);DEBUG</DefineConstants>

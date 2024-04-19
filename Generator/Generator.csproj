@@ -33,4 +33,8 @@
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE4`))'">
 		<Compile Remove="GenerateFiles.RE4.cs"/>
 	</ItemGroup>
+	<!-- RE8 -->
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE8`))'">
+		<Compile Remove="GenerateFiles.RE8.cs"/>
+	</ItemGroup>
 </Project>

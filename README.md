@@ -9,6 +9,7 @@ Supported games:
 - `RE2`
 - `RE3`
 - `RE4`
+- `RE8` (Village)
 
 To build for a game, switch to that configuration: `{Game} - Debug/Release`
 

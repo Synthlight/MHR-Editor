@@ -68,6 +68,8 @@ public partial class GenerateFiles {
 #elif RE4
         "app.",
         "chainsaw.CameraCurveUserDataParam.CurveParamTable`", // Winds up with `ObservableCollection<System_String>` instead of `ObservableCollection<string>`.
+#elif RE8
+        "app.TPSCameraConditionSetting`",
 #endif
     ];
 
@@ -139,6 +141,11 @@ public partial class GenerateFiles {
         "chainsaw.SwitchFeatureParameter`",
         "soundlib.SoundStateApp`",
         "soundlib.SoundSwitchApp`",
+#elif RE8
+        "app.EnemyRankControlParameter.RankParam`",
+        "app.ParamSetting`",
+        "app.Spawn.ResumeOptionParameter`",
+        "app.TPSCameraConditionContainer`",
 #endif
     ];
 

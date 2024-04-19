@@ -57,4 +57,13 @@
 		<Compile Remove="Data\DataHelper.RE4.cs"/>
 		<Compile Remove="PathHelper.RE4.cs"/>
 	</ItemGroup>
+	<!-- RE8 -->
+	<ItemGroup Condition="'$(Configuration.StartsWith(`RE8`))'">
+		<Compile Remove="Attributes\DataSourceType.cs"/>
+	</ItemGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE8`))'">
+		<Compile Remove="Attributes\DataSourceType.RE8.cs"/>
+		<Compile Remove="Data\DataHelper.RE8.cs"/>
+		<Compile Remove="PathHelper.RE8.cs"/>
+	</ItemGroup>
 </Project>

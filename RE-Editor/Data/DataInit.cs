@@ -18,6 +18,8 @@ using RE_Editor.Data.RE2;
 using RE_Editor.Data.RE3;
 #elif RE4
 using RE_Editor.Data.RE4;
+#elif RE8
+using RE_Editor.Data.RE8;
 #endif
 
 namespace RE_Editor.Data;

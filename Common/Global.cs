@@ -79,5 +79,7 @@ public static class Global {
     public const string MSG_VERSION = "67305745";
 #elif RE4
     public const string MSG_VERSION = "22";
+#elif RE8
+    public const string MSG_VERSION = "33685777";
 #endif
 }

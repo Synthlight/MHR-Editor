@@ -109,6 +109,7 @@ public class StructType(string name, string? parent, string hash, StructJson str
             "app.ropeway.gamemastering.Item.ID" => DataSourceType.ITEMS,
             "app.ropeway.EquipmentDefine.WeaponType" => DataSourceType.WEAPONS,
 #elif RE3
+            "offline.EquipmentDefine.WeaponType" => DataSourceType.WEAPONS,
             "offline.gamemastering.Item.ID" => DataSourceType.ITEMS,
 #elif RE4
             "chainsaw.ItemID" => DataSourceType.ITEMS,

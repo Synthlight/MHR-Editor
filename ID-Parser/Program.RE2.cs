@@ -40,6 +40,11 @@ public static partial class Program {
                          }
                      });
         CreateAssetFile(msg, "WEAPON_NAME_LOOKUP");
-        CreateConstantsFile(msg[Global.LangIndex.eng].Flip(), "WeaponConstants");
+
+        var dict = new Dictionary<App_ropeway_EquipmentDefine_WeaponType, string>();
+        foreach (var (id, name) in msg[Global.LangIndex.eng]) {
+            dict[(App_ropeway_EquipmentDefine_WeaponType) id] = name;
+        }
+        CreateConstantsFile(dict.Flip(), "WeaponConstants");
     }
 }

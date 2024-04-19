@@ -411,6 +411,7 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
             DataSourceType.WEAPONS => nameof(DataHelper.WEAPON_NAME_LOOKUP),
 #elif RE3
             DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
+            DataSourceType.WEAPONS => nameof(DataHelper.WEAPON_NAME_LOOKUP),
 #elif RE4
             DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
             DataSourceType.WEAPONS => nameof(DataHelper.WEAPON_NAME_LOOKUP),

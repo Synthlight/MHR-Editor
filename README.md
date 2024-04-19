@@ -6,6 +6,7 @@ RE data file editor.
 Supported games:
 - `DD2`
 - `MHR`
+- `RE2`
 - `RE3`
 - `RE4`
 

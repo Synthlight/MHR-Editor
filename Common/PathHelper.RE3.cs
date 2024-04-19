@@ -20,5 +20,6 @@ public static partial class PathHelper {
         @"\natives\STM\"
     ];
 
-    public const string ITEM_DATA_PATH = @"\natives\STM\Escape\UserData\Item\EsItemUserData.user.2";
+    public const string ITEM_DATA_PATH               = "/natives/STM/Escape/UserData/Item/EsItemUserData.user.2";
+    public const string WEAPON_BULLET_USER_DATA_PATH = "/natives/STM/SectionRoot/UserData/System/Inventory/WeaponBulletUserData.user.2";
 }

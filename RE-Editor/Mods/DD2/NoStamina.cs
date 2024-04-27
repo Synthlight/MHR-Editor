@@ -17,7 +17,7 @@ public class NoStamina : IMod {
     public static void Make() {
         const string name        = "No Stamina Consumed";
         const string description = "Changes stamina use.";
-        const string version     = "1.5";
+        const string version     = "1.6";
 
         var descriptionOptions = new Dictionary<StaminaOptions, string> {
             [StaminaOptions.JOB_SKILLS]    = "Changes job skills' stamina use.",

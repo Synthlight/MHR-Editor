@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
@@ -19,7 +18,7 @@ public class MorePortCrystals : IMod {
     public static void Make() {
         const string name        = "Higher Portcrystal Limit";
         const string description = "Changes the limit from 10 to 256.";
-        const string version     = "1.2";
+        const string version     = "1.3";
 
         var baseMod = new NexusMod {
             Version      = version,
@@ -28,7 +27,7 @@ public class MorePortCrystals : IMod {
             Image        = $@"{PathHelper.MODS_PATH}\{name}\Title.png",
         };
 
-        var additionalFiles = new Dictionary<string, string> {{$@"{PathHelper.MODS_PATH}\{name}\MapIconSizeFixer.dll", @"reframework\plugins\MapIconSizeFixer.dll"}};
+        var additionalFiles = new Dictionary<string, string> {{@"reframework\plugins\MapIconSizeFixer.dll", $@"{PathHelper.MODS_PATH}\{name}\MapIconSizeFixer.dll"}};
 
         var mods = new[] {
             baseMod

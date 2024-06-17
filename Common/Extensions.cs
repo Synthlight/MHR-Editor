@@ -484,6 +484,14 @@ public static class Extensions {
                        .Replace(">", "");
         }
 
+        // snow.enemy.aifsm.EnemyCheckThinkCounter`1<snow.enemy.em001.Em001Define.ThinkCounterEnum>
+        // becomes
+        // snow.enemy.em001.Em001Define.ThinkCounterEnum
+        // Which shadows the enum by the same name, so do a little postfix magic to fix it.
+        if (source.Contains("EnemyCheckThinkCounter`")) {
+            name = $"{name}_EnemyCheckThinkCounter";
+        }
+
         Debug.Assert(!name.StartsWith("System_Collections"), source);
         Debug.Assert(!name.Contains('`'), source);
         Debug.Assert(!name.Contains('['), source);

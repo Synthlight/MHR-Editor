@@ -362,6 +362,7 @@ public partial class GenerateFiles {
              *         `app.ShellAdditionalParameter` <---------------------------------- And get this.
              */
 
+
             if (structJsonByName.TryGetValue(parent, out var parentStructInfo)) {
                 if (parent.Contains('`') && parentStructInfo.parent?.Contains('`') == false && parentStructInfo.fields?.Count == 0) {
                     structInfo = parentStructInfo;
@@ -369,9 +370,13 @@ public partial class GenerateFiles {
                 }
             }
 
-            if (IsStructNameValid(parent) && parent.StartsWith("via") != true) {
-                parent = parent.ToConvertedTypeName();
-                return parent;
+            if (IsStructNameValid(parent)) {
+                var isViaType = parent.ToLower().StartsWith("via");
+
+                if (!isViaType || (isViaType && parentStructInfo?.fields?.Count > 0)) {
+                    parent = parent.ToConvertedTypeName();
+                    return parent;
+                }
             }
             return null;
         }
@@ -395,7 +400,10 @@ public partial class GenerateFiles {
                             || structName.StartsWith("soundlib")
                             || structName.StartsWith("via");
             isBadName = !(!isBadName && isAllowed);
-            if (isBadName && ALLOWED_GENERIC_TYPES.Any(structName.StartsWith)) isBadName = false;
+            if (isBadName && (ALLOWED_GENERIC_TYPES.Any(structName.StartsWith)
+                              || structName.StartsWith("snow.enemy.aifsm") && structName.Contains("`"))) { // MHR
+                isBadName = false;
+            }
         }
         return !isBadName;
     }

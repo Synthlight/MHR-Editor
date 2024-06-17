@@ -264,7 +264,8 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
     private void WriteClassCreate(TextWriter file) {
         if (className.StartsWith("Via_")) return;
 
-        var modifier = parentClass == null ? "" : "new ";
+        var isParentViaType = parentClass?.ToLower().StartsWith("via") ?? false;
+        var modifier        = parentClass == null || isParentViaType ? "" : "new ";
 
         file.WriteLine("");
         file.WriteLine($"    public {modifier}static {className} Create(RSZ rsz) {{");
@@ -324,10 +325,12 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
     private void WriteClassCopy(TextWriter file) {
         if (className.StartsWith("Via_")) return;
 
-        var modifier = parentClass == null ? "virtual" : "override";
+        var isParentViaType = parentClass?.ToLower().StartsWith("via") ?? false;
+        var modifier        = parentClass == null || isParentViaType ? "virtual" : "override";
 
         file.WriteLine("");
         file.WriteLine($"    public {modifier} {className} Copy() {{");
+
         file.WriteLine($"        var obj = base.Copy<{className}>();");
 
         foreach (var field in structInfo.fields!) {

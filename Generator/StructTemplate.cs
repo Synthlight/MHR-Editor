@@ -51,7 +51,7 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
                             break;
                     }
                 }
-                if (structInfo.name is "app.AttackUserData" or "app.HitBaseUserData" && field.name == "v1") {
+                if (structInfo.name is "app.AttackUserData" or "app.HitBaseUserData" or "via.physics.RequestSetColliderUserData" && field.name == "v1") {
                     field.type         = "Object";
                     field.originalType = "via.physics.UserData";
                 }

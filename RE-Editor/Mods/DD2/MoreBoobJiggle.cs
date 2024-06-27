@@ -18,7 +18,7 @@ public class MoreBoobJiggle : IMod {
     public static void Make() {
         const string name        = "More Boob Jiggle";
         const string description = "Because boobs need to jiggle.";
-        const string version     = "1.0";
+        const string version     = "1.2";
 
         var baseMod = new NexusMod {
             Version      = version,
@@ -34,7 +34,7 @@ public class MoreBoobJiggle : IMod {
                 .SetName($"{name} (REF)")
                 .SetDesc($"{description} Alternate option done as an LUA script. ONLY ENABLE ONE OPTION.")
                 .SetFiles([])
-                .SetAdditionalFiles(new() {{$@"{PathHelper.MODS_PATH}\{name}\MoreBoobJiggle.lua", @"reframework\autorun\MoreBoobJiggle.lua"}})
+                .SetAdditionalFiles(new() {{@"reframework\autorun\MoreBoobJiggle.lua", $@"{PathHelper.MODS_PATH}\{name}\MoreBoobJiggle.lua"}})
                 .SetSkipPak(true),
             baseMod
                 .SetName($"{name} (PAK)")

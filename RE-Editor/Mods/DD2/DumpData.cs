@@ -19,6 +19,7 @@ public class DumpData : IMod {
     public static void Make() {
         DumpDecayData();
         DumpGimmickData();
+        DumpStyleToMeshData();
     }
 
     private static void DumpDecayData() {
@@ -62,5 +63,27 @@ public class DumpData : IMod {
             }
         }
         File.WriteAllText($@"{PathHelper.MODS_PATH}\..\Gm80_001_GmData.json", JsonConvert.SerializeObject(chestContents, Formatting.Indented));
+    }
+    private static void DumpStyleToMeshData() {
+        /*
+        var armorData      = ReDataFile.Read(@$"{PathHelper.CHUNK_PATH}\{PathHelper.ARMOR_DATA_PATH}").rsz.GetEntryObject<App_ItemArmorData>();
+        var swapHelmData   = ReDataFile.Read(@$"{PathHelper.CHUNK_PATH}\{PathHelper.SWAP_DATA_TOPS_PATH}").rsz.GetEntryObject<App_HelmSwapData>();
+        var swapMantleData = ReDataFile.Read(@$"{PathHelper.CHUNK_PATH}\{PathHelper.SWAP_DATA_TOPS_PATH}").rsz.GetEntryObject<App_MantleSwapData>();
+        var swapTopData    = ReDataFile.Read(@$"{PathHelper.CHUNK_PATH}\{PathHelper.SWAP_DATA_TOPS_PATH}").rsz.GetEntryObject<App_TopsSwapData>();
+        var swapPantsData  = ReDataFile.Read(@$"{PathHelper.CHUNK_PATH}\{PathHelper.SWAP_DATA_TOPS_PATH}").rsz.GetEntryObject<App_PantsSwapData>();
+
+        var decayItemsWhichAreBad = new Dictionary<uint, string>();
+        var itemsWithBadDecay     = new Dictionary<uint, string>();
+        foreach (var itemData in data.Params) {
+            var itemName      = DataHelper.ITEM_NAME_LOOKUP[Global.LangIndex.eng].TryGet((uint) itemData.Id, "");
+            var decayItemName = DataHelper.ITEM_NAME_LOOKUP[Global.LangIndex.eng].TryGet((uint) itemData.DecayedItemId, "");
+            if (decayItemName.StartsWith("Rotten") || decayItemName.StartsWith("Dried")) {
+                decayItemsWhichAreBad.TryAdd((uint) itemData.DecayedItemId, decayItemName);
+                itemsWithBadDecay.TryAdd((uint) itemData.Id, itemName);
+            }
+        }
+        File.WriteAllText($@"{PathHelper.MODS_PATH}\..\decayItemsWhichAreBad.json", JsonConvert.SerializeObject(decayItemsWhichAreBad, Formatting.Indented));
+        File.WriteAllText($@"{PathHelper.MODS_PATH}\..\itemsWithBadDecay.json", JsonConvert.SerializeObject(itemsWithBadDecay, Formatting.Indented));
+        */
     }
 }

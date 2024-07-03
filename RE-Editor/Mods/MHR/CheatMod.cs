@@ -18,7 +18,7 @@ public class CheatMod : IMod {
         const string name = "Weapon/Armor/Gem/Slot/Skill Cheats";
 
         var baseMod = new NexusMod {
-            Version      = "1.8.1",
+            Version      = "1.8.2",
             NameAsBundle = name,
             Desc         = "A cheat mod."
         };
@@ -69,6 +69,17 @@ public class CheatMod : IMod {
                 .SetFiles([PathHelper.GUN_LANCE_BASE_DATA_PATH])
                 .SetAction(data => {
                     Lvl8Shelling(data);
+                    MaxSlots(data);
+                }),
+            baseMod
+                .SetName("InsectGlaive With Lvl 15 Insect Lvl Only")
+                .SetFiles([PathHelper.INSECT_GLAIVE_BASE_DATA_PATH])
+                .SetAction(Lvl15Insect),
+            baseMod
+                .SetName("InsectGlaive With Lvl 15 Insect Lvl & Max Slots")
+                .SetFiles([PathHelper.INSECT_GLAIVE_BASE_DATA_PATH])
+                .SetAction(data => {
+                    Lvl15Insect(data);
                     MaxSlots(data);
                 }),
             baseMod
@@ -279,6 +290,16 @@ public class CheatMod : IMod {
             switch (obj) {
                 case Snow_equip_GunLanceBaseUserData_Param gLanceData:
                     gLanceData.GunLanceFireLv = Snow_data_GunLanceFireData_GunLanceFireLv.Lv8;
+                    break;
+            }
+        }
+    }
+
+    public static void Lvl15Insect(List<RszObject> rszObjectData) {
+        foreach (var obj in rszObjectData) {
+            switch (obj) {
+                case Snow_equip_InsectGlaiveBaseUserData_Param igData:
+                    igData.InsectGlaiveInsectLv = Snow_data_InsectGlaiveWeaponBaseData_InsectLevelTypes.Lv15;
                     break;
             }
         }

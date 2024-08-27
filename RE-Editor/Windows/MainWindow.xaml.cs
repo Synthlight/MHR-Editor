@@ -186,14 +186,27 @@ public partial class MainWindow {
 
             /*
              * Gets the items & typeName to use as the root entry in the dataGrid.
-             * For param types, the is the list of params. (A shortcut we make.)
+             * For param types, this is the list of params. (A shortcut we make.)
              * For the rest, it's the entry point & type.
              */
             var structInfo = entryPointRszObject.structInfo;
             if (structInfo.fields is {Count: 1} && structInfo.fields[0].array && structInfo.fields[0].type == "Object") {
-                var type     = rszObjectData[^2].GetType();
-                var items    = rszObjectData.GetGenericItemsOfType(type);
-                var dataGrid = MakeDataGrid((dynamic) items, file.rsz);
+                var type  = rszObjectData[^2].GetType();
+                var items = rszObjectData.GetGenericItemsOfType(type);
+
+                /*
+                 * Above, we make a pseudo list; a container of the data skipping the final wrapper object.
+                 * This works great for displaying the items without needing to do a sub-struct,
+                 * but completely prevent adding new rows since they need to be added to the wrapper field we skip over.
+                 *
+                 * So we need to get the actual wrapper field value and pass that as the real underlying list to RowHelper (through MakeDataGrid).
+                 */
+
+                var list = entryPointRszObject.GetType().GetProperty(structInfo.fields[0].name.ToConvertedFieldName()!)!
+                                              .GetGetMethod()!
+                                              .Invoke(entryPointRszObject, null);
+
+                var dataGrid = MakeDataGrid((dynamic) items, file.rsz, (dynamic) list); // Needs the original list else adding items won't persist.
                 Debug.WriteLine($"Loading type: {type.Name}");
                 AddMainDataGrid(dataGrid);
             } else {
@@ -281,11 +294,26 @@ public partial class MainWindow {
         }
     }
 
-    public static AutoDataGridGeneric<T> MakeDataGrid<T>(IEnumerable<T> itemSource, RSZ rsz) {
-        var dataGrid        = new AutoDataGridGeneric<T>(rsz);
-        var observableItems = itemSource as ObservableCollection<T> ?? new(itemSource);
+    public static AutoDataGridGeneric<T> MakeDataGrid<T>(IList<T> itemSource, RSZ rsz, IList<T> underlyingList) where T : RszObject {
+        var lists = new List<IList<T>>();
+        if (underlyingList != null) {
+            lists.Add(underlyingList);
+        }
+
+        if (itemSource is not ObservableCollection<T> observableItems) {
+            observableItems = new(itemSource);
+            lists.Add(observableItems);
+        } else {
+            lists.Add(itemSource);
+        }
+
+        var dataGrid = new AutoDataGridGeneric<T>(rsz);
         dataGrid.SetItems(observableItems);
-        RowHelper.AddKeybinds(dataGrid, observableItems, dataGrid, rsz);
+
+        // Give it a list of all lists that need the object added/removed from.
+        // Only really matters for the wrapper list we make when it's a list of params, and we skip the actual root object.
+        // Or when we need to create an ObservableCollection, as then we need to pass the original list.
+        RowHelper<T>.AddKeybinds(dataGrid, lists, dataGrid, rsz);
         return dataGrid;
     }
 

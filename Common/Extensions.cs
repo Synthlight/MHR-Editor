@@ -546,7 +546,13 @@ public static class Extensions {
                 throw new FileNotSupported();
             }
         }
-        return genericItemsOfType;
+
+        // So the returned object is IList and not IEnumerable. (And thus we can add/remove from it.)
+        var list = typeof(Enumerable).GetMethod(nameof(Enumerable.ToList), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.FlattenHierarchy)
+                                     ?.MakeGenericMethod(type)
+                                     .Invoke(null, [genericItemsOfType]) ?? throw new("rsz.objectData.ToList failure.");
+
+        return list;
     }
 
     public static void Align(this Stream stream, int align) {

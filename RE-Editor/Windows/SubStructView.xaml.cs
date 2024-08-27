@@ -14,7 +14,7 @@ namespace RE_Editor.Windows {
         }
     }
 
-    public sealed class SubStructViewDynamic<T> : SubStructView {
+    public sealed class SubStructViewDynamic<T> : SubStructView where T : RszObject {
         [CanBeNull] private readonly ObservableCollection<T> items;
         [CanBeNull] private readonly AutoDataGridGeneric<T>  dataGrid;
 
@@ -56,7 +56,7 @@ namespace RE_Editor.Windows {
         }
 
         private void Init(RSZ rsz) {
-            RowHelper.AddKeybinds(this, items, dataGrid, rsz);
+            RowHelper<T>.AddKeybinds(this, [items], dataGrid, rsz);
         }
     }
 }

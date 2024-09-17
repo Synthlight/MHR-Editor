@@ -10,10 +10,10 @@
 		<NoWarn>$(NoWarn);WFAC010</NoWarn>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.0">
+		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.6.1">
 			<NoWarn>NU1701</NoWarn>
 		</PackageReference>
-		<PackageReference Include="JetBrains.Annotations" Version="2023.3.0"/>
+		<PackageReference Include="JetBrains.Annotations" Version="2024.2.0"/>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" PrivateAssets="All"/>
 		<PackageReference Include="SharpZipLib" Version="1.4.2"/>
@@ -25,7 +25,7 @@
 	<!-- DD2 -->
 	<PropertyGroup Condition="$(Configuration.StartsWith('DD2'))">
 		<AssemblyName>DD2-Editor</AssemblyName>
-		<AssemblyVersion>1.1.5.0</AssemblyVersion>
+		<AssemblyVersion>1.1.6.0</AssemblyVersion>
 	</PropertyGroup>
 	<ItemGroup Condition="$(Configuration.StartsWith('DD2'))">
 		<Compile Update="Data\DD2\Assets.Designer.cs">

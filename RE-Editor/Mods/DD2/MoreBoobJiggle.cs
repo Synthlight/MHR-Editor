@@ -18,7 +18,7 @@ public class MoreBoobJiggle : IMod {
     public static void Make() {
         const string name        = "More Boob Jiggle";
         const string description = "Because boobs need to jiggle.";
-        const string version     = "1.2";
+        const string version     = "1.3";
 
         var baseMod = new NexusMod {
             Version      = version,

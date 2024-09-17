@@ -25,6 +25,8 @@ public static class Program {
                                  .Replace($@"{PathHelper.CHUNK_PATH}\", "")
                                  .Replace('/', '\\')
                                  .ToLower();
+                if (name.StartsWith('"')) name = name[1..];
+                if (name.EndsWith('"')) name   = name[..^1];
                 paths.Add(name);
             } else {
                 failed++;

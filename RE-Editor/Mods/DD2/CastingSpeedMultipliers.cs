@@ -17,7 +17,7 @@ public class CastingSpeedMultipliers : IMod {
     public static void Make() {
         const string name        = "Casting Speed Multipliers";
         const string description = "Casting speed multipliers.";
-        const string version     = "1.2";
+        const string version     = "1.3";
 
         var dataFiles = new Dictionary<TargetOptions, List<string>> {
             [TargetOptions.MAGE]         = [PathHelper.JOB_03_PARAM_PATH],

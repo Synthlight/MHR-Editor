@@ -17,8 +17,8 @@ public class MorePortCrystals : IMod {
     [UsedImplicitly]
     public static void Make() {
         const string name        = "Higher Portcrystal Limit";
-        const string description = "Changes the limit from 10 to 256.";
-        const string version     = "1.7";
+        const string description = "Changes the limit from 10 to 127.";
+        const string version     = "1.8";
 
         var baseMod = new NexusMod {
             Version      = version,

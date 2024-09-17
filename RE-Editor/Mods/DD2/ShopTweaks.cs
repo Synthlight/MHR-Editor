@@ -19,7 +19,7 @@ public class ShopTweaks : IMod {
     public static void Make() {
         const string name        = "Shop Tweaks";
         const string description = "Adds a much of things to every shop in the game.";
-        const string version     = "1.5";
+        const string version     = "1.6";
 
         var mod = new NexusMod {
             Version = version,

@@ -23,7 +23,7 @@ public class ItemTweaks : IMod {
     public static void Make() {
         const string name        = "Item Tweaks";
         const string description = "Item/Equipment weight and cost changes.";
-        const string version     = "1.9";
+        const string version     = "1.10";
 
         var itemDataFiles = new List<string> {
             PathHelper.ARMOR_DATA_PATH,

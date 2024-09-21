@@ -315,6 +315,8 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
                 }
             } else if (isEnumType && !field.array && buttonType == null) {
                 file.WriteLine($"        obj.{newName} = Enum.GetValues<{typeName}>()[0];");
+            } else if ((isEnumType || isPrimitive) && field.array) {
+                file.WriteLine($"        obj.{newName} = new(new());"); // GenericWrapper
             }
         }
 

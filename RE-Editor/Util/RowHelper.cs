@@ -11,7 +11,7 @@ using RE_Editor.Controls;
 
 namespace RE_Editor.Util;
 
-public static class RowHelper<T> where T : RszObject {
+public static class RowHelper<T> where T : class {
     public static void AddKeybinds(UIElement control, List<IList<T>> itemLists, AutoDataGridGeneric<T> dataGrid, RSZ rsz) {
         Utils.SetupKeybind(control, new KeyGesture(Key.I, ModifierKeys.Control), () => HandleAddRow(itemLists, dataGrid, rsz));
         Utils.SetupKeybind(control, new KeyGesture(Key.R, ModifierKeys.Control), () => HandleRemoveRow(itemLists, dataGrid));
@@ -59,11 +59,11 @@ public static class RowHelper<T> where T : RszObject {
             try {
                 if (items.Count == 0) return;
 
-                var selectedItems = dataGrid.SelectedItems.Cast<object>().ToList();
+                var selectedItems = dataGrid.SelectedItems.Cast<T>().ToList();
 
                 foreach (var cellItem in dataGrid.SelectedCells.Select(cell => cell.Item)) {
-                    if (selectedItems.Contains(cellItem)) continue;
-                    selectedItems.Add(cellItem);
+                    if (selectedItems.Contains((T) cellItem)) continue;
+                    selectedItems.Add((T) cellItem);
                 }
 
                 foreach (var item in from selectedItem in selectedItems

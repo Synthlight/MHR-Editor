@@ -14,7 +14,7 @@ namespace RE_Editor.Windows {
         }
     }
 
-    public sealed class SubStructViewDynamic<T> : SubStructView where T : RszObject {
+    public sealed class SubStructViewDynamic<T> : SubStructView where T : class {
         [CanBeNull] private readonly ObservableCollection<T> items;
         [CanBeNull] private readonly AutoDataGridGeneric<T>  dataGrid;
 

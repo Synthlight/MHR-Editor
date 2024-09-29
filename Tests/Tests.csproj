@@ -27,6 +27,13 @@
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`DD2`))'">
 		<None Remove="DD2.runsettings"/>
 	</ItemGroup>
+	<!-- DRDR -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('DRDR'))">
+		<RunSettingsFilePath>$(MSBuildProjectDirectory)\DRDR.runsettings</RunSettingsFilePath>
+	</PropertyGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`DRDR`))'">
+		<None Remove="DRDR.runsettings"/>
+	</ItemGroup>
 	<!-- MHR -->
 	<PropertyGroup Condition="$(Configuration.StartsWith('MHR'))">
 		<RunSettingsFilePath>$(MSBuildProjectDirectory)\MHR.runsettings</RunSettingsFilePath>

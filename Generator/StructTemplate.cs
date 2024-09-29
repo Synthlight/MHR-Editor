@@ -7,6 +7,8 @@ using Guid = RE_Editor.Common.Structs.Guid;
 
 #if DD2
 using RE_Editor.Common.Data;
+#elif DRDR
+using RE_Editor.Common.Data;
 #elif MHR
 using RE_Editor.Common.Data;
 #elif RE2
@@ -404,6 +406,8 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
     public static string GetLookupForDataSourceType(DataSourceType? dataSourceType) {
         return dataSourceType switch {
 #if DD2
+            DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
+#elif DRDR
             DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
 #elif MHR
             DataSourceType.DANGO_SKILLS => nameof(DataHelper.DANGO_SKILL_NAME_LOOKUP),

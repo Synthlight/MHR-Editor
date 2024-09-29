@@ -49,6 +49,8 @@ public partial class GenerateFiles {
         "app.ClassSelector`1[",
         "app.GUICharaEditData.PatternParam`",
         "app.lod.LODProcessDefine.ClassSelector`1[app.lod.opecon.LODProcessOperatingCondition][][]",
+#elif DRDR
+        "app.solid.CorrespondGroup`",
 #elif MHR
         "snow.data.StmKeyconfigSystem.ConfigCodeSet`",
         "snow.enemy.EnemyCarryChangeTrack`",
@@ -101,6 +103,11 @@ public partial class GenerateFiles {
         "app.SimpleFlightPathTracer`",
         "app.StringUtil.NameHash`",
         "soundlib.SoundSwitchApp`",
+#elif DRDR
+        "app.solid.camera.CameraCurveUserData.CurveParamTable`",
+        "app.solid.DampingSetting`",
+        "app.solid.weapon.generator.BombGeneratorUserDataBase`",
+        "app.solid.weapon.shell.ShellPrefabSetting`",
 #elif MHR
         "snow.camera.CameraUtility.BufferingParam`",
         "snow.eventcut.EventPlayerMediator.FaceMaterialConfig`",
@@ -397,6 +404,7 @@ public partial class GenerateFiles {
                             || structName.StartsWith("ace")
                             || structName.StartsWith("AISituation")
                             || structName.StartsWith("share")
+                            || structName.StartsWith("solid")
                             || structName.StartsWith("soundlib")
                             || structName.StartsWith("via");
             isBadName = !(!isBadName && isAllowed);

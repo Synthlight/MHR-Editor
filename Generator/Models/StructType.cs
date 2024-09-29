@@ -89,6 +89,9 @@ public class StructType(string name, string? parent, string hash, StructJson str
             case "App_ItemDropParam_Table_Item.Id":
             case "App_ItemShopParamBase.ItemId":
                 return DataSourceType.ITEMS;
+#elif DRDR
+            case "Solid_MT2RE_rItemAttackTable__CommonAttackParam.MItemNo":
+                return DataSourceType.ITEMS;
 #endif
         }
 #pragma warning restore CS1522
@@ -98,6 +101,8 @@ public class StructType(string name, string? parent, string hash, StructJson str
         return field.originalType?.Replace("[]", "") switch {
 #if DD2
             "app.ItemIDEnum" => DataSourceType.ITEMS,
+#elif DRDR
+            "app.MTData.ITEM_NO" => DataSourceType.ITEMS,
 #elif MHR
             "snow.data.ContentsIdSystem.ItemId" => DataSourceType.ITEMS,
             "snow.data.DataDef.PlEquipSkillId" => DataSourceType.SKILLS,

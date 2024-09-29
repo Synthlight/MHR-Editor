@@ -17,6 +17,13 @@
 		<Compile Remove="Models\DD2\**"/>
 		<Compile Remove="Structs\DD2\**"/>
 	</ItemGroup>
+	<!-- DRDR -->
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`DRDR`))'">
+		<Compile Remove="Enums\DRDR\**"/>
+		<Compile Remove="Manual\DRDR\Structs\**"/>
+		<Compile Remove="Models\DRDR\**"/>
+		<Compile Remove="Structs\DRDR\**"/>
+	</ItemGroup>
 	<!-- MHR -->
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHR`))'">
 		<Compile Remove="Enums\MHR\**"/>
@@ -52,6 +59,5 @@
 		<Compile Remove="Manual\RE8\Structs\**"/>
 		<Compile Remove="Models\RE8\**"/>
 		<Compile Remove="Structs\RE8\**"/>
-		<Compile Remove="RE8WeaponInstanser.cs"/>
 	</ItemGroup>
 </Project>

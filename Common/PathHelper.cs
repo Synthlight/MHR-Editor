@@ -10,7 +10,7 @@ public static partial class PathHelper {
     public static List<string> GetCachedFileList(FileListCacheType cacheType, bool msg = false) {
         var fileType = cacheType switch {
             FileListCacheType.MSG => $"msg.{Global.MSG_VERSION}",
-            FileListCacheType.USER => "user.2",
+            FileListCacheType.USER => $"user.{Global.USER_VERSION}",
             _ => throw new ArgumentOutOfRangeException(nameof(cacheType), cacheType, null)
         };
         var          userFileCache = $@"{CHUNK_PATH}\{cacheType}_{(msg ? "MSG" : "STM")}_FILE_LIST_CACHE.json";

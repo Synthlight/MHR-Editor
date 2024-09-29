@@ -19,6 +19,15 @@
 		<Compile Remove="Data\DataHelper.DD2.cs"/>
 		<Compile Remove="PathHelper.DD2.cs"/>
 	</ItemGroup>
+	<!-- DRDR -->
+	<ItemGroup Condition="'$(Configuration.StartsWith(`DRDR`))'">
+		<Compile Remove="Attributes\DataSourceType.cs"/>
+	</ItemGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`DRDR`))'">
+		<Compile Remove="Attributes\DataSourceType.DRDR.cs"/>
+		<Compile Remove="Data\DataHelper.DRDR.cs"/>
+		<Compile Remove="PathHelper.DRDR.cs"/>
+	</ItemGroup>
 	<!-- MHR -->
 	<ItemGroup Condition="'$(Configuration.StartsWith(`MHR`))'">
 		<Compile Remove="Attributes\DataSourceType.cs"/>

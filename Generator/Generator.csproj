@@ -17,6 +17,10 @@
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`DD2`))'">
 		<Compile Remove="GenerateFiles.DD2.cs"/>
 	</ItemGroup>
+	<!-- DRDR -->
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`DRDR`))'">
+		<Compile Remove="GenerateFiles.DRDR.cs"/>
+	</ItemGroup>
 	<!-- MHR -->
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHR`))'">
 		<Compile Remove="GenerateFiles.MHR.cs"/>

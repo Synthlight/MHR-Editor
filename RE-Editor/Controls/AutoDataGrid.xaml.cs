@@ -336,7 +336,7 @@ public class AutoDataGridGeneric<T>(RSZ rsz) : AutoDataGrid, IAutoDataGrid<T> {
             var isList           = (IsListAttribute) propertyInfo.GetCustomAttribute(typeof(IsListAttribute), true) != null;
             var viewType         = typeof(SubStructViewDynamic<>).MakeGenericType(listType ?? throw new InvalidOperationException());
             var subStructView = isList switch {
-                true => (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, list, propertyInfo, rsz),
+                true => CreateDynamicSubStructView(viewType, displayName, list, propertyInfo), // (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, list, propertyInfo, rsz),
                 false => (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, ((dynamic) list)[0], rsz)
             };
 
@@ -344,6 +344,22 @@ public class AutoDataGridGeneric<T>(RSZ rsz) : AutoDataGrid, IAutoDataGrid<T> {
             subStructView?.ShowDialog();
         } catch (Exception err) when (!Debugger.IsAttached) {
             MainWindow.ShowError(err, "Error Occurred");
+        }
+    }
+
+    private SubStructView CreateDynamicSubStructView(Type viewType, string displayName, IList list, PropertyInfo propertyInfo) {
+        try {
+            return (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, list, propertyInfo, rsz);
+        } catch (Exception) {
+            // Can happen when we're dealing with generic lists and the entries are of a derived class.
+            // This isn't perfect either. It'll up-cast the contents to the type of the first entry and open the sub-struct view with that.
+            // So it is possible further derived types will fail, and a non-homogenous list might also break things.
+            var listType           = list[0]?.GetType();
+            var castCall           = typeof(Enumerable).GetMethod(nameof(Enumerable.Cast))!.MakeGenericMethod(listType ?? throw new InvalidOperationException());
+            var castedList         = castCall.Invoke(null, [list]);
+            var observableListType = typeof(ObservableCollection<>).MakeGenericType(listType);
+            var newList            = (IList) Activator.CreateInstance(observableListType, castedList);
+            return (SubStructView) Activator.CreateInstance(viewType, Window.GetWindow(this), displayName, newList, propertyInfo, rsz);
         }
     }
 
@@ -371,6 +387,8 @@ public class AutoDataGridGeneric<T>(RSZ rsz) : AutoDataGrid, IAutoDataGrid<T> {
 
         dynamic dataSource = dataSourceType switch {
 #if DD2
+            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
+#elif DRDR
             DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
 #elif MHR
             DataSourceType.DANGO_SKILLS => DataHelper.DANGO_SKILL_NAME_LOOKUP[Global.locale],

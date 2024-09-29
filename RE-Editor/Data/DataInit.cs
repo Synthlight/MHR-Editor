@@ -10,6 +10,8 @@ using RE_Editor.Common.Models;
 
 #if DD2
 using RE_Editor.Data.DD2;
+#elif DRDR
+using RE_Editor.Data.DRDR;
 #elif MHR
 using RE_Editor.Data.MHR;
 #elif RE2

@@ -518,7 +518,7 @@ public static class Extensions {
     public static string? ToConvertedFieldName(this string? name) {
         if (name == null) return null;
         while (name.StartsWith('_')) name = name[1..]; // Remove the leading '_'.
-        while (name.EndsWith('_')) name   = name[..1]; // Remove the trailing '_'.
+        while (name.EndsWith('_')) name   = name[..^1]; // Remove the trailing '_'.
 
         name = name.ToConvertedTypeName(true)!;
         if (name == "Index") name   = "_Index";

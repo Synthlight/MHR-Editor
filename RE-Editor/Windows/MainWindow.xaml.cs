@@ -31,6 +31,8 @@ public partial class MainWindow {
 
 #if DD2
     private const string TITLE = "DD2 Editor";
+#elif DRDR
+    private const string TITLE = "DRDR Editor";
 #elif MHR
     private const string TITLE = "MHR Editor";
 #elif RE2

@@ -1,0 +1,11 @@
+{
+    "profiles": {
+        "[None]": {
+            "commandName": "Project"
+        },
+        "ItemName.user.3": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DRDR/re_chunk_000/natives/STM/UI/Message/UserData/ItemName.user.3\""
+        }
+    }
+}

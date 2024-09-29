@@ -60,6 +60,44 @@
 		<Message Importance="high" Text="Copying launchSettings.DD2.json..."/>
 		<Copy SourceFiles="Properties/launchSettings.DD2.json" DestinationFiles="Properties/launchSettings.json"/>
 	</Target>
+	<!-- DRDR -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('DRDR'))">
+		<AssemblyName>DRDR-Editor</AssemblyName>
+		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+	</PropertyGroup>
+	<ItemGroup Condition="$(Configuration.StartsWith('DRDR'))">
+		<Compile Update="Data\DRDR\Assets.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Assets.resx</DependentUpon>
+		</Compile>
+		<EmbeddedResource Update="Data\DRDR\Assets.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Assets.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<None Update="Data\DRDR\Assets\SUPPORTED_FILES.txt">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>SUPPORTED_FILES.txt</TargetPath>
+		</None>
+	</ItemGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`DRDR`))'">
+		<Compile Remove="Constants\DRDR\**"/>
+		<Compile Remove="Data\DRDR\**"/>
+		<EmbeddedResource Remove="Data\DRDR\**"/>
+		<Page Remove="Data\DRDR\**"/>
+		<None Remove="Data\DRDR\**"/>
+		<Compile Remove="Data\DataInit.DRDR.cs"/>
+		<Compile Remove="Models\DRDR\**"/>
+		<Compile Remove="Mods\DRDR\**"/>
+	</ItemGroup>
+	<!-- DRDR (Launch Settings) -->
+	<ItemGroup Condition="$(Configuration.StartsWith('DRDR'))">
+		<UpToDateCheckInput Include="Properties/launchSettings.DRDR.json"/>
+	</ItemGroup>
+	<Target Condition="$(Configuration.StartsWith('DRDR'))" Name="CopyLaunchSettingsDRDR" AfterTargets="Build" Inputs="Properties/launchSettings.DRDR.json" Outputs="Properties/launchSettings.json">
+		<Message Importance="high" Text="Copying launchSettings.DRDR.json..."/>
+		<Copy SourceFiles="Properties/launchSettings.DRDR.json" DestinationFiles="Properties/launchSettings.json"/>
+	</Target>
 	<!-- MHR -->
 	<PropertyGroup Condition="$(Configuration.StartsWith('MHR'))">
 		<AssemblyName>MHR-Editor</AssemblyName>

@@ -12,7 +12,7 @@ public static class Global {
     public static LangIndex locale           = LangIndex.eng;
 
     public static readonly string[] FILE_TYPES = [
-        "*.user.2"
+        $"*.user.{USER_VERSION}"
     ];
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -71,6 +71,8 @@ public static class Global {
 
 #if DD2
     public const string MSG_VERSION = "22";
+#elif DRDR
+    public const string MSG_VERSION = "23";
 #elif MHR
     public const string MSG_VERSION = "539100710";
 #elif RE2
@@ -81,5 +83,21 @@ public static class Global {
     public const string MSG_VERSION = "22";
 #elif RE8
     public const string MSG_VERSION = "33685777";
+#endif
+
+#if DD2
+    public const string USER_VERSION = "2";
+#elif DRDR
+    public const string USER_VERSION = "3";
+#elif MHR
+    public const string USER_VERSION = "2";
+#elif RE2
+    public const string USER_VERSION = "2";
+#elif RE3
+    public const string USER_VERSION = "2";
+#elif RE4
+    public const string USER_VERSION = "2";
+#elif RE8
+    public const string USER_VERSION = "2";
 #endif
 }

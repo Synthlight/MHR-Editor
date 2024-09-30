@@ -90,6 +90,7 @@ public class StructType(string name, string? parent, string hash, StructJson str
             case "App_ItemShopParamBase.ItemId":
                 return DataSourceType.ITEMS;
 #elif DRDR
+            case "App_solid_gamemastering_rItemLayout__LayoutInfo.ITEM_ID":
             case "Solid_MT2RE_rItemAttackTable__CommonAttackParam.MItemNo":
                 return DataSourceType.ITEMS;
 #endif

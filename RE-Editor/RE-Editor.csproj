@@ -63,7 +63,7 @@
 	<!-- DRDR -->
 	<PropertyGroup Condition="$(Configuration.StartsWith('DRDR'))">
 		<AssemblyName>DRDR-Editor</AssemblyName>
-		<AssemblyVersion>1.0.0.0</AssemblyVersion>
+		<AssemblyVersion>1.0.1.0</AssemblyVersion>
 	</PropertyGroup>
 	<ItemGroup Condition="$(Configuration.StartsWith('DRDR'))">
 		<Compile Update="Data\DRDR\Assets.Designer.cs">

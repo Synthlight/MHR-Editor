@@ -44,10 +44,9 @@ namespace RE_Editor.Windows {
             Width  = window.Width;
             Height = window.Height * 0.8d;
 
-            var structGrid = new StructGridGeneric<T>(rsz) {
-                HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
-                VerticalScrollBarVisibility   = ScrollBarVisibility.Auto,
-            };
+            var structGrid = MakeStructGrid((dynamic) item, rsz); // Hack so it gets called with the concrete type of the item and I don't have to fuck with `MakeGenericMethod`.
+            structGrid.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+            structGrid.VerticalScrollBarVisibility   = ScrollBarVisibility.Auto;
             structGrid.SetItem(item);
 
             AddChild(structGrid);
@@ -57,6 +56,12 @@ namespace RE_Editor.Windows {
 
         private void Init(RSZ rsz) {
             RowHelper<T>.AddKeybinds(this, [items], dataGrid, rsz);
+        }
+
+        public static StructGridGeneric<F> MakeStructGrid<F>(F item, RSZ rsz) where F : RszObject {
+            var dataGrid = new StructGridGeneric<F>(rsz);
+            dataGrid.SetItem(item);
+            return dataGrid;
         }
     }
 }

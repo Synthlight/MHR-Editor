@@ -9,7 +9,7 @@ Short | Long | Latest Release
 --- | --- | ---
 DD2 | Dragon Age 2 | [v1.1.7.0](https://github.com/Synthlight/MHR-Editor/releases/tag/DD2-Editor_v1.1.7.0)
 DRDR | Dead Rising Deluxe Remaster | [v1.0.1.0](https://github.com/Synthlight/MHR-Editor/releases/tag/DRDR-Editor_v1.0.1.0)
-MHR | Monster Hunter Rise | [v1.5.0.0](https://github.com/Synthlight/MHR-Editor/releases/tag/MHR-Editor_v1.5.0.0)
+MHR | Monster Hunter Rise | [v1.5.1.0](https://github.com/Synthlight/MHR-Editor/releases/tag/MHR-Editor_v1.5.1.0)
 RE2 | Resident Evil 2 | [v1.0.0.0](https://github.com/Synthlight/MHR-Editor/releases/tag/RE2-Editor_v1.0.0.0)
 RE3 | Resident Evil 3 | [v1.0.0.0](https://github.com/Synthlight/MHR-Editor/releases/tag/RE3-Editor_v1.0.0.0)
 RE4 | Resident Evil 4 | [v1.0.0.0](https://github.com/Synthlight/MHR-Editor/releases/tag/RE4-Editor_v1.0.0.0)

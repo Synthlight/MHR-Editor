@@ -153,6 +153,16 @@ namespace RE_Editor.Data.MHR {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] DANGO_SKILL_ENUM_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("DANGO_SKILL_ENUM_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] DANGO_SKILL_NAME_LOOKUP {
             get {
                 object obj = ResourceManager.GetObject("DANGO_SKILL_NAME_LOOKUP", resourceCulture);
@@ -266,6 +276,16 @@ namespace RE_Editor.Data.MHR {
         internal static byte[] RAMPAGE_DECORATION_NAME_LOOKUP {
             get {
                 object obj = ResourceManager.GetObject("RAMPAGE_DECORATION_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] RAMPAGE_SKILL_ENUM_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("RAMPAGE_SKILL_ENUM_NAME_LOOKUP", resourceCulture);
                 return ((byte[])(obj));
             }
         }

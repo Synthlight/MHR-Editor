@@ -205,4 +205,10 @@
   <data name="WEAPON_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\weapon_name_lookup.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="DANGO_SKILL_ENUM_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assets\DANGO_SKILL_ENUM_NAME_LOOKUP.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="RAMPAGE_SKILL_ENUM_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assets\RAMPAGE_SKILL_ENUM_NAME_LOOKUP.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

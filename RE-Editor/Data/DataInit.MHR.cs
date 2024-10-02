@@ -41,20 +41,38 @@ public static partial class DataInit {
     }
 
     private static void CreateTranslationsForSkillEnumNameColumns() {
-        var skillEnumLookup = LoadDict<Global.LangIndex, Dictionary<Snow_data_DataDef_PlEquipSkillId, string>>(Assets.SKILL_ENUM_NAME_LOOKUP);
-        var regex           = new Regex(@"^EquipSkill_(\d+)");
-        foreach (var propertyInfo in typeof(Snow_player_EquipSkillParameter).GetProperties()) {
+        CreateEnumTranslation<Snow_data_DataDef_PlEquipSkillId>(@"^EquipSkill_(\d+)" /* language=regex */,
+                                                                Assets.SKILL_ENUM_NAME_LOOKUP,
+                                                                typeof(Snow_player_EquipSkillParameter),
+                                                                enumName => $"Pl_{enumName}");
+
+        CreateEnumTranslation<Snow_data_DataDef_PlKitchenSkillId>(@"^KitchenSkill_(\d+)" /* language=regex */,
+                                                                  Assets.DANGO_SKILL_ENUM_NAME_LOOKUP,
+                                                                  typeof(Snow_player_OdangoSkillParameter),
+                                                                  enumName => $"Pl_{enumName}");
+
+        CreateEnumTranslation<Snow_data_DataDef_PlHyakuryuSkillId>(@"^HyakuryuSkill_(\d+)" /* language=regex */,
+                                                                   Assets.RAMPAGE_SKILL_ENUM_NAME_LOOKUP,
+                                                                   typeof(Snow_player_HyakuryuSkillParameter),
+                                                                   enumName => enumName,
+                                                                   (lang, newName) => lang == Global.LangIndex.eng ? newName.Replace("Hyakuryu", "Rampage") : newName); // Because the translation applies before this does.
+    }
+
+    private static void CreateEnumTranslation<T>(string pattern, byte[] asset, Type type, Func<string, string> enumParseName, Func<Global.LangIndex, string, string> translatePropName = null) where T : struct {
+        var skillEnumLookup = LoadDict<Global.LangIndex, Dictionary<T, string>>(asset);
+        var regex           = new Regex(pattern);
+        foreach (var propertyInfo in type.GetProperties()) {
             var propName = propertyInfo.Name;
             var match    = regex.Match(propName);
             if (!match.Success) continue;
             var enumName  = match.Groups[0].Value;
-            var enumValue = Enum.Parse<Snow_data_DataDef_PlEquipSkillId>($"Pl_{enumName}");
+            var enumValue = Enum.Parse<T>(enumParseName(enumName));
             foreach (var lang in Enum.GetValues<Global.LangIndex>()) {
                 var skillMap = skillEnumLookup[lang];
                 if (!skillMap.ContainsKey(enumValue) || skillMap[enumValue] == "#Rejected#") continue;
                 var skillName = skillMap[enumValue];
                 var newName   = propName.Replace(enumName, skillName);
-                Global.TRANSLATION_MAP[lang][propName] = newName;
+                Global.TRANSLATION_MAP[lang][translatePropName == null ? propName : translatePropName(lang, propName)] = newName;
             }
         }
     }

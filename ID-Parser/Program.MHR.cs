@@ -129,36 +129,51 @@ public static partial class Program {
         var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.{Global.MSG_VERSION}", name =>
                                        ParseEnum(typeof(Snow_data_DataDef_PlEquipSkillId), name.Replace("PlayerSkill", "Pl_EquipSkill")));
 
-        // Load it again, but get the name this time, so we can use it to create the enum lookup file.
-        // Not efficient, but works.
-        var skillEnumToIdLookup = new Dictionary<Global.LangIndex, Dictionary<Snow_data_DataDef_PlEquipSkillId, string>>();
-        var skillEnumData = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.{Global.MSG_VERSION}", name => {
-            var value = name.Replace("PlayerSkill", "Pl_EquipSkill");
-            if (value == "Pl_EquipSkill_None") throw new MSG.SkipReadException();
-            return value;
-        });
-        foreach (var lang in Enum.GetValues<Global.LangIndex>()) {
-            skillEnumToIdLookup[lang] = new();
-            foreach (var (enumName, id) in skillEnumData[lang]) {
-                skillEnumToIdLookup[lang][Enum.Parse<Snow_data_DataDef_PlEquipSkillId>(enumName)] = id;
-            }
-        }
-        CreateAssetFile(skillEnumToIdLookup, "SKILL_ENUM_NAME_LOOKUP");
-
         var engSkills = msg[Global.LangIndex.eng];
         Debug.Assert(engSkills[1] == "Attack Boost");
 
         CreateAssetFile(msg, "SKILL_NAME_LOOKUP");
 
+        CreateEnumSkillLookup<Snow_data_DataDef_PlEquipSkillId>($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlEquipSkill\PlayerSkill_Name{MR}.msg.{Global.MSG_VERSION}",
+                                                                s => s.Replace("PlayerSkill", "Pl_EquipSkill"),
+                                                                nameof(Snow_data_DataDef_PlEquipSkillId.Pl_EquipSkill_None),
+                                                                "SKILL_ENUM_NAME_LOOKUP");
+
         msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name{MR}.msg.{Global.MSG_VERSION}", name =>
                                    ParseEnum(typeof(Snow_data_DataDef_PlHyakuryuSkillId), name));
         CreateAssetFile(msg, "RAMPAGE_SKILL_NAME_LOOKUP");
+
+        CreateEnumSkillLookup<Snow_data_DataDef_PlHyakuryuSkillId>($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlHyakuryuSkill\HyakuryuSkill_Name{MR}.msg.{Global.MSG_VERSION}",
+                                                                   s => s,
+                                                                   nameof(Snow_data_DataDef_PlHyakuryuSkillId.HyakuryuSkill_None),
+                                                                   "RAMPAGE_SKILL_ENUM_NAME_LOOKUP");
 
         msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name{MR}.msg.{Global.MSG_VERSION}", name =>
                                    ParseEnum(typeof(Snow_data_DataDef_PlKitchenSkillId), $"Pl_{name}"));
         CreateAssetFile(msg, "DANGO_SKILL_NAME_LOOKUP");
 
+        CreateEnumSkillLookup<Snow_data_DataDef_PlKitchenSkillId>($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlKitchenSkill\KitchenSkill_Name{MR}.msg.{Global.MSG_VERSION}",
+                                                                  s => s.Replace("KitchenSkill", "Pl_KitchenSkill"),
+                                                                  nameof(Snow_data_DataDef_PlKitchenSkillId.Pl_KitchenSkill_None),
+                                                                  "DANGO_SKILL_ENUM_NAME_LOOKUP");
+
         CreateConstantsFile(engSkills.Flip(), "SkillConstants");
+    }
+
+    private static void CreateEnumSkillLookup<T>(string path, Func<string, string> transformName, string noneName, string fileName) where T : struct {
+        var skillEnumToIdLookup = new Dictionary<Global.LangIndex, Dictionary<T, string>>();
+        var skillEnumData = GetMergedMrTexts(path, name => {
+            var value = transformName(name);
+            if (value == noneName) throw new MSG.SkipReadException();
+            return value;
+        });
+        foreach (var lang in Enum.GetValues<Global.LangIndex>()) {
+            skillEnumToIdLookup[lang] = new();
+            foreach (var (enumName, id) in skillEnumData[lang]) {
+                skillEnumToIdLookup[lang][Enum.Parse<T>(enumName)] = id;
+            }
+        }
+        CreateAssetFile(skillEnumToIdLookup, fileName);
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
@@ -183,7 +198,7 @@ public static partial class Program {
                     var value = regex.Match(name).Groups[1].Value;
                     if (int.Parse(value) > oneBelowMax) throw new MSG.SkipReadException();
                     return ParseEnum(typeof(Snow_data_ContentsIdSystem_WeaponId), $"W_Insect_{value}");
-                }, writeNameIds: true));
+                }));
             }
             var result = msgLists.MergeDictionaries();
 
@@ -282,7 +297,7 @@ public static partial class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractPetalaceInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\data\System\ContentsIdSystem\LvBuffCage\Normal\LvBuffCage_{@in}.msg.{Global.MSG_VERSION}", true)
+            var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\data\System\ContentsIdSystem\LvBuffCage\Normal\LvBuffCage_{@in}.msg.{Global.MSG_VERSION}")
                          .GetLangIdMap(name => ParseEnum(typeof(Snow_data_ContentsIdSystem_LvBuffCageId), name));
             CreateAssetFile(msg, $"PETALACE_{@out}_LOOKUP");
             if (@in == "Name") {

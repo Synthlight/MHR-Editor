@@ -15,7 +15,7 @@ public class HeaderInfo : OnPropertyChangedBase {
 
         foreach (var (locale, map) in Global.TRANSLATION_MAP) {
             if (map.Count == 0) continue;
-            if (!translatedText.ContainsKey(locale)) translatedText[locale] = originalText;
+            translatedText.TryAdd(locale, originalText);
 
             foreach (var (find, replace) in map) {
                 translatedText[locale] = translatedText[locale].Replace(find, replace);

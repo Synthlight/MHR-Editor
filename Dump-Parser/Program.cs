@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using RE_Editor.Common;
 
-namespace RE_Editor.ID_Parser;
+namespace RE_Editor.Dump_Parser;
 
 public static class Program {
     public const  string BASE_PROJ_PATH = @"..\..\..";

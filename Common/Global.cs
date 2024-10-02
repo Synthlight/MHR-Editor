@@ -55,6 +55,7 @@ public static class Global {
         {
             LangIndex.eng, new() {
                 {"Hyakuryu", "Rampage"},
+                {"Haykuryu", "Rampage"}, // Yes, it's spelled wrong in a few places. (Like in `PlayerUserDataSkillParameter`.)
                 {"Takumi", "Handicraft"},
                 {"Hagitori", "Carve"}
             }
@@ -62,7 +63,7 @@ public static class Global {
     };
 
 #if MHR
-    public static readonly List<string> WEAPON_TYPES = new() {"Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"};
+    public static readonly List<string> WEAPON_TYPES = ["Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"];
 #elif RE4
     public static readonly List<string> VARIANTS = ["CH", "MC", "AO"];
     public static readonly List<string> FOLDERS  = ["_Chainsaw", "_Mercenaries", "_AnotherOrder"];

@@ -5,7 +5,7 @@ doc = ElementTree.parse("RE-Editor/RE-Editor.csproj").getroot()
 versions = {}
 
 for node in doc.findall(".//PropertyGroup[@Condition]"):
-    name = node.find(".//AssemblyName").text
+    name    = node.find(".//AssemblyName").text
     version = node.find(".//AssemblyVersion").text
     versions[name] = version
 

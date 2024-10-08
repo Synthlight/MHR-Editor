@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
@@ -17,7 +16,7 @@ public class MaxStackSize : IMod {
     public static void Make() {
         const string name        = "Stack Size Changes";
         const string description = "Modifies the stack size of stackable items.";
-        const string version     = "1.8";
+        const string version     = "1.9";
 
         var itemDataFiles = new List<string> {
             PathHelper.ITEM_DATA_PATH,
@@ -115,70 +114,96 @@ public class MaxStackSize : IMod {
     }
 
     public static void MaxStacks(List<RszObject> rszObjectData, Target target, Type type) {
+        var sizeChanged = new HashSet<int>();
+
         foreach (var obj in rszObjectData) {
             switch (obj) {
                 case Chainsaw_ItemDefinitionUserData_Data itemData:
                     var item = itemData.ItemDefineData[0];
 
-                    if (type == Type.AMMO_ONLY) {
-                        if (itemData.ItemId == ItemConstants_CH.HANDGUN_AMMO
-                            || itemData.ItemId == ItemConstants_CH.SUBMACHINE_GUN_AMMO
-                            || itemData.ItemId == ItemConstants_CH.MAGNUM_AMMO
-                            || itemData.ItemId == ItemConstants_CH.SHOTGUN_SHELLS
-                            || itemData.ItemId == ItemConstants_CH.RIFLE_AMMO
-                            || itemData.ItemId == ItemConstants_CH.ATTACHABLE_MINES
-                            || itemData.ItemId == ItemConstants_CH.BOLTS
-                            || itemData.ItemId == ItemConstants_MC.BLAST_ARROWS
-                            || itemData.ItemId == ItemConstants_MC.EXPLOSIVE_ARROWS) {
-                            var newMax = GetNewMax(target, item);
+                    switch (type) {
+                        case Type.FULL_WITH_HERBS: {
+                            if (itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSG
+                                || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSR
+                                || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSY
+                                || itemData.ItemId == ItemConstants_CH.GREEN_HERB
+                                || itemData.ItemId == ItemConstants_CH.RED_HERB
+                                || itemData.ItemId == ItemConstants_CH.YELLOW_HERB) {
+                                var newMax = GetNewMax(target, item);
 
-                            if (item.StackMax < newMax) item.StackMax = newMax.Clamp(1, 9999);
+                                if (sizeChanged.Contains(itemData.ItemId)) break;
+                                if (item.StackMax < newMax) {
+                                    item.StackMax = newMax.Clamp(1, 9999);
+                                    sizeChanged.Add(itemData.ItemId);
+                                }
+                            }
+                            goto case Type.FULL;
                         }
-                        break;
-                    }
+                        case Type.AMMO_ONLY: {
+                            if (itemData.ItemId == ItemConstants_CH.HANDGUN_AMMO
+                                || itemData.ItemId == ItemConstants_CH.SUBMACHINE_GUN_AMMO
+                                || itemData.ItemId == ItemConstants_CH.MAGNUM_AMMO
+                                || itemData.ItemId == ItemConstants_CH.SHOTGUN_SHELLS
+                                || itemData.ItemId == ItemConstants_CH.RIFLE_AMMO
+                                || itemData.ItemId == ItemConstants_CH.ATTACHABLE_MINES
+                                || itemData.ItemId == ItemConstants_CH.BOLTS
+                                || itemData.ItemId == ItemConstants_MC.BLAST_ARROWS
+                                || itemData.ItemId == ItemConstants_MC.EXPLOSIVE_ARROWS) {
+                                var newMax = GetNewMax(target, item);
 
-                    if ((item.StackMax > 1
-                         || itemData.ItemId == ItemConstants_CH.FIRST_AID_SPRAY
-                         || itemData.ItemId == ItemConstants_CH.GOLD_CHICKEN_EGG
-                         || itemData.ItemId == ItemConstants_CH.BROWN_CHICKEN_EGG
-                         || itemData.ItemId == ItemConstants_CH.CHICKEN_EGG
-                         || itemData.ItemId == ItemConstants_CH.HAND_GRENADE
-                         || itemData.ItemId == ItemConstants_CH.FLASH_GRENADE
-                         || itemData.ItemId == ItemConstants_CH.HEAVY_GRENADE
-                         || itemData.ItemId == ItemConstants_CH.RESOURCES_S
-                         || itemData.ItemId == ItemConstants_CH.RESOURCES_L
-                         || itemData.ItemId == ItemConstants_CH.VIPER
-                         || itemData.ItemId == ItemConstants_CH.BLACK_BASS
-                         || itemData.ItemId == ItemConstants_CH.BLACK_BASS_L
-                         || itemData.ItemId == ItemConstants_CH.LUNKER_BASS
-                         || itemData.ItemId == ItemConstants_AO.LORD_OF_THE_WATERWAY
-                         || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSG_PLUSG
-                         || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSG_PLUSY
-                         || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSR_PLUSY
-                         || itemData.ItemId == ItemConstants_CH.RHINOCEROS_BEETLE
-                         // Below works if we disable drag-craft herbs.
-                         || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSG
-                         || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSR
-                         || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSY
-                         || itemData.ItemId == ItemConstants_CH.GREEN_HERB
-                         || itemData.ItemId == ItemConstants_CH.RED_HERB
-                         || itemData.ItemId == ItemConstants_CH.YELLOW_HERB
-                        )
-                        && itemData.ItemId != ItemConstants_CH.PESETAS
-                       ) {
-                        var newMax = GetNewMax(target, item);
-
-                        if (item.StackMax < newMax) item.StackMax = newMax.Clamp(1, 9999);
-
-                        if (itemData.ItemId == ItemConstants_CH.HAND_GRENADE
-                            || itemData.ItemId == ItemConstants_CH.FLASH_GRENADE
-                            || itemData.ItemId == ItemConstants_CH.HEAVY_GRENADE
-                            || itemData.ItemId == ItemConstants_CH.GOLD_CHICKEN_EGG
-                            || itemData.ItemId == ItemConstants_CH.BROWN_CHICKEN_EGG
-                            || itemData.ItemId == ItemConstants_CH.CHICKEN_EGG
-                           ) {
-                            itemData.WeaponDefineData[0].StackMax = item.StackMax;
+                                if (sizeChanged.Contains(itemData.ItemId)) break;
+                                if (item.StackMax < newMax) {
+                                    item.StackMax = newMax.Clamp(1, 9999);
+                                    sizeChanged.Add(itemData.ItemId);
+                                }
+                            }
+                            break;
                         }
+                        case Type.FULL: {
+                            if ((item.StackMax > 1
+                                 || itemData.ItemId == ItemConstants_CH.FIRST_AID_SPRAY
+                                 || itemData.ItemId == ItemConstants_CH.GOLD_CHICKEN_EGG
+                                 || itemData.ItemId == ItemConstants_CH.BROWN_CHICKEN_EGG
+                                 || itemData.ItemId == ItemConstants_CH.CHICKEN_EGG
+                                 || itemData.ItemId == ItemConstants_CH.HAND_GRENADE
+                                 || itemData.ItemId == ItemConstants_CH.FLASH_GRENADE
+                                 || itemData.ItemId == ItemConstants_CH.HEAVY_GRENADE
+                                 || itemData.ItemId == ItemConstants_CH.RESOURCES_S
+                                 || itemData.ItemId == ItemConstants_CH.RESOURCES_L
+                                 || itemData.ItemId == ItemConstants_CH.VIPER
+                                 || itemData.ItemId == ItemConstants_CH.BLACK_BASS
+                                 || itemData.ItemId == ItemConstants_CH.BLACK_BASS_L
+                                 || itemData.ItemId == ItemConstants_CH.LUNKER_BASS
+                                 || itemData.ItemId == ItemConstants_AO.LORD_OF_THE_WATERWAY
+                                 || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSG_PLUSG
+                                 || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSG_PLUSY
+                                 || itemData.ItemId == ItemConstants_CH.MIXED_HERB_G_PLUSR_PLUSY
+                                 || itemData.ItemId == ItemConstants_CH.RHINOCEROS_BEETLE
+                                )
+                                && itemData.ItemId != ItemConstants_CH.PESETAS
+                               ) {
+                                var newMax = GetNewMax(target, item);
+
+                                if (sizeChanged.Contains(itemData.ItemId)) break;
+                                if (item.StackMax < newMax) {
+                                    item.StackMax = newMax.Clamp(1, 9999);
+                                    sizeChanged.Add(itemData.ItemId);
+                                }
+
+                                // The few that have the stack size in two locations since weapon data (the 'clip') has its own max that should match.
+                                if (itemData.ItemId == ItemConstants_CH.HAND_GRENADE
+                                    || itemData.ItemId == ItemConstants_CH.FLASH_GRENADE
+                                    || itemData.ItemId == ItemConstants_CH.HEAVY_GRENADE
+                                    || itemData.ItemId == ItemConstants_CH.GOLD_CHICKEN_EGG
+                                    || itemData.ItemId == ItemConstants_CH.BROWN_CHICKEN_EGG
+                                    || itemData.ItemId == ItemConstants_CH.CHICKEN_EGG
+                                   ) {
+                                    itemData.WeaponDefineData[0].StackMax = item.StackMax;
+                                }
+                            }
+                            break;
+                        }
+                        default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
                     }
                     break;
                 case Chainsaw_ItemCombineDefinitionUserData craftData:

@@ -164,7 +164,7 @@ public partial class MainWindow {
             GC.Collect();
 
 #if RE4
-                // ReSharper disable StringLiteralTypo
+            // ReSharper disable StringLiteralTypo
             if (targetFile.ToLower().Contains("_mercenaries")) {
                 Global.variant = "MC";
             } else if (targetFile.ToLower().Contains("_anotherorder")) {
@@ -172,7 +172,7 @@ public partial class MainWindow {
             } else {
                 Global.variant = "CH";
             }
-                // ReSharper restore StringLiteralTypo
+            // ReSharper restore StringLiteralTypo
 #endif
 
             file = ReDataFile.Read(target);
@@ -192,7 +192,7 @@ public partial class MainWindow {
              * For the rest, it's the entry point & type.
              */
             var structInfo = entryPointRszObject.structInfo;
-            if (structInfo.fields is {Count: 1} && structInfo.fields[0].array && structInfo.fields[0].type == "Object") {
+            if (structInfo.fields is {Count: 1} && structInfo.fields[0].array && structInfo.fields[0].type == "Object" && rszObjectData.Count > 1) {
                 var type  = rszObjectData[^2].GetType();
                 var items = rszObjectData.GetGenericItemsOfType(type);
 

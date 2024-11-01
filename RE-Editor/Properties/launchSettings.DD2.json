@@ -23,6 +23,10 @@
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemDropData/EnemyItemDropData.user.2\""
         },
+        "gm80_001_gmdata.user.2": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Gimmick/UserData/gm80_001_gmdata.user.2\""
+        },
         "ItemArmorData.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/DD2/re_chunk_000/natives/STM/AppSystem/Item/ItemData/ItemArmorData.user.2\""

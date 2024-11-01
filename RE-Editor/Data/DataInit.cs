@@ -14,6 +14,8 @@ using RE_Editor.Data.DD2;
 using RE_Editor.Data.DRDR;
 #elif MHR
 using RE_Editor.Data.MHR;
+#elif MHWS
+using RE_Editor.Data.MHWS;
 #elif RE2
 using RE_Editor.Data.RE2;
 #elif RE3

@@ -1,0 +1,11 @@
+{
+    "profiles": {
+        "[None]": {
+            "commandName": "Project"
+        },
+        "itemData.user.3": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/MHWS/re_chunk_000/natives/STM/GameDesign/Common/Item/itemData.user.3\""
+        }
+    }
+}

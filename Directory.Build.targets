@@ -11,6 +11,10 @@
 	<PropertyGroup Condition="$(Configuration.StartsWith('MHR'))">
 		<DefineConstants>$(DefineConstants);MHR</DefineConstants>
 	</PropertyGroup>
+	<!-- MHWS -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('MHWS'))">
+		<DefineConstants>$(DefineConstants);MHWS</DefineConstants>
+	</PropertyGroup>
 	<!-- RE2 -->
 	<PropertyGroup Condition="$(Configuration.StartsWith('RE2'))">
 		<DefineConstants>$(DefineConstants);RE2</DefineConstants>

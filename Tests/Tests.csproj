@@ -41,6 +41,13 @@
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHR`))'">
 		<None Remove="MHR.runsettings"/>
 	</ItemGroup>
+	<!-- MHWS -->
+	<PropertyGroup Condition="$(Configuration.StartsWith('MHWS'))">
+		<RunSettingsFilePath>$(MSBuildProjectDirectory)\MHWS.runsettings</RunSettingsFilePath>
+	</PropertyGroup>
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHWS`))'">
+		<None Remove="MHWS.runsettings"/>
+	</ItemGroup>
 	<!-- RE2 -->
 	<PropertyGroup Condition="$(Configuration.StartsWith('RE2'))">
 		<RunSettingsFilePath>$(MSBuildProjectDirectory)\RE2.runsettings</RunSettingsFilePath>

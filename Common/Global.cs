@@ -76,6 +76,8 @@ public static class Global {
     public const string MSG_VERSION = "23";
 #elif MHR
     public const string MSG_VERSION = "539100710";
+#elif MHWS
+    public const string MSG_VERSION = "23";
 #elif RE2
     public const string MSG_VERSION = "50397457";
 #elif RE3
@@ -92,6 +94,8 @@ public static class Global {
     public const string USER_VERSION = "3";
 #elif MHR
     public const string USER_VERSION = "2";
+#elif MHWS
+    public const string USER_VERSION = "3";
 #elif RE2
     public const string USER_VERSION = "2";
 #elif RE3

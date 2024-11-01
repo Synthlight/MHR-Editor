@@ -35,6 +35,8 @@ public partial class MainWindow {
     private const string TITLE = "DRDR Editor";
 #elif MHR
     private const string TITLE = "MHR Editor";
+#elif MHWS
+    private const string TITLE = "MHWS Editor";
 #elif RE2
     private const string TITLE = "RE2 Editor";
 #elif RE3
@@ -380,12 +382,6 @@ public partial class MainWindow {
                     break;
             }
         }
-    }
-
-    private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e) {
-        var scv = (ScrollViewer) sender;
-        scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
-        e.Handled = true;
     }
 
     public static void ShowError(Exception err, string title) {

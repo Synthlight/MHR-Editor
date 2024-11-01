@@ -31,6 +31,13 @@
 		<Compile Remove="Models\MHR\**"/>
 		<Compile Remove="Structs\MHR\**"/>
 	</ItemGroup>
+	<!-- MHWS -->
+	<ItemGroup Condition="'!$(Configuration.StartsWith(`MHWS`))'">
+		<Compile Remove="Enums\MHWS\**"/>
+		<Compile Remove="Manual\MHWS\Structs\**"/>
+		<Compile Remove="Models\MHWS\**"/>
+		<Compile Remove="Structs\MHWS\**"/>
+	</ItemGroup>
 	<!-- RE2 -->
 	<ItemGroup Condition="'!$(Configuration.StartsWith(`RE2`))'">
 		<Compile Remove="Enums\RE2\**"/>

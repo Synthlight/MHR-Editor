@@ -3,6 +3,10 @@
         "[None]": {
             "commandName": "Project"
         },
+        "ArmorData.user.3": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/MHWS/re_chunk_000/natives/STM/GameDesign/Common/Equip/ArmorData.user.3\""
+        },
         "itemData.user.3": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/MHWS/re_chunk_000/natives/STM/GameDesign/Common/Item/itemData.user.3\""

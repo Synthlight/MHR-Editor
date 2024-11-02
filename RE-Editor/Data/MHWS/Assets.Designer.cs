@@ -63,6 +63,16 @@ namespace RE_Editor.Data.MHWS {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] ARMOR_INFO_LOOKUP_BY_GUID {
+            get {
+                object obj = ResourceManager.GetObject("ARMOR_INFO_LOOKUP_BY_GUID", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] GP_CRC_OVERRIDE_INFO {
             get {
                 object obj = ResourceManager.GetObject("GP_CRC_OVERRIDE_INFO", resourceCulture);
@@ -73,9 +83,49 @@ namespace RE_Editor.Data.MHWS {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] ITEM_DESC_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("ITEM_DESC_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ITEM_INFO_LOOKUP_BY_GUID {
+            get {
+                object obj = ResourceManager.GetObject("ITEM_INFO_LOOKUP_BY_GUID", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ITEM_NAME_LOOKUP {
+            get {
+                object obj = ResourceManager.GetObject("ITEM_NAME_LOOKUP", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] STRUCT_INFO {
             get {
                 object obj = ResourceManager.GetObject("STRUCT_INFO", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] WEAPON_INFO_LOOKUP_BY_GUID {
+            get {
+                object obj = ResourceManager.GetObject("WEAPON_INFO_LOOKUP_BY_GUID", resourceCulture);
                 return ((byte[])(obj));
             }
         }

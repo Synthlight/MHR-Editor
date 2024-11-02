@@ -11,6 +11,8 @@ using RE_Editor.Common.Data;
 using RE_Editor.Common.Data;
 #elif MHR
 using RE_Editor.Common.Data;
+#elif MHWS
+using RE_Editor.Common.Data;
 #elif RE2
 using RE_Editor.Common.Data;
 #elif RE3
@@ -415,6 +417,8 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
             DataSourceType.RAMPAGE_SKILLS => nameof(DataHelper.RAMPAGE_SKILL_NAME_LOOKUP),
             DataSourceType.SKILLS => nameof(DataHelper.SKILL_NAME_LOOKUP),
             DataSourceType.SWITCH_SKILLS => nameof(DataHelper.SWITCH_SKILL_NAME_LOOKUP),
+#elif MHWS
+            DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
 #elif RE2
             DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
             DataSourceType.WEAPONS => nameof(DataHelper.WEAPON_NAME_LOOKUP),

@@ -153,6 +153,7 @@ public static class ModMaker {
     private static void CompressTheMod(string zipPath, List<string> baseFiles, List<string> gameFiles, bool copyToFluffy) {
         DoZip(zipPath, baseFiles, gameFiles);
         if (copyToFluffy) {
+            Directory.CreateDirectory(PathHelper.FLUFFY_MODS_PATH);
             File.Copy(zipPath, $@"{PathHelper.FLUFFY_MODS_PATH}\{Path.GetFileName(zipPath)}", true);
         }
     }

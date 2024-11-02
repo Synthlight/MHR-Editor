@@ -64,6 +64,8 @@ public static class Global {
 
 #if MHR
     public static readonly List<string> WEAPON_TYPES = ["Bow", "ChargeAxe", "DualBlades", "GreatSword", "GunLance", "Hammer", "HeavyBowgun", "Horn", "InsectGlaive", "Lance", "LightBowgun", "LongSword", "ShortSword", "SlashAxe"];
+#elif MHWS
+    public static readonly List<string> WEAPON_TYPES = ["Bow", "ChargeAxe", "GunLance", "Hammer", "HeavyBowgun", "Lance", "LightBowgun", "LongSword", "Rod", "ShortSword", "SlashAxe", "Tachi", "TwinSword", "Whistle"];
 #elif RE4
     public static readonly List<string> VARIANTS = ["CH", "MC", "AO"];
     public static readonly List<string> FOLDERS  = ["_Chainsaw", "_Mercenaries", "_AnotherOrder"];

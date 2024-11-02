@@ -1,4 +1,6 @@
-﻿namespace RE_Editor.Common;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RE_Editor.Common;
 
 public static partial class PathHelper {
     public const string CONFIG_NAME      = "MHWS";
@@ -19,4 +21,21 @@ public static partial class PathHelper {
     public static readonly string[] TEST_PATHS = [
         @"\natives\STM"
     ];
+
+    public const string ARMOR_DATA_PATH = @"\natives\STM\GameDesign\Common\Equip\ArmorData.user.3";
+    public const string ITEM_DATA_PATH  = @"\natives\STM\GameDesign\Common\Item\itemData.user.3";
+
+    public static IEnumerable<string> GetAllWeaponFilePaths(WeaponDataType type, string platform = "STM") {
+        var postfix                                = "";
+        if (type == WeaponDataType.Recipe) postfix = "Recipe";
+
+        return Global.WEAPON_TYPES.Select(s => @$"\natives\{platform}\GameDesign\Common\Weapon\{s}{postfix}.user.3");
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    public enum WeaponDataType {
+        Base,
+        Recipe
+    }
 }

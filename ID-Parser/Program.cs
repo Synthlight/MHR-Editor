@@ -62,6 +62,7 @@ public static partial class Program {
             var constName = name.ToUpper()
                                 .Replace("'", "")
                                 .Replace("\"", "")
+                                .Replace(",", "")
                                 .Replace(".", "")
                                 .Replace("(", "")
                                 .Replace(")", "")

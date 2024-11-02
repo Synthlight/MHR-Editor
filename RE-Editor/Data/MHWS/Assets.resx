@@ -118,10 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ARMOR_INFO_LOOKUP_BY_GUID" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assets\ARMOR_INFO_LOOKUP_BY_GUID.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="GP_CRC_OVERRIDE_INFO" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Assets\GP_CRC_OVERRIDE_INFO.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ITEM_DESC_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assets\ITEM_DESC_LOOKUP.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ITEM_INFO_LOOKUP_BY_GUID" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assets\ITEM_INFO_LOOKUP_BY_GUID.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ITEM_NAME_LOOKUP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assets\ITEM_NAME_LOOKUP.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="STRUCT_INFO" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>assets\struct_info.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WEAPON_INFO_LOOKUP_BY_GUID" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Assets\WEAPON_INFO_LOOKUP_BY_GUID.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
@@ -34,23 +35,41 @@ public class DumpArmor : IMod {
             list.Add(modelData);
         }
 
-        var outFile = new StreamWriter(File.Open($@"{PathHelper.MODS_PATH}\..\Armor Models.csv", FileMode.Create, FileAccess.Write, FileShare.Read));
-        outFile.WriteLine("Name,Path");
-        outFile.WriteLine(",\"`Gender` is ch02 for male, and ch03 for female.\"");
+        var writer = new StreamWriter(File.Open($@"{PathHelper.MODS_PATH}\..\Armor Models.csv", FileMode.Create, FileAccess.Write, FileShare.Read));
+        writer.WriteLine("Name,Gender,Path");
         foreach (var data in list) {
-            outFile.Write(data.name);
-            outFile.Write(',');
-            var modelId = data.series.ModId;
-            var variant = data.series.ModelVariety[0].Value + 1;
-            var part    = (int) data.part + 1;
-            outFile.WriteLine($"natives/STM/Art/Model/Character/{{Gender}}/{modelId:000}/{variant:000}/{part}/{{Gender}}_{modelId:000}_{variant:000}{part}");
+            writer.Write(data.name);
+            writer.Write(',');
+            writer.Write("Male");
+            writer.Write(',');
+            WritePart(writer, data, Gender.Male);
+
+            writer.Write(data.name);
+            writer.Write(',');
+            writer.Write("Female");
+            writer.Write(',');
+            WritePart(writer, data, Gender.Female);
         }
-        outFile.Close();
+        writer.Close();
+    }
+
+    private static void WritePart(StreamWriter writer, ArmorModelData armor, Gender gender) {
+        var genderChar = gender == Gender.Male ? "ch02" : "ch03";
+        var modelId    = armor.series.ModId;
+        var subId      = gender == Gender.Male ? armor.series.ModSubMaleId : armor.series.ModSubFemaleId;
+        var part       = (int) armor.part + 1;
+        writer.WriteLine($"natives/STM/Art/Model/Character/{genderChar}/{modelId:000}/{subId:000}/{part}/{genderChar}_{modelId:000}_{subId:000}{part}");
     }
 
     private struct ArmorModelData {
         public string                              name;
         public App_user_data_ArmorSeriesData_cData series;
         public App_ArmorDef_ARMOR_PARTS            part;
+    }
+
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    private enum Gender {
+        Male,
+        Female
     }
 }

@@ -1,0 +1,80 @@
+{
+  "jpn": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "ホープ",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "ドシャグマ",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "チャタ",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "バーラ"
+  },
+  "eng": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "Hope",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "Doshaguma",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "Chatacabra",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "Balahara"
+  },
+  "fre": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "Espoir",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "Doshaguma",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "Chatacabra",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "Balahara"
+  },
+  "ita": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "Speranza",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "Doshaguma",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "Chatacabra",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "Balahara"
+  },
+  "ger": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "Hoffnung",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "Doshaguma",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "Chatacabra",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "Balahara"
+  },
+  "spa": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "Esperanza",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "Doshaguma",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "Chatacabra",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "Balahara"
+  },
+  "rus": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "«Надежда»",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "Дошагумовый",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "Чатакабровый",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "Балахаровый"
+  },
+  "pol": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "Dające nadzieję",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "Doshaguma",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "Chatacabra",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "Balahara"
+  },
+  "ptB": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "Esperança",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "Doshaguma",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "Chatacabra",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "Balahara"
+  },
+  "kor": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "호프",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "도샤구마",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "차타",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "발라"
+  },
+  "chT": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "希望",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "闢獸",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "纏蛙",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "沙海龍"
+  },
+  "chS": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "希望",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "辟兽",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "缠蛙",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "沙海龙"
+  },
+  "ara": {
+    "f4f4d8a2-daad-4677-a171-da87d5a18430": "الأمل",
+    "606858d8-4010-4cab-9d81-b8a70e63b32f": "دوشاغوما",
+    "0deff97b-5c34-483b-ac40-d9dc5d8a5c8a": "تشاتاكابرا",
+    "b41fb49f-f9d7-4ea3-b68f-21377191e6bc": "بالاهارا"
+  }
+}

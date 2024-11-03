@@ -11,6 +11,7 @@ public static partial class Program {
         ExtractItemInfoByName();
         ExtractItemInfoByGuid();
         ExtractArmorInfoByGuid();
+        ExtractArmorSeriesInfoByGuid();
         ExtractWeaponInfoByGuid();
         ExtractSkillInfoByName();
     }
@@ -85,6 +86,33 @@ public static partial class Program {
                      }
                  });
         CreateConstantsFile(msg[Global.LangIndex.eng].Flip(), "ArmorConstants");
+    }
+
+    private static void ExtractArmorSeriesInfoByGuid() {
+        var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\GameDesign\Text\Excel_Equip\ArmorSeries.msg.{Global.MSG_VERSION}")
+                     .GetLangRawMap(name => {
+                         try {
+                             return name.id1;
+                         } catch (Exception) {
+                             throw new MSG.SkipReadException();
+                         }
+                     });
+        DataHelper.ARMOR_SERIES_INFO_LOOKUP_BY_GUID = msg;
+        CreateAssetFile(msg, "ARMOR_SERIES_INFO_LOOKUP_BY_GUID");
+
+        var regex = new Regex(@"ArmorSeries_(m?\d+)");
+        var msgByEnum = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\GameDesign\Text\Excel_Equip\ArmorSeries.msg.{Global.MSG_VERSION}")
+                           .GetLangIdMap(name => {
+                               var match = regex.Match(name);
+                               var value = match.Groups[1].Value.Replace('m', '-');
+                               try {
+                                   return int.Parse(value);
+                               } catch (Exception) {
+                                   throw new MSG.SkipReadException();
+                               }
+                           });
+        DataHelper.ARMOR_SERIES_BY_ENUM_VALUE = msgByEnum;
+        CreateAssetFile(msgByEnum, "ARMOR_SERIES_BY_ENUM_VALUE");
     }
 
     private static void ExtractWeaponInfoByGuid() {

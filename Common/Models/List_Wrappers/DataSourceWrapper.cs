@@ -5,6 +5,8 @@ using RE_Editor.Common.Controls.Models;
 
 #if MHR
 using RE_Editor.Common.Data;
+#elif MHWS
+using RE_Editor.Common.Data;
 #elif RE4
 using RE_Editor.Common.Data;
 #endif
@@ -48,6 +50,8 @@ public sealed class DataSourceWrapper<T> : ListWrapper<T> where T : struct {
             "snow.data.DataDef.PlHyakuryuSkillId" => DataHelper.RAMPAGE_SKILL_NAME_LOOKUP,
             "snow.data.DataDef.PlKitchenSkillId" => DataHelper.DANGO_NAME_LOOKUP,
             "snow.data.DataDef.PlWeaponActionId" => DataHelper.SWITCH_SKILL_NAME_LOOKUP,
+#elif MHWS
+            "app.ItemDef.ID_Fixed" => DataHelper.ITEM_NAME_LOOKUP,
 #elif RE4
             "chainsaw.ItemID" => DataHelper.ITEM_NAME_LOOKUP[Global.variant],
 #endif

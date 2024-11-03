@@ -42,9 +42,11 @@ public class StructJson {
         [UsedImplicitly] public string? type;
 
         // The two should be updated together, and are done so in `StructType.UpdateUsingCounts`.
-        [JsonIgnore] public int             overrideCount; // Used by children to mark they need to override a parent field.
-        [JsonIgnore] public int             virtualCount; // Used by children to mark their parent's fields as overwritten.
-        [JsonIgnore] public DataSourceType? buttonType; // Used by children to mark their parent's fields as overwritten.
+        [JsonIgnore] public int overrideCount; // Used by children to mark they need to override a parent field.
+        [JsonIgnore] public int virtualCount; // Used by children to mark their parent's fields as overwritten.
+
+        [JsonIgnore] public DataSourceType? buttonType;
+        [JsonIgnore] public string?         buttonPrimitive;
 
         public override string? ToString() {
             return name ?? base.ToString();

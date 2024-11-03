@@ -133,6 +133,7 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
         var isPrimitive         = primitiveName != null;
         var isEnumType          = typeName != null && generator.enumTypes.ContainsKey(typeName);
         var buttonType          = field.buttonType;
+        var buttonPrimitive     = field.buttonPrimitive;
         var isNonPrimitive      = !isPrimitive && !isEnumType; // via.thing
         var isUserData          = field.type == "UserData";
         var isObjectType        = field.type == nameof(Object);
@@ -203,13 +204,13 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
                 file.WriteLine($"    [DisplayName(\"{newName}\")]");
 #if MHR
-                file.WriteLine($"    public {modifier}string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
+                file.WriteLine($"    public {modifier}string {newName}_button => DataHelper.{lookupName}[Global.locale].TryGet(({buttonPrimitive}) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
 #elif RE4
                 file.WriteLine($"    public {modifier}string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
-                               $"DataHelper.{lookupName}[Global.variant][Global.locale].TryGet((uint) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
+                               $"DataHelper.{lookupName}[Global.variant][Global.locale].TryGet(({buttonPrimitive}) {newName}).ToStringWithId({newName}{(buttonType == DataSourceType.ITEMS ? ", true" : "")});");
 #else
                 file.WriteLine($"    public {modifier}string {newName}_button => {(negativeOneForEmpty ? $"{newName} == -1 ? \"<None>\".ToStringWithId({newName}) : " : "")}" +
-                               $"DataHelper.{lookupName}[Global.locale].TryGet((uint) {newName}).ToStringWithId({newName});");
+                               $"DataHelper.{lookupName}[Global.locale].TryGet(({buttonPrimitive}) {newName}).ToStringWithId({newName});");
 #endif
             } else if (viaType?.Is(typeof(ISimpleViaType)) == true) {
                 file.WriteLine($"    [SortOrder({sortOrder})]");
@@ -418,6 +419,7 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
             DataSourceType.SKILLS => nameof(DataHelper.SKILL_NAME_LOOKUP),
             DataSourceType.SWITCH_SKILLS => nameof(DataHelper.SWITCH_SKILL_NAME_LOOKUP),
 #elif MHWS
+            DataSourceType.ARMOR_SERIES => nameof(DataHelper.ARMOR_SERIES_BY_ENUM_VALUE),
             DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
             DataSourceType.SKILLS => nameof(DataHelper.SKILL_NAME_BY_ENUM_VALUE),
 #elif RE2

@@ -22,8 +22,10 @@ public static partial class PathHelper {
         @"\natives\STM"
     ];
 
-    public const string ARMOR_DATA_PATH = @"\natives\STM\GameDesign\Common\Equip\ArmorData.user.3";
-    public const string ITEM_DATA_PATH  = @"\natives\STM\GameDesign\Common\Item\itemData.user.3";
+    public const string ARMOR_DATA_PATH        = @"\natives\STM\GameDesign\Common\Equip\ArmorData.user.3";
+    public const string ARMOR_SERIES_DATA_PATH = @"\natives\STM\GameDesign\Common\Equip\ArmorSeriesData.user.3";
+    public const string ITEM_DATA_PATH         = @"\natives\STM\GameDesign\Common\Item\ItemData.user.3";
+    public const string ITEM_RECIPE_PATH       = @"\natives\STM\GameDesign\Common\Item\ItemRecipe.user.3";
 
     public static IEnumerable<string> GetAllWeaponFilePaths(WeaponDataType type, string platform = "STM") {
         var postfix                                = "";

@@ -65,7 +65,8 @@ public class StructType(string name, string? parent, string hash, StructJson str
             if (parent != null && generator.structTypes[parent].structInfo.fieldNameMap.TryGetValue(field.name, out var parentField)) {
                 field.buttonType = parentField.buttonType;
             } else {
-                field.buttonType = GetButtonType(field);
+                field.buttonType      = GetButtonType(field);
+                field.buttonPrimitive = GetButtonPrimitive(field.buttonType);
             }
         }
     }
@@ -95,8 +96,8 @@ public class StructType(string name, string? parent, string hash, StructJson str
             case "Solid_MT2RE_rItemAttackTable__CommonAttackParam.MItemNo":
                 return DataSourceType.ITEMS;
 #elif MHWS
-            case "App_HunterDef_Skill_Serializable.Value":
-                return DataSourceType.SKILLS;
+            case "App_ArmorDef_SERIES_Serializable.Value": return DataSourceType.ARMOR_SERIES;
+            case "App_HunterDef_Skill_Serializable.Value": return DataSourceType.SKILLS;
 #endif
         }
 #pragma warning restore CS1522
@@ -115,8 +116,9 @@ public class StructType(string name, string? parent, string hash, StructJson str
             "snow.data.DataDef.PlKitchenSkillId" => DataSourceType.DANGO_SKILLS,
             "snow.data.DataDef.PlWeaponActionId" => DataSourceType.SWITCH_SKILLS,
 #elif MHWS
-            "app.ItemDef.ID_Fixed" => DataSourceType.ITEMS,
+            "app.ArmorDef.SERIES_Fixed" => DataSourceType.ARMOR_SERIES,
             "app.HunterDef.Skill_Fixed" => DataSourceType.SKILLS,
+            "app.ItemDef.ID_Fixed" => DataSourceType.ITEMS,
 #elif RE2
             "app.ropeway.gamemastering.Item.ID" => DataSourceType.ITEMS,
             "app.ropeway.EquipmentDefine.WeaponType" => DataSourceType.WEAPONS,
@@ -128,6 +130,17 @@ public class StructType(string name, string? parent, string hash, StructJson str
             "chainsaw.WeaponID" => DataSourceType.WEAPONS,
 #endif
             _ => null
+        };
+    }
+
+    private static string? GetButtonPrimitive(DataSourceType? fieldButtonType) {
+        return fieldButtonType switch {
+#if MHWS
+            DataSourceType.ARMOR_SERIES => "int",
+            DataSourceType.SKILLS => "int",
+#endif
+            null => null,
+            _ => "uint"
         };
     }
 }

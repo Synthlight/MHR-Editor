@@ -20,3 +20,16 @@ public partial class App_user_data_ArmorData_cData {
         return Name_;
     }
 }
+
+[SuppressMessage("ReSharper", "InconsistentNaming")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+[SuppressMessage("ReSharper", "UnusedType.Global")]
+public partial class App_user_data_ArmorSeriesData_cData {
+    [SortOrder(50)]
+    public string Name_ => DataHelper.ARMOR_SERIES_INFO_LOOKUP_BY_GUID[Global.locale].TryGet(Name.Value);
+
+    public override string ToString() {
+        return Name_;
+    }
+}

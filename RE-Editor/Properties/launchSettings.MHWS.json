@@ -7,9 +7,13 @@
             "commandName": "Project",
             "commandLineArgs": "\"V:/MHWS/re_chunk_000/natives/STM/GameDesign/Common/Equip/ArmorData.user.3\""
         },
-        "itemData.user.3": {
+        "ItemData.user.3": {
             "commandName": "Project",
-            "commandLineArgs": "\"V:/MHWS/re_chunk_000/natives/STM/GameDesign/Common/Item/itemData.user.3\""
+            "commandLineArgs": "\"V:/MHWS/re_chunk_000/natives/STM/GameDesign/Common/Item/ItemData.user.3\""
+        },
+        "LongSword.user.3": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/MHWS/re_chunk_000/natives/STM/GameDesign/Common/Weapon/LongSword.user.3\""
         }
     }
 }

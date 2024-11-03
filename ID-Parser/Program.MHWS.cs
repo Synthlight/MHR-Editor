@@ -1,16 +1,18 @@
 ﻿using System.Text.RegularExpressions;
 using RE_Editor.Common;
 using RE_Editor.Common.Data;
+using RE_Editor.Models.Enums;
 using MSG = RE_Editor.Common.Models.MSG;
 
 namespace RE_Editor.ID_Parser;
 
 public static partial class Program {
     public static void Main() {
-        //ExtractItemInfoByName();
-        //ExtractItemInfoByGuid();
-        //ExtractArmorInfoByGuid();
+        ExtractItemInfoByName();
+        ExtractItemInfoByGuid();
+        ExtractArmorInfoByGuid();
         ExtractWeaponInfoByGuid();
+        ExtractSkillInfoByName();
     }
 
     private static void ExtractItemInfoByName() {
@@ -117,5 +119,31 @@ public static partial class Program {
         CreateAssetFile(mergedMsg, "WEAPON_INFO_LOOKUP_BY_GUID");
         mergedMsg = nameOnlyMsgs.MergeDictionaries();
         CreateConstantsFile(mergedMsg[Global.LangIndex.eng].Flip(), "WeaponConstants");
+    }
+
+    private static void ExtractSkillInfoByName() {
+        var regex = new Regex(@"SkillCommon_(m?\d+)");
+        var msg = MSG.Read($@"{PathHelper.CHUNK_PATH}\natives\STM\GameDesign\Text\Excel_Equip\SkillCommon.msg.{Global.MSG_VERSION}")
+                     .GetLangIdMap(name => {
+                         var match = regex.Match(name);
+                         var value = match.Groups[1].Value.Replace('m', '-');
+                         try {
+                             return (App_HunterDef_Skill_Fixed) int.Parse(value);
+                         } catch (Exception) {
+                             throw new MSG.SkipReadException();
+                         }
+                     });
+        CreateAssetFile(msg, "SKILL_NAME_BY_ENUM_NAME");
+        CreateConstantsFile(msg[Global.LangIndex.eng].Flip(), "SkillConstants");
+
+        var byInt = new Dictionary<Global.LangIndex, Dictionary<int, string>>();
+        foreach (var lang in Global.LANGUAGES) {
+            foreach (var (id, name) in msg[lang]) {
+                if (!byInt.ContainsKey(lang)) byInt[lang] = new();
+                byInt[lang][(int) id] = name;
+            }
+        }
+        DataHelper.SKILL_NAME_BY_ENUM_VALUE = byInt;
+        CreateAssetFile(byInt, "SKILL_NAME_BY_ENUM_VALUE");
     }
 }

@@ -113,6 +113,26 @@ namespace RE_Editor.Data.MHWS {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] SKILL_NAME_BY_ENUM_NAME {
+            get {
+                object obj = ResourceManager.GetObject("SKILL_NAME_BY_ENUM_NAME", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SKILL_NAME_BY_ENUM_VALUE {
+            get {
+                object obj = ResourceManager.GetObject("SKILL_NAME_BY_ENUM_VALUE", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] STRUCT_INFO {
             get {
                 object obj = ResourceManager.GetObject("STRUCT_INFO", resourceCulture);

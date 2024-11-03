@@ -12,4 +12,5 @@ public static partial class DataHelper {
     public static Dictionary<Global.LangIndex, Dictionary<Guid, string>> ITEM_INFO_LOOKUP_BY_GUID;
     public static Dictionary<Global.LangIndex, Dictionary<Guid, string>> ARMOR_INFO_LOOKUP_BY_GUID;
     public static Dictionary<Global.LangIndex, Dictionary<Guid, string>> WEAPON_INFO_LOOKUP_BY_GUID;
+    public static Dictionary<Global.LangIndex, Dictionary<int, string>>  SKILL_NAME_BY_ENUM_VALUE;
 }

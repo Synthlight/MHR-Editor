@@ -14,5 +14,6 @@ public partial class GenerateFiles {
         "App_user_data_ArmorData",
         "App_user_data_WeaponData_cData",
         "App_user_data_WeaponData",
+        "App_HunterDef_Skill_Fixed",
     ];
 }

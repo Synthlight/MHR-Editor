@@ -11,7 +11,7 @@ public static partial class PathHelper {
     public const string ENUM_HEADER_PATH = $@"{GAME_PATH}\Enums_Internal.hpp";
     public const string REFRAMEWORK_PATH = @"R:\Games\Monster Hunter Rise\REFramework";
     public const string MODS_PATH        = @"R:\Games\Monster Hunter Wilds\Mods";
-    public const string FLUFFY_MODS_PATH = @"R:\Games\Monster Hunter Wilds\FMM\Games\MHRS\Mods";
+    public const string FLUFFY_MODS_PATH = @"R:\Games\Monster Hunter Wilds\FMM\Games\MonsterHunterWildsBeta\Mods";
     public const string PYTHON38_PATH    = @"C:\Program Files\Python38\python.exe";
 
     public const string NEXUS_URL              = "";

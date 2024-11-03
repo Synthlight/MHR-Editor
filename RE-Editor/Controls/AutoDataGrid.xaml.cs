@@ -396,6 +396,8 @@ public class AutoDataGridGeneric<T>(RSZ rsz) : AutoDataGrid, IAutoDataGrid<T> {
             DataSourceType.RAMPAGE_SKILLS => DataHelper.RAMPAGE_SKILL_NAME_LOOKUP[Global.locale],
             DataSourceType.SKILLS => DataHelper.SKILL_NAME_LOOKUP[Global.locale],
             DataSourceType.SWITCH_SKILLS => DataHelper.SWITCH_SKILL_NAME_LOOKUP[Global.locale],
+#elif MHWS
+            DataSourceType.SKILLS => DataHelper.SKILL_NAME_BY_ENUM_VALUE[Global.locale],
 #elif RE4
             DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.variant][Global.locale],
             DataSourceType.WEAPONS => DataHelper.WEAPON_NAME_LOOKUP[Global.variant][Global.locale],

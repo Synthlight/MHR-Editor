@@ -419,6 +419,7 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
             DataSourceType.SWITCH_SKILLS => nameof(DataHelper.SWITCH_SKILL_NAME_LOOKUP),
 #elif MHWS
             DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
+            DataSourceType.SKILLS => nameof(DataHelper.SKILL_NAME_BY_ENUM_VALUE),
 #elif RE2
             DataSourceType.ITEMS => nameof(DataHelper.ITEM_NAME_LOOKUP),
             DataSourceType.WEAPONS => nameof(DataHelper.WEAPON_NAME_LOOKUP),

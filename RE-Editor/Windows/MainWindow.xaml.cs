@@ -233,19 +233,6 @@ public partial class MainWindow {
         }
     }
 
-    private static (Type, object) GetItemAndTypeToUseAsRoot(IReadOnlyList<RszObject> rszObjectData, RszObject entryPointRszObject) {
-        var structInfo = entryPointRszObject.structInfo;
-        if (structInfo.fields is {Count: 1} && structInfo.fields[0].array && structInfo.fields[0].type == "Object") {
-            var type  = rszObjectData[0].GetType();
-            var items = rszObjectData.GetGenericItemsOfType(type);
-            return (type, items);
-        } else {
-            var type  = entryPointRszObject.GetType();
-            var items = new List<RszObject> {entryPointRszObject}.GetGenericItemsOfType(type);
-            return (type, items);
-        }
-    }
-
     private string GetOpenTarget() {
         var ofdResult = new OpenFileDialog {
             Filter           = filter,
@@ -318,6 +305,31 @@ public partial class MainWindow {
         // Only really matters for the wrapper list we make when it's a list of params, and we skip the actual root object.
         // Or when we need to create an ObservableCollection, as then we need to pass the original list.
         RowHelper<T>.AddKeybinds(dataGrid, lists, dataGrid, rsz);
+        return dataGrid;
+    }
+
+    // TODO: We need a better system to handle lists with inherited/generic contents.
+    private static AutoDataGridGeneric<T1> MakeDataGrid<T1, T2>(IList<T1> itemSource, RSZ rsz, IList<T2> underlyingList) where T1 : T2
+                                                                                                                         where T2 : RszObject {
+        var lists = new List<IList<T1>>();
+        if (underlyingList != null) {
+            lists.Add(underlyingList.Cast<T1>().ToList()); // Works, but probably breaks adding items.
+        }
+
+        if (itemSource is not ObservableCollection<T1> observableItems) {
+            observableItems = new(itemSource);
+            lists.Add(observableItems);
+        } else {
+            lists.Add(itemSource);
+        }
+
+        var dataGrid = new AutoDataGridGeneric<T1>(rsz);
+        dataGrid.SetItems(observableItems);
+
+        // Give it a list of all lists that need the object added/removed from.
+        // Only really matters for the wrapper list we make when it's a list of params, and we skip the actual root object.
+        // Or when we need to create an ObservableCollection, as then we need to pass the original list.
+        RowHelper<T1>.AddKeybinds(dataGrid, lists, dataGrid, rsz);
         return dataGrid;
     }
 

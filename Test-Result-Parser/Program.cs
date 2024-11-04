@@ -37,6 +37,8 @@ public static class Program {
         using var assetFile  = File.CreateText($@"{ASSETS_DIR}\{PathHelper.SUPPORTED_FILES_NAME}");
         using var outputFile = File.CreateText(TEST_RESULTS_PATH.Replace("Results.trx", "Supported Files.txt"));
 
+        paths.Sort();
+
         foreach (var path in paths) {
             assetFile.WriteLine(path);
             outputFile.WriteLine(path);

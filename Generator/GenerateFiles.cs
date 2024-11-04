@@ -61,6 +61,16 @@ public partial class GenerateFiles {
         "snow.StmGuiKeyconfigData.EnumItemSystemMessage`",
         "snow.StmGuiKeyconfigData.EnumMessage`",
         "System.Collections.Generic.List`1<snow.enemy.em134.Em", // Nested generics.
+#elif MHWS
+        "ace.Bitset`1<ace.GUIBase`",
+        "ace.user_data.DialogueManagerSettingBase`",
+        "ace.user_data.EventResourceListBase`",
+        "app.cEnumerableParam`",
+        "app.user_data.CharacterEditGenderedThumbnails`",
+        "app.user_data.CharacterEditThumbnails`",
+        "app.user_data.OptionDisplayData.cSetting`",
+        "app.user_data.OptionGraphicsData.cItem`",
+        "app.user_data.OptionGraphicsData.cSetting`",
 #elif RE2
         "app.ropeway.camera.CameraCurveUserData.CurveParamTable`",
         "app.ropeway.CorrespondGroup`",
@@ -111,6 +121,39 @@ public partial class GenerateFiles {
 #elif MHR
         "snow.camera.CameraUtility.BufferingParam`",
         "snow.eventcut.EventPlayerMediator.FaceMaterialConfig`",
+#elif MHWS
+        "ace.Bitset`1<app.AppSystem",
+        "ace.Bitset`1<app.BaseCampDef",
+        "ace.Bitset`1<app.EnemyDef",
+        "ace.Bitset`1<app.FieldDef",
+        "ace.Bitset`1<app.GUIDefApp",
+        "ace.Bitset`1<app.MenuDef",
+        "ace.Bitset`1<app.OtomoDef",
+        "ace.Bitset`1<app.TimelineEventDefine",
+        "ace.Bitset`1<app.user_data.EmParamAngry",
+        "ace.Bitset`1<app.user_data.GroundSurfaceTrailRequestSetting",
+        "ace.Bitset`1<app.user_data.OtomoHeadPartsEnableData",
+        "ace.Bitset`1<app.user_data.OtomoBodyPartsEnableData",
+        "ace.Bitset`1<app.user_data.TimelineEventDynamicResourceData",
+        "ace.Bitset`1<app.WeaponDef",
+        "ace.btable.cEditFieldDropBox`",
+        "ace.btable.cEditFieldEnum`",
+        "ace.cInstanceGuidArray`",
+        "ace.cUserDataArgumentHolder`",
+        "ace.user_data.GraphicsSettingUsedVramSizeBase.cData`",
+        "ace.voxel.cVoxelBuffer`",
+        "app.AppActionUtil.cActionParamEditableArray`",
+        "app.cAnimalLotteryTable`",
+        "app.cFieldGridTable`",
+        "app.cParamsByEnv`",
+        "app.DynamicClassSelector2`",
+        "app.InstanceGuidArray`",
+        "app.snd_user_data.EnumStateArray`",
+        "app.snd_user_data.SoundCatalogData`",
+        "app.snd_user_data.SoundGUIDefinition`",
+        "app.snd_user_data.SoundMusicGameFlowSettings.GameFlowMusicAction`",
+        "app.user_data.PorterRopesData`",
+        "soundlib.SoundSwitchApp`",
 #elif RE2
         "app.ropeway.enemy.userdata.MotionUserDataBase.MotionInfo`",
         "app.ropeway.enemy.userdata.MotionUserDataBase.MotionTable`",
@@ -339,8 +382,12 @@ public partial class GenerateFiles {
             if (structInfo.fields is [{name: "value__"}]) continue;
 
             if (structInfo.name!.ToLower() == "via.prefab") {
-                structInfo.fields![0].name = "Enabled";
-                structInfo.fields![1].name = "Name";
+                if (structInfo.fields!.Count >= 2) {
+                    structInfo.fields![0].name = "Enabled";
+                    structInfo.fields![1].name = "Name";
+                } else {
+                    Log("Warning: via.prefab type has no fields.");
+                }
             }
 
             // Ignore the 'via.thing' placeholders.
@@ -403,6 +450,7 @@ public partial class GenerateFiles {
             var isAllowed = structName.StartsWith(ROOT_STRUCT_NAMESPACE)
                             || structName.StartsWith("ace")
                             || structName.StartsWith("AISituation")
+                            || structName.StartsWith("goatree")
                             || structName.StartsWith("share")
                             || structName.StartsWith("solid")
                             || structName.StartsWith("soundlib")

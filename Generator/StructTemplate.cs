@@ -271,6 +271,7 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
 
         var isParentViaType = parentClass?.ToLower().StartsWith("via") ?? false;
         var modifier        = parentClass == null || isParentViaType ? "" : "new ";
+        var usedNamesLocal  = new Dictionary<string, int>();
 
         file.WriteLine("");
         file.WriteLine($"    public {modifier}static {className} Create(RSZ rsz) {{");
@@ -292,6 +293,11 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
             var isUserData     = field.type == "UserData";
             var isObjectType   = field.type == "Object";
             var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType, isUserData);
+
+            if (!usedNamesLocal.TryAdd(newName, 1)) {
+                usedNamesLocal[newName]++;
+                newName += usedNamesLocal[newName].ToString();
+            }
 
             if (!field.array && isObjectType && viaType == null && typeName != null && !isEnumType) {
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
@@ -334,6 +340,7 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
 
         var isParentViaType = parentClass?.ToLower().StartsWith("via") ?? false;
         var modifier        = parentClass == null || isParentViaType ? "virtual" : "override";
+        var usedNamesLocal  = new Dictionary<string, int>();
 
         file.WriteLine("");
         file.WriteLine($"    public {modifier} {className} Copy() {{");
@@ -355,6 +362,11 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
             var isUserData     = field.type == "UserData";
             var isObjectType   = field.type == "Object";
             var viaType        = GetViaType(field, isNonPrimitive, typeName, ref isObjectType, isUserData);
+
+            if (!usedNamesLocal.TryAdd(newName, 1)) {
+                usedNamesLocal[newName]++;
+                newName += usedNamesLocal[newName].ToString();
+            }
 
             // TODO: Fix generic/dataSource wrappers.
 

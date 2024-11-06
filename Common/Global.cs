@@ -1,13 +1,17 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Windows.Markup;
+using System.Reflection;
 
 #if MHR
+using System.Windows.Markup;
+
 [assembly: XmlnsDefinition("MHR", "RE_Editor.Common")]
 #endif
 
 namespace RE_Editor.Common;
 
 public static class Global {
+    public const BindingFlags FLAGS = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.FlattenHierarchy;
+
     public static bool      showIdBeforeName = true;
     public static LangIndex locale           = LangIndex.eng;
 

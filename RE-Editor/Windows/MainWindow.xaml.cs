@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -184,41 +185,9 @@ public partial class MainWindow {
             var rszObjectInfo = file?.rsz.objectEntryPoints;
             if (rszObjectInfo == null || rszObjectInfo.Count == 0) throw new("Error loading data; rszObjectInfo is null/empty.\n\nPlease report the path/name of the file you are trying to load.");
 
-            // Find entry object & type.
-            var objectDataIndex     = (int) rszObjectInfo[0] - 1; // 1 based.
-            var entryPointRszObject = rszObjectData[objectDataIndex];
-
-            /*
-             * Gets the items & typeName to use as the root entry in the dataGrid.
-             * For param types, this is the list of params. (A shortcut we make.)
-             * For the rest, it's the entry point & type.
-             */
-            var structInfo = entryPointRszObject.structInfo;
-            if (structInfo.fields is {Count: 1} && structInfo.fields[0].array && structInfo.fields[0].type == "Object" && rszObjectData.Count > 1) {
-                var type  = rszObjectData[^2].GetType();
-                var items = rszObjectData.GetGenericItemsOfType(type);
-
-                /*
-                 * Above, we make a pseudo list; a container of the data skipping the final wrapper object.
-                 * This works great for displaying the items without needing to do a sub-struct,
-                 * but completely prevent adding new rows since they need to be added to the wrapper field we skip over.
-                 *
-                 * So we need to get the actual wrapper field value and pass that as the real underlying list to RowHelper (through MakeDataGrid).
-                 */
-
-                var list = entryPointRszObject.GetType().GetProperty(structInfo.fields[0].name.ToConvertedFieldName()!)!
-                                              .GetGetMethod()!
-                                              .Invoke(entryPointRszObject, null);
-
-                var dataGrid = MakeDataGrid((dynamic) items, file.rsz, (dynamic) list); // Needs the original list else adding items won't persist.
-                Debug.WriteLine($"Loading type: {type.Name}");
-                AddMainDataGrid(dataGrid);
-            } else {
-                var type       = entryPointRszObject.GetType();
-                var structGrid = MakeStructGrid((dynamic) Convert.ChangeType(entryPointRszObject, type), file.rsz);
-                Debug.WriteLine($"Loading type: {type.Name}");
-                AddStructGrid(structGrid);
-            }
+            var entryObject     = file.rsz.GetEntryObject();
+            var dataGridControl = CreateDataGridControl(entryObject);
+            AddMainDataGrid(dataGridControl);
 
 #if MHR
             btn_sort_gems_by_skill_name.Visibility = target.Contains("DecorationsBaseData.user.2") || target.Contains("HyakuryuDecoBaseData.user.2") ? Visibility.Visible : Visibility.Collapsed;
@@ -231,6 +200,72 @@ public partial class MainWindow {
         } catch (Exception e) when (!Debugger.IsAttached) {
             ShowError(e, "Load Error");
         }
+    }
+
+    public static IDataGrid CreateDataGridControl(RszObject rszObj) {
+        /*
+         * Gets the items & typeName to use as the root entry in the dataGrid.
+         * For param types, this is the list of params. (A shortcut we make.)
+         * For the rest, it's the entry point & type.
+         */
+        var structInfo = rszObj.structInfo;
+        if (structInfo.fields is {Count: 1} && structInfo.fields[0].array && structInfo.fields[0].type == "Object") {
+            var entryType     = rszObj.GetType();
+            var entryProp     = entryType.GetProperty(structInfo.fields[0].name.ToConvertedFieldName()!)!;
+            var entryListType = entryProp.PropertyType.GenericTypeArguments[0];
+            var items         = entryProp.GetGetMethod()!.Invoke(rszObj, null);
+
+            /*
+             * If there is only one type, create a list with only that type for the grid so it can correctly plot columns.
+             * If there's more than one type, pass the root item and populate the UI so the user can switch target types.
+             */
+
+            //var itemTypes = (List<Type>) GetTypesInList((dynamic) items);
+            var itemTypes = Utils.GetTypesInList((IEnumerable) items);
+            if (itemTypes.Count == 1) {
+                entryListType = itemTypes[0];
+                var ofType = typeof(Enumerable).GetMethod(nameof(Enumerable.OfType))!.MakeGenericMethod(entryListType);
+                var list   = ofType.Invoke(null, [items]);
+                var newObs = Utils.GetGenericConstructor(typeof(ObservableCollection<>), [typeof(IEnumerable<>)], entryListType)!;
+                items = newObs.Invoke([list]);
+            } else {
+                // TODO: Add a UI so the user can select the target type for the grid.
+                // There might also be nothing in the list at all.
+            }
+
+            var makeGridMethod = typeof(MainWindow).GetMethod(nameof(MakeDataGrid), Global.FLAGS)!.MakeGenericMethod(entryListType);
+            var dataGrid       = (AutoDataGrid) makeGridMethod.Invoke(null, [items, rszObj.rsz, entryProp, rszObj, itemTypes]);
+            //var dataGrid = MakeDataGrid((dynamic) items, rszObj.rsz, entryProp, entryPointRszObject, itemTypes);
+
+            Debug.WriteLine($"Loading type: {entryListType.Name}");
+            return dataGrid;
+        } else {
+            var type       = rszObj.GetType();
+            var structGrid = (StructGrid) MakeSubDataGrid((dynamic) Convert.ChangeType(rszObj, type), rszObj.rsz);
+            Debug.WriteLine($"Loading type: {type.Name}");
+            return structGrid;
+        }
+    }
+
+    private static AutoDataGridGeneric<T> MakeDataGrid<T>(ObservableCollection<T> items, RSZ rsz, PropertyInfo prop, object instance, List<Type> contentTypes) where T : RszObject {
+        var dataGrid = new AutoDataGridGeneric<T>(rsz);
+        dataGrid.SetItems(items);
+        // TODO: RowHelper<T>.AddKeybinds(dataGrid, lists, dataGrid, rsz);
+        return dataGrid;
+    }
+
+    private static StructGridGeneric<T> MakeSubDataGrid<T>(T item, RSZ rsz) where T : RszObject {
+        var dataGrid = new StructGridGeneric<T>(rsz);
+        dataGrid.SetItem(item);
+        // TODO: RowHelper<T>.AddKeybinds(dataGrid, item, dataGrid, rsz);
+        return dataGrid;
+    }
+
+    public void AddMainDataGrid(IDataGrid dataGrid) {
+        dataGrid.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+        dataGrid.VerticalScrollBarVisibility   = ScrollBarVisibility.Auto;
+
+        AddMainControl((UIElement) dataGrid);
     }
 
     private string GetOpenTarget() {
@@ -264,7 +299,7 @@ public partial class MainWindow {
         }
     }
 
-    private string GetSaveTarget() {
+    private static string GetSaveTarget() {
         var sfdResult = new SaveFileDialog {
             FileName         = $"{Path.GetFileName(targetFile)}",
             InitialDirectory = targetFile == null ? string.Empty : Path.GetDirectoryName(targetFile) ?? string.Empty,
@@ -283,74 +318,6 @@ public partial class MainWindow {
             lbl_saved.Visibility = lbl_no_changes.Visibility = Visibility.Hidden;
         } catch (TaskCanceledException) {
         }
-    }
-
-    public static AutoDataGridGeneric<T> MakeDataGrid<T>(IList<T> itemSource, RSZ rsz, IList<T> underlyingList) where T : RszObject {
-        var lists = new List<IList<T>>();
-        if (underlyingList != null) {
-            lists.Add(underlyingList);
-        }
-
-        if (itemSource is not ObservableCollection<T> observableItems) {
-            observableItems = new(itemSource);
-            lists.Add(observableItems);
-        } else {
-            lists.Add(itemSource);
-        }
-
-        var dataGrid = new AutoDataGridGeneric<T>(rsz);
-        dataGrid.SetItems(observableItems);
-
-        // Give it a list of all lists that need the object added/removed from.
-        // Only really matters for the wrapper list we make when it's a list of params, and we skip the actual root object.
-        // Or when we need to create an ObservableCollection, as then we need to pass the original list.
-        RowHelper<T>.AddKeybinds(dataGrid, lists, dataGrid, rsz);
-        return dataGrid;
-    }
-
-    // TODO: We need a better system to handle lists with inherited/generic contents.
-    private static AutoDataGridGeneric<T1> MakeDataGrid<T1, T2>(IList<T1> itemSource, RSZ rsz, IList<T2> underlyingList) where T1 : T2
-                                                                                                                         where T2 : RszObject {
-        var lists = new List<IList<T1>>();
-        if (underlyingList != null) {
-            lists.Add(underlyingList.Cast<T1>().ToList()); // Works, but probably breaks adding items.
-        }
-
-        if (itemSource is not ObservableCollection<T1> observableItems) {
-            observableItems = new(itemSource);
-            lists.Add(observableItems);
-        } else {
-            lists.Add(itemSource);
-        }
-
-        var dataGrid = new AutoDataGridGeneric<T1>(rsz);
-        dataGrid.SetItems(observableItems);
-
-        // Give it a list of all lists that need the object added/removed from.
-        // Only really matters for the wrapper list we make when it's a list of params, and we skip the actual root object.
-        // Or when we need to create an ObservableCollection, as then we need to pass the original list.
-        RowHelper<T1>.AddKeybinds(dataGrid, lists, dataGrid, rsz);
-        return dataGrid;
-    }
-
-    public static StructGridGeneric<T> MakeStructGrid<T>(T item, RSZ rsz) where T : RszObject {
-        var dataGrid = new StructGridGeneric<T>(rsz);
-        dataGrid.SetItem(item);
-        return dataGrid;
-    }
-
-    public void AddMainDataGrid(AutoDataGrid dataGrid) {
-        dataGrid.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
-        dataGrid.VerticalScrollBarVisibility   = ScrollBarVisibility.Auto;
-
-        AddMainControl(dataGrid);
-    }
-
-    public void AddStructGrid(StructGrid structGrid) {
-        structGrid.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
-        structGrid.VerticalScrollBarVisibility   = ScrollBarVisibility.Auto;
-
-        AddMainControl(structGrid);
     }
 
     private void AddMainControl(UIElement uiElement) {

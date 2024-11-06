@@ -78,6 +78,10 @@
         "WeaponEquipParamCatalogUserData.user.2": {
             "commandName": "Project",
             "commandLineArgs": "\"V:/RE4/re_chunk_000/natives/STM/_Chainsaw/AppSystem/Weapon/WeaponEquipParamCatalogUserData.user.2\""
+        },
+        "File with generic list with more than one type.": {
+            "commandName": "Project",
+            "commandLineArgs": "\"V:/RE4/re_chunk_000/natives/STM/_Chainsaw/AppSystem/UI/UserData/UVSequenceResourceSettingUserdata.user.2\""
         }
     }
 }

@@ -4,7 +4,7 @@ namespace RE_Editor.Common;
 
 public static partial class PathHelper {
     public const string CONFIG_NAME      = "MHWS";
-    public const string CHUNK_PATH       = @"V:\MHWS\re_chunk_000";
+    public const string CHUNK_PATH       = @"V:\MHWilds\re_chunk_000";
     public const string GAME_PATH        = @"O:\SteamLibrary\steamapps\common\MonsterHunterWildsBetatest";
     public const string EXE_PATH         = $@"{GAME_PATH}\MonsterHunterWildsBeta_dump.exe";
     public const string IL2CPP_DUMP_PATH = $@"{GAME_PATH}\il2cpp_dump.json";

@@ -17,8 +17,9 @@ using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Controls.Models;
-using RE_Editor.Common.Data;
 using RE_Editor.Common.Models;
+using RE_Editor.Models;
+using RE_Editor.Util;
 using RE_Editor.Windows;
 
 namespace RE_Editor.Controls;
@@ -35,14 +36,14 @@ public interface IAutoDataGrid<T> : IAutoDataGrid {
     void SetItems(ObservableCollection<T> items, PropertyInfo sourceProperty = null);
 }
 
-public abstract partial class AutoDataGrid : IAutoDataGrid {
+public abstract partial class AutoDataGrid : IAutoDataGrid, IDataGrid {
     protected static readonly Brush           BACKGROUND_BRUSH = (Brush) new BrushConverter().ConvertFrom("#c0e1fb");
     public static readonly    SolidColorBrush ALT_ROW_BRUSH    = new(Color.FromRgb(230, 230, 230));
 
     public abstract bool IsAddingAllowed { get; set; }
 
     protected AutoDataGrid() {
-        InitializeComponent();
+        if (!Utils.IsRunningFromUnitTests) InitializeComponent();
     }
 
     public abstract    void SetItems(object items, PropertyInfo sourceProperty = null);
@@ -68,6 +69,7 @@ public class AutoDataGridGeneric<T>(RSZ rsz) : AutoDataGrid, IAutoDataGrid<T> {
     public new ObservableCollection<T> Items {
         get => items;
         private set {
+            if (Utils.IsRunningFromUnitTests) return;
             columnMap  = new();
             coloredRow = null;
             items      = value;
@@ -228,10 +230,8 @@ public class AutoDataGridGeneric<T>(RSZ rsz) : AutoDataGrid, IAutoDataGrid<T> {
                 if (shadeThisColumn) {
                     column.CellStyle = new(typeof(DataGridCell));
                     column.CellStyle.Setters.Add(new Setter(BackgroundProperty, ALT_ROW_BRUSH));
-                    shadeThisColumn = !shadeThisColumn;
-                } else {
-                    shadeThisColumn = !shadeThisColumn;
                 }
+                shadeThisColumn = !shadeThisColumn;
             }
 
             // Since T may be dynamic/object. Also need to account for custom views.
@@ -384,29 +384,8 @@ public class AutoDataGridGeneric<T>(RSZ rsz) : AutoDataGrid, IAutoDataGrid<T> {
         var propToUse      = sourceProperty?.GetCustomAttribute(typeof(DataSourceAttribute), true) != null ? sourceProperty : property;
         var dataSourceType = ((DataSourceAttribute) propToUse.GetCustomAttribute(typeof(DataSourceAttribute), true))?.dataType;
         var showAsHex      = (ButtonIdAsHexAttribute) propToUse.GetCustomAttribute(typeof(ButtonIdAsHexAttribute), true) != null;
-
-        dynamic dataSource = dataSourceType switch {
-#if DD2
-            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
-#elif DRDR
-            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
-#elif MHR
-            DataSourceType.DANGO_SKILLS => DataHelper.DANGO_SKILL_NAME_LOOKUP[Global.locale],
-            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
-            DataSourceType.RAMPAGE_SKILLS => DataHelper.RAMPAGE_SKILL_NAME_LOOKUP[Global.locale],
-            DataSourceType.SKILLS => DataHelper.SKILL_NAME_LOOKUP[Global.locale],
-            DataSourceType.SWITCH_SKILLS => DataHelper.SWITCH_SKILL_NAME_LOOKUP[Global.locale],
-#elif MHWS
-            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.locale],
-            DataSourceType.SKILLS => DataHelper.SKILL_NAME_BY_ENUM_VALUE[Global.locale],
-#elif RE4
-            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.variant][Global.locale],
-            DataSourceType.WEAPONS => DataHelper.WEAPON_NAME_LOOKUP[Global.variant][Global.locale],
-#endif
-            _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
-        };
-
-        var getNewItemId = new GetNewItemId(value, dataSource, showAsHex);
+        var dataSource     = Utils.GetDataSourceType(dataSourceType);
+        var getNewItemId   = new GetNewItemId(value, dataSource, showAsHex);
         getNewItemId.ShowDialog();
 
         if (!getNewItemId.Cancelled) {

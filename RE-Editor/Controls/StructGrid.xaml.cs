@@ -13,6 +13,8 @@ using RE_Editor.Common;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Controls.Models;
 using RE_Editor.Common.Models;
+using RE_Editor.Models;
+using RE_Editor.Util;
 using RE_Editor.Windows;
 
 #if RE4
@@ -31,20 +33,24 @@ public interface IStructGrid<T> : IStructGrid {
     void SetItem(T item);
 }
 
-public abstract partial class StructGrid : IStructGrid {
+public abstract partial class StructGrid : IStructGrid, IDataGrid {
     protected StructGrid() {
-        InitializeComponent();
+        if (!Utils.IsRunningFromUnitTests) InitializeComponent();
     }
 
     public abstract void SetItem(object item);
     public abstract void Refresh();
 }
 
+/***
+ ** A vertical layout of a single struct.
+ **/
 public class StructGridGeneric<T>(RSZ rsz) : StructGrid, IStructGrid<T> {
     private T item;
     public T Item {
         get => item;
         set {
+            if (Utils.IsRunningFromUnitTests) return;
             ClearContents();
             item = value;
             SetupRows();
@@ -173,14 +179,7 @@ public class StructGridGeneric<T>(RSZ rsz) : StructGrid, IStructGrid<T> {
         var dataSourceType      = ((DataSourceAttribute) property.GetCustomAttribute(typeof(DataSourceAttribute), true))?.dataType;
         var showAsHex           = (ButtonIdAsHexAttribute) property.GetCustomAttribute(typeof(ButtonIdAsHexAttribute), true) != null;
         var negativeOneForEmpty = (NegativeOneForEmptyAttribute) property.GetCustomAttribute(typeof(NegativeOneForEmptyAttribute), true) != null;
-
-        dynamic dataSource = dataSourceType switch {
-#if RE4
-            DataSourceType.ITEMS => DataHelper.ITEM_NAME_LOOKUP[Global.variant][Global.locale],
-            DataSourceType.WEAPONS => DataHelper.WEAPON_NAME_LOOKUP[Global.variant][Global.locale],
-#endif
-            _ => throw new ArgumentOutOfRangeException(dataSourceType.ToString())
-        };
+        var dataSource          = Utils.GetDataSourceType(dataSourceType);
 
         if (negativeOneForEmpty) {
             var newData = new Dictionary<int, string> {[-1] = "<None>"};

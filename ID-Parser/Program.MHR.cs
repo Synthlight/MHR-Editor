@@ -31,7 +31,7 @@ public static partial class Program {
         ExtractGuildCardInfo();
     }
 
-    private static Dictionary<Global.LangIndex, Dictionary<uint, string>> GetMergedMrTexts(string path, SubCategoryType type, bool startAtOne, uint offsetToAdd, bool addAfter = false, bool writeNameIds = false) {
+    private static Dictionary<Global.LangIndex, Dictionary<uint, string>> GetMergedMrTexts(string path, Snow_data_ContentsIdSystem_SubCategoryType type, bool startAtOne, uint offsetToAdd, bool addAfter = false, bool writeNameIds = false) {
         var baseList = MSG.Read(path.Replace(MR, ""), writeNameIds)
                           .GetLangIdMap((uint) type, startAtOne);
         var mrList = MSG.Read(path.Replace(MR, "_MR"))
@@ -101,7 +101,7 @@ public static partial class Program {
             var msgLists = new List<Dictionary<Global.LangIndex, Dictionary<uint, string>>>(types.Count);
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var type in types) {
-                var enumType = Enum.Parse<SubCategoryType>($"A_{type}");
+                var enumType = Enum.Parse<Snow_data_ContentsIdSystem_SubCategoryType>($"A_{type}");
                 msgLists.Add(GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\{type}\A_{type}_{@in}{MR}.msg.{Global.MSG_VERSION}", enumType, false, 300));
             }
             var result = msgLists.MergeDictionaries();
@@ -117,7 +117,7 @@ public static partial class Program {
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractArmorSeriesInfo() {
-        var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.{Global.MSG_VERSION}", SubCategoryType.C_Unclassified, false, 300);
+        var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Armor\ArmorSeries_Hunter_Name{MR}.msg.{Global.MSG_VERSION}", Snow_data_ContentsIdSystem_SubCategoryType.C_Unclassified, false, 300);
 
         CreateAssetFile(msg, "ARMOR_SERIES_LOOKUP");
 
@@ -309,7 +309,7 @@ public static partial class Program {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     private static void ExtractSwitchSkillInfo() {
         foreach (var (@in, @out) in NAME_DESC) {
-            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlSwitchAction\PlayerSwitchAction_{@in}{MR}.msg.{Global.MSG_VERSION}", SubCategoryType.C_Unclassified, false, 0, addAfter: true);
+            var msg = GetMergedMrTexts($@"{PathHelper.CHUNK_PATH}\natives\STM\data\Define\Player\Skill\PlSwitchAction\PlayerSwitchAction_{@in}{MR}.msg.{Global.MSG_VERSION}", Snow_data_ContentsIdSystem_SubCategoryType.C_Unclassified, false, 0, addAfter: true);
             CreateAssetFile(msg, $"SWITCH_SKILL_{@out}_LOOKUP");
         }
     }

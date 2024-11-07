@@ -195,7 +195,7 @@ public class StructGridGeneric<T>(RSZ rsz) : StructGrid, IStructGrid<T> {
         getNewItemId.ShowDialog();
 
         if (!getNewItemId.Cancelled) {
-            property.SetValue(Item, Convert.ChangeType(getNewItemId.CurrentItem, propertyType));
+            property.SetValue(Item, propertyType.IsEnum ? Enum.ToObject(propertyType, getNewItemId.CurrentItem) : Convert.ChangeType(getNewItemId.CurrentItem, propertyType));
             //Item.OnPropertyChanged(propertyName);
         }
     }

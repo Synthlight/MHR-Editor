@@ -389,7 +389,7 @@ public class AutoDataGridGeneric<T>(RSZ rsz) : AutoDataGrid, IAutoDataGrid<T> {
         getNewItemId.ShowDialog();
 
         if (!getNewItemId.Cancelled) {
-            property.SetValue(obj, Convert.ChangeType(getNewItemId.CurrentItem, propertyType));
+            property.SetValue(obj, propertyType.IsEnum ? Enum.ToObject(propertyType, getNewItemId.CurrentItem) : Convert.ChangeType(getNewItemId.CurrentItem, propertyType));
             obj.OnPropertyChanged(propertyName);
         }
 

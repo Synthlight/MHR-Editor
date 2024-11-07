@@ -46,6 +46,11 @@ public class StructType(string name, string? parent, string hash, StructJson str
             if (generator.enumTypes.TryGetValue(typeName, out var enumType)) {
                 enumType.useCount++;
             }
+#if MHWS
+            if (typeName.EndsWith("_Serializable")) {
+                generator.enumTypes[typeName.ToFixedEnumName()!].useCount++;
+            }
+#endif
         }
     }
 
@@ -63,16 +68,17 @@ public class StructType(string name, string? parent, string hash, StructJson str
                 generator.structTypes[parent].UpdateButtons(generator, history);
             }
             if (parent != null && generator.structTypes[parent].structInfo.fieldNameMap.TryGetValue(field.name, out var parentField)) {
-                field.buttonType = parentField.buttonType;
+                field.buttonType      = parentField.buttonType;
+                field.buttonPrimitive = parentField.buttonPrimitive;
             } else {
-                field.buttonType      = GetButtonType(field);
+                field.buttonType      = GetButtonType(generator, field);
                 field.buttonPrimitive = GetButtonPrimitive(field.buttonType);
             }
         }
     }
 
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
-    private DataSourceType? GetButtonType(StructJson.Field field) {
+    private DataSourceType? GetButtonType(GenerateFiles generator, StructJson.Field field) {
         // This part check the class + field name.
         var fullName = $"{name}.{field.name.ToConvertedFieldName()}";
 #pragma warning disable IDE0066
@@ -103,8 +109,17 @@ public class StructType(string name, string? parent, string hash, StructJson str
 #pragma warning restore CS1522
 #pragma warning restore IDE0066
 
+        var originalType = field.originalType;
+        if (originalType == null) return null;
+
+#if MHWS
+        if (originalType.Contains("_Serializable") && field is {array: false, type: nameof(Object)} && generator.structTypes[field.originalType!.ToConvertedTypeName()!].structInfo.fields![0].type != nameof(Object)) {
+            originalType = originalType.ToFixedEnumName()!;
+        }
+#endif
+
         // And this check the original type.
-        return field.originalType?.Replace("[]", "") switch {
+        return originalType.Replace("[]", "") switch {
 #if DD2
             "app.ItemIDEnum" => DataSourceType.ITEMS,
 #elif DRDR

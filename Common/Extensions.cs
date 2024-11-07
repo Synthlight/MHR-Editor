@@ -526,6 +526,13 @@ public static class Extensions {
         return name;
     }
 
+    [Pure]
+    public static string? ToFixedEnumName(this string? name) {
+        return name?.Replace("BIT_Serializable", "BIT")
+                   .Replace("Bit_Serializable", "Bit")
+                   .Replace("_Serializable", "_Fixed");
+    }
+
     /**
      * Returns a list of all the items in the give list matching the given type.
      * Essentially a type-as-a-variable way to call OfType().

@@ -30,7 +30,7 @@ public class DumpArmor : IMod {
             var modelData = new ArmorModelData {
                 name   = armor.Name_,
                 series = armorSeriesData.First(series => series.Series[0].Value == armor.Series[0].Value),
-                part   = (App_ArmorDef_ARMOR_PARTS) armor.PartsType[0].Value,
+                part   = (App_ArmorDef_ARMOR_PARTS_Fixed) armor.PartsType[0].Value,
             };
             list.Add(modelData);
         }
@@ -64,7 +64,7 @@ public class DumpArmor : IMod {
     private struct ArmorModelData {
         public string                              name;
         public App_user_data_ArmorSeriesData_cData series;
-        public App_ArmorDef_ARMOR_PARTS            part;
+        public App_ArmorDef_ARMOR_PARTS_Fixed      part;
     }
 
     [SuppressMessage("ReSharper", "InconsistentNaming")]

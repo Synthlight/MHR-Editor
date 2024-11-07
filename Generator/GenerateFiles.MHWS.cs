@@ -8,7 +8,6 @@ public partial class GenerateFiles {
     [SuppressMessage("ReSharper", "StringLiteralTypo")]
     [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression")]
     private static readonly List<string> WHITELIST = [
-        "App_HunterDef_Skill_Fixed",
         "App_user_data_ArmorData",
         "App_user_data_ArmorData_cData",
         "App_user_data_ArmorSeriesData",
@@ -19,10 +18,9 @@ public partial class GenerateFiles {
         "App_user_data_cItemRecipe_cData",
         "App_user_data_WeaponData",
         "App_user_data_WeaponData_cData",
-        "App_ArmorDef_ARMOR_COLOR_TYPE_Serializable",
-        "App_ArmorDef_ARMOR_PARTS",
-        "App_ArmorDef_MODEL_VARIETY_Serializable",
-        "App_ArmorDef_SERIES_Fixed",
-        "App_WeaponDef_SERIES_Fixed",
+        // For debugging:
+        "App_cEnemyCheckBox", // Has a `_Serializable` field where the wrapper is another object.
+        "App_user_data_EmParamParts_cMultiParts", // Has a `_Serializable` field that doesn't target `_Fixed`.
+        "App_user_data_NpcDesireLotteryTable_Health", // Has a `_Serializable` field with a button type that doesn't have an explicit `buttonPrimitive` defined.
     ];
 }

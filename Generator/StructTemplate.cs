@@ -194,7 +194,42 @@ public class StructTemplate(GenerateFiles generator, StructType structType) {
                 throw new InvalidDataException("Not a primitive, enum, or object array type.");
             }
         } else {
-            if (buttonType != null) { //  && field.name != "_Id" -- Not sure which needed this? Breaks for DD2 stuff like item drop params.
+            // Special case for MHWS's fucked enum wrapping nonsense.
+            if (PathHelper.CONFIG_NAME == "MHWS" && isObjectType && typeName?.EndsWith("_Serializable") == true && generator.structTypes[typeName].structInfo.fields![0].type != nameof(Object)) {
+                var unwrappedName      = $"{newName}_Unwrapped";
+                var unwrappedType      = typeName.ToFixedEnumName();
+                var wrappedStructInfo  = generator.structTypes[typeName];
+                var valuePrimitiveName = wrappedStructInfo.structInfo.fields![0].GetCSharpType(); // Being a wrapper for enums, it must have a primitive type.
+
+                file.WriteLine($"    [SortOrder({sortOrder})]");
+                file.WriteLine("    [DisplayName(\"\")]");
+                file.WriteLine($"    public {modifier}ObservableCollection<{typeName}> {newName} {{ get; set; }}");
+                file.WriteLine("");
+                file.WriteLine($"    [SortOrder({sortOrder + 5})]");
+                file.WriteLine($"    [DisplayName(\"{newName}\")]");
+
+                if (buttonType != null) {
+                    file.WriteLine($"    [DataSource({nameof(DataSourceType)}.{buttonType})]");
+                }
+
+                file.WriteLine($"    public {modifier}{unwrappedType} {unwrappedName} {{");
+                file.WriteLine("        get {");
+                file.WriteLine($"            return ({unwrappedType}) {newName}[0].Value;");
+                file.WriteLine("        }");
+                file.WriteLine("        set {");
+                file.WriteLine($"             {newName}[0].Value = ({valuePrimitiveName}) value;");
+                file.WriteLine("        }");
+                file.WriteLine("    }");
+
+                if (buttonType != null) {
+                    var lookupName = GetLookupForDataSourceType(buttonType);
+                    file.WriteLine("");
+                    file.WriteLine($"    [SortOrder({sortOrder})]");
+                    file.WriteLine($"    [DisplayName(\"{newName}\")]");
+                    file.WriteLine($"    public {modifier}string {unwrappedName}_button => {(negativeOneForEmpty ? $"{unwrappedName} == -1 ? \"<None>\".ToStringWithId({unwrappedName}) : " : "")}" +
+                                   $"DataHelper.{lookupName}[Global.locale].TryGet(({buttonPrimitive}) {unwrappedName}).ToStringWithId({unwrappedName});");
+                }
+            } else if (buttonType != null) { //  && field.name != "_Id" -- Not sure which needed this? Breaks for DD2 stuff like item drop params.
                 var lookupName = GetLookupForDataSourceType(buttonType);
                 file.WriteLine($"    [SortOrder({sortOrder + 10})]");
                 file.WriteLine($"    [DataSource({nameof(DataSourceType)}.{buttonType})]");

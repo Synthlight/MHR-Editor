@@ -47,7 +47,6 @@
 		<Compile Remove="Attributes\DataSourceType.MHWS.cs"/>
 		<Compile Remove="Data\DataHelper.MHWS.cs"/>
 		<Compile Remove="Enums\**"/>
-		<Compile Remove="BitMasks.cs"/>
 		<Compile Remove="PathHelper.MHWS.cs"/>
 	</ItemGroup>
 	<!-- RE2 -->

@@ -330,7 +330,7 @@ public class AutoDataGridGeneric<T>(RSZ rsz) : AutoDataGrid, IAutoDataGrid<T> {
     private void On_Cell_Open_Click(object sender, RoutedEventArgs _, PropertyInfo propertyInfo, string displayName) {
         try {
             var frameworkElement = (FrameworkElement) sender;
-            var obj              = frameworkElement.DataContext;
+            var obj              = (RszObject) frameworkElement.DataContext;
             var list             = (IList) propertyInfo.GetGetMethod()?.Invoke(obj, null);
             var listType         = list?.Count > 0 ? list[0]?.GetType() : list?.GetType().GenericTypeArguments[0];
             var isList           = (IsListAttribute) propertyInfo.GetCustomAttribute(typeof(IsListAttribute), true) != null;

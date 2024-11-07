@@ -156,9 +156,6 @@
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>Assets.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-		<Compile Update="Windows\MainWindow.xaml.buttons.MHWS.cs">
-			<DependentUpon>MainWindow.xaml</DependentUpon>
-		</Compile>
 		<None Update="Data\MHWS\Assets\SUPPORTED_FILES.txt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<TargetPath>SUPPORTED_FILES.txt</TargetPath>
@@ -173,8 +170,6 @@
 		<Compile Remove="Data\DataInit.MHWS.cs"/>
 		<Compile Remove="Models\MHWS\**"/>
 		<Compile Remove="Mods\MHWS\**"/>
-		<Compile Remove="Windows\MainWindow.xaml.buttons.MHWS.cs"/>
-		<Compile Remove="WikiDump.cs"/>
 	</ItemGroup>
 	<!-- MHWS (Launch Settings) -->
 	<ItemGroup Condition="$(Configuration.StartsWith('MHWS'))">

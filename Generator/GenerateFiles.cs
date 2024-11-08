@@ -231,7 +231,7 @@ public partial class GenerateFiles {
         Log("Parsing structs.");
         ParseStructs();
 
-        if (useWhitelist) {
+        if (useWhitelist || useGreylist) {
             FilterWhitelisted();
         }
         if (useGreylist) {

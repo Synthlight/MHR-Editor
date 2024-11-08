@@ -22,10 +22,15 @@ public static partial class PathHelper {
         @"\natives\STM"
     ];
 
-    public const string ARMOR_DATA_PATH        = @"\natives\STM\GameDesign\Common\Equip\ArmorData.user.3";
-    public const string ARMOR_SERIES_DATA_PATH = @"\natives\STM\GameDesign\Common\Equip\ArmorSeriesData.user.3";
-    public const string ITEM_DATA_PATH         = @"\natives\STM\GameDesign\Common\Item\ItemData.user.3";
-    public const string ITEM_RECIPE_PATH       = @"\natives\STM\GameDesign\Common\Item\ItemRecipe.user.3";
+    public const string AMULETS_RECIPE_DATA_PATH = @"\natives\STM\GameDesign\Common\Equip\AmuletRecipeData.user.3";
+    public const string ARMOR_DATA_PATH          = @"\natives\STM\GameDesign\Common\Equip\ArmorData.user.3";
+    public const string ARMOR_RECIPE_DATA_PATH   = @"\natives\STM\GameDesign\Common\Equip\ArmorRecipeData.user.3";
+    public const string ARMOR_SERIES_DATA_PATH   = @"\natives\STM\GameDesign\Common\Equip\ArmorSeriesData.user.3";
+    public const string ITEM_DATA_PATH           = @"\natives\STM\GameDesign\Common\Item\ItemData.user.3";
+    public const string ITEM_RECIPE_DATA_PATH    = @"\natives\STM\GameDesign\Common\Item\ItemRecipe.user.3";
+    public const string KINSECT_RECIPE_DATA_PATH = @"\natives\STM\GameDesign\Common\Item\RodInsectRecipeData.user.3";
+    public const string OTOMO_RECIPE_DATA_PATH   = @"\natives\STM\GameDesign\Facility\Data\OtomoEquipRecipe.user.3";
+    public const string POPUP_CAMP_PATH          = @"\natives\STM\System\SystemSetting\CampManagerSetting.user.3";
 
     public static IEnumerable<string> GetAllWeaponFilePaths(WeaponDataType type, string platform = "STM") {
         var postfix                                = "";

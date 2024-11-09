@@ -24,7 +24,7 @@ public class MorePopupCamps : IMod {
             Action  = HigherCampLimits
         };
 
-        ModMaker.WriteMods([mod], name, copyLooseToFluffy: true);
+        ModMaker.WriteMods([mod], name, copyLooseToFluffy: true, noPakZip: true);
     }
 
     public static void HigherCampLimits(IList<RszObject> rszObjectData) {

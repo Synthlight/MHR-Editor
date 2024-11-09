@@ -1,11 +1,11 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Attributes;
 using RE_Editor.Common.Data;
@@ -54,8 +54,7 @@ public static class Utils {
         return dataSource;
     }
 
-    [CanBeNull]
-    public static ConstructorInfo GetGenericConstructor(Type target, List<Type> args, Type genericType) {
+    public static ConstructorInfo? GetGenericConstructor(Type target, List<Type> args, Type genericType) {
         return (from constructor in target.MakeGenericType(genericType).GetConstructors()
                 let parameters = constructor.GetParameters()
                 where args.Count == parameters.Length
@@ -65,7 +64,7 @@ public static class Utils {
                 select constructor).FirstOrDefault();
     }
 
-    public static List<Type> GetTypesInList<T>(IEnumerable<T> items) {
+    public static List<Type> GetTypesInList<T>(IEnumerable<T> items) where T : notnull {
         return items.Select(item => item.GetType()).Distinct().ToList();
     }
 

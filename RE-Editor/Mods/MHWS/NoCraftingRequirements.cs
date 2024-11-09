@@ -15,12 +15,14 @@ namespace RE_Editor.Mods;
 public class NoCraftingRequirements : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string name = "No Crafting Requirements";
+        const string name        = "No Crafting Requirements";
+        const string description = "No Crafting Requirements.";
+        const string version     = "1.0.0";
 
         var baseMod = new NexusMod {
-            Version      = "1.0.0",
+            Version      = version,
             NameAsBundle = name,
-            Desc         = "No Crafting Requirements."
+            Desc         = description
         };
 
         var mods = new List<INexusMod> {
@@ -66,7 +68,7 @@ public class NoCraftingRequirements : IMod {
                 .SetAction(list => NoRequirements(list, Mode.NORMAL | Mode.IGNORE_UNLOCK_FLAGS))
         };
 
-        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true, noPakZip: true);
     }
 
     public static void NoRequirements(List<RszObject> rszObjectData, Mode mode) {
@@ -158,7 +160,7 @@ public class NoCraftingRequirements : IMod {
 
     [Flags]
     public enum Mode {
-        NORMAL,
+        NORMAL = 1,
         IGNORE_UNLOCK_FLAGS
     }
 }

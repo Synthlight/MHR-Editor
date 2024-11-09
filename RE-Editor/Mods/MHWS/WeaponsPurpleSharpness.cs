@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
@@ -12,22 +13,39 @@ namespace RE_Editor.Mods;
 public class WeaponsPurpleSharpness : IMod {
     [UsedImplicitly]
     public static void Make() {
-        const string name = "Weapons - Max Purple Sharpness";
+        const string name        = "Weapons - Max Purple Sharpness";
+        const string description = "Weapons - Max Purple Sharpness.";
+        const string version     = "1.0.0";
 
         var baseMod = new NexusMod {
-            Version      = "1.0.0",
+            Version      = version,
             NameAsBundle = name,
-            Desc         = "Weapons - Max Purple Sharpness."
+            Desc         = description
+        };
+
+        var baseLuaMod = new VariousDataTweak {
+            Version      = version,
+            NameAsBundle = name,
+            Desc         = description
         };
 
         var mods = new List<INexusMod> {
             baseMod
-                .SetName("Weapons - Max Purple Sharpness")
+                .SetName($"{name} (Natives)")
                 .SetFiles(PathHelper.GetAllWeaponFilePaths(PathHelper.WeaponDataType.Base))
-                .SetAction(MaxSharpness)
+                .SetAction(MaxSharpness),
+            baseLuaMod
+                .SetName($"{name} (REF)")
+                .SetDefaultLuaName()
+                .SetChanges([
+                    new() {
+                        Target = VariousDataTweak.Target.WEAPON_DATA,
+                        Action = MaxSharpnessRef
+                    }
+                ])
         };
 
-        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true);
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true, noPakZip: true);
     }
 
     public static void MaxSharpness(List<RszObject> rszObjectData) {
@@ -49,5 +67,20 @@ public class WeaponsPurpleSharpness : IMod {
                     break;
             }
         }
+    }
+
+    public static void MaxSharpnessRef(StreamWriter writer) {
+        writer.WriteLine("    if (entry._SharpnessValList[0].m_value > 0) then");
+        writer.WriteLine("        entry._SharpnessValList[0] = 10");
+        writer.WriteLine("        entry._SharpnessValList[1] = 10");
+        writer.WriteLine("        entry._SharpnessValList[2] = 10");
+        writer.WriteLine("        entry._SharpnessValList[3] = 10");
+        writer.WriteLine("        entry._SharpnessValList[4] = 10");
+        writer.WriteLine("        entry._SharpnessValList[5] = 10");
+        writer.WriteLine("        entry._SharpnessValList[6] = 340");
+        writer.WriteLine("        for handicraftIndex = 0, entry._TakumiValList:get_size() - 1 do");
+        writer.WriteLine("            entry._TakumiValList[handicraftIndex] = 0");
+        writer.WriteLine("        end");
+        writer.WriteLine("    end");
     }
 }

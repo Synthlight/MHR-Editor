@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using JetBrains.Annotations;
 using RE_Editor.Common;
 using RE_Editor.Common.Models;
@@ -17,15 +19,35 @@ public class InfiniteAmmo : IMod {
         const string description = "Infinite Ammo and Coatings.";
         const string version     = "1.0.0";
 
-        var mod = new NexusMod {
-            Name    = name,
-            Version = version,
-            Desc    = description,
-            Files   = [PathHelper.ITEM_DATA_PATH],
-            Action  = InfiniteAmmoAndCoatings
+        var baseMod = new NexusMod {
+            Version      = version,
+            NameAsBundle = name,
+            Desc         = description
         };
 
-        ModMaker.WriteMods([mod], name, copyLooseToFluffy: true);
+        var baseLuaMod = new VariousDataTweak {
+            Version      = version,
+            NameAsBundle = name,
+            Desc         = description
+        };
+
+        var mods = new List<INexusMod> {
+            baseMod
+                .SetName($"{name} (Natives)")
+                .SetFiles([PathHelper.ITEM_DATA_PATH])
+                .SetAction(InfiniteAmmoAndCoatings),
+            baseLuaMod
+                .SetName($"{name} (REF)")
+                .SetDefaultLuaName()
+                .SetChanges([
+                    new() {
+                        Target = VariousDataTweak.Target.ITEM_DATA,
+                        Action = InfiniteAmmoAndCoatingsRef
+                    }
+                ])
+        };
+
+        ModMaker.WriteMods(mods, name, copyLooseToFluffy: true, noPakZip: true);
     }
 
     public static void InfiniteAmmoAndCoatings(IList<RszObject> rszObjectData) {
@@ -38,5 +60,12 @@ public class InfiniteAmmo : IMod {
                     break;
             }
         }
+    }
+
+    [SuppressMessage("ReSharper", "StringLiteralTypo")]
+    public static void InfiniteAmmoAndCoatingsRef(StreamWriter writer) {
+        writer.WriteLine($"    if (entry._Type == {(int) App_ItemDef_TYPE_Fixed.SHELL} or entry._Type == {(int) App_ItemDef_TYPE_Fixed.BOTTLE}) then");
+        writer.WriteLine("        entry._Infinit = true");
+        writer.WriteLine("    end");
     }
 }

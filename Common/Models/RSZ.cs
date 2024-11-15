@@ -157,4 +157,10 @@ public class RSZ {
     public T GetEntryObject<T>() where T : RszObject {
         return (T) objectData[(int) objectEntryPoints[0] - 1];
     }
+
+    public bool TryGetEntryObject<T>(out T? file) where T : RszObject {
+        var entryObj = objectData[(int) objectEntryPoints[0] - 1];
+        file = entryObj as T;
+        return file != null;
+    }
 }
